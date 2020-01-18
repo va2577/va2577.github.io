@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>検索した文字列の行から後ろの内容を抽出したい(POWERSHELL) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>検索した文字列の行から後ろの内容を抽出したい(PowerShell)</h1>
+    
+      <div><time>January 14, 2017</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>テキストファイルを文字列で検索して、その行から後ろの 10 行分抽出する、みたいなことができないか、調べてみました。</p>
+<p>例えば、<a href="http://www.cftc.gov/dea/options/financial_lof.htm">シカゴ IMM 通貨先物ポジション</a>。</p>
+<p>これの、ユーロのポジションが見たいので、 <code>EURO FX - CHICAGO MERCANTILE EXCHANGE</code> の文字列がある行から 20 行分出力する、ということをしたいわけです。</p>
+<h2 id="行数を指定してテキストファイルを読み込む">行数を指定してテキストファイルを読み込む</h2>
+<p>まず、文字列を検索することは置いといて、行数を指定してテキストファイルの内容を読み込むには <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-content?view=powershell-5.1"><code>Get-Content</code></a> コマンドレットを使えばよさそうです。</p>
+<pre><code>PS C:\&gt; (Get-Content Cmdlets.txt)[0..9]
+</code></pre><p><code>Get-Content</code> コマンドレットでテキストファイルを読み込むと、内容が配列のように扱えるようです。
+<code>[0..9]</code> はテキストファイルの 1 行目から 10 行目を表しています。</p>
+<h2 id="テキストファイルから文字列を検索する">テキストファイルから文字列を検索する</h2>
+<p>次に、テキストファイルから文字列を検索します。</p>
+<p><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-string?view=powershell-5.1"><code>Select-String</code></a> コマンドレットを使えばよさそうです。</p>
+<pre><code>PS C:\&gt; Select-String -Path &quot;*.xml&quot; -Pattern &quot;the the&quot;
+</code></pre><p>結果は次のように表示されます。</p>
+<pre><code>
+test1.xml:11:the the
+test2.xml:21:the the
+
+</code></pre><p>今回は、行の番号だけ必要になりますので、 <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-member?view=powershell-5.1"><code>Get-Member</code></a> コマンドレットでオブジェクトの内容を見てみます。</p>
+<pre><code>PS C:\&gt; Select-String -Path &quot;*.xml&quot; -Pattern &quot;the the&quot; | Get-Member
+
+
+   TypeName: Microsoft.PowerShell.Commands.MatchInfo
+
+Name         MemberType Definition
+----         ---------- ----------
+Equals       Method     bool Equals(System.Object obj)
+GetHashCode  Method     int GetHashCode()
+GetType      Method     type GetType()
+RelativePath Method     string RelativePath(string directory)
+ToString     Method     string ToString(), string ToString(string directory)
+Context      Property   Microsoft.PowerShell.Commands.MatchInfoContext Context {get;set;}
+Filename     Property   string Filename {get;}
+IgnoreCase   Property   bool IgnoreCase {get;set;}
+Line         Property   string Line {get;set;}
+LineNumber   Property   int LineNumber {get;set;}
+Matches      Property   System.Text.RegularExpressions.Match[] Matches {get;set;}
+Path         Property   string Path {get;set;}
+Pattern      Property   string Pattern {get;set;}
+
+
+</code></pre><p><code>LineNumber</code> というプロパティがそれでしょうか。</p>
+<pre><code>PS C:\&gt; Select-String -Path &quot;*.xml&quot; -Pattern &quot;the the&quot; | ForEach-Object { $_.LineNumber }
+11
+21
+</code></pre><p>行の番号が取れたようです。</p>
+<h2 id="文字列を指定してテキストファイルを読み込む">文字列を指定してテキストファイルを読み込む</h2>
+<p>上で試したことを組み合わせてみます。</p>
+<pre><code>PS C:\&gt; (Get-Content financial_lof.htm)[((Select-String -Path &quot;financial_lof.htm&quot; -Pattern &quot;EURO FX - CHICAGO MERCANTILE EXCHANGE&quot; | ForEach-Object { $_.LineNumber }) - 1)..((Select-String -Path &quot;financial_lof.htm&quot; -Pattern &quot;EURO FX - CHICAGO MERCANTILE EXCHANGE&quot; | ForEach-Object { $_.LineNumber }) + 18)]
+EURO FX - CHICAGO MERCANTILE EXCHANGE   (CONTRACTS OF EUR 125,000)                                                      
+CFTC Code #099741                                                    Open Interest is   652,721
+Positions
+…略…
+</code></pre><p>ファイルに出力したいので、 <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-content?view=powershell-5.1"><code>Set-Content</code></a> コマンドレットにパイプで渡してみます。</p>
+<pre><code>PS C:\&gt; (Get-Content financial_lof.htm)[((Select-String -Path &quot;financial_lof.htm&quot; -Pattern &quot;EURO FX - CHICAGO MERCANTILE EXCHANGE&quot; | ForEach-Object { $_.LineNumber }) - 1)..((Select-String -Path &quot;financial_lof.htm&quot; -Pattern &quot;EURO FX - CHICAGO MERCANTILE EXCHANGE&quot; | ForEach-Object { $_.LineNumber }) + 18)] | Set-Content -Path output.htm
+</code></pre><p>検索した文字列の行から後ろの内容を抽出できたようです。</p>
+<h2 id="文字列を検索するときに前後の行を抽出できた">文字列を検索するときに前後の行を抽出できた…</h2>
+<p><code>Select-String</code> コマンドレットの <code>-Context</code> オプションで前後の行を抽出できたようです。</p>
+<pre><code>PS C:\&gt; Select-String -Path &quot;financial_lof.htm&quot; -Pattern &quot;EURO FX - CHICAGO MERCANTILE EXCHANGE&quot; -Context 0, 19
+
+&gt; financial_lof.htm:105:EURO FX - CHICAGO MERCANTILE EXCHANGE   (CONTRACTS OF EUR 125,000)
+
+  financial_lof.htm:106:CFTC Code #099741                                                    Open Interest is   652,721
+  financial_lof.htm:107:Positions
+…略…
+</code></pre><p>前の行は 0 で、後ろの行は 19 としています。
+この数字に、検索する文字列の行は含めていません。</p>
+<p>このままだと <code>Microsoft.PowerShell.Commands.MatchInfo</code> 型で返ってきてしまって見づらいので、必要な内容だけを出力します。</p>
+<pre><code>PS C:\&gt; Select-String -Path &quot;financial_lof.htm&quot; -Pattern &quot;EURO FX - CHICAGO MERCANTILE EXCHANGE&quot; -Context 0, 19 | ForEach-Object { $_.Line + &quot;`r`n&quot; + ($_.Context.PostContext -Join &quot;`r`n&quot;) }
+EURO FX - CHICAGO MERCANTILE EXCHANGE   (CONTRACTS OF EUR 125,000)                                                      
+CFTC Code #099741                                                    Open Interest is   652,721
+Positions
+…略…
+</code></pre><p>マッチした行は <code>Line</code> プロパティ、後ろの行は <code>Context</code> プロパティの <code>PostContext</code> プロパティにありました。
+前の行は <code>Context</code> プロパティの <code>PreContext</code> プロパティにありました。</p>
+<p>それぞれの文字列を改行で区切って出力したかったので、 <code>`r`n</code> も出力しています。
+PowerShell ではバックスラッシュでエスケープするのではなくて、バッククォートでエスケープするようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>過去に少しだけ PowerShell を使ったことがありましたが、パイプでオブジェクトが渡せることは便利なことだと気づきました。
+Bash は文字列としてパイプするだけだったように思いますので、大きな違いに感じました。</p>
+<p>でも、 PowerShell ってあまり普及していない印象です。
+Windows の標準の設定で、 PowerShell のスクリプトファイルが実行できないあたりは、PowerShell を採用しづらくさせているような気がします。
+セキュリティ的には仕方ないのかな。</p>
+<pre><code>PS C:\&gt; Get-ExecutionPolicy
+Restricted
+</code></pre><h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-5.1">about_Comparison_Operators | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_join?view=powershell-5.1">about_Join | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators?view=powershell-5.1">about_Operators | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_quoting_rules?view=powershell-5.1">about_Quoting_Rules | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_special_characters?view=powershell-5.1">about_Special_Characters | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_type_operators?view=powershell-5.1">about_Type_Operators | Microsoft Docs</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

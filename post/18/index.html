@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ECMASCRIPT 2015 (ES6) IN NODE.JSでIMPORTとEXPORTがエラーになる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ECMAScript 2015 (ES6) in Node.jsでimportとexportがエラーになる</h1>
+    
+      <div><time>January 31, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Node.jsがECMAScript 2015をサポートしているということで、Node.jsだけで動かすものはECMAScript 2015のまま実行してしまおうとしたところ、importのところがエラーになるので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Node.js バージョン 5.5.0</li>
+</ul>
+<h2 id="ecmascript-2015-es6-in-nodejs">ECMAScript 2015 (ES6) in Node.js？</h2>
+<blockquote>
+<p>Which features ship with Node.js by default (no runtime flag required)?</p>
+<ul>
+<li>Block scoping
+<ul>
+<li>let (strict mode only)</li>
+<li>const</li>
+<li>function-in-blocks (strict mode only [1])</li>
+</ul>
+</li>
+<li>Classes (strict mode only)</li>
+<li>Collections
+<ul>
+<li>Map</li>
+<li>WeakMap</li>
+<li>Set</li>
+<li>WeakSet</li>
+</ul>
+</li>
+<li>Typed arrays</li>
+<li>Generators</li>
+<li>Binary and Octal literals</li>
+<li>Object literal extensions (shorthand properties and methods)</li>
+<li>Promises</li>
+<li>New String methods</li>
+<li>Symbols</li>
+<li>Template strings</li>
+<li>Arrow Functions</li>
+<li>new.target [2]</li>
+<li>Object.assign</li>
+<li>Spread operator [2]</li>
+</ul>
+<p>Which features are behind the &ndash;es_staging flag?</p>
+<ul>
+<li>Symbol.toStringTag (user-definable results for Object.prototype.toString, behind flag &ndash;harmony_tostring)</li>
+<li>Array.prototype.includes (determine whether an array includes a certain element, behind flag &ndash;harmony_array_includes) [2]</li>
+<li>Rest Parameters (represent an indefinite number of arguments as an array, behind flag &ndash;harmony_rest_parameters) [2]</li>
+</ul>
+<p>Which features are in progress?</p>
+<p>New features are constantly being added to the V8 engine. Generally speaking, expect them to land on a future Node.js release, although timing is unknown.</p>
+<p><cite><a href="https://nodejs.org/en/docs/es6/">ECMAScript 2015 (ES6) | Node.js</a></cite></p>
+</blockquote>
+<p>これを見ると、Node.jsのサポートする3段階あるうちのデフォルトではimportってないですし、StagedにもIn progressにもないですよね。
+<a href="https://github.com/callemall/material-ui">GitHub - callemall/material-ui: React Components that Implement Google's Material Design.</a>とかソースを見ているとimportを使っているから、悪意なくそのまま使い始めてしまっていたんですけど、こういう意識が危険で長期的な成長がないと感じ始めているところです。</p>
+<blockquote>
+<p>Module Loaders</p>
+<p>Not part of ES2015
+This is left as implementation-defined within the ECMAScript 2015 specification. The eventual standard will be in WHATWG's Loader specification, but that is currently a work in progress. What is below is from a previous ES2015 draft.</p>
+<p><cite><a href="https://babeljs.io/docs/learn-es2015/#module-loaders">Module Loaders - Learn ES2015 · Babel</a></cite></p>
+</blockquote>
+<p>こちらにはModule LoadersがES2015の一部ではないことが記載されていました。</p>
+<p>そして、現在の自分なりの暫定的結論として、まだimportやexportは使わずにNode.jsでそのまま実行できる形のrequireとexportsを使うのがいいと思っています。
+ECMAScriptで正式に決定したらそれを使うようにしようと思っています。</p>
+<h2 id="importとexportの確認">importとexportの確認</h2>
+<p>importとexportを使ってみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// a.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">b</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./b&#39;</span>;
+
+(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">b: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">b</span>()<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+})();
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// b.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> () =&gt; {
+  <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;b!&#39;</span>;
+};
+</code></pre></div><p>実行するとimportのところでエラーになります。</p>
+<pre><code>$ node a.js
+a.js:1
+(function (exports, require, module, __filename, __dirname) { import b from './b';
+                                                              ^^^^^^
+
+SyntaxError: Unexpected token import
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:387:25)
+    at Object.Module._extensions..js (module.js:422:10)
+    at Module.load (module.js:357:32)
+    at Function.Module._load (module.js:314:12)
+    at Function.Module.runMain (module.js:447:10)
+    at startup (node.js:139:18)
+    at node.js:999:3
+</code></pre><h2 id="requireに修正">requireに修正</h2>
+<p>importとしていたところをrequireに修正します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// a.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./b&#39;</span>);
+
+(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">b: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">b</span>()<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+})();
+</code></pre></div><p>今度はexportのところがエラーになりました。</p>
+<pre><code>$ node a.js
+b.js:1
+(function (exports, require, module, __filename, __dirname) { export default () =&gt; {
+                                                              ^^^^^^
+
+SyntaxError: Unexpected token export
+    at exports.runInThisContext (vm.js:53:16)
+    at Module._compile (module.js:387:25)
+    at Object.Module._extensions..js (module.js:422:10)
+    at Module.load (module.js:357:32)
+    at Function.Module._load (module.js:314:12)
+    at Module.require (module.js:367:17)
+    at require (internal/module.js:16:19)
+    at Object.&lt;anonymous&gt; (a.js:1:73)
+    at Module._compile (module.js:413:34)
+    at Object.Module._extensions..js (module.js:422:10)
+</code></pre><h2 id="exportsに修正">exportsに修正</h2>
+<p>exportのところをexportsに修正します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// b.js
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">exports</span>.<span style="color:#66d9ef">default</span> <span style="color:#f92672">=</span> () =&gt; {
+  <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;b!&#39;</span>;
+};
+</code></pre></div><p>今度は呼び出しのところで関数じゃないっていうエラーになりました。</p>
+<pre><code>$ node a.js
+a.js:4
+  console.log(`b: ${b()}`);
+                    ^
+
+TypeError: b is not a function
+    at a.js:4:21
+    at Object.&lt;anonymous&gt; (a.js:5:3)
+    at Module._compile (module.js:413:34)
+    at Object.Module._extensions..js (module.js:422:10)
+    at Module.load (module.js:357:32)
+    at Function.Module._load (module.js:314:12)
+    at Function.Module.runMain (module.js:447:10)
+    at startup (node.js:139:18)
+    at node.js:999:3
+</code></pre><h2 id="呼び出しをdefaultに修正">呼び出しをdefaultに修正</h2>
+<p>requireした時のbの型を見るとobjectになっていました。
+そして、babelで変換したソースを見たらexport defaultの場合はdefaultという名前のプロパティを呼び出すようになっていました。
+なので、defaultという名前のプロパティを呼び出すように修正します。
+export.defaultっていうのは単純にdefaultっていう名前のプロパティに設定しているだけなんですね。
+export.funcbだったらfuncbっていう名前のプロパティに設定しているのと同じことだったんですけど、何かdefaultって特別のような気がして気がつきませんでした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// a.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;./b&#39;</span>);
+
+(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">b: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">b</span>.<span style="color:#66d9ef">default</span>()<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+})();
+</code></pre></div><p>エラーがなくなりました。</p>
+<pre><code>$ node a.js
+b: b!
+</code></pre><h2 id="終わり">終わり</h2>
+<p>ECMAScriptを含めた周辺の動きに過熱感がありすぎてバブルのような印象をうけますけど、適切な関わり方をしていくことが大切だと思います。</p>
+<blockquote>
+<p>「最も重要なのは、自分の能力の輪をどれだけ大きくするかではなく、その輪の境界をどこまで厳密に決められるかです」
+ウォーレン・バフェット</p>
+</blockquote>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://nodejs.org/en/docs/es6/">ECMAScript 2015 (ES6) | Node.js</a></li>
+<li><a href="https://babeljs.io/docs/learn-es2015/#module-loaders">Module Loaders - Learn ES2015 · Babel</a></li>
+</ul>
+<h2 id="30-march-2018-追記">30 March 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/119/">Node.js で ECMAScript Modules を使ってみました</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

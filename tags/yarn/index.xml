@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yarn on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/yarn/</link>
+    <description>Recent content in Yarn on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Apr 2018 14:52:33 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/yarn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Yarn を使ってみました</title>
+      <link>https://va2577.github.io/post/127/</link>
+      <pubDate>Sat, 07 Apr 2018 14:52:33 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/127/</guid>
+      <description>&lt;p&gt;たまたま &lt;a href=&#34;https://www.webprofessional.jp/yarn-vs-npm/&#34;&gt;Yarn の記事&lt;/a&gt;を読みまして、気になったので使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FFmpeg on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/ffmpeg/</link>
+    <description>Recent content in FFmpeg on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 May 2018 18:42:15 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/ffmpeg/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に Utuntu 16.04 で使っていたアプリケーションをインストールし直しました</title>
+      <link>https://va2577.github.io/post/178/</link>
+      <pubDate>Mon, 28 May 2018 18:42:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/178/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/177/&#34;&gt;前回&lt;/a&gt; WSL の Ubuntu 18.04 をインストールしたので、改めてアプリケーションをインストールし直しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>radiko.jp で録音（保存、ダウンロード）したファイルが iOS の CloudBeats や OneDrive で聞けない</title>
+      <link>https://va2577.github.io/post/82/</link>
+      <pubDate>Sun, 14 Jan 2018 18:58:57 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/82/</guid>
+      <description>&lt;p&gt;iOS の CloudBeats で音楽を聴くようになったのですが、radiko.jp で録音した m4a ファイルが CloudBeats で聴けなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL(Windows Subsystem for Linux) の Ubuntu に FFmpeg をインストールする</title>
+      <link>https://va2577.github.io/post/78/</link>
+      <pubDate>Thu, 04 Jan 2018 15:48:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/78/</guid>
+      <description>&lt;p&gt;Windows に変えてから、使ってみたかったのが、WSL(Windows Subsystem for Linux) です。
+コマンドプロンプトよりできることが増えるかなと思っています。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>らじる★らじる NHKネットラジオを録音する 2017年9月</title>
+      <link>https://va2577.github.io/post/73/</link>
+      <pubDate>Sun, 10 Sep 2017 15:25:12 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/73/</guid>
+      <description>&lt;p&gt;9 月の 2 週目あたりになってらじる★らじるが録音できなくなっていたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>radiko.jp のタイムフリーの録音(保存、ダウンロード)</title>
+      <link>https://va2577.github.io/post/72/</link>
+      <pubDate>Fri, 28 Apr 2017 11:08:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/72/</guid>
+      <description>&lt;p&gt;radiko.jp のタイムフリーの録音(保存、ダウンロード)ができないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルから指定した時間を無劣化で切り取る</title>
+      <link>https://va2577.github.io/post/41/</link>
+      <pubDate>Thu, 19 May 2016 18:06:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/41/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/28/&#34;&gt;FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する&lt;/a&gt;
+でAACファイルを抽出していたのですが、音楽が流れている部分だけ切り取りたいと思いましたので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルからAACファイルを抽出する</title>
+      <link>https://va2577.github.io/post/27/</link>
+      <pubDate>Tue, 09 Feb 2016 15:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/27/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/24/&#34;&gt;らじる★らじる&lt;/a&gt;、&lt;a href=&#34;https://va2577.github.io/post/25/&#34;&gt;radiko.jp&lt;/a&gt;で録音したファイルは&lt;a href=&#34;https://ja.wikipedia.org/wiki/Flash_Video&#34;&gt;Flash Video&lt;/a&gt;という&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88&#34;&gt;コンテナ型のファイルフォーマット&lt;/a&gt;なのでそのままだとMacで再生しづらいです。
+今回はFLVファイルからAACファイルを抽出することについて調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

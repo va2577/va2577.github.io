@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ruby on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/ruby/</link>
+    <description>Recent content in Ruby on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Feb 2016 20:51:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RubyGemsのインストールにBundlerを使う</title>
+      <link>https://va2577.github.io/post/22/</link>
+      <pubDate>Fri, 05 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/22/</guid>
+      <description>&lt;p&gt;JekyllはRubyで書かれているため&lt;a href=&#34;https://www.ruby-lang.org/ja/libraries/&#34;&gt;RubyGems&lt;/a&gt;というRuby に特化した apt-get と同じようなパッケージングシステムが使われています。
+RubyでもNode.jsでも、今の流れとして、これらのライブラリーはプロジェクトごとにインストールするようになっていると感じます。
+たくさんのライブラリーを使うとプロジェクト間のバージョンの違いによる問題が出てくることがあるからなんですね。
+今回はBundlerでRubyGemsをインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

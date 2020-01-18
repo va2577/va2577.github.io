@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>VISUAL STUDIO なしで C# のプログラムをコンパイルする - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Visual Studio なしで C# のプログラムをコンパイルする</h1>
+    
+      <div><time>May 8, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>ちょっとだけ C# を使いたくて。
+そのために Visual Studio をインストールするのは時間もかかるし容量も必要になるので。
+調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Windows 10 Pro 1809</li>
+<li>.NET Framework 4.7.2</li>
+</ul>
+<h2 id="windows-の-net-framework-の-c-のコンパイラ">Windows の .NET Framework の C# のコンパイラ</h2>
+<p>Windows 10 には標準で .NET Framework があって、そこに C# のコンパイラもあるみたいです。</p>
+<blockquote>
+<p>通常、実行可能ファイル csc.exe は、Windows ディレクトリの Microsoft.NET\Framework&lt;バージョン&gt; フォルダーに格納されています。</p>
+<p><cite><a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-options/command-line-building-with-csc-exe">csc.exe を使用したコマンド ラインからのビルド | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>次の場所に C# のコンパイラがありました。</p>
+<ul>
+<li>32bit: <code>C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe</code></li>
+<li>64bit: <code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe</code></li>
+</ul>
+<p>VB.NET のコンパイラと思われる「vbc.exe」も同じフォルダーにありました。
+参考までに。</p>
+<p>次のリンクに <code>csc.exe</code> の使い方のサンプルが記載されていました。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-options/command-line-building-with-csc-exe">C# コンパイラのコマンド ラインのサンプル</a></p>
+<h2 id="サンプル１">サンプル１</h2>
+<p>次のプログラム（Program.cs）を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">using</span> System;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+{
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
+    {
+        Console.WriteLine(<span style="color:#e6db74">&#34;Hello World!&#34;</span>);
+    }
+}
+</code></pre></div><p>これをコンパイルします。
+PowerShell から次のコマンドを入力しました。</p>
+<pre><code>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe Program.cs
+</code></pre><p>Program.exe が作られました。</p>
+<p>PowerShell から Program.exe を実行しました。</p>
+<pre><code>&gt; Program.exe
+Hello World!
+</code></pre><p>Visual Studio を使っていた時はあまり意識していなかったので引用しておきます。</p>
+<blockquote>
+<p>-target:exe オプションは既定で有効になっています。 実行可能ファイルは、.exe という拡張子で作成されます。</p>
+<p>…略…</p>
+<p>-out オプションで指定しない限り、出力ファイル名は Main メソッドを含む入力ファイルと同じになります。</p>
+<p>…略…</p>
+<p>Main メソッドは、.exe ファイルにコンパイルされるソース コード ファイル内に 1 つだけ必要です。 コードに Main メソッドを含むクラスが複数ある場合は、-main コンパイラ オプションを使用して、Main メソッドを含めるクラスを指定できます。</p>
+<p><cite><a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-options/target-exe-compiler-option">-target:exe (C# コンパイラ オプション) | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>Main メソッドは基本的に１つだけ必要だそうです。</p>
+<h2 id="サンプル２">サンプル２</h2>
+<p>dll を作って、それを参照して exe を作ります。</p>
+<h3 id="dll-の作成">dll の作成</h3>
+<p>１つ目のプログラム（LibraryClass1.cs）です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LibraryClass1</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Hello()
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;Hello World! {0}&#34;</span>, <span style="color:#66d9ef">this</span>.GetType().Name);
+    }
+}
+</code></pre></div><p>２つ目のプログラム（LibraryClass2.cs）です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LibraryClass2</span>
+{
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Hello()
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;Hello World! {0}&#34;</span>, <span style="color:#66d9ef">this</span>.GetType().Name);
+    }
+}
+</code></pre></div><p>これらをコンパイルします。
+PowerShell から次のコマンドを入力しました。</p>
+<pre><code class="language-console" data-lang="console">C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe -target:library LibraryClass1.cs LibraryClass2.cs
+</code></pre><p>LibraryClass1.dll が作られました。</p>
+<p>複数のファイルをコンパイルする場合は引数に続けて指定してあげればいいみたいでした。</p>
+<blockquote>
+<p>-target:library オプションを指定した場合、コンパイラは実行可能ファイル (EXE) ではなく、ダイナミック リンク ライブラリ (DLL) を作成します。</p>
+<p>…略…</p>
+<p>-out オプションを特に指定しない限り、出力ファイル名は最初の入力ファイルと同じになります。</p>
+<p>…略…</p>
+<p>.dll ファイルを作成する際に、Mainメソッドは必要ありません。</p>
+<p><cite><a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-options/target-library-compiler-option">-target:library (C# コンパイラ オプション) | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>.dll ファイルを作成する場合は Main メソッドは必要ないそうです。</p>
+<h3 id="exe-の作成">exe の作成</h3>
+<p>次のプログラム（Class1.cs）を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">using</span> System;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Class1</span>
+{
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
+    {
+        Console.WriteLine(<span style="color:#66d9ef">new</span> LibraryClass1().Hello());
+        Console.WriteLine(<span style="color:#66d9ef">new</span> LibraryClass2().Hello());
+    }
+}
+</code></pre></div><p>これをコンパイルします。
+PowerShell から次のコマンドを入力しました。</p>
+<pre><code class="language-console" data-lang="console">C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe -reference:LibraryClass1.dll Class1.cs
+</code></pre><p>Class1.exe が作られました。</p>
+<blockquote>
+<p>-reference オプションを指定すると、コンパイラは指定されたファイルの public 型の情報を現在のプロジェクトにインポートし、指定されたアセンブリ ファイルからメタデータを参照できるようにします。</p>
+<p>…略…</p>
+<p>アセンブリ マニフェストを含むファイルの名前。 複数のファイルをインポートするには、ファイルごとに個別に -reference オプションを指定します。</p>
+<p><cite><a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-options/reference-compiler-option">-reference (C# コンパイラ オプション) | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>参照設定は <code>-reference</code> オプションを指定することでできるようになるみたいです。</p>
+<p>PowerShell から Class1.exe を実行しました。</p>
+<pre><code>&gt; .\Class1.exe
+Hello World! LibraryClass1
+Hello World! LibraryClass2
+</code></pre><h2 id="msbuild">MSBuild</h2>
+<blockquote>
+<p>MSBuild を使用して、プログラムによって C# プログラムをビルドすることもできます。 詳細については、「MSBuild」を参照してください。</p>
+<p><cite><a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-options/command-line-building-with-csc-exe">csc.exe を使用したコマンド ラインからのビルド | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>.</p>
+<blockquote>
+<p>Microsoft Build Engine は、アプリケーションをビルドするためのプラットフォームです。 MSBuild とも呼ばれるこのエンジンには、ビルド プラットフォームでソフトウェアを処理およびビルドする方法を制御する、プロジェクト ファイル用の XML スキーマが用意されています。 Visual Studio は MSBuild を使用しますが、MSBuild は Visual Studio に依存しません。 プロジェクト ファイルまたはソリューション ファイルに対して msbuild.exe を実行すると、Visual Studio がインストールされていない環境で、製品の統合とビルドを実行できます。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild">MSBuild - Visual Studio | Microsoft Docs</a></p>
+</blockquote>
+<p>MSBuild も <code>csc.exe</code> と同じフォルダーにありました。
+プロジェクトファイル（.csproj）、ソリューションファイル（.sln）を作れば MSBuild でコンパイルすることもできます。</p>
+<p>プロジェクトファイルやソリューションファイルを作るにはやっぱり Visual Studio があった方が楽なのですけれども。
+Visual Studio は遅いし重いしあまりインストールしたくないなー。
+そう感じてしまうのは普段 Node.js とか Python とかやってるせいかな。
+テキストエディタだけで済むようにしたい。</p>
+<h2 id="終わり">終わり</h2>
+<p>ちょっと勉強のために使うにはこれで十分かな。
+今回はこれで終わります。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-options/">C# コンパイラ オプション | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild">MSBuild - Visual Studio | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild-command-line-reference">MSBuild コマンド ライン リファレンス - Visual Studio | Microsoft Docs</a></li>
+</ul>
+<h2 id="22-may-2019-追記c-のバージョン">22 May 2019 追記（C# のバージョン）</h2>
+<p><code>csc.exe</code> を使うと次のようなメッセージが表示されます。</p>
+<pre><code>This compiler is provided as part of the Microsoft (R) .NET Framework, but only supports language versions up to C# 5, which is no longer the latest version. For compilers that support newer versions of the C# programming language, see http://go.microsoft.com/fwlink/?LinkID=533240
+</code></pre><p><code>csc.exe</code> のコンパイラは C# 5 までしかサポートしていないようです。
+新しいバージョンをサポートしているのは <a href="https://docs.microsoft.com/ja-jp/dotnet/csharp/roslyn-sdk/">Roslyn API</a> になるようです。</p>
+<blockquote>
+<p>What's new in C# 8.0</p>
+<p>02/12/2019 ・ 13 minutes to read ・ Contributors</p>
+<p>There are many enhancements to the C# language that you can try out already.</p>
+<p>…略…</p>
+<p>This article was last updated for C# 8.0 preview 5.</p>
+<p><cite><a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8">What's New in C# 8.0 - C# Guide | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>.</p>
+<blockquote>
+<p>What's new in C# 7.3</p>
+<p>05/16/2018 ・ 6 minutes to read ・ Contributors</p>
+<p>There are two main themes to the C# 7.3 release.</p>
+<p><cite><a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-3">What's new in C# 7.3 | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>この記事を書いている時点では C# 8.0 が preview 5 で、 C# 7.3 が release になっていました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

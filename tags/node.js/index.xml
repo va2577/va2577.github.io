@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Node.js on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/node.js/</link>
+    <description>Recent content in Node.js on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 May 2018 18:42:15 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/node.js/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に Utuntu 16.04 で使っていたアプリケーションをインストールし直しました</title>
+      <link>https://va2577.github.io/post/178/</link>
+      <pubDate>Mon, 28 May 2018 18:42:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/178/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/177/&#34;&gt;前回&lt;/a&gt; WSL の Ubuntu 18.04 をインストールしたので、改めてアプリケーションをインストールし直しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js でランダムな文字列を作成してみました</title>
+      <link>https://va2577.github.io/post/143/</link>
+      <pubDate>Mon, 23 Apr 2018 09:03:45 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/143/</guid>
+      <description>&lt;p&gt;ランダムな文字列が必要になることがありまして、 Node.js で作成してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 4(Universal Module Definition)</title>
+      <link>https://va2577.github.io/post/124/</link>
+      <pubDate>Wed, 04 Apr 2018 08:09:47 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/124/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/123/&#34;&gt;前回の記事&lt;/a&gt;では、 SystemJS を使ってみました。
+今回は、 Universal Module Definition を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 3(SystemJS)</title>
+      <link>https://va2577.github.io/post/123/</link>
+      <pubDate>Tue, 03 Apr 2018 18:21:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/123/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/122/&#34;&gt;前回の記事&lt;/a&gt;では、 CommonJS を使ってみました。
+今回は、 SystemJS を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js で ECMAScript Modules を使ってみました</title>
+      <link>https://va2577.github.io/post/119/</link>
+      <pubDate>Fri, 30 Mar 2018 19:48:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/119/</guid>
+      <description>&lt;p&gt;以前、 &lt;a href=&#34;https://va2577.github.io/post/18/&#34;&gt;ECMAScript 2015 (ES6) in Node.js で import と export がエラーになる&lt;/a&gt;という記事を書きました。
+この記事の中では、結局、 &lt;code&gt;import&lt;/code&gt; と &lt;code&gt;export&lt;/code&gt; を使わないで実行する方向で終わってしまいました。
+今回は、 &lt;code&gt;import&lt;/code&gt; と &lt;code&gt;export&lt;/code&gt; を使って、とりあえずでも、実行する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js の express で session を使ってみました</title>
+      <link>https://va2577.github.io/post/108/</link>
+      <pubDate>Mon, 19 Mar 2018 15:26:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/108/</guid>
+      <description>&lt;p&gt;Node.js の express で session が使いたかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js の forever を使ってみました</title>
+      <link>https://va2577.github.io/post/102/</link>
+      <pubDate>Tue, 13 Mar 2018 16:57:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/102/</guid>
+      <description>&lt;p&gt;express のウェブアプリを作っていたのですが、実行しながらソースの修正を自動で反映したかったので、 &lt;a href=&#34;https://github.com/foreverjs/forever&#34;&gt;forever&lt;/a&gt; を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js の express で POST した値を取ろうとしたら request.body が undefined になる</title>
+      <link>https://va2577.github.io/post/99/</link>
+      <pubDate>Sat, 10 Mar 2018 17:26:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/99/</guid>
+      <description>&lt;p&gt;request.body が undefined になるので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>npm をアップデートしました</title>
+      <link>https://va2577.github.io/post/98/</link>
+      <pubDate>Tue, 06 Mar 2018 09:20:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/98/</guid>
+      <description>&lt;p&gt;npm をアップデートしたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Node.js をインストールする</title>
+      <link>https://va2577.github.io/post/80/</link>
+      <pubDate>Fri, 12 Jan 2018 11:11:36 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/80/</guid>
+      <description>&lt;p&gt;このブログの CSS や JavaScript を作成するのに Node.js を使っていたので、WSL の Ubuntu にインストールすることにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SuperAgentでXMLのレスポンスのtextがundefinedになる</title>
+      <link>https://va2577.github.io/post/19/</link>
+      <pubDate>Tue, 02 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/19/</guid>
+      <description>&lt;p&gt;SuperAgentでXMLにアクセスした時にレスポンスのbodyやtextが取れなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript 2015 (ES6) in Node.jsでimportとexportがエラーになる</title>
+      <link>https://va2577.github.io/post/18/</link>
+      <pubDate>Sun, 31 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/18/</guid>
+      <description>&lt;p&gt;Node.jsがECMAScript 2015をサポートしているということで、Node.jsだけで動かすものはECMAScript 2015のまま実行してしまおうとしたところ、importのところがエラーになるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript® 2015とBabelを使う</title>
+      <link>https://va2577.github.io/post/15/</link>
+      <pubDate>Sat, 23 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/15/</guid>
+      <description>&lt;p&gt;2015年6月にECMAScript® 2015の仕様が策定されました。
+しかしブラウザーで使う場合は、まだ実装されていないものもあるようです。
+そのためBabelでECMAScript 5に変換してから使うのが主流のようですが、変換する方法がいくつもあって、結局どれが良いのかわからなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>nodebrew, Node.jsのインストール</title>
+      <link>https://va2577.github.io/post/3/</link>
+      <pubDate>Wed, 30 Dec 2015 22:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/3/</guid>
+      <description>&lt;p&gt;Node.jsは頻繁にアップデートをしているのでバージョンを管理するためにnodebrewを使ってNode.jsをインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

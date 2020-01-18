@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HEXOのMARKDOWNで勝手に改行されるのが気になる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>HexoのMarkdownで勝手に改行されるのが気になる</h1>
+    
+      <div><time>February 25, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>元々<a href="/post/20/">JekyllのMarkdown</a>を使っていたんですけど、HexoのMarkdownを使ってみたら、テキストで改行したところがそのままHTMLでも改行されていて気になったので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.2</li>
+<li>Hexo バージョン 3.1.1</li>
+</ul>
+<h2 id="hexo">Hexo？</h2>
+<blockquote>
+<p>A fast, simple &amp; powerful blog framework</p>
+<p><cite><a href="https://hexo.io">Hexo</a></cite></p>
+</blockquote>
+<h2 id="markdownの改行">Markdownの改行</h2>
+<blockquote>
+<p>改行</p>
+<p>テキストに挿入された改行は最終的な結果から取り除かれる。これは、画面の大きさに応じて改行を行う処理はWebブラウザが担当すべきであるという設計思想による。強制的に改行したい場合は、行末に2つのスペースを挿入すればよい。</p>
+<p><cite><a href="https://ja.wikipedia.org/wiki/Markdown#.E6.94.B9.E8.A1.8C">Markdown - Wikipedia</a></cite></p>
+</blockquote>
+<p>こういう設計思想があるようで、自分もこういう結果になることを想定して、テキストのファイルの中では適当なところで改行を入れながら書いています。
+(ブラウザーでは改行して欲しくない)</p>
+<blockquote>
+<p>PARAGRAPHS AND LINE BREAKS</p>
+<p>A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines. (A blank line is any line that looks like a blank line — a line containing nothing but spaces or tabs is considered blank.) Normal paragraphs should not be indented with spaces or tabs.</p>
+<p>The implication of the “one or more consecutive lines of text” rule is that Markdown supports “hard-wrapped” text paragraphs. This differs significantly from most other text-to-HTML formatters (including Movable Type’s “Convert Line Breaks” option) which translate every line break character in a paragraph into a <br /> tag.
+When you do want to insert a <br /> break tag using Markdown, you end a line with two or more spaces, then type return.</p>
+<p>Yes, this takes a tad more effort to create a <br />, but a simplistic “every line break is a <br />” rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.</p>
+<p><cite><a href="https://daringfireball.net/projects/markdown/syntax#p">Daring Fireball: Markdown Syntax Documentation</a></cite></p>
+</blockquote>
+<p>Markdownのドキュメントにもそれらしいことが書かれています。</p>
+<h2 id="気になる結果">気になる結果</h2>
+<p>例えばMarkdownのファイルに次のように書くと</p>
+<blockquote>
+<pre><code>テキストに挿入された改行は最終的な結果から取り除かれる。
+これは、画面の大きさに応じて改行を行う処理はWebブラウザが担当すべきであるという設計思想による。
+強制的に改行したい場合は、行末に2つのスペースを挿入すればよい。
+</code></pre>
+<p><cite><a href="https://ja.wikipedia.org/wiki/Markdown#.E6.94.B9.E8.A1.8C">Markdown - Wikipedia</a></cite></p>
+</blockquote>
+<p>改行がそのまま<code>&lt;br&gt;</code>に置き換わってこうなってしまいます。</p>
+<blockquote>
+<p>テキストに挿入された改行は最終的な結果から取り除かれる。<br>
+これは、画面の大きさに応じて改行を行う処理はWebブラウザが担当すべきであるという設計思想による。<br>
+強制的に改行したい場合は、行末に2つのスペースを挿入すればよい。</p>
+</blockquote>
+<p>本当は次のようになって欲しいんです。
+これがMarkdownの純粋な設計思想だと思うんです。
+Markdownの方言はたくさんあるようですけどね。</p>
+<blockquote>
+<p>テキストに挿入された改行は最終的な結果から取り除かれる。これは、画面の大きさに応じて改行を行う処理はWebブラウザが担当すべきであるという設計思想による。強制的に改行したい場合は、行末に2つのスペースを挿入すればよい。</p>
+</blockquote>
+<h2 id="_configymlの設定"><code>_config.yml</code>の設定</h2>
+<blockquote>
+<p>Hexo uses marked as markdown renderer. You can set breaks to false to avoid line breaks. For more details: <a href="https://github.com/hexojs/hexo-renderer-marked">https://github.com/hexojs/hexo-renderer-marked</a></p>
+<p><cite><a href="https://github.com/hexojs/hexo/issues/868">Broken markdown syntax · Issue #868 · hexojs/hexo · GitHub</a></cite></p>
+</blockquote>
+<p>ここにHexo memberの<a href="https://github.com/tommy351">tommy351</a>さんが書いているんですけど、HexoのMarkdownのエンジンには<code>marked</code>を使っていて、<code>breaks</code>オプションに<code>false</code>を設定すれば良いそうです。</p>
+<p><code>_config.yml</code>に次のような行を追加しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">marked:
+  breaks: false
+</code></pre></div><p>次の文章もテキストに挿入された改行は取り除かれて表示されていると思います。</p>
+<blockquote>
+<p>テキストに挿入された改行は最終的な結果から取り除かれる。
+これは、画面の大きさに応じて改行を行う処理はWebブラウザが担当すべきであるという設計思想による。
+強制的に改行したい場合は、行末に2つのスペースを挿入すればよい。</p>
+</blockquote>
+<h2 id="markedのオプション">markedのオプション</h2>
+<p>markedについてもう少し調べてみました。
+オプションの設定の例が次のように記載されていました。</p>
+<blockquote>
+<p>Example setting options with default values:</p>
+<pre><code>var marked = require('marked');
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false
+});
+
+console.log(marked('I am using __markdown__.'));
+</code></pre>
+<p><cite><a href="https://github.com/chjj/marked#usage">GitHub - chjj/marked: A markdown parser and compiler. Built for speed.</a></cite></p>
+</blockquote>
+<ul>
+<li><code>gfm</code> <a href="https://help.github.com/articles/working-with-advanced-formatting/">GitHub flavored markdown</a>を有効にします。</li>
+<li><code>tables</code> <a href="https://help.github.com/articles/organizing-information-with-tables/">GFM tables</a>を有効にします。 このオプションを有効にするためには<code>gfm</code>オプションに<code>true</code>を設定しておく必要があります。</li>
+<li><code>pedantic</code> 可能な限り markdown.pl に準拠します。</li>
+<li><code>sanitize</code> 入力されたHTMLを無視(サニタイズ)します。</li>
+<li><code>smartLists</code> markdown.pl のリストよりも賢い動作をするようですが、説明から具体的にどういうことなのかまでは読み取れませんでした。</li>
+<li><code>smartypants</code> 引用符やダッシュのようなもののために&quot;スマート&quot;なタイポグラフィー句読点を使います。これも説明から具体的にどういうことなのかまでは読み取れませんでした。</li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>後から<code>package.json</code>ファイルを見たら、Markdownのエンジンに<code>marked</code>が使われていることがわかったんですが、最初はどこを見ればいいかもわからず、Hexoの情報も中国語が多くて細かいところを調べるのは大変です。
+使われているエンジンがわかったら、個別にそちらを調べることをすればいいので単純な話です。</p>
+<p>Hexoに関しては<a href="https://github.com/hexojs/hexo/issues">GitHubのIssues</a>を検索するようにしています。
+同じ質問をしている人がいたりしますので、その回答を有効に活用させていただきます。</p>
+<p>まだGitHubを有効に活用できていないので、自分でIssueを登録することもないんですけど、こういったこともやってみたいと思っています。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://github.com/hexojs/hexo/issues/868">Broken markdown syntax · Issue #868 · hexojs/hexo · GitHub</a></li>
+<li><a href="https://github.com/chjj/marked">GitHub - chjj/marked: A markdown parser and compiler. Built for speed.</a></li>
+<li><a href="https://daringfireball.net/projects/markdown/syntax#p">Daring Fireball: Markdown Syntax Documentation</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

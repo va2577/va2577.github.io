@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>口座残高の推移をシミュレーションしてみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>口座残高の推移をシミュレーションしてみました</h1>
+    
+      <div><time>April 30, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>勝率と平均利益、平均損失をもとに口座残高の推移を Chart.js の折れ線グラフで表示してみました。</p>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<p>それから、ひと月当たりのトレードの機会をもとに、月利と年利も計算してみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Chart.js Version 2.7.2</li>
+<li>Microsoft EdgeHTML 17.17134</li>
+<li>Firefox 59.0.3</li>
+</ul>
+<h2 id="パラメーター">パラメーター</h2>
+<p>入力するパラメーターは次の通りです。</p>
+<ul>
+<li>定率</li>
+<li>口座残高</li>
+<li>勝率</li>
+<li>平均利益</li>
+<li>平均損失</li>
+<li>機会(ひと月当たりのトレードの機会)</li>
+<li>試行回数</li>
+</ul>
+<h2 id="仕様">仕様</h2>
+<ul>
+<li>勝率をもとにランダムに勝敗を決める</li>
+<li>資金管理は定率で、１トレード当たり(定率 × 口座残高)のリスクをとる
+<ul>
+<li>勝った場合は、(定率 × 口座残高) × (平均利益 ÷ 平均損失)の利益</li>
+<li>負けた場合は、(定率 × 口座残高)の損失</li>
+</ul>
+</li>
+<li>試行回数の数だけ繰り返す</li>
+<li>口座残高の推移を折れ線グラフに表示する</li>
+<li>最終的な口座残高を表示する</li>
+<li>試行結果の勝率を表示する</li>
+<li>試行結果の期待値を表示する</li>
+<li>機会をもとに平均月利を表示する</li>
+<li>機会をもとに平均年利を表示する</li>
+</ul>
+<h2 id="シミュレーション">シミュレーション</h2>
+<p>シミュレーションの結果を折れ線グラフに表示してみました。</p>
+<style>
+  input#simulate {
+    width: 100%;
+  }
+  input.error {
+    background-color: red;
+  }
+  span#message {
+    color: red;
+  }
+</style>
+<div>
+  <form>
+    <table>
+      <tr>
+        <th>定率</th>
+        <td><input type="text" id="fr" placeholder="0.02" value="0.02"></td>
+      </tr>
+      <tr>
+        <th>口座残高</th>
+        <td><input type="text" id="balance" placeholder="1000000" value="1000000"></td>
+      </tr>
+      <tr>
+        <th>勝率</th>
+        <td><input type="text" id="wr" placeholder="0.30" value="0.30"></td>
+      </tr>
+      <tr>
+        <th>平均利益</th>
+        <td><input type="text" id="ap" placeholder="3" value="3"></td>
+      </tr>
+      <tr>
+        <th>平均損失</th>
+        <td><input type="text" id="al" placeholder="1" value="1"></td>
+      </tr>
+      <tr>
+        <th>機会</th>
+        <td><input type="text" id="opportunity" placeholder="10" value="10"></td>
+      </tr>
+      <tr>
+        <th>試行回数</th>
+        <td><input type="text" id="count" placeholder="100" value="100"></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input type="button" id="simulate" value="シミュレート"></td>
+      </tr>
+    </table>
+  </form>
+  <span id="message"></span>
+</div>
+<div height="320" width="640">
+  <canvas id="canvas"></canvas>
+</div>
+<script>
+  const local = {
+    chart: null,
+    comma: v => v.toLocaleString(),
+    validate: ids => {
+      document.getElementById('message').textContent = '';
+      const entered = (a, c) => {
+        const e = document.getElementById(c);
+        const v = e.value;
+        const isValid = !(v.length === 0 || isNaN(v));
+        e.className = isValid ? '' : 'error';
+        return a && isValid;
+      };
+      if (!ids.reduce(entered, true)) {
+        document.getElementById('message').textContent = 'パラメーターを数字で入力してください。';
+        return false;
+      }
+      if (Number(document.getElementById('count').value) > 2000) {
+        document.getElementById('message').textContent = '試行回数は 2000 以内で入力してください。';
+        return false;
+      }
+      return true;
+    },
+    parameters: ids => {
+      return ids.reduce((a, c) => {
+        a[c] = Number(document.getElementById(c).value);
+        return a;
+      }, {});
+    },
+    rrr: (ap, al) => ap / al,
+    wl: wr => Math.random() < wr ? 1 : -1,
+    pl: (fr, balance, wl, rrr) => Math.round(fr * balance * (wl === 1 ? rrr : -1), 0),
+    last: array => array[array.length - 1],
+    balance: (balance, pl) => balance + pl,
+    wr: wls => local.precisionRound(wls.reduce((a, c) => a + (c === 1 ? 1 : 0), 0) / wls.length, 2),
+    precisionRound: (number, precision) => {
+      const factor = Math.pow(10, precision);
+      return Math.round(number * factor) / factor;
+    },
+    ev: (wr, rrr) => local.precisionRound((wr * rrr / 1) - (1 - wr * (1 / 1)), 2),
+    pr: (balance, opportunity, monthly, annual) => {
+      const times = monthly ? opportunity : annual ? opportunity * 12 : 0;
+      // if (balance.length - 1 < times) return 0;
+      const b = [];
+      for (let i = 0; i < Math.ceil(balance.length / times); i++) {
+        b.push(balance.slice(i * times, (i + 1) * times + 1));
+      }
+      const prs = b.filter(x => x.length > 1)
+        .map(x => (local.last(x) - x[0]) / x[0]);
+      const apr = local.precisionRound(prs.reduce((a, c) => a + c, 0) / prs.length, 2);
+      return apr;
+    },
+    simulate: () => {
+      const ids = ['fr', 'balance', 'wr', 'ap', 'al', 'opportunity', 'count'];
+      if (!local.validate(ids)) return {};
+      const params = local.parameters(ids);
+      const result = {};
+      result.rrr = local.rrr(params.ap, params.al);
+      result.wl = [];
+      result.pl = [];
+      result.balance = [params.balance];
+      for (let i = 0; i < params.count; i++) {
+        result.wl.push(local.wl(params.wr));
+        result.pl.push(local.pl(params.fr, local.last(result.balance), local.last(result.wl), result.rrr));
+        result.balance.push(local.balance(local.last(result.balance), local.last(result.pl)));
+      }
+      result.wr = local.wr(result.wl);
+      result.ev = local.ev(result.wr, result.rrr);
+      result.monthly = local.pr(result.balance, params.opportunity, true, false);
+      result.annual = local.pr(result.balance, params.opportunity, false, true);
+      return result;
+    },
+    plot: () => {
+      const result = local.simulate();
+      if (!result.hasOwnProperty('balance')) return;
+      local.chart.data.datasets[0].data = result.balance;
+      local.chart.data.labels = result.balance.map((c, i, a) => i);
+      local.chart.update();
+      document.getElementById('rb').textContent = local.last(result.balance).toLocaleString();
+      document.getElementById('rwr').textContent = result.wr;
+      document.getElementById('rev').textContent = result.ev;
+      document.getElementById('rm').textContent = result.monthly.toLocaleString();
+      document.getElementById('ra').textContent = result.annual.toLocaleString();
+    }
+  };
+  document.getElementById('simulate').addEventListener('click', () => {
+    local.plot();
+  });
+  window.addEventListener('load', () => {
+    const ctx = document.getElementById('canvas').getContext('2d');
+    const data = {
+      datasets: [{
+        data: [],
+        fill: false,
+        label: '口座残高'
+      }],
+      labels: []
+    };
+    const options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            userCallback: local.comma
+          }
+        }]
+      },
+      tooltips: {
+        callbacks: {
+          label: (tooltipItem, data) => data.datasets[tooltipItem.datasetIndex].label + ': ' + local.comma(tooltipItem.yLabel)
+        }
+      }
+    };
+    local.chart = new Chart(ctx, {
+      data: data,
+      options: options,
+      type: 'line'
+    });
+    local.plot();
+  });
+</script>
+<div>
+  <table>
+    <tr>
+      <th>口座残高</th>
+      <td><span id="rb">0</span></td>
+    </tr>
+    <tr>
+      <th>勝率</th>
+      <td><span id="rwr">0</span></td>
+    </tr>
+    <tr>
+      <th>期待値</th>
+      <td><span id="rev">0</span></td>
+    </tr>
+    <tr>
+      <th>平均月利</th>
+      <td><span id="rm">0</span></td>
+    </tr>
+    <tr>
+      <th>平均年利</th>
+      <td><span id="ra">0</span></td>
+    </tr>
+  </table>
+</div>
+<p>ちゃんと表示されたかな。</p>
+<h2 id="gist-のソース">Gist のソース</h2>
+<p>ソースを Gist にアップしました。</p>
+<ul>
+<li><a href="https://gist.github.com/va2577/997fc9c073071408b7e5c2088718967e">口座残高の推移のシミュレーション</a></li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>勝率をもとに結果を表示していますが、 100 回くらいのランダムな試行では、バラツキがあるのを実感しました。
+パラメーターが同じでも、試行によっては 100 万円が 380 万円になることもあれば、 80 万円になってしまうこともありました。
+1,000 回くらいのランダムな試行では、期待値がプラスであれば指数関数的な右肩上がりのグラフになることがわかりました。</p>
+<p>それから、ひと月当たりのトレードの機会をもとに、どれだけの利益率になるのか表示してみました。
+機会が少なくても、期待値がプラスであれば、長期的には大きな口座残高になることがわかりました。
+そして、機会が多い方が短期的にも大きな口座残高になることもわかりました。
+今のわたしのトレードでは、ひと月当たりのトレードの機会は 3 回程度なので、もう少し短期の時間足でトレードしないといけないかもしれないと思いました。
+これじゃ、生きているうちに 1,000 回もトレードできないから。</p>
+<h2 id="2-may-2018-追記">2 May 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/152/">期待値による口座残高の推移を折れ線グラフで表示してみました</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

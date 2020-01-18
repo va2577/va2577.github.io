@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HTML on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/html/</link>
+    <description>Recent content in HTML on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Apr 2018 15:15:47 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/html/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>HTML の &lt;meta name=&#34;viewport&#34; …&gt; を記述しなかったために…</title>
+      <link>https://va2577.github.io/post/139/</link>
+      <pubDate>Thu, 19 Apr 2018 15:15:47 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/139/</guid>
+      <description>&lt;p&gt;新しく作成した Hugo のテーマを&lt;a href=&#34;https://va2577.github.io/post/137/&#34;&gt;このウェブサイトに適用した&lt;/a&gt;のですが、 &lt;code&gt;&amp;lt;meta name=&amp;quot;viewport&amp;quot; …&lt;/code&gt; を記述しなかったために iOS の Safari で開いたら文字がちっちゃくなってしまいました。
+なので、調べました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

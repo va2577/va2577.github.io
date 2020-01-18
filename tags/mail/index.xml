@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mail on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/mail/</link>
+    <description>Recent content in Mail on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Mar 2016 15:00:34 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/mail/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Macのメールアプリで受信したメールが文字化けしたら？</title>
+      <link>https://va2577.github.io/post/37/</link>
+      <pubDate>Thu, 03 Mar 2016 15:00:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/37/</guid>
+      <description>&lt;p&gt;最近はPCを使っていてもあまり文字化けすることはなかったのですが、受信したメールが文字化けするので、読めるように調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

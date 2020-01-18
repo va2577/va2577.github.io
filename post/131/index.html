@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のテーマを作ってみます 5(CUSTOM 404 PAGE) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のテーマを作ってみます 5(Custom 404 Page)</h1>
+    
+      <div><time>April 11, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/126/">前回の記事</a>では、 <a href="https://gohugo.io/templates/taxonomy-templates/">Taxonomy Templates</a> を使ってみました。
+今回は、 <a href="https://gohugo.io/templates/404/">Custom 404 Page</a> を使ってみます。</p>
+<p>最初に、<a href="/post/115/">この記事</a>の通り、サイトとテーマの骨組みを作成しておきました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Hugo Static Site Generator v0.38.2</li>
+</ul>
+<h2 id="custom-404-page">Custom 404 Page</h2>
+<blockquote>
+<p>Custom 404 Page</p>
+<p>If you know how to create a single page template, you have unlimited options for creating a custom 404.</p>
+<p>When using Hugo with GitHub Pages, you can provide your own template for a custom 404 error page by creating a 404.html template file in your /layouts folder. When Hugo generates your site, the 404.html file will be placed in the root.</p>
+<p><cite><a href="https://gohugo.io/templates/404/">Custom 404 Page | Hugo</a></cite></p>
+</blockquote>
+<p>/layout/404.html ファイルを作成すればいいみたいです。</p>
+<h2 id="404html">404.html</h2>
+<p>404.html ファイル (themes/&lt;THEME&gt;/layouts/404.html) を次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;main&#34; }}
+  &lt;<span style="color:#f92672">main</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;404&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;Not Found.&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ &#34;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">&#34;</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#a6e22e">relURL</span> <span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">&#34;</span>&gt;Go Home&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;/<span style="color:#f92672">main</span>&gt;
+{{ end }}
+</code></pre></div><h2 id="baseofhtml">baseof.html</h2>
+<p><a href="/post/116/">以前の記事</a>を参考に、 baseof.html ファイル (theme/&lt;THEME&gt;/layout/_default/baseof.html) を次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;
+      {{ block &#34;title&#34; . }}
+        {{ .Site.Title }}
+      {{ end }}
+    &lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    {{ block &#34;header&#34; . }}
+    {{ end }}
+    {{ block &#34;main&#34; . }}
+    {{ end }}
+    {{ block &#34;footer&#34; . }}
+    {{ end }}
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h2 id="hugo-のサーバーで確認">Hugo のサーバーで確認</h2>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/404.html にアクセスします。
+すると、 404 Page が表示されました。</p>
+<p><img src="/img/131-01.png" alt=""></p>
+<h2 id="automatic-loading">Automatic Loading</h2>
+<blockquote>
+<p>Automatic Loading</p>
+<p>Your 404.html file can be set to load automatically when a visitor enters a mistaken URL path, dependent upon the web serving environment you are using. For example:</p>
+<ul>
+<li>GitHub Pages. The 404 page is automatic.</li>
+</ul>
+<p><cite><a href="https://gohugo.io/templates/404/#automatic-loading">Custom 404 Page | Hugo</a></cite></p>
+</blockquote>
+<p>GitHub Pages は、ファイルが見つからない場合は、自動的に 404.html を表示してくれる設定になっているようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>404 Page もサイトに合わせておきたいです。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gohugo.io/templates/404/">Custom 404 Page | Hugo</a></li>
+</ul>
+<h2 id="12-april-2018-追記">12 April 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/132/">Hugo のテーマを作ってみます 6(Menu Templates)</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

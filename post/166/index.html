@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>UBUNTU BASH でファイルの内容を 8 進数で出力しました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Ubuntu Bash でファイルの内容を 8 進数で出力しました</h1>
+    
+      <div><time>May 16, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>以前、<a href="/post/163/">改行コードを調べたこと</a>の続きです。
+ファイルの内容を 8 進数や 16 進数で表示したかったので調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 16.04 LTS</li>
+</ul>
+<h2 id="準備">準備</h2>
+<p>いくつかファイルを用意しました。
+以前、改行コードの異なるファイルを用意したので、同じように作っておきます。</p>
+<pre><code>$ echo -ne &quot;a\r\nb\r\nc\r\nd\r\ne\r\n&quot; &gt; crlf.txt
+$ echo -ne &quot;a\rb\rc\rd\re\r&quot; &gt; cr.txt
+$ echo -ne &quot;a\nb\nc\nd\ne\n&quot; &gt; lf.txt
+</code></pre><p>abcde の文字と、改行コードが含まれるファイルです。</p>
+<h2 id="od">od</h2>
+<blockquote>
+<p>od - dump files in octal and other formats</p>
+<p><cite><code>man od</code></cite></p>
+</blockquote>
+<p><code>od</code> コマンドを使うとファイルの内容を 8 進数で表示できるようです。</p>
+<p>その他のフォーマットもあるようです。</p>
+<h2 id="format">format</h2>
+<blockquote>
+<p>-t, &ndash;format=TYPE</p>
+<p>select output format or formats</p>
+<p><cite><code>man od</code></cite></p>
+</blockquote>
+<p><code>-t</code> オプションで書式が指定できるようです。</p>
+<blockquote>
+<p>TYPE is made up of one or more of these specifications:</p>
+<p>a<br>
+named character, ignoring high-order bit</p>
+<p>c<br>
+printable character or backslash escape</p>
+<p>d[SIZE]<br>
+signed decimal, SIZE bytes per integer</p>
+<p>f[SIZE]<br>
+floating point, SIZE bytes per integer</p>
+<p>o[SIZE]<br>
+octal, SIZE bytes per integer</p>
+<p>u[SIZE]<br>
+unsigned decimal, SIZE bytes per integer</p>
+<p>x[SIZE]<br>
+hexadecimal, SIZE bytes per integer</p>
+<p><cite><code>man od</code></cite></p>
+</blockquote>
+<p>7 つのタイプがあるようです。</p>
+<p>使いそうなものを見てみます。</p>
+<h3 id="anamed-character">a(named character)</h3>
+<pre><code>$ od -t a crlf.txt
+0000000   a  cr  nl   b  cr  nl   c  cr  nl   d  cr  nl   e  cr  nl
+0000017
+$ od -t a cr.txt
+0000000   a  cr   b  cr   c  cr   d  cr   e  cr
+0000012
+$ od -t a lf.txt
+0000000   a  nl   b  nl   c  nl   d  nl   e  nl
+0000012
+</code></pre><p><code>-a</code> のオプションは名前付きの文字で表示してくれるようです。
+CR は <code>cr</code> と表示してくれました。
+LF は <code>nl</code> (new line) と表示してくれました。
+このオプションは見やすいです。</p>
+<h3 id="cprintable-character-or-backslash-escape">c(printable character or backslash escape)</h3>
+<pre><code>$ od -t c crlf.txt
+0000000   a  \r  \n   b  \r  \n   c  \r  \n   d  \r  \n   e  \r  \n
+0000017
+$ od -t c cr.txt
+0000000   a  \r   b  \r   c  \r   d  \r   e  \r
+0000012
+$ od -t c lf.txt
+0000000   a  \n   b  \n   c  \n   d  \n   e  \n
+0000012
+</code></pre><p><code>-c</code> のオプションはバックスラッシュでエスケープした文字で表示してくれるようです。
+CR は <code>\r</code> と表示してくれました。
+LF は <code>\n</code> と表示してくれました。
+このオプションも見やすいです。</p>
+<h3 id="dsigned-decimal">d(signed decimal)</h3>
+<pre><code>$ od -t d crlf.txt
+0000000  1644825953   224594445   168649738      658789
+0000017
+$ od -t d cr.txt
+0000000   224529761   224660835        3429
+0000012
+$ od -t d lf.txt
+0000000   174197345   174328419        2661
+0000012
+</code></pre><p><code>-d</code> のオプションは 10 進数で文字を表示してくれるようです。
+ちょっと見づらいです。</p>
+<pre><code>$ od -t d1 crlf.txt
+0000000   97   13   10   98   13   10   99   13   10  100   13   10  101   13   10
+0000017
+$ od -t d1 cr.txt
+0000000   97   13   98   13   99   13  100   13  101   13
+0000012
+$ od -t d1 lf.txt
+0000000   97   10   98   10   99   10  100   10  101   10
+0000012
+</code></pre><p>サイズを指定することもできるようで、 <code>-t d1</code> のように指定すると、 1 文字ごとに区切って表示してくれるようです。
+これの方が少し見やすいです。
+CR は 10 進数の 13 と表示してくれます。
+LF は 10 進数の 10 と表示してくれます。</p>
+<h3 id="ooctal">o(octal)</h3>
+<pre><code>$ od -t o1 crlf.txt
+0000000 141 015 012 142 015 012 143 015 012 144 015 012 145 015 012
+0000017
+$ od -t o1 cr.txt
+0000000 141 015 142 015 143 015 144 015 145 015
+0000012
+$ od -t o1 lf.txt
+0000000 141 012 142 012 143 012 144 012 145 012
+0000012
+</code></pre><p><code>-o</code> のオプションは 8 進数で文字を表示してくれるようです。
+CR は 8 進数の 015 と表示してくれます。
+LF は 8 進数の 012 と表示してくれます。</p>
+<h3 id="xhexadecimal">x(hexadecimal)</h3>
+<pre><code>$ od -t x1 crlf.txt
+0000000 61 0d 0a 62 0d 0a 63 0d 0a 64 0d 0a 65 0d 0a
+0000017
+$ od -t x1 cr.txt
+0000000 61 0d 62 0d 63 0d 64 0d 65 0d
+0000012
+$ od -t x1 lf.txt
+0000000 61 0a 62 0a 63 0a 64 0a 65 0a
+0000012
+</code></pre><p><code>-x</code> のオプションは 16 進数で文字を表示してくれるようです。
+CR は 16 進数の 0d と表示してくれます。
+LF は 16 進数の 0a と表示してくれます。</p>
+<h2 id="タイプのサフィックス">タイプのサフィックス</h2>
+<blockquote>
+<p>Adding a z suffix to any type displays printable characters at the end of each output line.</p>
+<p><cite><code>man od</code></cite></p>
+</blockquote>
+<p>タイプのオプションの後ろに <code>a</code> か <code>z</code> をつけると表示可能な文字を行の後ろに表示してくれるようです。</p>
+<pre><code>$ od -t x1a crlf.txt
+0000000  61  0d  0a  62  0d  0a  63  0d  0a  64  0d  0a  65  0d  0a
+          a  cr  nl   b  cr  nl   c  cr  nl   d  cr  nl   e  cr  nl
+0000017
+$ od -t x1z crlf.txt
+0000000 61 0d 0a 62 0d 0a 63 0d 0a 64 0d 0a 65 0d 0a     &gt;a..b..c..d..e..&lt;
+0000017
+</code></pre><p><code>a</code> は次の行に表示してくれました。</p>
+<p><code>z</code> は同じ行に表示してくれました。
+表示可能じゃない文字 (CR や LF) は <code>.</code> のように表示してくれました。</p>
+<p><code>a</code> は <code>-t a</code> のタイプと同じ内容のようでした。
+だから、 <code>-t aa</code> と指定すると、同じ内容を 2 回表示してくれます。</p>
+<pre><code>$ od -t aa crlf.txt
+0000000   a  cr  nl   b  cr  nl   c  cr  nl   d  cr  nl   e  cr  nl
+          a  cr  nl   b  cr  nl   c  cr  nl   d  cr  nl   e  cr  nl
+0000017
+</code></pre><h2 id="終わり">終わり</h2>
+<p>数年前にも調べたことがあったのですが、数日前にも調べなおしてしまったので、書いてみました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

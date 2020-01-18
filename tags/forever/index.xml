@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>forever on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/forever/</link>
+    <description>Recent content in forever on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Mar 2018 16:57:19 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/forever/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Node.js の forever を使ってみました</title>
+      <link>https://va2577.github.io/post/102/</link>
+      <pubDate>Tue, 13 Mar 2018 16:57:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/102/</guid>
+      <description>&lt;p&gt;express のウェブアプリを作っていたのですが、実行しながらソースの修正を自動で反映したかったので、 &lt;a href=&#34;https://github.com/foreverjs/forever&#34;&gt;forever&lt;/a&gt; を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

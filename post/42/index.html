@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>SQL SERVER 2014 EXPRESS に外部から接続するための設定 - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>SQL Server 2014 Express に外部から接続するための設定</h1>
+    
+      <div><time>May 30, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>SQL Server に外部から接続するためにいつも調べてしまうので書いておきます。</p>
+<h2 id="sql-server-構成マネージャー">SQL Server 構成マネージャー</h2>
+<p>[SQL Server ネットワークの構成]-[SQLEXPRESS のプロトコル]の[TCP/IP]を有効にします。
+コマンドでするには次のようにします。
+Windows PowerShell を使っています。
+[管理者として開く]から Windows PowerShell を開きます。</p>
+<p><code>#[reflection.assembly]</code> を <code>[reflection.assembly]</code> に変更して実行します。
+Markdown のコードブロックの中でリンクの記法になってしまうようで、うまくエスケープできませんでした・・</p>
+<pre><code># Load the assemblies
+#[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.SqlServer.Smo&quot;)
+#[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.SqlServer.SqlWmiManagement&quot;)
+
+$smo = 'Microsoft.SqlServer.Management.Smo.'
+$wmi = new-object ($smo + 'Wmi.ManagedComputer').
+
+# List the object properties, including the instance names.
+#$Wmi
+
+# Enable the TCP protocol on the default instance.
+$uri = &quot;ManagedComputer[@Name='&quot; + (get-item env:\computername).Value + &quot;']/ServerInstance[@Name='SQLEXPRESS']/ServerProtocol[@Name='Tcp']&quot;
+$Tcp = $wmi.GetSmoObject($uri)
+$Tcp.IsEnabled = $true
+$Tcp.Alter()
+$Tcp
+</code></pre><h2 id="windows-ファイアウォール">Windows ファイアウォール</h2>
+<p>Windows ファイアウォールから SQL Server の接続に使う TCP/IP のポートを許可します。
+ここでは細かいことはせずに Windows ファイアウォールを無効にしています。
+コマンドプロンプトか Windows PowerShell のウィンドウから次のコマンドを入力します。
+こちらも[管理者として開く]必要があります。</p>
+<pre><code>netsh advfirewall set allprofiles state off
+</code></pre><p>個別のポートを許可する設定にする場合は次のページを参考に設定すると良いと思います。</p>
+<p>[SQL Server のアクセスを許可するための Windows ファイアウォールの構成](<a href="https://msdn.microsoft.com/ja-jp/library/cc646023(v=sql.120">https://msdn.microsoft.com/ja-jp/library/cc646023(v=sql.120</a>).aspx)</p>
+<h2 id="sql-server-management-studiossms-から接続する場合">SQL Server Management Studio(SSMS) から接続する場合</h2>
+<p>SSMS から接続する場合は SQL Server Browser のサービスを起動します。</p>
+<pre><code>net start &quot;SQL Server Browser&quot;
+</code></pre><p>SSMS の[サーバーへの接続]のところからサーバーのインスタンスが探せるようになっているはずです。</p>
+<p>サービスが[無効]になっている場合は最初に[自動]か[手動]に変更しておきます。</p>
+<h2 id="設定を戻す場合のコマンド">設定を戻す場合のコマンド</h2>
+<p>設定を戻す場合のコマンドも書いておきます。</p>
+<h3 id="sql-server-構成マネージャー-1">SQL Server 構成マネージャー</h3>
+<p><code>$Tcp.IsEnabled = $false</code> のところが変わっているだけです。</p>
+<p><code>#[reflection.assembly]</code> を <code>[reflection.assembly]</code> に変更して実行します。
+うまくエスケープできませんでした・・</p>
+<pre><code># Load the assemblies
+#[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.SqlServer.Smo&quot;)
+#[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.SqlServer.SqlWmiManagement&quot;)
+
+$smo = 'Microsoft.SqlServer.Management.Smo.'
+$wmi = new-object ($smo + 'Wmi.ManagedComputer').
+
+# List the object properties, including the instance names.
+#$Wmi
+
+# Enable the TCP protocol on the default instance.
+$uri = &quot;ManagedComputer[@Name='&quot; + (get-item env:\computername).Value + &quot;']/ServerInstance[@Name='SQLEXPRESS']/ServerProtocol[@Name='Tcp']&quot;
+$Tcp = $wmi.GetSmoObject($uri)
+$Tcp.IsEnabled = $false
+$Tcp.Alter()
+$Tcp
+</code></pre><h3 id="windows-ファイアウォール-1">Windows ファイアウォール</h3>
+<p><code>state on</code> のところが変わっているだけです。</p>
+<pre><code>netsh advfirewall set allprofiles state on
+</code></pre><h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://technet.microsoft.com/ja-jp/library/dd206997(v=sql.105).aspx">サーバー ネットワーク プロトコルを有効または無効にする方法 (SQL Server PowerShell)</a></li>
+<li><a href="https://msdn.microsoft.com/ja-jp/library/cc646023(v=sql.120).aspx">SQL Server のアクセスを許可するための Windows ファイアウォールの構成</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

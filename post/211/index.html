@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>バックテストにおけるマネーマネジメントについてです - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>バックテストにおけるマネーマネジメントについてです</h1>
+    
+      <div><time>December 8, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>バックテストで評価したいことはその売買ルールの期待値でした。
+だからマネーマネジメントを考慮していませんでした。
+ですがマネーマネジメントは期待値にも影響してくるようでした。
+今回はそのことを書いてみました。</p>
+<h2 id="マネーマネジメントの重要性">マネーマネジメントの重要性</h2>
+<p>最初にマネーマネジメントの重要性について、いくつか引用してみました。</p>
+<blockquote>
+<p>「富を作りだすのは、システムではなくマネーマネジメントです」</p>
+<p><cite>マーケットの魔術師 システムトレーダー編 ラリー・ウィリアムズ</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>投機家の富は怪しげなシステムや錬金術師の秘術によって創造されるのではなく、資産管理によって創造されるのである。
+トレーディングで成功すればお金は儲けられるが、そのお金を正しいマネーマネジメントで管理すれば巨額の富を築くことができる。</p>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第２版】 第１３章 マネーマネジメント－－王国へのカギ</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>勝ちトレーダーになるか負けトレーダーになるかの最大の決め手は、マネーマネジメントにあると言ってよいだろう。
+あなたがどういったタイプのトレーダーであるかは問題ではない。
+トレンドフォロー型システムを使っている人だろうとリバーサルシステムを使っている人だろうと、スキャルパーだろうと長期トレーダーだろうと、あるいは純粋にメカニカルなシステムを使っている人だろうと自由裁量型システムを使っている人だろうと、厳密なマネーマネジメントプランに従う人こそがゲームの勝者になれる人だ。
+マネーマネジメントプランを持たないトレーダーは多く、たとえ持っていたとしても、それが何をやるものなのかを知らない人もいる。
+自分の資産の管理方法を知らない人は、たとえ世界一強運のトレーダーだとしても、お金を儲けることはできないだろう。</p>
+<p><cite>高勝率トレード学のススメ 第１４章 マネーマネジメントプラン</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>この章では、トレーディングを実際に行ううえで最も重要な要素である資金管理について説明する。
+これはトレーディングの３本の柱の１本目で、破産リスクを避けるのに大切な武器だ。
+トレーディングの目的は生き残ることだから、適切な資金管理について理解したうえで、それを実行する必要がある。
+そうしないと、ほぼ間違いなく９０％の負け組の終身会員となる。
+１０％の勝ち組に加わるようにという誘いは来ないだろう。</p>
+<p><cite>システムトレード 基本と原則 第８章 資金管理</cite></p>
+</blockquote>
+<p>これまでいくつか本を読んできていますが、数え切れないくらいマネーマネジメントの重要性を聞いてきました。</p>
+<h2 id="バックテスト">バックテスト</h2>
+<p>今回、マネーマネジメントを考慮してバックテストをしてみようと思ったきっかけは、<a href="/post/209/">以前</a>やったランダムな仕掛けの売買ルールの結果が次のように感じられなかったからです。</p>
+<blockquote>
+<p>こうして自分のシステムを検証した結果、トム・バッソの結果と一致した。
+つまり、ランダムに仕掛けても着実にお金を稼ぐことができるということである。
+大金を稼ぎ出すわけではなく、ドローダウンも乗り切らなければならないが、１０年間という期間で見れば利益が出た。</p>
+</blockquote>
+<p>実際にランダムな仕掛けを何度もやっていると、マイナスの期待値になることの方が多いように感じました。</p>
+<p>マネーマネジメントを考慮したら同じ結果になるかと思って、次の内容を考慮することにしました。</p>
+<blockquote>
+<p>１ポジション当たりのリスクとしては１００万ドル口座の１％に設定した</p>
+</blockquote>
+<p>そして次のような Python の関数を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>(df, pip<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, spread<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>, unit<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>, periods<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, x<span style="color:#f92672">=</span><span style="color:#ae81ff">3.0</span>, money<span style="color:#f92672">=</span><span style="color:#ae81ff">100000000</span>, ratio<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>):
+    lot <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> money, entry, stop, unit, ratio: math<span style="color:#f92672">.</span>floor(round(money <span style="color:#f92672">*</span> ratio <span style="color:#f92672">/</span> abs(entry <span style="color:#f92672">-</span> stop), <span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> unit) <span style="color:#f92672">*</span> unit
+    sp <span style="color:#f92672">=</span> pip <span style="color:#f92672">*</span> spread <span style="color:#f92672">*</span> unit
+    m <span style="color:#f92672">=</span> money
+    df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([df, df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>), atr(df, periods<span style="color:#f92672">=</span>periods)<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>)], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    pl <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>full(df2<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size, np<span style="color:#f92672">.</span>nan), index<span style="color:#f92672">=</span>df2<span style="color:#f92672">.</span>index)
+    ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> lot_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>itertuples():
+        time, open_, high, low, close, close2, atr_ <span style="color:#f92672">=</span> row
+        <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>isnan([close2, atr_])<span style="color:#f92672">.</span>any():
+            <span style="color:#66d9ef">continue</span>
+        <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>isnan(ls):
+            <span style="color:#75715e"># entry</span>
+            ls <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>])
+            entry <span style="color:#f92672">=</span> open_
+            stop <span style="color:#f92672">=</span> istop <span style="color:#f92672">=</span> close2 <span style="color:#f92672">-</span> (atr_ <span style="color:#f92672">*</span> x <span style="color:#f92672">*</span> ls)
+            lot_ <span style="color:#f92672">=</span> lot(m, entry, stop, unit, ratio)
+            <span style="color:#66d9ef">if</span> lot_ <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>:
+                ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> lot_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> np<span style="color:#f92672">.</span>isnan(ls):
+            tmp <span style="color:#f92672">=</span> close2 <span style="color:#f92672">-</span> (atr_ <span style="color:#f92672">*</span> x <span style="color:#f92672">*</span> ls)
+            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> ls <span style="color:#f92672">and</span> stop <span style="color:#f92672">&lt;</span> tmp) <span style="color:#f92672">or</span> (ls <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> tmp <span style="color:#f92672">&lt;</span> stop):
+                <span style="color:#75715e"># trailing stop</span>
+                stop <span style="color:#f92672">=</span> tmp
+            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> ls <span style="color:#f92672">and</span> low <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> stop) <span style="color:#f92672">or</span> (ls <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> stop <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> high):
+                <span style="color:#75715e"># exit</span>
+                p <span style="color:#f92672">=</span> (stop <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> lot_ <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+                pl[time] <span style="color:#f92672">=</span> p
+                m <span style="color:#f92672">+</span><span style="color:#f92672">=</span> p
+                ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> lot_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> np<span style="color:#f92672">.</span>isnan(ls):
+        p <span style="color:#f92672">=</span> (close <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> lot_ <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+        pl[time] <span style="color:#f92672">=</span> p
+        m <span style="color:#f92672">+</span><span style="color:#f92672">=</span> p
+        ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> lot_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+    <span style="color:#66d9ef">return</span> pl
+</code></pre></div><h2 id="結果">結果</h2>
+<p>21 通貨ペアでテストした結果です。
+ヒストリカルデータは<a href="/post/162/">以前</a>作ったものです（2005 年から 2017 年までのデータを使いました）。</p>
+<p>損益のグラフを 3 つだけ載せておきます。</p>
+<p>ユーロ／米ドルです。</p>
+<p><img src="/img/211-01.png" alt=""></p>
+<p>75,000 米ドル程度の利益になったようです。</p>
+<p>米ドル／円です。</p>
+<p><img src="/img/211-02.png" alt=""></p>
+<p>10,000,000 円程度の利益になったようです。</p>
+<p>ユーロ／円です。</p>
+<p><img src="/img/211-03.png" alt=""></p>
+<p>米ドル／円とは対照的に 10,000,000 円程度の損失になったようです。</p>
+<p>けっこう額が大きいですけれども、口座残高は 100 万米ドル程度、 1 億円程度から始めています。
+ストップがかなり大きいので、 1 万米ドルとか 100 万円じゃトレードができないほどでした…（1 万通貨単位の場合）。</p>
+<p>評価の一覧表です。</p>
+<table>
+<thead>
+<tr>
+<th>　</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+<th align="right">期待値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AUDJPY</td>
+<td align="right">110</td>
+<td align="right">44.55</td>
+<td align="right">1062923.49</td>
+<td align="right">700608.31</td>
+<td align="right">1.52</td>
+<td align="right">84964.95</td>
+<td align="right">-9151615.39</td>
+<td align="right">9346144.51</td>
+<td align="right">0.12</td>
+</tr>
+<tr>
+<td>AUDNZD</td>
+<td align="right">97</td>
+<td align="right">35.05</td>
+<td align="right">8713.89</td>
+<td align="right">5780.46</td>
+<td align="right">1.51</td>
+<td align="right">-699.97</td>
+<td align="right">-93455.65</td>
+<td align="right">-67896.85</td>
+<td align="right">-0.12</td>
+</tr>
+<tr>
+<td>AUDUSD</td>
+<td align="right">130</td>
+<td align="right">30.77</td>
+<td align="right">9038.00</td>
+<td align="right">5614.07</td>
+<td align="right">1.61</td>
+<td align="right">-1105.74</td>
+<td align="right">-189945.95</td>
+<td align="right">-143746.01</td>
+<td align="right">-0.20</td>
+</tr>
+<tr>
+<td>CADJPY</td>
+<td align="right">109</td>
+<td align="right">31.19</td>
+<td align="right">1106369.71</td>
+<td align="right">595416.33</td>
+<td align="right">1.86</td>
+<td align="right">-64583.99</td>
+<td align="right">-12369262.86</td>
+<td align="right">-7039654.81</td>
+<td align="right">-0.11</td>
+</tr>
+<tr>
+<td>CHFJPY</td>
+<td align="right">114</td>
+<td align="right">39.47</td>
+<td align="right">832445.49</td>
+<td align="right">608384.92</td>
+<td align="right">1.37</td>
+<td align="right">-39636.07</td>
+<td align="right">-12314499.71</td>
+<td align="right">-4518512.47</td>
+<td align="right">-0.07</td>
+</tr>
+<tr>
+<td>EURAUD</td>
+<td align="right">107</td>
+<td align="right">32.71</td>
+<td align="right">10968.02</td>
+<td align="right">6173.44</td>
+<td align="right">1.78</td>
+<td align="right">-566.42</td>
+<td align="right">-105460.64</td>
+<td align="right">-60607.06</td>
+<td align="right">-0.09</td>
+</tr>
+<tr>
+<td>EURGBP</td>
+<td align="right">122</td>
+<td align="right">36.07</td>
+<td align="right">8063.96</td>
+<td align="right">5801.42</td>
+<td align="right">1.39</td>
+<td align="right">-800.79</td>
+<td align="right">-126822.72</td>
+<td align="right">-97696.40</td>
+<td align="right">-0.14</td>
+</tr>
+<tr>
+<td>EURJPY</td>
+<td align="right">132</td>
+<td align="right">34.85</td>
+<td align="right">1036875.61</td>
+<td align="right">667343.65</td>
+<td align="right">1.55</td>
+<td align="right">-73449.06</td>
+<td align="right">-18969912.58</td>
+<td align="right">-9695276.15</td>
+<td align="right">-0.11</td>
+</tr>
+<tr>
+<td>EURUSD</td>
+<td align="right">114</td>
+<td align="right">35.09</td>
+<td align="right">12065.54</td>
+<td align="right">5484.08</td>
+<td align="right">2.20</td>
+<td align="right">673.68</td>
+<td align="right">-100194.08</td>
+<td align="right">76799.57</td>
+<td align="right">0.12</td>
+</tr>
+<tr>
+<td>GBPAUD</td>
+<td align="right">105</td>
+<td align="right">40.00</td>
+<td align="right">10379.03</td>
+<td align="right">6638.73</td>
+<td align="right">1.56</td>
+<td align="right">168.37</td>
+<td align="right">-97375.27</td>
+<td align="right">17679.31</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td>GBPJPY</td>
+<td align="right">120</td>
+<td align="right">35.83</td>
+<td align="right">1338024.69</td>
+<td align="right">637445.07</td>
+<td align="right">2.10</td>
+<td align="right">70431.59</td>
+<td align="right">-8016954.33</td>
+<td align="right">8451790.77</td>
+<td align="right">0.11</td>
+</tr>
+<tr>
+<td>GBPUSD</td>
+<td align="right">124</td>
+<td align="right">31.45</td>
+<td align="right">10097.97</td>
+<td align="right">5471.78</td>
+<td align="right">1.85</td>
+<td align="right">-574.84</td>
+<td align="right">-135377.08</td>
+<td align="right">-71280.30</td>
+<td align="right">-0.11</td>
+</tr>
+<tr>
+<td>HKDJPY</td>
+<td align="right">99</td>
+<td align="right">31.31</td>
+<td align="right">1395856.10</td>
+<td align="right">688266.23</td>
+<td align="right">2.03</td>
+<td align="right">-35662.26</td>
+<td align="right">-10232481.46</td>
+<td align="right">-3530564.16</td>
+<td align="right">-0.05</td>
+</tr>
+<tr>
+<td>NZDJPY</td>
+<td align="right">106</td>
+<td align="right">43.40</td>
+<td align="right">1239166.30</td>
+<td align="right">691216.98</td>
+<td align="right">1.79</td>
+<td align="right">146496.52</td>
+<td align="right">-5257997.72</td>
+<td align="right">15528630.86</td>
+<td align="right">0.21</td>
+</tr>
+<tr>
+<td>NZDUSD</td>
+<td align="right">114</td>
+<td align="right">36.84</td>
+<td align="right">11075.89</td>
+<td align="right">5595.58</td>
+<td align="right">1.98</td>
+<td align="right">546.54</td>
+<td align="right">-86988.10</td>
+<td align="right">62305.32</td>
+<td align="right">0.10</td>
+</tr>
+<tr>
+<td>SGDJPY</td>
+<td align="right">78</td>
+<td align="right">39.74</td>
+<td align="right">1373167.22</td>
+<td align="right">569303.07</td>
+<td align="right">2.41</td>
+<td align="right">202704.35</td>
+<td align="right">-5358410.63</td>
+<td align="right">15810939.49</td>
+<td align="right">0.36</td>
+</tr>
+<tr>
+<td>USDCAD</td>
+<td align="right">112</td>
+<td align="right">34.82</td>
+<td align="right">11269.43</td>
+<td align="right">5628.40</td>
+<td align="right">2.00</td>
+<td align="right">255.67</td>
+<td align="right">-97621.22</td>
+<td align="right">28634.69</td>
+<td align="right">0.05</td>
+</tr>
+<tr>
+<td>USDCHF</td>
+<td align="right">117</td>
+<td align="right">36.75</td>
+<td align="right">8295.43</td>
+<td align="right">5976.40</td>
+<td align="right">1.39</td>
+<td align="right">-731.20</td>
+<td align="right">-150825.95</td>
+<td align="right">-85550.13</td>
+<td align="right">-0.12</td>
+</tr>
+<tr>
+<td>USDHKD</td>
+<td align="right">62</td>
+<td align="right">38.71</td>
+<td align="right">12422.21</td>
+<td align="right">6913.51</td>
+<td align="right">1.80</td>
+<td align="right">571.28</td>
+<td align="right">-87422.25</td>
+<td align="right">35419.49</td>
+<td align="right">0.08</td>
+</tr>
+<tr>
+<td>USDJPY</td>
+<td align="right">116</td>
+<td align="right">37.93</td>
+<td align="right">1248358.30</td>
+<td align="right">622388.72</td>
+<td align="right">2.01</td>
+<td align="right">87204.98</td>
+<td align="right">-10851268.05</td>
+<td align="right">10115777.60</td>
+<td align="right">0.14</td>
+</tr>
+<tr>
+<td>USDSGD</td>
+<td align="right">91</td>
+<td align="right">42.86</td>
+<td align="right">14143.33</td>
+<td align="right">6212.77</td>
+<td align="right">2.28</td>
+<td align="right">2511.28</td>
+<td align="right">-61372.84</td>
+<td align="right">228526.23</td>
+<td align="right">0.40</td>
+</tr>
+</tbody>
+</table>
+<p>期待値の平均は</p>
+<p>0.0285</p>
+<p>でした。</p>
+<p>わずかではありますが、プラスではありました。</p>
+<p>それぞれの通貨ペアの期待値を見ると、<a href="/post/209/">以前</a>の結果とあまり変わらないようにも見えました。
+なので、これを 10 回ずつやって期待値の平均を比較してみました。</p>
+<p>まず、マネージメントを考慮しない（すべて 10,000 通貨単位）でテストした結果です。</p>
+<table>
+<thead>
+<tr>
+<th align="center">No.</th>
+<th align="right">期待値の平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="right">-0.01</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="right">-0.01</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="right">-0.01</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="right">-0.04</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="right">0.04</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="right">0.02</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="right">-0.01</td>
+</tr>
+</tbody>
+</table>
+<p>21 通貨ペアの平均の期待値を 10 回分見てもやっぱりマイナスが目立つみたいでした。
+マイナスになったのは 8 つでした。</p>
+<p>次に、マネージメントを考慮してテストした結果です。</p>
+<table>
+<thead>
+<tr>
+<th align="center">No.</th>
+<th align="right">期待値の平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="right">0.05</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="right">0.04</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="right">0.11</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="right">0.06</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="right">-0.0</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="right">0.08</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="right">0.05</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="right">0.04</td>
+</tr>
+</tbody>
+</table>
+<p>マイナスになったのは 2 つしかありませんでした（よく見たらひとつはゼロでした）。</p>
+<p>ランダムなのでこの差がもっと小さいこともありました。
+どちらもマイナスが 1 つしかなかったり。
+でもそのときに 10 回分の期待値の平均をさらに平均してみたら、マネーマネジメントを考慮した方が良い結果になっていました。</p>
+<p>やっぱり期待値を見るだけであってもマネーマネジメントを考慮した方が良さそうでした。</p>
+<h2 id="マネージメントは最も重要なのか">マネージメントは最も重要…なのか？</h2>
+<blockquote>
+<p>「優秀なマネー・マネジメントができるならば、貧困なシステムでも稼げる」と言う人がいる。
+ナンセンスな議論である。
+貧困な取引戦略の下で優秀なマネー・マネジメントができることといったら、ゆっくりと損失を出していくことくらいのものである。</p>
+<p><cite>新マーケットの魔術師 第六章 カネ儲けマシーン ブレアー・ハル</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>トレードに関して、鉄則としていることは何ですか？</strong></p>
+<p>必ず有利に立つこと。
+自分の有利性が何かを知ること。
+先に話したように、厳密なリスク管理規制を持つこと。
+基本的には、稼ぐためにはトレード上の有利性、しっかりしたマネー・マネジメントが必要なのです。
+いいマネー・マネジメントだけで有利性を高めることはできないのです。
+そして、使っているシステムが機能していなければ、いくら優秀なリスク管理をもってしても損をすることになるのです。
+しかし、稼げるアプローチがあれば、マネー・マネジメントが成功と失敗を決定することになるのです。</p>
+<p><cite>新マーケットの魔術師 第三章 先物取引－－バラエティに富んだマーケット モンロー・トラウト</cite></p>
+</blockquote>
+<p>ある時点の誰かにとって何が最も重要かなんて言えないと思います。</p>
+<p>マネーマネジメント <em><strong>だけ</strong></em> を必死に勉強してきた人に「マネーマネジメントが最も重要だ」と言ったところであまり効果はないと思います。
+心理 <em><strong>だけ</strong></em> を必死に勉強してきた人に「心理が最も重要だ」と言ったところであまり効果はないと思います。</p>
+<p>でも一般的にはそういう人はあまりいないとは思います。
+何も知識がないうちは、安く買える方法（手法）や高く売れる方法（手法）さえ理解すれば儲けられる気がするからです。
+そうやって最初に手法を必死に勉強してきたからこそ、「マネーマネジメントが最も重要だ」とか「心理が最も重要だ」と言えるんだと思います。</p>
+<p>だから、最初から「マネーマネジメントが最も重要だ」とか「心理が最も重要だ」って聞いてしまうと、ちょっと不幸なことになってしまうかもしれません。
+手法が身についていないにも関わらず、「手法は適当でいい」みたいな勘違いした状態になっているかもしれないですから。</p>
+<h2 id="終わり">終わり</h2>
+<p>Jupyter Notebook のファイルを <a href="https://gist.github.com/va2577/e35dc0b283150761122300debc6f06c6">Gist</a> にアップロードしておきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>らじる★らじる NHKネットラジオを録音する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>らじる★らじる NHKネットラジオを録音する</h1>
+    
+      <div><time>February 6, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <h2 id="10-september-2017-追記">10 September 2017 追記</h2>
+<p><a href="https://developer.apple.com/streaming/">HTTP Live Streaming (HLS)</a> に変わったようなので新しい記事にしました。</p>
+<ul>
+<li><a href="/post/73/">らじる★らじる NHKネットラジオを録音する 2017年9月</a></li>
+</ul>
+<hr>
+<p>ここから古い内容です。</p>
+<p>インターネットでラジオを聞くことがありまして、録音できないかなと思って調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Homebrew バージョン 0.9.5</li>
+<li>RTMPDump バージョン 2.4</li>
+</ul>
+<h2 id="らじるらじる-nhkネットラジオ">らじる★らじる NHKネットラジオ？</h2>
+<blockquote>
+<p>ラジオ第1（R1）・ラジオ第2（R2）・FMの番組を、インターネットを通して放送と同時に提供するサービスです。</p>
+<p><cite><a href="http://www3.nhk.or.jp/netradio/">らじる★らじる NHKネットラジオ</a></cite></p>
+</blockquote>
+<h2 id="準備">準備</h2>
+<p>Homebrewを先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/2/">Homebrewのインストール</a></li>
+</ul>
+<p><a href="https://rtmpdump.mplayerhq.hu">RTMPDump</a>をインストールします。</p>
+<pre><code>$ brew install rtmpdump
+==&gt; Downloading https://homebrew.bintray.com/bottles/rtmpdump-2.4+20151223.el_ca
+######################################################################## 100.0%
+==&gt; Pouring rtmpdump-2.4+20151223.el_capitan.bottle.tar.gz
+🍺  /usr/local/Cellar/rtmpdump/2.4+20151223: 18 files, 424.1K
+</code></pre><h2 id="録音">録音</h2>
+<pre><code>$ rtmpdump -r rtmpe://netradio-fm-flash.nhk.jp/live/NetRadio_FM_flash@63343 -a live -W http://www3.nhk.or.jp/netradio/files/swf/rtmpe_ver2015.swf -v -o filename.flv -B 60
+RTMPDump v2.4
+(c) 2010 Andrej Stepanchuk, Howard Chu, The Flvstreamer Team; license: GPL
+Connecting ...
+WARNING: HandShake: Type mismatch: client sent 6, server answered 8
+INFO: Connected...
+Starting Live Stream
+For duration: 60.000 sec
+INFO: Metadata:
+INFO:   audiodatarate         48.00
+INFO:   audiocodecid          mp4a
+372.456 kB / 59.56 sec
+WARNING: Larger timestamp than 24-bit: 0xfffffe74
+374.095 kB / 59.82 sec
+Download complete
+</code></pre><p><code>-o filename.flv</code> のところは任意のファイル名で保存するように名前を変えます。
+<code>-B 60</code> のところは60秒だけ保存するようになっていますので、任意の時間保存するように変えます。</p>
+<p><code>-r rtmpe://netradio-fm-flash.nhk.jp/live/NetRadio_FM_flash@63343</code> のところが放送局の選択になります。</p>
+<p><del><a href="http://www3.nhk.or.jp/netradio/app/config_pc.xml">各地域のストリームURL</a></del> <a href="http://www3.nhk.or.jp/netradio/app/config_pc_2016.xml">各地域のストリームURL</a>の中に地域と放送局のストリームのURLが書かれています。
+東京の場合は次のようになっていました。</p>
+<ul>
+<li>ラジオ第1（R1） rtmpe://netradio-r1-flash.nhk.jp/live/NetRadio_R1_flash@63346</li>
+<li>ラジオ第2（R2） rtmpe://netradio-r2-flash.nhk.jp/live/NetRadio_R2_flash@63342</li>
+<li>NHK-FM rtmpe://netradio-fm-flash.nhk.jp/live/NetRadio_FM_flash@63343</li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>録音しようと思って調べていましたけど、データをそのまま保存できるのでクリアな音のまま保存できました。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://www3.nhk.or.jp/netradio/">らじる★らじる NHKネットラジオ</a></li>
+</ul>
+<h2 id="7-february-2016-追記">7 February 2016 追記</h2>
+<p>radiko.jpの録音について書いてみました。</p>
+<ul>
+<li><a href="/post/25/">radiko.jpを録音する</a></li>
+</ul>
+<h2 id="9-february-2016-追記">9 February 2016 追記</h2>
+<p>FLVファイルからAACファイルを抽出することについて書いてみました。</p>
+<ul>
+<li><a href="/post/27/">FLVファイルからAACファイルを抽出する</a></li>
+</ul>
+<h2 id="10-february-2016-追記">10 February 2016 追記</h2>
+<p>iTunesで再生できるようになるまでを書いてみました。</p>
+<ul>
+<li><a href="/post/28/">FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

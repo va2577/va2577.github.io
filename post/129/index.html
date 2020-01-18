@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のテンプレートの中でコメントを記述したかったので調べました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のテンプレートの中でコメントを記述したかったので調べました</h1>
+    
+      <div><time>April 9, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Hugo のテーマを作成していたのですが、テンプレートの中でコメントを記述したかったので調べました。</p>
+<h2 id="問題">問題</h2>
+<p>Hugo のテンプレートで、 <code>&lt;body&gt;...&lt;/body&gt;</code> の中で HTML のコメント <code>&lt;!-- a comment --&gt;</code> を記述して、 HTML を生成すると、このコメントは出力されませんでした。</p>
+<p>が、次のようにテンプレートを作成して、 HTML を生成すると、このコメントが文字列として出力されてしまいました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">title</span>&gt;
+  {{ block &#34;title&#34; }}
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> a comment </span><span style="color:#75715e">--&gt;</span>
+    my title
+  {{ end }}
+&lt;/<span style="color:#f92672">title</span>&gt;
+</code></pre></div><p>出力された HTML は半分エスケープされて、 <code>&amp;lt;!-- a comment --&gt;</code> のようになっていました。</p>
+<p>これをブラウザーで開くと、タイトルバーには &ldquo;&lt;!&ndash; a comment &ndash;&gt; my title&rdquo; のように表示されてしまいます。</p>
+<h2 id="html-の仕様">HTML の仕様？</h2>
+<p>気になって、 Hugo で生成した HTML じゃなくて、普通に HTML のファイルにコメントを記述した場合はどうなるのか確認してみました。</p>
+<p>次のファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;
+      <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> a comment </span><span style="color:#75715e">--&gt;</span>
+      my title
+    &lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;comment&lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>ブラウザーでこのファイルを開きます。</p>
+<p>すると、タイトルバーに &ldquo;&lt;!&ndash; a comment &ndash;&gt; my title&rdquo; のように表示されてしまいました。</p>
+<p><code>&lt;title&gt;...&lt;/title&gt;</code> の中では <code>&lt;!-- ... --&gt;</code> のコメントはコメントとして使えないのか。</p>
+<h2 id="hugo-のテンプレートのコメント">Hugo のテンプレートのコメント</h2>
+<p>じゃあ、 HTML として出力される前に、コメントアウトされるような仕組みが Hugo にないかな。</p>
+<blockquote>
+<p>You want</p>
+<pre><code>{{/* comments here */}}
+</code></pre>
+<p>also works multiline.</p>
+<p>Most of the template rules are here: <a href="http://golang.org/pkg/text/template/">http://golang.org/pkg/text/template/</a></p>
+<p><cite><a href="https://discourse.gohugo.io/t/how-to-add-comments-in-a-template/75">How to add comments in a template? - support - Hugo Discussion</a></cite></p>
+</blockquote>
+<p>Hugo の Discussion でコメントについてのやり取りがありました。</p>
+<blockquote>
+<pre><code>{{/* a comment */}}
+</code></pre>
+<p>A comment; discarded. May contain newlines.
+Comments do not nest and must start and end at the
+delimiters, as shown here.</p>
+<p><cite><a href="https://golang.org/pkg/text/template/#hdr-Actions">template - The Go Programming Language</a></cite></p>
+</blockquote>
+<p><code>{{/* ... */}}</code> とすることで、テンプレートのコメントになるようです。</p>
+<p>次のファイルを作成して確認してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">title</span>&gt;
+  {{ block &#34;title&#34; }}
+    {{/* <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> a comment </span><span style="color:#75715e">--&gt;</span> */}}
+    my title
+  {{ end }}
+&lt;/<span style="color:#f92672">title</span>&gt;
+</code></pre></div><p>すると、 HTML を生成した際に、 <code>{{/* ... */}}</code> が出力されることがなくなりました。</p>
+<p>ブラウザーのタイトルバーにも &ldquo;my title&rdquo; とだけ、表示されました。</p>
+<h2 id="終わり">終わり</h2>
+<p>HTML の公式の仕様をちゃんと調べたことがないので、ちゃんと勉強しなきゃかな。</p>
+<h2 id="16-april-2018-追記">16 April 2018 追記</h2>
+<p>Hugo の Docs に記載がありました。</p>
+<blockquote>
+<p>Go templates comments</p>
+<p>Go templates support {{/* and */}} to open and close a comment block. Nothing within that block will be rendered.</p>
+<p>For example:</p>
+<pre><code>Bonsoir, {{/* {{ add 0 + 2 }} */}}Eliott.
+</code></pre>
+<p>Will render Bonsoir, Eliott., and not care about the syntax error (add 0 + 2) in the comment block.</p>
+<p><cite><a href="https://gohugo.io/templates/introduction/#go-templates-comments">Introduction to Hugo Templating | Hugo</a></cite></p>
+</blockquote>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

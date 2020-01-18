@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>GIT のすでにあるリポジトリーからサブモジュールにするためのリポジトリーを作成しました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Git のすでにあるリポジトリーからサブモジュールにするためのリポジトリーを作成しました</h1>
+    
+      <div><time>April 21, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Hugo でウェブサイトを作っていて、テーマも自分で作っていたのですが、ウェブサイトとテーマが同じリポジトリーに含まれてしまっていたため、テーマだけのリポジトリーを独立して作成してみました。</p>
+<p><a href="https://qiita.com/horiem/items/e740a69bd3fec5908ce4">既存のリポジトリからサブモジュールを分離する - Qiita</a> の記事を参考にしました。</p>
+<p>流れは、次のようになるみたいです。</p>
+<ol>
+<li>今回の作業のためのワーキングディレクトリーを作成(git clone)(dir2)</li>
+<li>ワーキングディレクトリーの内容を変更(git filter-branch)(dir2)</li>
+<li>GitHub にリポジトリーを作成</li>
+<li>remote url を変更(git remote set-url)(dir2)</li>
+<li>GitHub に push(git push)(dir2)</li>
+<li>ディレクトリーを削除(dir1)</li>
+<li>GitHub に push(git push)(dir1)</li>
+<li>サブモジュールを追加(dir1)</li>
+<li>GitHub に push(git push)(dir1)</li>
+</ol>
+<h3 id="リポジトリーとディレクトリー">リポジトリーとディレクトリー</h3>
+<p>repo1 リポジトリーがあって、 repo1 のディレクトリーは次のようになっています。</p>
+<pre><code>$ tree -L 2
+.
+├── archetypes
+├── config.toml
+├── content
+│   ├── about.md
+│   ├── _index.md
+│   ├── post
+│   └── privacy.md
+├── data
+├── deploy.sh
+├── layouts
+├── public
+│   ├── 404.html
+│   ├── about
+│   ├── categories
+│   ├── css
+│   ├── googlebc830b58d80exxxx.html
+│   ├── img
+│   ├── index.html
+│   ├── index.xml
+│   ├── js
+│   ├── post
+│   ├── privacy
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   └── tags
+├── README.md
+├── static
+│   ├── googlebc830b58d80exxxx.html
+│   ├── img
+│   └── robots.txt
+└── themes
+    ├── an6474
+    └── theme1
+
+19 directories, 14 files
+</code></pre><p>これの一番下にある themes/theme1 ディレクトリーを新しいリポジトリーとして独立して作りたいと思います。
+これを repo2 とします。</p>
+<pre><code>$ ls themes/theme1/
+archetypes  gulpfile.js  layouts  LICENSE.md  package.json  package-lock.json  src-static  static  theme.toml
+</code></pre><p>themes/theme1/ ディレクトリーの内容が repo2 リポジトリーの内容になるように進めていきます。</p>
+<h3 id="ワーキングディレクトリーを作成">ワーキングディレクトリーを作成</h3>
+<p>すでにローカルにワーキングディレクトリーを作成してあったとしても、それは使わずに、新しくワーキングディレクトリーを作成するようです。
+それに対して内容を変更していくことになるようです。
+新しいリポジトリーの名前を repo2 にしようとしているため、 <code>git clone</code> のところでローカルのワーキングディレクトリーの名前を repo2 にしてしまいます。</p>
+<pre><code>$ git clone https://github.com/username/repo1.git repo2
+Cloning into 'repo2'...
+remote: Counting objects: 2325, done.
+remote: Compressing objects: 100% (756/756), done.
+remote: Total 2325 (delta 685), reused 1054 (delta 501), pack-reused 1061
+Receiving objects: 100% (2325/2325), 86.36 MiB | 7.16 MiB/s, done.
+Resolving deltas: 100% (1073/1073), done.
+Checking connectivity... done.
+</code></pre><p><code>git clone</code> できました。</p>
+<p>ワーキングディレクトリーの中に移動します。</p>
+<pre><code>$ cd repo2/
+</code></pre><h3 id="ワーキングディレクトリーの内容を変更">ワーキングディレクトリーの内容を変更</h3>
+<p>今回は、 themes/theme1/ ディレクトリーの内容を新しいリポジトリーとして作成したいので、 repo2/ ディレクトリーの内容が themes/theme1/ ディレクトリーの内容になるように変更します。
+サブディレクトリーの内容でリポジトリー直下のディレクトリーの内容を置き換えます。</p>
+<pre><code># repo2/ ディレクトリーの内容
+$ ls
+archetypes  config.toml  content  data  deploy.sh  layouts  public  README.md  static  themes
+# themes/theme1/ ディレクトリーの内容
+$ ls themes/theme1/
+archetypes  gulpfile.js  layouts  LICENSE.md  package.json  package-lock.json  src-static  static  theme.toml
+</code></pre><p><code>git filter-branch</code> でそれができるようです。
+<code>git filter-branch</code> を使うと、履歴を引き継いでくれるようです。</p>
+<p><code>--prune-empty</code> のオプションを指定すると、プロセスの後に空のままなっているコミットを削除してくれるようです。
+<code>--subdirectory-filter &lt;directory&gt;</code> のオプションを指定すると、指定したサブディレクトリーの履歴だけを対象にすることができるようです。</p>
+<pre><code>$ git filter-branch --prune-empty --subdirectory-filter themes/theme1 master
+Rewrite 1c8476b8235014ba34affeca38513566649be49e (21/21) (41 seconds passed, remaining 0 predicted)
+Ref 'refs/heads/master' was rewritten
+</code></pre><p>少し時間がかかりました。
+が、内容が変更できたようです。</p>
+<pre><code>$ ls
+archetypes  gulpfile.js  layouts  LICENSE.md  package.json  package-lock.json  src-static  static  theme.toml
+</code></pre><p>repo2/ ディレクトリーの内容が themes/theme1/ ディレクトリーの内容に置き換わったようです。</p>
+<pre><code>$ git status
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 21 and 324 different commits each, respectively.
+  (use &quot;git pull&quot; to merge the remote branch into yours)
+nothing to commit, working directory clean
+</code></pre><p><code>git status</code> を見ると、 have diverged のメッセージが出ています。
+が、気にせず進めて良さそうなので、そのまま進めます。</p>
+<h3 id="github-にリポジトリーを作成">GitHub にリポジトリーを作成</h3>
+<p>GitHub にサインインして、右上の + のマークから New repository を選択します。
+Create a new repository の Repository name あたりを入力して、下にある緑の Create repository ボタンをクリックします。</p>
+<p><img src="/img/141-01.png" alt=""></p>
+<p>すると、次のようなページが表示されました。</p>
+<p><img src="/img/141-02.png" alt=""></p>
+<p><code>git push</code> するまでについて記載されているようでした。</p>
+<h3 id="remote-url-を変更">remote url を変更</h3>
+<p>ローカルのワーキングディレクトリーに戻って。
+このまま <code>git push</code> してしまうと、今の remote url に設定されている repo1 のリポジトリーの内容が変わってしまいます。
+ので、先ほど新しく作成した GitHub のリポジトリー (repo2) の url に変更します。</p>
+<p><code>git remote set-url</code> で url を変更します。</p>
+<pre><code>$ git remote set-url origin https://github.com/username/repo2.git
+</code></pre><p>url を確認します。</p>
+<pre><code>$ git remote -v
+origin  https://github.com/username/repo2.git (fetch)
+origin  https://github.com/username/repo2.git (push)
+</code></pre><p>変更できたみたいです。</p>
+<h3 id="github-に-push">GitHub に push</h3>
+<pre><code>$ git status
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 21 and 324 different commits each, respectively.
+  (use &quot;git pull&quot; to merge the remote branch into yours)
+nothing to commit, working directory clean
+</code></pre><p><code>git status</code> を見ると have diverged のメッセージが出ています。
+でもそのまま <code>git push</code> してしまって良さそうなので、してしまいます。</p>
+<pre><code>$ git push -u origin master
+Counting objects: 183, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (93/93), done.
+Writing objects: 100% (183/183), 73.91 KiB | 0 bytes/s, done.
+Total 183 (delta 68), reused 161 (delta 68)
+remote: Resolving deltas: 100% (68/68), done.
+To https://github.com/username/repo2.git
+ * [new branch]      master -&gt; master
+Branch master set up to track remote branch master from origin.
+</code></pre><p>repo2 リポジトリーに push できたみたいです。</p>
+<p><code>git status</code> を見ると、 up-to-date のメッセージに変わりました。</p>
+<pre><code>$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+</code></pre><p>GitHub からも確認できました。</p>
+<p><img src="/img/141-03.png" alt=""></p>
+<h3 id="ディレクトリーの削除">ディレクトリーの削除</h3>
+<p>ここからは、もともとあったワーキングディレクトリー (repo1) に移動して、先ほど作成したリポジトリー (repo2) をサブモジュールとして追加していきたいと思います。</p>
+<p>最初に、今あるディレクトリー (themes/theme1) を削除します。
+(ローカルにワーキングディレクトリーがない場合は <code>git clone</code> しておきます)</p>
+<pre><code># もともとローカルにあったワーキングディレクトリーの repo1
+$ cd /path/to/repo1/
+$ ls themes/theme1/
+archetypes   layouts     node_modules  package-lock.json  static
+gulpfile.js  LICENSE.md  package.json  src-static         theme.toml
+$ rm -rf themes/theme1
+$
+</code></pre><p>node_modules があって時間がかかりました。
+が、削除できたみたいです。</p>
+<pre><code>$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+
+        deleted:    themes/theme1/.babelrc
+        deleted:    themes/theme1/.eslintrc
+        deleted:    themes/theme1/LICENSE.md
+        deleted:    themes/theme1/archetypes/default.md
+        deleted:    themes/theme1/gulpfile.js
+        deleted:    themes/theme1/layouts/404.html
+        deleted:    themes/theme1/layouts/_default/li.html
+        deleted:    themes/theme1/layouts/_default/list.html
+        deleted:    themes/theme1/layouts/_default/single.html
+        deleted:    themes/theme1/layouts/_default/terms.html
+        deleted:    themes/theme1/layouts/index.html
+        deleted:    themes/theme1/layouts/partials/adsense.html
+        deleted:    themes/theme1/layouts/partials/analytics.html
+        deleted:    themes/theme1/layouts/partials/disqus.html
+        deleted:    themes/theme1/layouts/partials/footer.html
+        deleted:    themes/theme1/layouts/partials/header.html
+        deleted:    themes/theme1/layouts/partials/pagination.html
+        deleted:    themes/theme1/layouts/shortcodes/img.html
+        deleted:    themes/theme1/layouts/shortcodes/mail.html
+        deleted:    themes/theme1/package-lock.json
+        deleted:    themes/theme1/package.json
+        deleted:    themes/theme1/src-static/css/style.scss
+        deleted:    themes/theme1/src-static/js/js.js
+        deleted:    themes/theme1/static/css/html5reset-1.6.1.css
+        deleted:    themes/theme1/static/css/style.css
+        deleted:    themes/theme1/static/img/apple-touch-icon.png
+        deleted:    themes/theme1/static/img/favicon.png
+        deleted:    themes/theme1/static/img/logo.png
+        deleted:    themes/theme1/static/js/js.js
+        deleted:    themes/theme1/theme.toml
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</code></pre><p>大量にファイルが削除されています。</p>
+<h3 id="github-に-push-1">GitHub に push</h3>
+<p><code>git add</code> して、 <code>git commit</code> して、 <code>git push</code> していきます。</p>
+<pre><code>$ git add -A
+$ git commit -m &quot;message&quot;
+[master af52937] message
+ 30 files changed, 7383 deletions(-)
+ delete mode 100644 themes/theme1/.babelrc
+ delete mode 100644 themes/theme1/.eslintrc
+ delete mode 100644 themes/theme1/LICENSE.md
+ delete mode 100644 themes/theme1/archetypes/default.md
+ delete mode 100644 themes/theme1/gulpfile.js
+ delete mode 100644 themes/theme1/layouts/404.html
+ delete mode 100644 themes/theme1/layouts/_default/li.html
+ delete mode 100644 themes/theme1/layouts/_default/list.html
+ delete mode 100644 themes/theme1/layouts/_default/single.html
+ delete mode 100644 themes/theme1/layouts/_default/terms.html
+ delete mode 100644 themes/theme1/layouts/index.html
+ delete mode 100644 themes/theme1/layouts/partials/adsense.html
+ delete mode 100644 themes/theme1/layouts/partials/analytics.html
+ delete mode 100644 themes/theme1/layouts/partials/disqus.html
+ delete mode 100644 themes/theme1/layouts/partials/footer.html
+ delete mode 100644 themes/theme1/layouts/partials/header.html
+ delete mode 100644 themes/theme1/layouts/partials/pagination.html
+ delete mode 100644 themes/theme1/layouts/shortcodes/img.html
+ delete mode 100644 themes/theme1/layouts/shortcodes/mail.html
+ delete mode 100644 themes/theme1/package-lock.json
+ delete mode 100644 themes/theme1/package.json
+ delete mode 100644 themes/theme1/src-static/css/style.scss
+ delete mode 100644 themes/theme1/src-static/js/js.js
+ delete mode 100644 themes/theme1/static/css/html5reset-1.6.1.css
+ delete mode 100644 themes/theme1/static/css/style.css
+ delete mode 100644 themes/theme1/static/img/apple-touch-icon.png
+ delete mode 100644 themes/theme1/static/img/favicon.png
+ delete mode 100644 themes/theme1/static/img/logo.png
+ delete mode 100644 themes/theme1/static/js/js.js
+ delete mode 100644 themes/theme1/theme.toml
+$ git push origin master
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 289 bytes | 0 bytes/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/username/repo1.git
+   38ac1ba..af52937  master -&gt; master
+</code></pre><p>push できたみたいです。</p>
+<h3 id="サブモジュールを追加">サブモジュールを追加</h3>
+<p>次に、新しく作成しておいたリポジトリー (repo2) をサブモジュールとして追加してみます。
+themes/repo2 ディレクトリーに追加したかったので、ローカルのディレクトリーも指定しています。</p>
+<pre><code>$ git submodule add https://github.com/username/repo2.git themes/repo2
+Cloning into 'themes/repo2'...
+remote: Counting objects: 183, done.
+remote: Compressing objects: 100% (93/93), done.
+remote: Total 183 (delta 68), reused 183 (delta 68), pack-reused 0
+Receiving objects: 100% (183/183), 73.91 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (68/68), done.
+Checking connectivity... done.
+</code></pre><p>追加されたみたいです。</p>
+<pre><code>$ ls themes/repo2/
+archetypes  gulpfile.js  layouts  LICENSE.md  package.json  package-lock.json  src-static  static  theme.toml
+</code></pre><p>repo2 リポジトリーのファイルがちゃんとワーキングディレクトリーにありました。</p>
+<pre><code>$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+
+        modified:   .gitmodules
+        new file:   themes/repo2
+
+</code></pre><p><code>git status</code> するとファイルに変更がありました。
+.gitmodules ファイルはサブモジュールを追加すると勝手に作られるファイルのようです。
+この repo1 リポジトリーは、すでにサブモジュールを追加したことがあったので modified になっています。</p>
+<h3 id="github-に-push-2">GitHub に push</h3>
+<p><code>git add</code> と <code>git commit</code> と <code>git push</code> をしておきます。</p>
+<pre><code>$ git add -A
+$ git commit -m &quot;message&quot;
+[master d3332f0] message
+ 2 files changed, 4 insertions(+)
+ create mode 160000 themes/repo2
+$ git push origin master
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 430 bytes | 0 bytes/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/username/repo1.git
+   af52937..d3332f0  master -&gt; master
+</code></pre><h2 id="終わり">終わり</h2>
+<p>サブモジュールにしようと思っていて、放置してしまっていたので、これでスッキリしました。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://qiita.com/horiem/items/e740a69bd3fec5908ce4">既存のリポジトリからサブモジュールを分離する - Qiita</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

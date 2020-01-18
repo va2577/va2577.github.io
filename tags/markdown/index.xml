@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markdown on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/markdown/</link>
+    <description>Recent content in Markdown on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 17 Mar 2018 13:32:32 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Markdown の fenced code block の ``` をそのまま表示したかったので調べました</title>
+      <link>https://va2577.github.io/post/106/</link>
+      <pubDate>Sat, 17 Mar 2018 13:32:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/106/</guid>
+      <description>&lt;p&gt;Markdown のコードブロックのエスケープについて書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>block quote の中の fenced code block が崩れるので調べました</title>
+      <link>https://va2577.github.io/post/105/</link>
+      <pubDate>Fri, 16 Mar 2018 22:30:18 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/105/</guid>
+      <description>&lt;p&gt;Markdown のブロッククォートの中にコードブロックの記述したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>HexoのMarkdownで勝手に改行されるのが気になる</title>
+      <link>https://va2577.github.io/post/34/</link>
+      <pubDate>Thu, 25 Feb 2016 09:42:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/34/</guid>
+      <description>&lt;p&gt;元々&lt;a href=&#34;https://va2577.github.io/post/20/&#34;&gt;JekyllのMarkdown&lt;/a&gt;を使っていたんですけど、HexoのMarkdownを使ってみたら、テキストで改行したところがそのままHTMLでも改行されていて気になったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JekyllのMarkdownのエンジンをRedcarpetからkramdownに切り替える</title>
+      <link>https://va2577.github.io/post/20/</link>
+      <pubDate>Thu, 04 Feb 2016 19:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/20/</guid>
+      <description>&lt;p&gt;Redcarpetからkramdownに切り替える時にコードブロックの扱いに違いがありましたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

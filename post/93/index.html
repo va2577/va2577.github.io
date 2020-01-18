@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>VMWARE WORKSTATION PLAYER で VMWARE FUSION の仮想マシンを使用する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>VMware Workstation Player で VMware Fusion の仮想マシンを使用する</h1>
+    
+      <div><time>February 13, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><img src="/img/93-01.jpg" alt=""></p>
+<p>MacBook Pro から Surface Pro に変えて、 macOS の VMware Fusion も使わなくなりましたので、 Windows の VMware Workstation Player で使えないか調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>macOS High Sierra</li>
+<li>VMware Fusion 10</li>
+<li>Windows 10 Pro</li>
+<li>VMware Workstation 14 Player</li>
+</ul>
+<h2 id="公式の記事を探す">公式の記事を探す</h2>
+<p>公式にはそれを許可しているのか探してみました。</p>
+<blockquote>
+<p>Fusion と Workstation の仮想マシンは交換可能です。Workstationと Fusion の間で仮想マシンを移動する場合、VMwarevCenter Converter を使用する必要はありません。仮想ディスクフォーマットが同じで、仮想マシンはいずれかのプログラムで使用できます。</p>
+<p><cite><a href="https://kb.vmware.com/s/article/2076754">VMware Fusion で VMware Workstation の仮想マシンを使用する (2076754)</a></cite></p>
+</blockquote>
+<p>Workstation から Fusion の記事ですが、交換可能と記載されています。</p>
+<p>次のように注意点が記載されています。</p>
+<blockquote>
+<p>ただし、Fusion から Workstation、またはその逆に仮想マシンを移動するときには、次の点を考慮する必要があります。</p>
+<ul>
+<li>Workstation の仮想マシンはファイルをフォルダに保存しますが、Fusion の仮想マシンはファイルを仮想マシンバンドルに保存します。Fusion では Workstation で作成したフォルダを問題なく使用でき、Workstation では Fusion バンドルはフォルダとして表示されます。<br>
+注：Mac 上の Workstation 仮想マシンフォルダをバンドルに変換するには、仮想マシンフォルダの名前に .vmwarevm を追加します。たとえば、Workstation の仮想マシンフォルダが Windows 7 という名前の場合、Windows 7.vmwarevm という名前に変更すると Mac 上のバンドルになります。</li>
+<li>Workstation には、Fusion にない機能がいくつかあります。機能によっては、Fusion は警告を表示する（ただし動作はする）か、機能を無視します。
+<ul>
+<li>スナップショットツリー：Fusion は Workstation と同じようにスナップショットツリーをサポートしますが、Fusion 3.x 以前のインターフェイスではツリーを表示しません。代わりにスナップショットのリストが表示されます。</li>
+<li>チーム：Fusion はチームをサポートしていないため、無視します。</li>
+<li>パラレルポートおよびシリアルポート：Fusion はこれらのデバイスのいずれかを持つ Mac 上では実行できません。パラレルポートまたはシリアルポートに接続された仮想マシンが Fusion でパワーオンにされている場合、Fusion は接続されたデバイスが存在しないという警告を表示します。警告を閉じても仮想マシンはパワーオンのままです。</li>
+</ul>
+</li>
+<li>Fusion も Workstation も、互いのサポートするすべてのゲスト OS をサポートしているわけではありません。『VMware 互換性ガイド』で、仮想マシンのオペレーティングシステムがサポートされていることを必ず確認してください。</li>
+<li>仮想マシンが暗号化されている場合、Fusion で仮想マシンを使用する前に暗号化は解除されます。</li>
+<li>Linux の仮想マシンは作成されるプロセッサに合わせて最適化される場合があります。すべての Mac は Intel プロセッサを使用しますが、Workstation ホストには AMD プロセッサがある場合があります。この場合は、異なるプロセッサへの移行 (1011788)（Migration to a different processor (1011788)）を参照してください。</li>
+</ul>
+<p><cite><a href="https://kb.vmware.com/s/article/2076754">VMware Fusion で VMware Workstation の仮想マシンを使用する (2076754)</a></cite></p>
+</blockquote>
+<p>気になるところは、 macOS のバンドルと Windows のフォルダーの扱いです。
+バンドルを Windows で見ると、フォルダーとして見えているため、そのまま進めることにしました。</p>
+<h2 id="移行してみる">移行してみる</h2>
+<p><a href="https://my.vmware.com/en/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/14_0">VMware Workstation Player</a> はインストールしておきました。</p>
+<p>VMware Workstation Player を起動して、[仮想マシンを開く]を選択します。</p>
+<p><img src="/img/93-02.png" alt=""></p>
+<p>仮想マシンを選択します。</p>
+<p><img src="/img/93-03.png" alt=""></p>
+<p>仮想マシンがライブラリの先頭に追加されました。
+[仮想マシン設定の編集]を選択してみました。</p>
+<p><img src="/img/93-04.png" alt=""></p>
+<p>仮想マシン設定が表示されました。</p>
+<p><img src="/img/93-05.png" alt=""></p>
+<p>[ハードディスク(SCSI)]を選択したら、エラーになりました。
+ディスクの &quot; がずれているので、 macOS と Windows における日本語のファイルの名前の扱いの違いに関するエラーだったのかもしれません。</p>
+<p><img src="/img/93-06.png" alt=""></p>
+<p>[参照ボタン]をクリックして、ファイルを選択してみました。</p>
+<p>選択できたので、気にせずに、そのまま[仮想マシンの再生]を選択してみました。</p>
+<p><img src="/img/93-04.png" alt=""></p>
+<p>起動できそうです。
+Windows 8 から Windows 10 に無償アップグレードしたものなので、[移動しました]を選択しました。</p>
+<p><img src="/img/93-07.png" alt=""></p>
+<blockquote>
+<p>他の場所に仮想マシンを移動またはコピーしない限り、UUID は変わりません。新しい格納場所に移動またはコピーされた仮想マシンをパワーオンすると、仮想マシンを移動またはコピーしたかどうかを指定するプロンプトが表示されます。仮想マシンをコピーしたことを示すと、仮想マシンに新しい UUID が通知されます。</p>
+<p><cite><a href="https://docs.vmware.com/jp/VMware-Workstation-Pro/12.0/com.vmware.ws.using.doc/GUID-533B2C4F-7BD5-41EB-8392-2B9FE687AE50.html">仮想マシン UUID の使用</a></cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q：Windows 10 デバイスのハードウェア構成を変更すると、何が起こりますか？</p>
+<p>A：Windows 10 デバイスのハードウェアの構成を変更した場合 (例えば、マザーボードの交換など)、そのデバイスの Windows の再認証が必要になると考えられます。これは以前のバージョンの Windows (Windows 7 や 8.1 など) と同様の動作です。無償アップグレードでは、このようなハードウェア変更の認証リセットのシナリオは Windows 10 の認証に適用されません。</p>
+<p><cite><a href="http://answers.microsoft.com/ja-jp/windows/forum/windows_10-windows_install/%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC/2131d8c8-60f7-4388-94a4-e4b1ac9b7862?auth=1">アップグレード後の Windows 10 再インストールについて - マイクロソフト コミュニティ</a></cite></p>
+</blockquote>
+<p>この UUID が変わってしまうと、 Windows 10 の認証が適用されなくなってしまうためです。</p>
+<p>起動できたみたいです。</p>
+<p><img src="/img/93-01.jpg" alt=""></p>
+<p>最初は Windows の VMware Tools がインストールされ始めました。
+それから、問題なくログインもできました。</p>
+<p><img src="/img/93-08.jpg" alt=""></p>
+<h2 id="終わり">終わり</h2>
+<p>VMware Player がいつの間にか VMware Workstation Player に、名前が変わっていたのですね。</p>
+<blockquote>
+<p>VMware Workstation Player について教えてください</p>
+<p>VMware Workstation Player （旧称 Player Pro） はデスクトップ仮想化アプリケーションです。個人利用の場合は無償で提供されます。商用のライセンスでは、VMware Workstation Pro および Fusion Pro で作成した制限付きの仮想マシンを Workstation Player で実行できます。</p>
+<p><cite><a href="https://www.vmware.com/jp/products/workstation-player.html">VMware Workstation Player | VMware</a></cite></p>
+</blockquote>
+<p>Fusion で作成した仮想マシンを実行できます。と記載されています。</p>
+<blockquote>
+<p>VMware Workstation Player は引き続き無償で提供されますか</p>
+<p>VMware Workstation Player は、個人利用、および商用以外での利用の場合は無償で提供されます （企業および非営利組織での利用は商用利用に該当します）。仮想マシンについて学びたい方や、個人的に利用したい方は無償の VMware Workstation Player をご利用ください。認定教育機関の学生や教職員で、VMware Academic Program のメンバーの方は、VMware Workstation Player を無償で利用できます。</p>
+<p><cite><a href="https://www.vmware.com/jp/products/workstation-player.html">VMware Workstation Player | VMware</a></cite></p>
+</blockquote>
+<p>VMware Fusion はバージョンアップのたびに 6,000 円くらい払っていたのですが、 VMware Workstation Player は無償でありがたいです。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://kb.vmware.com/s/article/2076754">VMware Fusion で VMware Workstation の仮想マシンを使用する (2076754)</a></li>
+<li><a href="https://www.vmware.com/jp/products/fusion/faqs.html">Fusion および Fusion Pro の FAQ</a></li>
+<li><a href="https://www.vmware.com/jp/products/player/faqs.html">VMware Workstation Player の FAQ： 仮想マシンの作成および実行</a></li>
+<li><a href="http://blog.dreamhive.co.jp/yama/12095.html">Mac の VMware Fusion から Windows の VMware Player に仮想マシンを移動する時には仮想ディスクのファイル名に気をつけるべき | ゆめとちぼーとげんじつと</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>R 倍数でトレードを考える - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>R 倍数でトレードを考える</h1>
+    
+      <div><time>February 10, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><img src="/img/91-01.png" alt=""></p>
+<p>R 倍数のことを書いてみます。</p>
+<h2 id="r-倍数とは">R 倍数とは？</h2>
+<p>バン・K・タープ博士は、期待値を考える元となる変数として、 R 倍数という考え方を提唱しています。
+わたしが読んできた書籍の中で（少ないけれども）、 R 倍数という言葉を使っていたのは、タープ博士だけだったと思います。</p>
+<blockquote>
+<p>リスクのことを R と呼ぶことにしよう。
+R はリスク (risk) の頭文字をとったものなので覚えやすいはずだ。</p>
+<p><cite>新版　魔術師たちの心理学　第２部　システムの概念化　第７章　優れたトレーディングシステムの開発に不可欠な６つの要素　Six Keys to a Great Trading System　拡大鏡を通して見た期待値　No.4678</cite></p>
+</blockquote>
+<p>R 倍数の R はリスクのことのようです。</p>
+<blockquote>
+<p>R 倍数とはリワードのリスクに対する倍率の略語である。
+任意のトレードの R 倍数を計算するには、そのトレードの正味損益をトータル初期リスクで割ればよい。</p>
+<p><cite>新版　魔術師たちの心理学　第２部　システムの概念化　第７章　優れたトレーディングシステムの開発に不可欠な６つの要素　Six Keys to a Great Trading System　実際のトレーディングへの応用　No.4833</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>あるポジションのトータル初期リスクが 1000 ドルであることが分かっているとすると、利益と損失はすべて初期リスクに対する比率として表すことができる。
+例えば、 2000 ドルの利益（または 1 株あたり 20 ドル）を目標とするならば、その利益は 2R と表すことができる。
+1 万ドルの利益なら 10R である。</p>
+<p><cite>新版　魔術師たちの心理学　第２部　システムの概念化　第７章　優れたトレーディングシステムの開発に不可欠な６つの要素　Six Keys to a Great Trading System　拡大鏡を通して見た期待値　No.4682</cite></p>
+</blockquote>
+<p>初期リスクを 1R として、損益をその倍数として表現するようです。</p>
+<p>&ldquo;正味損益をトータル初期リスクで割ればよい&rdquo; とのことなので、次の計算式になるようです。</p>
+<p>R 倍数 ＝ 正味損益 ÷ 初期リスク</p>
+<p>&ldquo;R 倍数とはリワードのリスクに対する倍率の略語である。&rdquo; ということで、 &ldquo;リスク・リワード・レシオのことね&rdquo; と思うかもしれません。
+実際に、リスク・リワード・レシオのことを R 倍数とも呼ぶ、みたいな記事を見たりします。
+が、タープ博士の本を読むと、厳密には違うように受け取りました。</p>
+<h2 id="リスクリワードレシオとは">リスク・リワード・レシオとは？</h2>
+<p>一般的なリスク・リワード・レシオはどういうものでしょうか。</p>
+<blockquote>
+<p>リスク／リワードレシオ 【りすく/りわーどれしお】</p>
+<p>トレードでの損失の可能性と収益の可能性の比率。</p>
+<p><cite><a href="https://www.central-tanshifx.com/vocabulary/detail-investment.html#panc-009">投資 | 用語集 | セントラル短資FX</a></cite></p>
+</blockquote>
+<p>個人のブログばかりヒットしてしまって、計算式まで記載されている企業のページが見つけられませんでした…</p>
+<p>&ldquo;トレードでの損失の可能性と収益の可能性の比率。&rdquo; とのことなので、タープ博士の言う、 &ldquo;R 倍数とはリワードのリスクに対する倍率の略語である。&rdquo; と同じ意味のように思えます。</p>
+<p>しかし、リスク・リワード・レシオの計算式はどうなるか、と調べてみると…
+個人のブログの記載をいくつか見まして、一般的には次のような計算式になるようです。</p>
+<p>リスク・リワード・レシオ ＝ 平均利益 ÷ 平均損失</p>
+<p>タープ博士の言う次の計算式と違いますね。</p>
+<p>R 倍数 ＝ 正味損益 ÷ 初期リスク</p>
+<p>なぜ、計算式が違うのか、それぞれの文脈を調べてみます。</p>
+<h2 id="r-倍数とリスクリワードレシオの違い">R 倍数とリスク・リワード・レシオの違い</h2>
+<p>違うポイントは二つあると思っています。</p>
+<ol>
+<li>複数のトレードを評価するとき</li>
+<li>損失のトレードを評価するとき</li>
+</ol>
+<h3 id="複数のトレードを評価するときの違い">複数のトレードを評価するときの違い</h3>
+<p>一つ目は、複数のトレードを評価するときについてです。</p>
+<p>例えば、あるトレードのエントリーの根拠をチェックしているとします。
+その売買ルールの勝率が 60%~70% だったとして、ストップまでの値幅とリミットまでの値幅が 1 対 1 以上だから（リスク・リワード・レシオが 1 以上だから）、エントリーに値すると判断しました。
+こういうときの R 倍数とリスク・リワード・レシオの意味は同じです。
+1 つのトレードの評価をしているからです。</p>
+<p>しかし、複数のトレードの評価をするときのリスク・リワード・レシオは、次の計算式で計算することが一般的です。</p>
+<p>リスク・リワード・レシオ ＝ 平均利益 ÷ 平均損失</p>
+<p>これに対して R 倍数は、個々のトレードの初期リスクに対する損益の R 倍数の分布によって表現します。</p>
+<p>例として、 <a href="/post/86/">2018 年 1 月のトレードの結果</a>の R 倍数の分布を表してみます。</p>
+<table>
+<thead>
+<tr>
+<th align="right">No.</th>
+<th align="right">初期リスク</th>
+<th align="right">総利益</th>
+<th align="right">総損失</th>
+<th align="right">R 倍数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">75,631</td>
+<td align="right"></td>
+<td align="right">-71,520</td>
+<td align="right">-0.94</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">74,202</td>
+<td align="right"></td>
+<td align="right">-68,850</td>
+<td align="right">-0.92</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right">72,835</td>
+<td align="right"></td>
+<td align="right">-71,460</td>
+<td align="right">-0.98</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right">71,377</td>
+<td align="right">210,154</td>
+<td align="right"></td>
+<td align="right">2.94</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">69,950</td>
+<td align="right">209,100</td>
+<td align="right"></td>
+<td align="right">2.98</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="right">68,551</td>
+<td align="right"></td>
+<td align="right">-65,380</td>
+<td align="right">-0.95</td>
+</tr>
+</tbody>
+</table>
+<p>分布にしてから何をするのか、またの機会に書いてみたいと思います。</p>
+<h3 id="損失のトレードを評価するときの違い">損失のトレードを評価するときの違い</h3>
+<p>二つ目は、損失のトレードを評価するときについてです。
+リスク・リワード・レシオは利益については評価しますが、損失については評価しないと思っています。
+リスクに対するリワード（報酬。ほうび。）なので。</p>
+<p>しかし、 R 倍数は損失も評価します。</p>
+<p>初期リスクが 1,000 円で、利益が 3,000 円のトレードは 3R と評価します。
+初期リスクが 1,000 円で、損失が 2,000 円のトレードは -2R と評価します。</p>
+<p>でも、損失に終わった 1 つのトレードについて、リスク・リワード・レシオが 1 対 ? とか、 0 以下とか、あまり聞かないと思っています。
+エントリー前に想定したリワードで、リスク・リワード・レシオが 1 対 1 以上だったとか、 1 以上だったとか、言えるのかもしれませんが、損失の結果を評価するときには、やっぱり聞かないと思います。</p>
+<h2 id="一般的なリスクリワードレシオの問題点">一般的なリスク・リワード・レシオの問題点</h2>
+<p>その違いには、どのような問題点があるのでしょうか。
+次の記載を見てみます。</p>
+<blockquote>
+<p>正確なパフォーマンス予測を得るためには、サンプル数はできるだけ多いほうがよい。
+期待値を計算するだけでも最低 30 トレードサンプルは必要だ。
+システムの将来性をより正確に見積もるには、できれば 100 回程度のトレードサンプルがあったほうがよい。</p>
+<p>…略…</p>
+<p>サンプルによる期待値を実際のトレーディングに応用した場合、問題点がある。</p>
+<p>…略…</p>
+<p>表 7.3 サンプルシステムの 2 年間におけるトレード結果</p>
+</blockquote>
+<!-- > |  勝ち  |  勝ち  |  勝ち  |   負け   |   負け   |   負け   |
+> | -----: | -----: | -----: | -------: | -------: | -------: |
+> |    $23 |    $17 |    $14 |    ($31) |    ($18) |    ($16) |
+> |    $12 |    $32 |     $8 |     ($6) |    ($23) |    ($15) |
+> |     $6 |   $489 |   $532 |   ($427) |   ($491) |   ($532) |
+> |   $611 |   $431 |   $563 |   ($488) |   ($612) |   ($556) |
+> |   $459 |   $531 |   $476 |   ($511) |   ($483) |   ($477) |
+> |   $561 |   $499 |   $521 |   ($456) |   ($532) |   ($521) |
+> |   $458 |   $479 |   $532 |   ($460) |   ($530) |   ($477) |
+> |   $618 | $1,141 |   $995 |   ($607) |   ($478) |   ($517) |
+> | $1,217 | $1,014 |   $832 |   ($429) |   ($489) |   ($512) |
+> |   $984 |   $956 | $1,131 |   ($521) |   ($499) |   ($527) |
+> | $1,217 |   $897 | $1,517 |   ($501) |   ($506) |   ($665) |
+> | $1,684 | $1,501 | $1,654 |   ($612) |   ($432) |   ($564) |
+> | $1,464 | $1,701 | $2,551 |   ($479) |   ($519) |   ($671) |
+> | $2,545 | $2,366 | $4,652 | ($1,218) |   ($871) | ($1,132) |
+> |        |        |        |   ($988) | ($1,015) |   ($978) |
+> |        |        |        | ($1,123) | ($1,311) |   ($976) |
+> |        |        |        | ($1,213) | ($1,011) |   ($993) |
+> |        |        |        |   ($876) | ($1,245) | ($1,043) |
+> |        |        |        | ($1,412) | ($1,611) | ($3,221) | -->
+<blockquote>
+<table>
+<thead>
+<tr>
+<th align="right">勝ちトレード</th>
+<th align="right">負けトレード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">$23</td>
+<td align="right">($31)</td>
+</tr>
+<tr>
+<td align="right">$12</td>
+<td align="right">($6)</td>
+</tr>
+<tr>
+<td align="right">$6</td>
+<td align="right">($427)</td>
+</tr>
+<tr>
+<td align="right">$611</td>
+<td align="right">($488)</td>
+</tr>
+<tr>
+<td align="right">$459</td>
+<td align="right">($511)</td>
+</tr>
+<tr>
+<td align="right">$561</td>
+<td align="right">($456)</td>
+</tr>
+<tr>
+<td align="right">$458</td>
+<td align="right">($460)</td>
+</tr>
+<tr>
+<td align="right">$618</td>
+<td align="right">($607)</td>
+</tr>
+<tr>
+<td align="right">$1,217</td>
+<td align="right">($429)</td>
+</tr>
+<tr>
+<td align="right">$984</td>
+<td align="right">($521)</td>
+</tr>
+<tr>
+<td align="right">$1,217</td>
+<td align="right">($501)</td>
+</tr>
+<tr>
+<td align="right">$1,684</td>
+<td align="right">($612)</td>
+</tr>
+<tr>
+<td align="right">$1,464</td>
+<td align="right">($479)</td>
+</tr>
+<tr>
+<td align="right">$2,545</td>
+<td align="right">($1,218)</td>
+</tr>
+<tr>
+<td align="right">…略…</td>
+<td align="right">($988)</td>
+</tr>
+<tr>
+<td align="right"></td>
+<td align="right">($1,123)</td>
+</tr>
+<tr>
+<td align="right"></td>
+<td align="right">($1,213)</td>
+</tr>
+<tr>
+<td align="right"></td>
+<td align="right">($876)</td>
+</tr>
+<tr>
+<td align="right"></td>
+<td align="right">($1,412)</td>
+</tr>
+<tr>
+<td align="right"></td>
+<td align="right">…略…</td>
+</tr>
+</tbody>
+</table>
+<p>平均利益＝ 1259.23 ドル、平均損失＝ -721.73 ドル</p>
+<p>利益合計＝ 54147 ドル、損失合計＝ 43304 ドル、正味利益＝ 10843 ドル</p>
+<p>…略…</p>
+<p>この表を見ると、各トレードのトータル初期リスクを示すデータがないことに気づくはずだ。
+R 倍数の概念を理解せずにトレーディングを行うとこういった状態になる。
+しかし各トレードの初期リスクを示すデータがなくても、負けトレードの平均損失を 1R とすることで期待値と R 倍数分布は求められる。</p>
+<p>…略…</p>
+<p>これは期待値の概算値にすぎないが、 1 トレードの初期リスクがわからない場合にはこうするしかない。</p>
+<p><cite>新版　魔術師たちの心理学　第２部　システムの概念化　第７章　優れたトレーディングシステムの開発に不可欠な６つの要素　Six Keys to a Great Trading System　実際のトレーディングへの応用　No.4853</cite></p>
+</blockquote>
+<p>&ldquo;これは期待値の概算値にすぎない&rdquo; と記載されています。</p>
+<p>平均損失によって期待値を求めることは、雑な評価をしていることになるのだと認識しました。</p>
+<p>&ldquo;1 トレードの初期リスクがわからない場合にはこうするしかない。&rdquo; とも記載されています。</p>
+<p>これは不本意な対処のようです。</p>
+<p>少しでも厳密にしたいので、わたしは R 倍数で評価をした方が良いと考えています。</p>
+<h2 id="終わりの前にリスクリワードレシオとペイオフレシオ">終わりの前にリスク・リワード・レシオとペイオフレシオ</h2>
+<blockquote>
+<p>袋には７色のビー玉が合計で 100 個入っており、各色のペイオフ（リスク・リワード・レシオ）は表 7.1 に示したとおりである。</p>
+<p><cite>新版　魔術師たちの心理学　第２部　システムの概念化　第７章　優れたトレーディングシステムの開発に不可欠な６つの要素　Six Keys to a Great Trading System　拡大鏡を通して見た期待値　No.4730</cite></p>
+</blockquote>
+<p>リスク・リワード・レシオは、ペイオフレシオとも言うようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>トレードの初期リスクを記録するところから始めてみました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

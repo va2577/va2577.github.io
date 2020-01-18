@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ローソク足のパターンの有効性を確認してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ローソク足のパターンの有効性を確認してみました</h1>
+    
+      <div><time>August 25, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>7 月からデイトレードをしていますが、負け続けています。
+負けている理由を把握するために、根拠にしているローソク足のパターンがどれだけ有効そうなのかを手探りで確認してみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6</li>
+<li>Jupyter Notebook 5.2.0</li>
+<li>NumPy 1.14.4</li>
+<li>pandas 0.23.0</li>
+<li>matplotlib 2.2.2</li>
+</ul>
+<h2 id="hammer">Hammer</h2>
+<p>根拠にしていたローソク足は次の形でした。</p>
+<p><img src="/img/195-01.png" alt="img"></p>
+<p><img src="/img/195-02.png" alt="img"></p>
+<p>これ、いくつか呼び方を見たことがあります。
+スパイクとかピンバーとかハンマーとか。</p>
+<p>感覚的に“ヒゲが長くて実体が小さい足”程度の認識だったので、この機会に調べてみました。</p>
+<p>日本語の Wikipedia では見つけられなかったのですが、英語の Wikipedia に <a href="https://en.wikipedia.org/wiki/Candlestick_pattern">candlestick pattern</a> がありました。
+このページでは、このローソク足の形は Hammer と呼ばれていました。
+このハンマーについて引用してみます。</p>
+<blockquote>
+<p>In order for a candle to be a valid hammer most traders say the lower wick must be two times greater than the size of the body portion of the candle, and the body of the candle must be at the upper end of the trading range.</p>
+<p><cite><a href="https://en.wikipedia.org/wiki/Hammer_(candlestick_pattern)">Hammer (candlestick pattern) - Wikipedia</a></cite></p>
+</blockquote>
+<p>有効なハンマーであるためには、下ヒゲが実体の 2 倍以上あって、実体が上端にある、ことが条件らしいです。
+ほとんどのトレーダーはそう言っているらしいです（ほとんどのトレーダーって誰かな？）。</p>
+<blockquote>
+<p>When you see the hammer form in a downtrend this is a sign of a potential reversal in the market</p>
+<p><cite><a href="https://en.wikipedia.org/wiki/Hammer_(candlestick_pattern)">Hammer (candlestick pattern) - Wikipedia</a></cite></p>
+</blockquote>
+<p>ダウントレンドの中でハンマーを確認したら、これは市場における潜在的な反転の兆候（上がる）、のようです。</p>
+<p>これを信じていて、 Forex Tester で検証もして、その結果が良かったんです。
+それで運用を始めたのですが、実際のトレードでは結果が悪かったんです。
+だから、裁量的な Forex Tester での検証じゃなくて、データで、このハンマーがどれだけの数値になるのか確認してみようと思いました。</p>
+<h2 id="米ドル円">米ドル／円</h2>
+<p><a href="/post/162/">以前作った</a>ヒストリカルデータを使います。
+ここでは米ドル／円だけでやってみます。</p>
+<p>ここから Jupyter Notebook のセルに入力しながら進めます。</p>
+<p>最初に必要なモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>米ドル／円の日足のヒストリカルデータを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dtype <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+names <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/data/d/USDJPY_D.csv</span><span style="color:#e6db74">&#39;</span>, dtype<span style="color:#f92672">=</span>dtype, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, names<span style="color:#f92672">=</span>names, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><p>ハンマーであることを返す関数を作りました。
+ハンマーの条件に該当する行は <code>True</code> になる Series を返します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hammer</span>(df):
+    min_of_open_or_close <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>loc[:, [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]]<span style="color:#f92672">.</span>min(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    max_of_open_or_close <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>loc[:, [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]]<span style="color:#f92672">.</span>max(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    lower_wick <span style="color:#f92672">=</span> min_of_open_or_close <span style="color:#f92672">-</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]
+    upper_wick <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">-</span> max_of_open_or_close
+    body <span style="color:#f92672">=</span> max_of_open_or_close <span style="color:#f92672">-</span> min_of_open_or_close
+    trading_range <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">-</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]
+    <span style="color:#66d9ef">return</span> (lower_wick <span style="color:#f92672">/</span> body <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2.0</span>) <span style="color:#f92672">&amp;</span> (upper_wick <span style="color:#f92672">/</span> trading_range <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.05</span>)
+</code></pre></div><p>下ヒゲと実体の比率は具体的な数値があったのでいいのですけれども。
+実体が上端にある、っていう上ヒゲの長さに曖昧さが残ります。
+今回は、値幅の 5% 未満という条件にしてみました。</p>
+<p>この条件のハンマーはどれくらいあるのか確認してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s <span style="color:#f92672">=</span> hammer(df)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ハンマーの足の数:</span><span style="color:#e6db74">&#39;</span>, s[s <span style="color:#f92672">==</span> True]<span style="color:#f92672">.</span>count())
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">全体の足の数:</span><span style="color:#e6db74">&#39;</span>, s<span style="color:#f92672">.</span>count())
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ハンマーの足の割合:</span><span style="color:#e6db74">&#39;</span>, s[s <span style="color:#f92672">==</span> True]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s<span style="color:#f92672">.</span>count())
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">ハンマーの足の数: 31
+全体の足の数: 3827
+ハンマーの足の割合: 0.00810033969166449
+</code></pre><p>4000 本近く日足があって、 31 本しかハンマーはありませんでした。
+0.8% でした。
+かなり少なく感じます。
+一つの時間枠だけで言ったらこんなものでしょうか。
+普段は複数の時間枠を見ているから実際はもっとあるように感じるのでしょうか。</p>
+<p>ハンマーの次の足の陽線の割合を確認しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s21 <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">-</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]
+s22 <span style="color:#f92672">=</span> s21[s<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>fillna(False)]
+s22[s22 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s22<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.41935483870967744
+</code></pre><p>41.9% でした。
+かなり驚きました。
+もっと高いと思っていました。
+55% くらいはあるんじゃないかと思っていたのですけれども。</p>
+<p>ハンマーの次の足の始値から終値の平均を確認しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s22<span style="color:#f92672">.</span>mean()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.018419354838708695
+</code></pre><p>こちらはプラスでした。
+陽線の割合は低いものの、陽線になったときの値幅は陰線になったときの値幅よりも大きいみたいでした。</p>
+<p>陽線の値幅（終値－始値）と陰線の値幅（終値－始値）の比率も確認してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s22[s22 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>mean() <span style="color:#f92672">/</span> s22[s22 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>abs()<span style="color:#f92672">.</span>mean()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">1.4646128939359697
+</code></pre><p>1.5 倍もないみたいでした。</p>
+<h2 id="21-通貨ペアの平均">21 通貨ペアの平均</h2>
+<p>21 通貨ペアの平均も確認してみました。</p>
+<p>日足だとハンマーのデータの数が少なかったので 1 時間足で確認しました。
+次のようになりました。</p>
+<ul>
+<li>ハンマーの足の数: 1267.380952</li>
+<li>全体の足の数: 83329.619048</li>
+<li>陽線の割合: 0.446195</li>
+<li>始値から終値の平均: -1.210769</li>
+</ul>
+<p>ハンマーの次の足の陽線の割合は 44.6% でした。
+個別の通貨ペアを見ても 50% を超えるものが一つもありませんでした。</p>
+<p>ハンマーの次の足の始値から終値の平均は -1.21 pips でした。
+プラスにすらできませんでした。</p>
+<h2 id="n-本先の足の終値までの値幅">n 本先の足の終値までの値幅</h2>
+<p>ハンマーの次の足じゃなくて、さらに n 本先の足の終値まで持った場合も確認してみました。</p>
+<ul>
+<li>5 本先の終値まで
+<ul>
+<li>陽線の割合: 0.479826</li>
+<li>始値から終値の平均: -1.032897</li>
+</ul>
+</li>
+<li>10 本先の終値まで
+<ul>
+<li>陽線の割合: 0.486039</li>
+<li>始値から終値の平均: -1.123826</li>
+</ul>
+</li>
+<li>20 本先の終値まで
+<ul>
+<li>陽線の割合: 0.498421</li>
+<li>始値から終値の平均: -0.808150</li>
+</ul>
+</li>
+<li>50 本先の終値まで
+<ul>
+<li>陽線の割合: 0.504215</li>
+<li>始値から終値の平均: -0.067837</li>
+</ul>
+</li>
+<li>100 本先の終値まで
+<ul>
+<li>陽線の割合: 0.504479</li>
+<li>始値から終値の平均: -1.044284</li>
+</ul>
+</li>
+</ul>
+<p>50 本先の終値まで持つことで陽線の割合が 50% を超えてきました。
+値幅の平均もマイナスではありますが -0.06 pips にまで上がってきています。
+100 本先の終値までだと値幅の平均が -1.04 pips に拡大してしまっています。</p>
+<p>足の記憶は 100 本後までは残らないということかなあ。
+というか感覚的にはローソク足 1 本の根拠でエントリーしたら 10 本先くらいまではその影響と思えます。
+けれども 20 本先ともなると、もう根拠にしたローソク足の影響でそうなったとは言えないような気がしています。</p>
+<h2 id="see-also">See also</h2>
+<p>Wikipedia の中にハンマーに似た形で <a href="https://en.wikipedia.org/wiki/Hanging_man_(candlestick_pattern)">Hanging man</a> というのもありました。
+これはアップトレンドの中で出たら反転の兆候（下がる）というものらしいです。
+同じような形の足なのに、状況によって上がる兆候と下がる兆候というように、異なる兆候を示すみたいです。</p>
+<p>ハンマーやハンギングマンの足の逆の形（上ヒゲが長い形）として次の形もありました。</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Inverted_hammer">Inverted hammer - Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Shooting_star_(candlestick_pattern)">Shooting star (candlestick pattern) - Wikipedia</a></li>
+</ul>
+<p>インバーテッドハンマーはダウントレンドの中で出たら反転の兆候（上がる）というものらしいです。
+シューティングスターはアップトレンドの中で出たら反転の兆候（下がる）というものらしいです。</p>
+<p>同じ形なのに、不思議な感じがします。</p>
+<h2 id="終わり">終わり</h2>
+<p>よく、どういう環境で出ているのかが重要だ、って聞きます。
+だから、これ単体を確認してもあまり意味はないのかもしれません。</p>
+<p>でも、複数の根拠があるところでトレードする、っていうのも聞きます。
+ハンマーが根拠の一つになるとしたら、それ単体でも意味のある結果が出るんじゃないかと思いました。
+21 通貨ペアの平均が 44.6% とかじゃなくて、せめて 51% とか。</p>
+<p>ハンマーをはじめとするローソク足パターンって、バブルと同じように根拠のないもの、ただたくさんの人が信じているだけの迷信なのかなあ？</p>
+<p><a href="https://gist.github.com/va2577/66ca39f2a10caccd46a43a52f125f0a9">Gist</a> に Jupyter Notebook のファイルをアップロードしておきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

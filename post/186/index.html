@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>TDW(トレーディングデイ・オブ・ザ・ウィーク)(曜日限定)を確認してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>TDW(トレーディングデイ・オブ・ザ・ウィーク)(曜日限定)を確認してみました</h1>
+    
+      <div><time>June 23, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/185/">前回</a>に続いて『ラリー・ウィリアムズの短期売買法【改定第２版】』に書いてあったことを自分でも確認してみました。
+今回は TDW を確認しました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6</li>
+<li>Jupyter Notebook 5.2.0</li>
+<li>NumPy 1.14.4</li>
+<li>pandas 0.23.0</li>
+<li>matplotlib 2.2.2</li>
+</ul>
+<h2 id="tdw">TDW</h2>
+<blockquote>
+<p>市場はコイン投げとは違う－－ランダムウォーク理論家のクートナー対コーエン（この勝負はコーエンの勝ち）</p>
+<p>もしクートナーのランダムウォーク理論が正しくて、市場の動きがランダムというのならば、日々の値動きを検証してランダム性を立証することは簡単なはずだ。
+まず簡単な疑問から始めよう。
+「もし市場の動きがランダムならば、毎日の高値から終値を引いた値は曜日によらずほぼ同じになり、日々のトレーディングレンジの違いなど存在しないのではないか」</p>
+<p>次の疑問は、「もし価格の動きがランダムならば、日々の値動きの絶対値は曜日にかかわらず、ほぼ同じになるのではないか」。</p>
+<p>そして最後の疑問は、「もし価格がランダムなら、上昇傾向や下降傾向が極端に強い曜日はないのではないか」。
+市場が記憶を持たないのなら、あなたがいつコイン投げをしようと、つまりいつトレードしようと、問題ではないはずである。
+しかし、実際はというと、これは大いに疑問なのである。</p>
+<p>…略</p>
+<p>時の試練を経た真実を見ていくことにしよう。</p>
+<p>私が検証したのは、①値幅の大きさは曜日によって違うのか、②始値から終値までの値幅は曜日によって違うのか、③日々の値動きの絶対値は曜日によって違うのか－－の 3 点である。
+クートナーのランダムウォーク理論が正しいとするならば、これらの質問に対する答えはすべて同じで、曜日による違いはない、となるはずである。</p>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第２版】 第 6 章 真理の探究</cite></p>
+</blockquote>
+<h2 id="値幅の大きさは曜日によって違うのか">①値幅の大きさは曜日によって違うのか</h2>
+<p>ここから Jupyter Notebook のセルに入力しながら進めます。</p>
+<p>最初に必要なモジュールを読み込みます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>米ドル／円のヒストリカルデータを読み込みます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dtype <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+names <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/data/d/USDJPY_D.csv</span><span style="color:#e6db74">&#39;</span>, dtype<span style="color:#f92672">=</span>dtype, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, names<span style="color:#f92672">=</span>names, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><p>曜日ごとに高値－安値を計算しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 高値－安値</span>
+s <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">-</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]
+columns <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">月</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">火</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">水</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">木</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">金</span><span style="color:#e6db74">&#39;</span>]
+pd<span style="color:#f92672">.</span>DataFrame([[s[s<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>dayofweek <span style="color:#f92672">==</span> i]<span style="color:#f92672">.</span>mean() <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)]], index<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USDJPY</span><span style="color:#e6db74">&#39;</span>], columns<span style="color:#f92672">=</span>columns)
+</code></pre></div><p>結果です。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">USDJPY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">月</td>
+<td align="right">88.980157</td>
+</tr>
+<tr>
+<td align="left">火</td>
+<td align="right">95.799739</td>
+</tr>
+<tr>
+<td align="left">水</td>
+<td align="right">100.217124</td>
+</tr>
+<tr>
+<td align="left">木</td>
+<td align="right">100.605098</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">103.96</td>
+</tr>
+</tbody>
+</table>
+<p>見やすさを考慮して Jupyter Notebook からこの記事に転載するときに行と列を入れ替えました。
+米ドル／円は金曜日の値幅が大きいみたいです。
+月曜日は値幅が小さいみたいです。
+かなり差があるように感じました。</p>
+<p>21 通貨ペアでも確認しました。
+ユーロ／円とユーロ／米ドルだけ記載しておきます。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">EURJPY</th>
+<th align="right">EURUSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">月</td>
+<td align="right">136.035591</td>
+<td align="right">106.003655</td>
+</tr>
+<tr>
+<td align="left">火</td>
+<td align="right">139.516866</td>
+<td align="right">115.228590</td>
+</tr>
+<tr>
+<td align="left">水</td>
+<td align="right">136.570346</td>
+<td align="right">117.535686</td>
+</tr>
+<tr>
+<td align="left">木</td>
+<td align="right">148.466090</td>
+<td align="right">122.863529</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">143.915027</td>
+<td align="right">122.604183</td>
+</tr>
+</tbody>
+</table>
+<h2 id="始値から終値までの値幅は曜日によって違うのか">②始値から終値までの値幅は曜日によって違うのか</h2>
+<p>曜日ごとに終値－始値を計算しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 終値－始値</span>
+s <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">-</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]
+pd<span style="color:#f92672">.</span>DataFrame([[s[s<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>dayofweek <span style="color:#f92672">==</span> i]<span style="color:#f92672">.</span>mean() <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)]], index<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USDJPY</span><span style="color:#e6db74">&#39;</span>], columns<span style="color:#f92672">=</span>columns)
+</code></pre></div><p>結果です。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">USDJPY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">月</td>
+<td align="right">0.080026</td>
+</tr>
+<tr>
+<td align="left">火</td>
+<td align="right">-0.363446</td>
+</tr>
+<tr>
+<td align="left">水</td>
+<td align="right">1.093072</td>
+</tr>
+<tr>
+<td align="left">木</td>
+<td align="right">0.71634</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">-0.821569</td>
+</tr>
+</tbody>
+</table>
+<p>水曜日は上がる傾向にあるみたいです。
+でもこれは pips の単位にしていますけれども、たった 1 pips しか上がっていないことになります。
+平均してしまえばこんなものなのですね。</p>
+<p>21 通貨ペアでも確認しました。
+ユーロ／円とユーロ／米ドルだけ記載しておきます。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">EURJPY</th>
+<th align="right">EURUSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">月</td>
+<td align="right">-2.361089</td>
+<td align="right">-0.553264</td>
+</tr>
+<tr>
+<td align="left">火</td>
+<td align="right">1.007835</td>
+<td align="right">1.889295</td>
+</tr>
+<tr>
+<td align="left">水</td>
+<td align="right">5.415426</td>
+<td align="right">3.409412</td>
+</tr>
+<tr>
+<td align="left">木</td>
+<td align="right">3.417420</td>
+<td align="right">3.523268</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">-4.282447</td>
+<td align="right">-2.705229</td>
+</tr>
+</tbody>
+</table>
+<h2 id="日々の値動きの絶対値は曜日によって違うのか">③日々の値動きの絶対値は曜日によって違うのか</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 日々の値動きの絶対値</span>
+s <span style="color:#f92672">=</span> (df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">-</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>])<span style="color:#f92672">.</span>abs()
+pd<span style="color:#f92672">.</span>DataFrame([[s[s<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>dayofweek <span style="color:#f92672">==</span> i]<span style="color:#f92672">.</span>mean() <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)]], index<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USDJPY</span><span style="color:#e6db74">&#39;</span>], columns<span style="color:#f92672">=</span>columns)
+</code></pre></div><p>結果です。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">USDJPY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">月</td>
+<td align="right">42.119974</td>
+</tr>
+<tr>
+<td align="left">火</td>
+<td align="right">47.362663</td>
+</tr>
+<tr>
+<td align="left">水</td>
+<td align="right">48.748235</td>
+</tr>
+<tr>
+<td align="left">木</td>
+<td align="right">48.547974</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">50.565359</td>
+</tr>
+</tbody>
+</table>
+<p>この結果は本の中でもまったく触れられていませんでした。
+始値から終値の絶対値でいいのかわかりません。
+これは何を意味しているのだろう？
+ボラティリティだったら上で確認した高値－安値で十分そうだけれども。</p>
+<p>21 通貨ペアでも確認しました。
+ユーロ／円とユーロ／米ドルだけ記載しておきます。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">EURJPY</th>
+<th align="right">EURUSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">月</td>
+<td align="right">66.147012</td>
+<td align="right">50.118538</td>
+</tr>
+<tr>
+<td align="left">火</td>
+<td align="right">69.052988</td>
+<td align="right">57.637859</td>
+</tr>
+<tr>
+<td align="left">水</td>
+<td align="right">64.370479</td>
+<td align="right">59.267451</td>
+</tr>
+<tr>
+<td align="left">木</td>
+<td align="right">71.416888</td>
+<td align="right">60.479346</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">69.932979</td>
+<td align="right">63.012418</td>
+</tr>
+</tbody>
+</table>
+<h2 id="終わり">終わり</h2>
+<blockquote>
+<p>つまり、 TDW は大きな違いを生み、このバイアスはトレードに大いに利用できるということである。
+このバイアスを利用して利益を絞り出す方法はいろいろある。
+おそらくあなたの脳裏には独自の手法が浮かんでいるに違いない。
+短期トレーディングではどの市場でトレードしようと、このバイアスを理解し、それをトレードに取り入れることが成功のカギを握ることは明らかである。</p>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第２版】 第 6 章 真理の探究</cite></p>
+</blockquote>
+<p>ちょっとまだこのバイアスをトレードに取り入れられそうな気がしません。
+デイトレードでその日のうちに手仕舞いしようとしているからでしょうか。
+でもこの本を読んでいるとたくさん TDW が出てきて、実際にこれを使って利益を上げているんだろうと感じます。
+日本のデイトレーダーの方からは聞いたことがないアイデアだなあ、と思いました。
+そういう今はよくわからない違いをどれだけ明確にしていけるか、っていう泥臭い作業が利益を上げ続けていけるかどうかにつながる気がしています。</p>
+<p><a href="https://gist.github.com/va2577/8ff0b471b843b144d0be45ddbc2c7571">Gist</a> に Jupyter Notebook のファイルをアップロードしておきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

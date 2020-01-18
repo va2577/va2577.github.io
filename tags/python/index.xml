@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/python/</link>
+    <description>Recent content in Python on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Nov 2018 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python Bayesian Optimization でバックテストのパラメーターを最適化してみました</title>
+      <link>https://va2577.github.io/post/207/</link>
+      <pubDate>Sat, 10 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/207/</guid>
+      <description>&lt;p&gt;Bayesian Optimization を使ってみたかったので、これを使ってバックテストのパラメーターを最適化してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python Matplotlib を使って 2 軸のグラフ（株価のラインと出来高のバー）を作ってみました</title>
+      <link>https://va2577.github.io/post/205/</link>
+      <pubDate>Sat, 27 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/205/</guid>
+      <description>&lt;p&gt;2 軸のグラフを作りたかったので、試しに株価のラインと出来高のバーのグラフを作りました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>『矢口新の短期トレード教室』のルールでバックテストをしてみました</title>
+      <link>https://va2577.github.io/post/204/</link>
+      <pubDate>Sat, 20 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/204/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/477599154X/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/518%2BfJdUoxL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『矢口新の短期トレード教室』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python ローソク足とフラグを表示してみました</title>
+      <link>https://va2577.github.io/post/198/</link>
+      <pubDate>Sat, 15 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/198/</guid>
+      <description>&lt;p&gt;python-highcharts を使って、バックテストで売買した足にフラグを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python ローソク足と出来高とインディケーターを表示してみました</title>
+      <link>https://va2577.github.io/post/197/</link>
+      <pubDate>Sat, 08 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/197/</guid>
+      <description>&lt;p&gt;python-highcharts を使って、ローソク足と出来高とインディケーターを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ローソク足のパターンの有効性を確認してみました</title>
+      <link>https://va2577.github.io/post/195/</link>
+      <pubDate>Sat, 25 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/195/</guid>
+      <description>&lt;p&gt;7 月からデイトレードをしていますが、負け続けています。
+負けている理由を把握するために、根拠にしているローソク足のパターンがどれだけ有効そうなのかを手探りで確認してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に SciPy をインストールしてみました</title>
+      <link>https://va2577.github.io/post/181/</link>
+      <pubDate>Thu, 31 May 2018 17:33:44 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/181/</guid>
+      <description>&lt;p&gt;Jupyter Notebook と NumPy と pandas を個別にインストールしていたのですが、まとめて使いたいので SciPy をインストールしようと思いました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の Pipenv を使ってみました</title>
+      <link>https://va2577.github.io/post/179/</link>
+      <pubDate>Tue, 29 May 2018 09:48:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/179/</guid>
+      <description>&lt;p&gt;Pipenv というものがあることを知りました。
+ので、使ってみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python サマータイム (DST) について調べました</title>
+      <link>https://va2577.github.io/post/174/</link>
+      <pubDate>Thu, 24 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/174/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/173/&#34;&gt;前回の記事&lt;/a&gt;でヒストリカルデータを使うのにサマータイムを考慮する必要があったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python pandas ヒストリカルデータのサマータイムを考慮していませんでした</title>
+      <link>https://va2577.github.io/post/173/</link>
+      <pubDate>Wed, 23 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/173/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/162/&#34;&gt;以前の記事&lt;/a&gt;で 1 分足のヒストリカルデータから日足のヒストリカルデータを作りました。
+そのときに時間を UTC+3 に一律設定していたのですが、これだと問題がありました。
+修正した内容を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python と NumPy と pandas の間のデータのやり取りを調べました</title>
+      <link>https://va2577.github.io/post/172/</link>
+      <pubDate>Tue, 22 May 2018 10:20:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/172/</guid>
+      <description>&lt;p&gt;pandas を使うことが多かったのですが、少しだけ NumPy も使ってみたので、データのやり取りについて書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python(NumPy, pandas) で最大ドローダウンを計算してみました</title>
+      <link>https://va2577.github.io/post/171/</link>
+      <pubDate>Mon, 21 May 2018 22:59:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/171/</guid>
+      <description>&lt;p&gt;バックテストをしていて最大ドローダウンを計算したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の range と ndarray と Series と DataFrame のイテレーターのパフォーマンスを比較してみました</title>
+      <link>https://va2577.github.io/post/170/</link>
+      <pubDate>Sun, 20 May 2018 19:56:02 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/170/</guid>
+      <description>&lt;p&gt;以前、作った&lt;a href=&#34;https://va2577.github.io/post/162/&#34;&gt;日足のヒストリカルデータ&lt;/a&gt;でバックテストをするのに、 Python の実行速度としてのパフォーマンスが気になったので比較してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python と Jupyter Notebook と pandas と Highcharts を使って Price Channel を計算・表示してみました</title>
+      <link>https://va2577.github.io/post/169/</link>
+      <pubDate>Sat, 19 May 2018 18:01:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/169/</guid>
+      <description>&lt;p&gt;Price Channel を計算してみました。
+せっかくなので、 python-highcharts を使ってローソク足と一緒に表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>python-highcharts と pandas-highcharts を使って Jupyter Notebook にローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/168/</link>
+      <pubDate>Fri, 18 May 2018 08:56:03 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/168/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/167/&#34;&gt;前回&lt;/a&gt;、 &lt;code&gt;%%html&lt;/code&gt; と &lt;code&gt;%%javascript&lt;/code&gt; マジックコマンドを使って Highcharts のローソク足を表示してみました。
+今回は、 python-highcharts と pandas-highcharts を使ってローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook で Highcharts を使ってローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/167/</link>
+      <pubDate>Thu, 17 May 2018 23:21:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/167/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/149/&#34;&gt;Python で為替レートの折れ線グラフを表示してみました&lt;/a&gt;の記事を書いたときは、ローソク足を表示できなかったのですが、 Jupyter Notebook から JavaScript のライブラリーの Highcharts を読み込んで、ローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で 1 分足のヒストリカルデータから日足のデータを作りました</title>
+      <link>https://va2577.github.io/post/162/</link>
+      <pubDate>Sat, 12 May 2018 15:38:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/162/</guid>
+      <description>&lt;p&gt;売買ルールを検証するのに Python を使ってみようと思いました。
+かなりメカニカル、機械的にトレードをするようになったので、検証もメカニカルにプログラムを使ってできないかと思い始めています。
+でも、 MT4 の EA のような、システムトレードをしたいわけではないです。&lt;/p&gt;
+&lt;p&gt;今回は、データを用意するところを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook で処理時間を測りました</title>
+      <link>https://va2577.github.io/post/161/</link>
+      <pubDate>Fri, 11 May 2018 16:28:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/161/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/160/&#34;&gt;リスト内包表記のパフォーマンスを計測した&lt;/a&gt;ときに、 Jupyter Notebook のマジックコマンドを調べましたので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の for Statements(for 文) と List Comprehensions (リスト内包表記)のパフォーマンスを比較してみました</title>
+      <link>https://va2577.github.io/post/160/</link>
+      <pubDate>Thu, 10 May 2018 15:50:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/160/</guid>
+      <description>&lt;p&gt;一般的にはリスト内包表記の方がパフォーマンスがいいそうです。
+今回は、自分で for 文とリスト内包表記のパフォーマンスを比較してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Flask を使ってみました</title>
+      <link>https://va2577.github.io/post/159/</link>
+      <pubDate>Wed, 09 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/159/</guid>
+      <description>&lt;p&gt;Flask を使ってみたので、メモです。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の内包表記を覚えました</title>
+      <link>https://va2577.github.io/post/151/</link>
+      <pubDate>Tue, 01 May 2018 18:36:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/151/</guid>
+      <description>&lt;p&gt;Python の内包表記は、他の言語から入ってくると独特に感じます。
+だけど、便利なので、書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で為替レートの折れ線グラフを表示してみました</title>
+      <link>https://va2577.github.io/post/149/</link>
+      <pubDate>Sun, 29 Apr 2018 17:33:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/149/</guid>
+      <description>&lt;p&gt;Python で、 &lt;a href=&#34;https://matplotlib.org/&#34;&gt;Matplotlib&lt;/a&gt; を使って、為替レートの折れ線グラフを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Jupyter Notebook をインストールしました</title>
+      <link>https://va2577.github.io/post/148/</link>
+      <pubDate>Sat, 28 Apr 2018 17:50:46 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/148/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt; については、以前、&lt;a href=&#34;https://va2577.github.io/post/64/&#34;&gt;記事を書いた&lt;/a&gt;ことがあって、そのときに使いました。
+今回は、 WSL の Ubuntu でも使えるようにインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu の Python に pip がない</title>
+      <link>https://va2577.github.io/post/79/</link>
+      <pubDate>Fri, 05 Jan 2018 16:49:48 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/79/</guid>
+      <description>&lt;p&gt;WSL の Ubuntu には Python が標準でインストールされていましたので、Python を主に使っていこうと思っています。
+が、Python で仮想環境を作成しようとしたらエラーになったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Docker のインストールから Docker の Anaconda(Jupyter, Numba) を使うまで</title>
+      <link>https://va2577.github.io/post/71/</link>
+      <pubDate>Sat, 08 Apr 2017 12:59:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/71/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/70/&#34;&gt;[Python]pip で Numba をインストールする時にエラーになる&lt;/a&gt;という状況でしたので、結果的に Docker で Anaconda を使うまでを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>pip で Numba をインストールする時にエラーになる</title>
+      <link>https://va2577.github.io/post/70/</link>
+      <pubDate>Fri, 07 Apr 2017 17:46:35 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/70/</guid>
+      <description>&lt;p&gt;GitHub にある誰かが作った Python のソースを動かしたくて、実行してみたのですが、Numba を使っているようで、Numba をインストールしようとしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook を使ってみました</title>
+      <link>https://va2577.github.io/post/64/</link>
+      <pubDate>Fri, 23 Dec 2016 20:35:45 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/64/</guid>
+      <description>&lt;p&gt;Jupyter Notebook を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python 3 をインストールして venv で環境を設定する</title>
+      <link>https://va2577.github.io/post/62/</link>
+      <pubDate>Mon, 19 Dec 2016 15:59:13 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/62/</guid>
+      <description>&lt;p&gt;Machine Intelligence な &lt;a href=&#34;https://www.tensorflow.org&#34;&gt;TensorFlow&lt;/a&gt; を使ってみたくて、その前に Python をインストールして、使えるところまで調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

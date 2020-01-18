@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>システムの質を評価する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>システムの質を評価する</h1>
+    
+      <div><time>February 24, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><img src="/img/96-01.png" alt=""></p>
+<p>以前、 <a href="/post/91/">R 倍数でトレードを考える</a>を書きましたので、 R 倍数の分布を作成してからのことを書いてみます。</p>
+<h2 id="期待-r-倍数">期待 R 倍数</h2>
+<blockquote>
+<p>一連の損益をリスク・リワード・レシオで表すということは、 R 倍数分布（と私は呼んでいる）を取得することを意味する。
+つまり、いかなるトレーディングシステムも R 倍数分布として表すことで、システムに対する理解が高められるだけでなく、そのシステムから将来的に期待できることを知ることもできるという長所がある。</p>
+<p><cite>新版　魔術師たちの心理学　第７章　優れたトレーディングシステムの開発に不可欠な６つの要素　Six Keys to a Great Trading System　拡大鏡を通して見た期待値　No.4693</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>リスク・リワード・レシオで考えることは期待値とどのような関係があるのだろうか。
+システムの R 倍数分布が分かったら、次はその分布の平均を取る必要がある。
+その平均 R 倍数がそのシステムの「期待値」である。
+そのシステムで何回もトレードを行った場合にそのシステムから期待できるもの、それがすなわち期待値、言い換えれば平均 R 値である。
+もっと分かりやすく言えば、本書で言う期待値とは、そのシステムで何回もトレードした場合、リスク１ドルにつき平均でどれくらいの利益がでるかを示したものである。</p>
+<p><cite>新版　魔術師たちの心理学　第７章　優れたトレーディングシステムの開発に不可欠な６つの要素　Six Keys to a Great Trading System　拡大鏡を通して見た期待値　No.4697</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>あなたのトレーディングシステムの完全な R 倍数分布が得られれば、それからはいろいろな情報を得ることができる。
+各トレードの R 倍数からは R 倍数の平均を計算することができるが、これを私は期待 R 倍数と呼んでいる。
+期待 R 倍数とは、そのシステムで多くのトレードを行った場合、そのシステムから平均して期待できる利益を R で表したものである。</p>
+<p><cite>タープ博士のトレード学校　ポジションサイジング入門　第３部　自分がトレードするそれぞれの市場タイプに合うトレーディングシステムの開発　Develop a Trading System That Fits Each Market Type You Plan to Trade　リワードとリスクで考えよう　No.2929</cite></p>
+</blockquote>
+<p>各トレードの R 倍数の平均を計算することで期待値が把握できるようです。</p>
+<p>翻訳の違いか、タープ博士が時期によって呼び方を変えたのかわかりませんが、これを &ldquo;平均 R 値&rdquo; または &ldquo;期待 R 倍数&rdquo; と呼んでいるそうです。
+後者の本の方が新しいので、以降は &ldquo;期待 R 倍数&rdquo; で統一して記載します。</p>
+<p><a href="/post/86/">2018 年 1 月のトレードの結果</a>の R 倍数から期待 R 倍数を計算してみます。</p>
+<table>
+<thead>
+<tr>
+<th align="right">R 倍数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">-0.94</td>
+</tr>
+<tr>
+<td align="right">-0.92</td>
+</tr>
+<tr>
+<td align="right">-0.98</td>
+</tr>
+<tr>
+<td align="right">2.94</td>
+</tr>
+<tr>
+<td align="right">2.98</td>
+</tr>
+<tr>
+<td align="right">-0.95</td>
+</tr>
+</tbody>
+</table>
+<p>なので、 0.355R になりました。</p>
+<blockquote>
+<p>R 倍数の平均が 0.68R ということはそのシステムの期待 R 倍数が 0.68R であることを意味する。
+つまり、そのシステムでは１トレード当たり 0.68R の利益が期待できるということである。</p>
+<p><cite>タープ博士のトレード学校　ポジションサイジング入門　第３部　自分がトレードするそれぞれの市場タイプに合うトレーディングシステムの開発　Develop a Trading System That Fits Each Market Type You Plan to Trade　リワードとリスクで考えよう　No.2933</cite></p>
+</blockquote>
+<p>なので、 0.355R ということは、１トレード当たり１万円の損失を許容すると、１万３５５０円の利益が期待できるということになるようです。</p>
+<h2 id="標準偏差">標準偏差</h2>
+<blockquote>
+<p>また、サンプルの標準偏差からは、そのシステムのパフォーマンスのばらつきを知ることができる。</p>
+<p><cite>タープ博士のトレード学校　ポジションサイジング入門　第３部　自分がトレードするそれぞれの市場タイプに合うトレーディングシステムの開発　Develop a Trading System That Fits Each Market Type You Plan to Trade　リワードとリスクで考えよう　No.2937</cite></p>
+</blockquote>
+<p>標準偏差は、 Microsoft Excel の関数で言うと、 <code>stdev</code> を使えば良さそうかな。
+これを 2018 年 1 月のトレードの結果に当てはめると、 2.017957 になりました。</p>
+<p>これだけでは何のことかわからないため、次へ進みます。</p>
+<h2 id="期待-r-倍数標準偏差レシオ">期待 R 倍数・標準偏差レシオ</h2>
+<blockquote>
+<p>通常、システムの質は、期待 R 倍数の標準偏差に対する比率で見ることができる。
+８トレードの例では、その比率は 0.36 になる。
+これはかなり良い数字だ。
+100 トレード以上では、この比率はもっと小さな数字になるが、 0.25 以上であればシステムとして合格である。</p>
+<p><cite>タープ博士のトレード学校　ポジションサイジング入門　第３部　自分がトレードするそれぞれの市場タイプに合うトレーディングシステムの開発　Develop a Trading System That Fits Each Market Type You Plan to Trade　リワードとリスクで考えよう　No.2938</cite></p>
+</blockquote>
+<p>期待 R 倍数の標準偏差に対する比率なので、</p>
+<p>期待 R 倍数 ÷ 標準偏差</p>
+<p>で計算すれば良さそうです。</p>
+<p>また、 2018 年 1 月のトレードの結果に当てはめると、 0.175 になりました。
+0.25 未満なので、システムとしては合格ではないのかもしれません…</p>
+<h2 id="システムの質">システムの質</h2>
+<blockquote>
+<p>システムの目的は、ポジションサイジングを通じて目標を達成しやすくすることにある。
+ポジションサイジングによる目標の達成しやすさは、そのシステムの R 倍数分布の標準偏差に対するそのシステムの期待値の比率（期待 R 倍数・標準偏差レシオ）で判断することができる。
+表 4.1 はそのおおよその目安を示したものだ。</p>
+<p>表 4.1</p>
+<table>
+<thead>
+<tr>
+<th align="left">期待 R 倍数・標準偏差レシオ</th>
+<th align="left">システムの質</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">0.16 ～ 0.19</td>
+<td align="left">質は悪いがトレードは可能</td>
+</tr>
+<tr>
+<td align="left">0.20 ～ 0.25</td>
+<td align="left">平均的</td>
+</tr>
+<tr>
+<td align="left">0.25 ～ 0.29</td>
+<td align="left">良い</td>
+</tr>
+<tr>
+<td align="left">0.30 ～ 0.49</td>
+<td align="left">優秀</td>
+</tr>
+<tr>
+<td align="left">0.50 ～ 0.69</td>
+<td align="left">とびきり優秀</td>
+</tr>
+<tr>
+<td align="left">0.70 以上</td>
+<td align="left">聖杯</td>
+</tr>
+</tbody>
+</table>
+<p><cite>タープ博士のトレード学校　ポジションサイジング入門　第４部　ポジションサイジングの重要性を理解する　Understanding the Importance of Position Sizing　システムの質とポジションサイジング　No.3215</cite></p>
+</blockquote>
+<p>上で計算した、期待 R 倍数・標準偏差レシオは 0.17 だったので、 &ldquo;質は悪いがトレードは可能&rdquo; なようです。
+なんとか、 &ldquo;平均的&rdquo; な売買ルールにしたいところです。</p>
+<h2 id="システムの質とはどれくらいのものなのか">システムの質とはどれくらいのものなのか</h2>
+<p>でも、これはかなり厳しい基準に感じています。</p>
+<p>試しに次のパターンで計算してみたいと思います。</p>
+<ol>
+<li>勝率: 60% 、 リスク・リワード・レシオ: 1</li>
+<li>勝率: 70% 、 リスク・リワード・レシオ: 1</li>
+<li>勝率: 50% 、 リスク・リワード・レシオ: 2</li>
+</ol>
+<p>計算は単純化して、各トレードの損益はリスク・リワード・レシオの通りで固定します。
+利益のトレードは 1R 、損失のトレードは -1R のように。</p>
+<h3 id="勝率-60-リスクリワードレシオ-1">勝率 60% 、リスク・リワード・レシオ 1</h3>
+<p>計算結果は次の通りでした。</p>
+<ul>
+<li>期待 R 倍数: 0.2</li>
+<li>標準偏差: 0.984…</li>
+<li>期待 R 倍数・標準偏差レシオ: 0.203…</li>
+<li>システムの質: 平均的</li>
+</ul>
+<h3 id="勝率-70-リスクリワードレシオ-1">勝率 70% 、リスク・リワード・レシオ 1</h3>
+<p>計算結果は次の通りでした。</p>
+<ul>
+<li>期待 R 倍数: 0.4</li>
+<li>標準偏差: 0.921…</li>
+<li>期待 R 倍数・標準偏差レシオ: 0.434…</li>
+<li>システムの質: 優秀</li>
+</ul>
+<h3 id="勝率-50-リスクリワードレシオ-2">勝率 50% 、リスク・リワード・レシオ 2</h3>
+<ul>
+<li>期待 R 倍数: 0.5</li>
+<li>標準偏差: 1.507…</li>
+<li>期待 R 倍数・標準偏差レシオ: 0.331…</li>
+<li>システムの質: 優秀</li>
+</ul>
+<p>あれ、意外と、ブログで見かけるデイトレーダーのみなさんは &ldquo;平均的&rdquo; を超えるシステムの質だったようです。
+もっと厳しい評価だと感じていたのですが、わたしの売買ルールの質が悪かっただけのようでした…</p>
+<h3 id="聖杯">聖杯</h3>
+<p>聖杯はどれくらいかと思い、計算してみると、次のようになりました。
+リスク・リワード・レシオを 1 とした場合の例です。</p>
+<ul>
+<li>勝率: 79%</li>
+<li>リスク・リワード・レシオ: 1</li>
+<li>期待 R 倍数: 0.58</li>
+<li>標準偏差: 0.818…</li>
+<li>期待 R 倍数・標準偏差レシオ: 0.708…</li>
+<li>システムの質: 聖杯</li>
+</ul>
+<p>すごいデイトレーダーの方だったら、リスク・リワード・レシオが 1 で、勝率が 80% 程度のトレードをしている人もいるかもしれないですね。
+いないかな…</p>
+<blockquote>
+<p>■期待 R 倍数・標準偏差レシオが 0.7 といった高い値を持つシステムを実現するのはほぼ不可能</p>
+<p>例えば、レシオが 0.4 のシステムに 30R の勝ちトレードを追加すると、 R の標準偏差の増加率は平均の増加率より大きくなるため、レシオは低下する。
+聖杯システムを得るためには、勝ちトレード数を大きく増やし、利益や損失のばらつきを小さくしなければならない。</p>
+<p><cite>タープ博士のトレード学校　ポジションサイジング入門　第４部　ポジションサイジングの重要性を理解する　Understanding the Importance of Position Sizing　システムの質とポジションサイジング　No.3227</cite></p>
+</blockquote>
+<p>レシオが意味するところは、ばらつきを小さくする必要があるというところのようです。</p>
+<h3 id="長期のトレンドフォロー">長期のトレンドフォロー</h3>
+<p>だから、長期のトレンドフォローのように、わずかなトレードから大きな利益を得る売買ルールだと、システムの質は下がると思います。</p>
+<p>次の例で計算してみます。</p>
+<ul>
+<li>勝率: 10%(トレード回数 100 回)
+<ul>
+<li>うち 2 回は 100R</li>
+<li>うち 8 回は 1R</li>
+<li>うち 90 回は -1R</li>
+</ul>
+</li>
+</ul>
+<p>結果は次のようになりました。</p>
+<ul>
+<li>期待 R 倍数: 1.18</li>
+<li>標準偏差: 14.198…</li>
+<li>期待 R 倍数・標準偏差レシオ: 0.0831…</li>
+<li>システムの質: 欄外</li>
+</ul>
+<p>100R が 2 回って現実的じゃないかな…</p>
+<p>でも、この計算でわかったことは、勝率 79% 、リスク・リワード・レシオ 1 の聖杯の売買ルールよりも、期待値を意味する &ldquo;期待 R 倍数&rdquo; が高いことです。
+聖杯の期待 R 倍数は 0.58 のところ、長期のトレンドフォローの期待 R 倍数は 1.18 です。
+倍以上もあります。
+にもかかわらず、システムの質としては、聖杯と欄外で両極端。</p>
+<p>こんなに極端なトレードをすることはないとは思いますが、期待値だけで評価していては不十分だと感じました。</p>
+<h2 id="終わり">終わり</h2>
+<p>次の項目を記録するようにしました。</p>
+<ul>
+<li>初期リスク</li>
+<li>R 倍数</li>
+<li>期待 R 倍数</li>
+<li>標準偏差</li>
+<li>期待 R 倍数・標準偏差レシオ</li>
+<li>システムの質</li>
+</ul>
+<p>このような評価は、システムトレードやメカニカルトレードについてだけ言っているように感じるかもしれませんが、裁量トレードでも、いつスランプになるかわからないので、そんなときに自分を助けてくれるような気がしています。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

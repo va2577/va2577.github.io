@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON と JUPYTER NOTEBOOK と PANDAS と HIGHCHARTS を使って PRICE CHANNEL を計算・表示してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python と Jupyter Notebook と pandas と Highcharts を使って Price Channel を計算・表示してみました</h1>
+    
+      <div><time>May 19, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Price Channel を計算してみました。
+せっかくなので、 python-highcharts を使ってローソク足と一緒に表示してみました。</p>
+<p>Price Channel は Donchian Channel や High Low(HL) Bands とも呼ばれるそうです。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 16.04 LTS</li>
+<li>Python 3.5.2</li>
+<li>jupyter-1.0.0</li>
+<li>numpy-1.14.3</li>
+<li>pandas-0.22.0</li>
+<li>python-highcharts 0.5.2</li>
+</ul>
+<h2 id="準備">準備</h2>
+<p>以前、<a href="/post/162/">ヒストリカルデータのリサンプリングをした</a>ときと同じものを使いました。</p>
+<h2 id="jupyter-notebook">Jupyter Notebook</h2>
+<p>Jupyter Notebook を使って 1 セルごとに実行しながら進めました。</p>
+<h3 id="モジュールを読み込む">モジュールを読み込む</h3>
+<p>npmpy と pandas と python-highcharts のモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">from</span> highcharts <span style="color:#f92672">import</span> Highstock
+</code></pre></div><h3 id="ヒストリカルデータを読み込む">ヒストリカルデータを読み込む</h3>
+<p>ヒストリカルデータを読み込みました。</p>
+<p>次のような CSV の形式になっています。</p>
+<pre><code>$ head USDJPY_1\ Min_Bid_2000.01.01_2018.01.01.csv
+Time (UTC),Open,High,Low,Close,Volume
+2003.05.04 21:00:00,118.94,118.952,118.94,118.952,253
+2003.05.04 21:01:00,118.961,118.967,118.958,118.967,154.6
+2003.05.04 21:02:00,118.972,118.972,118.955,118.955,219.7
+2003.05.04 21:03:00,118.953,118.961,118.949,118.949,309.9
+2003.05.04 21:04:00,118.953,118.953,118.946,118.946,229.4
+2003.05.04 21:05:00,118.952,118.954,118.944,118.944,112.2
+2003.05.04 21:06:00,118.95,118.952,118.945,118.945,170.2
+2003.05.04 21:07:00,118.947,118.956,118.947,118.947,124.5
+2003.05.04 21:08:00,118.946,118.954,118.934,118.934,355
+</code></pre><p>550 万件程度あるみたいです。</p>
+<pre><code>$ wc -l USDJPY_1\ Min_Bid_2000.01.01_2018.01.01.csv
+5509561 USDJPY_1 Min_Bid_2000.01.01_2018.01.01.csv
+</code></pre><p><code>pd.read_csv</code> で読み込んで DataFrame を生成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">filepath1 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USDJPY_1 Min_Bid_2000.01.01_2018.01.01.csv</span><span style="color:#e6db74">&#39;</span>
+dtype1 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+names1 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+<span style="color:#f92672">%</span>time df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(filepath_or_buffer<span style="color:#f92672">=</span>filepath1, dtype<span style="color:#f92672">=</span>dtype1, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, names<span style="color:#f92672">=</span>names1, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><p>結果です。</p>
+<pre><code> 	open 	high 	low 	close 	volume
+time 					
+2003-05-04 21:00:00 	118.940 	118.952 	118.940 	118.952 	253.0
+2003-05-04 21:01:00 	118.961 	118.967 	118.958 	118.967 	154.6
+2003-05-04 21:02:00 	118.972 	118.972 	118.955 	118.955 	219.7
+2003-05-04 21:03:00 	118.953 	118.961 	118.949 	118.949 	309.9
+2003-05-04 21:04:00 	118.953 	118.953 	118.946 	118.946 	229.4
+</code></pre><h3 id="eest-にする">EEST にする</h3>
+<p>時刻が UTC なので EEST にします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data2 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values }
+columns2 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+index2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>index <span style="color:#f92672">+</span> pd<span style="color:#f92672">.</span>DateOffset(hours<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+<span style="color:#f92672">%</span>time df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data2, columns<span style="color:#f92672">=</span>columns2, index<span style="color:#f92672">=</span>index2)
+df2<span style="color:#f92672">.</span>head()
+</code></pre></div><p>結果です。</p>
+<pre><code> 	open 	high 	low 	close 	volume
+time 					
+2003-05-05 00:00:00 	118.940 	118.952 	118.940 	118.952 	253.0
+2003-05-05 00:01:00 	118.961 	118.967 	118.958 	118.967 	154.6
+2003-05-05 00:02:00 	118.972 	118.972 	118.955 	118.955 	219.7
+2003-05-05 00:03:00 	118.953 	118.961 	118.949 	118.949 	309.9
+2003-05-05 00:04:00 	118.953 	118.953 	118.946 	118.946 	229.4
+</code></pre><h3 id="リサンプリング">リサンプリング</h3>
+<p>1 分足から日足にリサンプリングしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>time df3 <span style="color:#f92672">=</span> df2<span style="color:#f92672">.</span>resample(rule<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">D</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>ohlc()
+<span style="color:#f92672">%</span>time df4 <span style="color:#f92672">=</span> df2<span style="color:#f92672">.</span>resample(rule<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">D</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>sum()
+data5 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: df4[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values }
+columns5 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+<span style="color:#f92672">%</span>time df5 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data5, columns<span style="color:#f92672">=</span>columns5, index<span style="color:#f92672">=</span>df3<span style="color:#f92672">.</span>index)<span style="color:#f92672">.</span>dropna()
+df5<span style="color:#f92672">.</span>head()
+</code></pre></div><p>結果です。</p>
+<pre><code> 	open 	high 	low 	close 	volume
+time 					
+2003-05-05 	118.940 	119.046 	118.461 	118.603 	592866.9
+2003-05-06 	118.591 	118.751 	117.290 	117.500 	581707.0
+2003-05-07 	117.456 	117.830 	116.052 	116.303 	584496.2
+2003-05-08 	116.311 	116.969 	115.940 	116.823 	588236.7
+2003-05-09 	116.835 	117.612 	116.794 	117.151 	583132.9
+</code></pre><h3 id="高値と安値を計算する">高値と安値を計算する</h3>
+<p>ここから Price Channel の計算になります。</p>
+<p>n 期間の高値と安値を計算します。
+pandas の関数があるようで、最初、 <code>pd.rolling_max</code> と <code>pd.rolling_min</code> を使ったのですが、 pandas 0.22.0 では deprecated になっていました。
+<code>DataFrame.rolling(...).max()</code> と <code>DataFrame.rolling(...).min()</code> を使うようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">period <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+<span style="color:#f92672">%</span>time high <span style="color:#f92672">=</span> df5[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(window<span style="color:#f92672">=</span>period)<span style="color:#f92672">.</span>max()
+<span style="color:#f92672">%</span>time low <span style="color:#f92672">=</span> df5[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(window<span style="color:#f92672">=</span>period)<span style="color:#f92672">.</span>min()
+<span style="color:#f92672">%</span>time pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: high, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: low })<span style="color:#f92672">.</span>tail()
+</code></pre></div><p>期間は 20 にしてみました。</p>
+<p>結果です。</p>
+<pre><code>CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 4.02 ms
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 1.34 ms
+
+ 	high 	low
+time 		
+2017-12-28 	113.75 	111.993
+2017-12-29 	113.75 	112.030
+2017-12-30 	113.75 	112.030
+2018-01-01 	113.75 	112.030
+2018-01-02 	113.75 	112.030
+</code></pre><p>日足にリサンプリングしたデータは 4,100 件程度ありましたが、わたしの環境では 1 ミリ秒から 5 ミリ秒程度で計算できました。</p>
+<h3 id="highstock-向けの-dataframe-を作る">Highstock 向けの DataFrame を作る</h3>
+<p>python-highcharts に渡すデータの形式は 2 次元配列なので、それに合わせて DataFrame を作ります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">time6 <span style="color:#f92672">=</span> (df5<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>values <span style="color:#f92672">/</span><span style="color:#f92672">/</span> pd<span style="color:#f92672">.</span>Timedelta(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">1ms</span><span style="color:#e6db74">&#39;</span>))<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>int64)
+data6 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: time6, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: df5[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: df5[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: df5[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: df5[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values }
+columns6 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]
+df6 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data6, columns<span style="color:#f92672">=</span>columns6)
+data7 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: time6, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hlhigh</span><span style="color:#e6db74">&#39;</span>: high<span style="color:#f92672">.</span>values }
+columns7 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hlhigh</span><span style="color:#e6db74">&#39;</span>]
+df7 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data7, columns<span style="color:#f92672">=</span>columns7)
+data8 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: time6, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hllow</span><span style="color:#e6db74">&#39;</span>: low<span style="color:#f92672">.</span>values }
+columns8 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hllow</span><span style="color:#e6db74">&#39;</span>]
+df8 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data8, columns<span style="color:#f92672">=</span>columns8)
+df6<span style="color:#f92672">.</span>merge(df7)<span style="color:#f92672">.</span>merge(df8)<span style="color:#f92672">.</span>tail()
+</code></pre></div><p><code>df5</code> がローソク足のデータです。
+<code>df6</code> が Price Channel の高値のデータです。
+<code>df7</code> が Price Channel の安値のデータです。</p>
+<p>DataFrame を index なしの行と列の形式にして、 <code>df.values.tolist()</code> のようにすると 2 次元配列の形式で渡すことができるからこのようにしています。
+index ありの DataFrame でも簡単に列の順番を考慮した 2 次元配列の形式にすることができるのかな。
+<code>df.values</code> が ndarray だから、 DataFrame にしなくても ndarray にできれば十分そうだけど、 pandas と NumPy の行き来がまだ不慣れです。</p>
+<p>結果です。</p>
+<pre><code> 	time 	open 	high 	low 	close 	hlhigh 	hllow
+4098 	1514419200000 	113.279 	113.351 	112.664 	112.895 	113.75 	111.993
+4099 	1514505600000 	112.894 	112.969 	112.472 	112.678 	113.75 	112.030
+4100 	1514592000000 	112.680 	112.714 	112.647 	112.658 	113.75 	112.030
+4101 	1514764800000 	112.658 	112.658 	112.658 	112.658 	113.75 	112.030
+4102 	1514851200000 	112.658 	112.789 	112.570 	112.773 	113.75 	112.030
+</code></pre><h3 id="highstock-のローソク足と-price-channel-を表示する">Highstock のローソク足と Price Channel を表示する</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">H <span style="color:#f92672">=</span> Highstock()
+
+H<span style="color:#f92672">.</span>add_data_set(df6<span style="color:#f92672">.</span>values<span style="color:#f92672">.</span>tolist(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">candlestick</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">米ドル/円</span><span style="color:#e6db74">&#39;</span>)
+H<span style="color:#f92672">.</span>add_data_set(df7<span style="color:#f92672">.</span>values<span style="color:#f92672">.</span>tolist(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">line</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">High</span><span style="color:#e6db74">&#39;</span>)
+H<span style="color:#f92672">.</span>add_data_set(df8<span style="color:#f92672">.</span>values<span style="color:#f92672">.</span>tolist(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">line</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Low</span><span style="color:#e6db74">&#39;</span>)
+
+options <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">plotOptions</span><span style="color:#e6db74">&#39;</span>: {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">line</span><span style="color:#e6db74">&#39;</span>: {
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">lineWidth</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">1</span>
+        }
+    },
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">rangeSelector</span><span style="color:#e6db74">&#39;</span>: {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">selected</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">1</span>
+    },
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>: {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">米ドル/円 daily</span><span style="color:#e6db74">&#39;</span>
+    }
+}
+H<span style="color:#f92672">.</span>set_dict_options(options)
+
+H
+</code></pre></div><p>ローソク足のデータは <code>H.add_data_set(df6.values.tolist(), 'candlestick', '米ドル/円')</code> のようにして渡しています。</p>
+<p>Price Channel のデータは <code>H.add_data_set(df7.values.tolist(), 'line', 'High')</code> と <code>H.add_data_set(df8.values.tolist(), 'line', 'Low')</code> のように 2 つの折れ線グラフのデータとして渡しています。</p>
+<p>オプションは Price Channel の折れ線グラフの線が太かったので細くしました。
+それから、チャートを表示する範囲の初期値を 3m にしました。</p>
+<p>結果は <a href="https://nbviewer.jupyter.org/gist/va2577/5d3a3fdf5c8586398fa9bc1046cf7aae#Highstock-%E3%81%AE%E3%83%AD%E3%83%BC%E3%82%BD%E3%82%AF%E8%B6%B3%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B">Jupyter Notebook Viewer</a> から見ることができます。</p>
+<h3 id="highstock-の-sma-単純移動平均線">Highstock の SMA (単純移動平均線)</h3>
+<p>Highstock のチャートのタイプに sma があったので、 python-highcharts でも使えるか試してみました。</p>
+<p>が、 <code>#OptionTypeError: Not An Accepted Option Type: sma</code> のようなエラーになってしまいました。
+sma は使えないようでした。</p>
+<p>pandas で計算すればいいや。</p>
+<h2 id="gist-のソース">Gist のソース</h2>
+<p><a href="https://gist.github.com/va2577/5d3a3fdf5c8586398fa9bc1046cf7aae">Gist</a> にアップしました。</p>
+<p><a href="https://nbviewer.jupyter.org/gist/va2577/5d3a3fdf5c8586398fa9bc1046cf7aae">Jupyter Notebook Viewer</a> からチャートを見ることができます。</p>
+<h2 id="終わり">終わり</h2>
+<p>今はインディケーターは使わなくなったのですが、 Price Channel は<a href="https://www.amazon.co.jp/dp/4198624267">タートルズ</a>も使っていたブレイクアウトの戦略を、自分でも検証してみたかったので計算してみました。</p>
+<p>計算したデータで検証してみたいと思います。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

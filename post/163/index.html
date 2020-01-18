@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>UBUNTU BASH で CRLF の改行コードのファイルを探してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Ubuntu Bash で CRLF の改行コードのファイルを探してみました</h1>
+    
+      <div><time>May 13, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>WSL(Windows Subsystem for Linux) で Ubuntu を使っていると、 Windows で CRLF で編集したテキストファイルをそのまま Ubuntu に持ってきてしまうことがあります。
+そういったファイルがあるか確認したかったので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 16.04 LTS</li>
+</ul>
+<h2 id="grep-コマンド">grep コマンド</h2>
+<p><code>grep</code> コマンドで CRLF を探せないかなと思って <code>man grep</code> してみました。</p>
+<blockquote>
+<p>Matcher Selection</p>
+<p>-P, &ndash;perl-regexp</p>
+<p>Interpret the pattern as a Perl-compatible regular expression (PCRE). This is highly experimental and grep -P may warn of unimplemented features.</p>
+</blockquote>
+<p><code>-P</code> オプションは Perl と互換のある正規表現が使えるようです。
+<code>grep</code> コマンドの正規表現はパターンがいくつかあるみたいです。</p>
+<ul>
+<li>extended regular expression (ERE, see below)</li>
+<li>basic regular expression (BRE, see below)</li>
+<li>Perl-compatible regular expression (PCRE)</li>
+</ul>
+<p>ERE も BRE も試してみましたがダメでした。
+CR のエスケープ文字である <code>\r</code> や LF のエスケープ文字である <code>\n</code> を認識してくれませんでした。
+ので、 PCRE を使うことにしました。</p>
+<p>PCRE は実験的な機能なようです。
+実装されていない機能は警告してくれるようなので、このオプションを使ってもそれ以外に不都合はなさそうかな。</p>
+<p>Perl と互換性のある正規表現は、 <code>\r</code> と記述することで CR 、 <code>\n</code> と記述することで LF とマッチさせる意味になるようです。</p>
+<blockquote>
+<p>General Output Control</p>
+<p>-l, &ndash;files-with-matches</p>
+<p>Suppress normal output; instead print the name of each input file from which output would normally have been printed. The scanning will stop on the first match.</p>
+</blockquote>
+<p><code>grep</code> コマンドの標準だと見つかった行を表示してくれるのですが、 <code>-l</code> オプションをつけるとファイルの名前を出力してくれるようです。
+ファイルの中で複数の行が見つかっても 1 回だけファイルの名前を出力してくれました。</p>
+<blockquote>
+<p>File and Directory Selection</p>
+<p>-I</p>
+<p>Process a binary file as if it did not contain matching data; this is equivalent to the &ndash;binary-files=without-match option.</p>
+</blockquote>
+<p><code>-I</code> オプションをつけるとバイナリーファイルを対象外にしてくれるようです。</p>
+<blockquote>
+<p>File and Directory Selection</p>
+<p>-r, &ndash;recursive</p>
+<p>Read all files under each directory, recursively, following symbolic links only if they are on the command line. Note that if no file operand is given, grep searches the working directory. This is equivalent to the -d recurse option.</p>
+</blockquote>
+<p><code>-r</code> オプションをつけるとディレクトリーを再帰的に検索してくれるようです。</p>
+<h3 id="準備">準備</h3>
+<p>次のファイルを用意しました。</p>
+<ul>
+<li>binary</li>
+<li>CRLF</li>
+<li>CR</li>
+<li>LF</li>
+</ul>
+<pre><code>$ ls
+binary.exe  crlf.csv  cr.md  lf.txt
+</code></pre><h3 id="cr-を含むファイルを探す">CR を含むファイルを探す</h3>
+<p>調べたオプションを参考に <code>grep</code> コマンドを実行してみます。</p>
+<pre><code>$ grep -PlIr '\r' .
+./cr.md
+./crlf.csv
+</code></pre><p>正規表現のパターンは <code>\r</code> と記述しました。
+<code>grep</code> コマンドがテキストファイルを扱うときに LF で区切っていることから LF 自体をマッチさせることができないからです。
+結果、 CR が <strong>含まれるもの</strong> (CRLF のファイルと CR のファイル)が検索できました。</p>
+<p>カレントディレクトリーだけを対象にするなら、再帰的な検索のオプション (<code>-r</code>) を削除して、次のように記述しても同じです。
+この場合の引数は、ディレクトリーじゃなくてファイルになるので、ワイルドカードの <code>*</code> を指定しました。</p>
+<pre><code>$ grep -PlI '\r' *
+crlf.csv
+cr.md
+</code></pre><p>これらのオプションだと CRLF のファイルは探せますが、 CR のファイルも探してしまいます。</p>
+<h3 id="crlf-のファイルを探す">CRLF のファイルを探す</h3>
+<p>CRLF のファイルだけを探すオプションがあるか、もう少し調べてみました。</p>
+<blockquote>
+<p>Other Options</p>
+<p>-z, &ndash;null-data</p>
+<p>Treat the input as a set of lines, each terminated by a zero byte (the ASCII NUL character) instead of a newline. Like the -Z or &ndash;null option, this option can be used with commands like sort -z to process arbitrary file names.</p>
+</blockquote>
+<p><code>-z</code> オプションをつけると改行コードで区切らずに、 0 バイトの (ASCII 制御文字の NUL) で区切ってくれるようです。
+LF は区切り文字にならないので、マッチの対象になります。
+ので、 CR は <code>\r</code> で、 LF は <code>\n</code> で、探すことができるようです。</p>
+<p><code>-z</code> オプションをつけて実行してみました。
+正規表現のパターンは <code>\r\n</code> のように記述しました。</p>
+<pre><code>$ grep -PlIrz '\r\n' .
+./binary.exe
+./crlf.csv
+</code></pre><p>CR だけのファイルは対象外になったみたいです。
+代わりにバイナリーのファイルが対象になってしまいました。
+<code>-I</code> オプション(バイナリーファイルを対象外にする)が無効になってしまったようです。
+<code>-z</code> オプションは ASCII 制御文字の NUL で区切るために、 CR や LF とかの ASCII 制御文字を扱うことになり、結果、テキストファイルとしてではなく、バイナリーファイルとして扱うことになるように見えました。</p>
+<p><code>-I</code> オプションは無駄なので削除して、次のようなコマンドになりました。</p>
+<pre><code>$ grep -Plrz '\r\n' .
+./binary.exe
+./crlf.csv
+</code></pre><h3 id="cr-のファイルを探す">CR のファイルを探す</h3>
+<p>CR だけを探す場合は次のコマンドになりました。</p>
+<pre><code>$ grep -Plrz '(?=.*\r)(?!.*\r\n)' .
+./binary.exe
+./cr.md
+</code></pre><p><code>\r</code> を対象にして、 <code>\r\n</code> を含まないもの、という正規表現のパターンを指定しました。</p>
+<h3 id="lf-のファイルを探す">LF のファイルを探す</h3>
+<p>LF だけを探す場合は次のコマンドになりました。</p>
+<pre><code>$ grep -Plrz '(?=.*\n)(?!.*\r\n)' .
+./binary.exe
+./lf.txt
+</code></pre><p><code>\n</code> を対象にして、 <code>\r\n</code> を含まないもの、という正規表現のパターンを指定しました。</p>
+<h3 id="大きなファイル">大きなファイル</h3>
+<p>このオプションだと、 ASCII 制御文字の NUL で区切っているので、 NUL がないようなテキストファイルの場合、 1 つファイル全体を 1 つの区切りとして扱うことになると思うのですが、巨大なファイルを検索させたらどうなるのかな。
+大丈夫かな。</p>
+<p>次ファイルを検索してみました。</p>
+<ul>
+<li>1 行当たり 500 文字</li>
+<li>75 万行</li>
+<li>537MB</li>
+</ul>
+<pre><code>$ time grep -Plrz '(?=.*\n)(?!.*\r\n)' .
+./big.txt
+./binary.exe
+./lf.txt
+
+real    0m17.719s
+user    0m10.938s
+sys     0m6.547s
+</code></pre><p>かなり遅くなりました。</p>
+<p>大きなファイルが検索対象に含まれないようにして時間を測ってみます。</p>
+<pre><code>$ time grep -Plrz '(?=.*\n)(?!.*\r\n)' --exclude=big.txt .
+./binary.exe
+./lf.txt
+
+real    0m0.024s
+user    0m0.000s
+sys     0m0.031s
+</code></pre><p>大きなファイルがあると 17.719 秒、大きなファイルがないと 0.024 秒。
+あまり実用的じゃないかもしれません。</p>
+<h3 id="その他のオプション">その他のオプション</h3>
+<p>それ以外にもオプションがあるようで、気になったのを引用しておきます。</p>
+<blockquote>
+<p>File and Directory Selection</p>
+<p>&ndash;exclude=GLOB</p>
+<p>Skip files whose base name matches GLOB (using wildcard matching). A file-name glob can use *, ?, and [&hellip;] as wildcards, and \ to quote a wildcard or backslash character literally.</p>
+</blockquote>
+<p><code>--exclude=xxx</code> のオプションをつけると指定したファイルを対象外にしてくれるようです。
+xxx のところはワイルドカードで指定することができるようです。</p>
+<pre><code>$ grep -PlIr '\r' --exclude=*.csv .
+./cr.md
+</code></pre><p>.csv ファイルが対象外になりました。</p>
+<blockquote>
+<p>File and Directory Selection</p>
+<p>&ndash;include=GLOB</p>
+<p>Search only files whose base name matches GLOB (using wildcard matching as described under &ndash;exclude).</p>
+</blockquote>
+<p><code>--include=xxx</code> オプションをつけると指定したファイルのみを検索してくれるようです。
+<code>--exclude=xxx</code> と同じで、 xxx のところはワイルドカードで指定することができるようです。</p>
+<pre><code>$ grep -PlIr '\r' --include=*.csv .
+./crlf.csv
+</code></pre><p>.csv ファイルだけが対象になりました。</p>
+<!-- カレントディレクトリーの CSV ファイルだけを対象にするなら、次のようにしても同じです。
+
+```
+$ grep -PlI '\r' *.csv
+crlf.csv
+```
+
+`-r` オプションを削除して、再帰的にディレクトリーを検索しないようにしました。
+代わりにファイルを指定する引数に `*.csv` のように指定しました。 -->
+<h2 id="file-コマンド">file コマンド</h2>
+<blockquote>
+<pre><code>find . -not -type d -exec file &quot;{}&quot; &quot;;&quot; | grep CRLF
+</code></pre>
+<p><cite><a href="https://stackoverflow.com/questions/73833/">bash - How do you search for files containing dos line endings (CRLF) with grep on Linux? - Stack Overflow</a></cite></p>
+</blockquote>
+<p>Stack Overflow を見ていたら <code>file</code> コマンドを使ったパターンがありましたので、 <code>file</code> コマンドも調べてみました。</p>
+<blockquote>
+<p>file — determine file type</p>
+</blockquote>
+<p>ファイルのタイプを決定してくれる(定めてくれる、教えてくれる)コマンドのようです。
+初めて知りました。</p>
+<blockquote>
+<p>file tests each argument in an attempt to classify it. There are three sets of tests, performed in this order: filesystem tests, magic tests, and language tests. The first test that succeeds causes the file type to be printed.</p>
+</blockquote>
+<p>ファイルシステムテスト、マジックテスト、言語テストの 3 つのテストによって決定してくれるようです。
+コマンドの内部のお話なのであまり詳しく知っておかなくてもいいのかもしれません。</p>
+<blockquote>
+<p>The type printed will usually contain one of the words text (the file contains only printing characters and a few common control characters and is probably safe to read on an ASCII terminal), executable (the file contains the result of compiling a program in a form understandable to some UNIX kernel or another), or data meaning anything else (data is usually “binary” or non-printable). Exceptions are well-known file formats (core files, tar archives) that are known to contain binary data. When adding local definitions to /etc/magic, make sure to preserve these keywords. Users depend on knowing that all the readable files in a directory have the word “text” printed. Don't do as Berkeley did and change “shell commands text” to “shell script”.</p>
+</blockquote>
+<p>ファイルシステムテストとマジックテストについて記載されているようです。
+ここもあまり詳しく知っていなくてもよいのかもしれません。</p>
+<blockquote>
+<p>If a file does not match any of the entries in the magic file, it is examined to see if it seems to be a text file. ASCII, ISO-8859-x, non-ISO 8-bit extended-ASCII character sets (such as those used on Macintosh and IBM PC systems), UTF-8-encoded Unicode, UTF-16-encoded Unicode, and EBCDIC character sets can be distinguished by the different ranges and sequences of bytes that constitute printable text in each set. If a file passes any of these tests, its character set is reported. ASCII, ISO-8859-x, UTF-8, and extended-ASCII files are identified as “text” because they will be mostly readable on nearly any terminal; UTF-16 and EBCDIC are only “character data” because, while they contain text, it is text that will require translation before it can be read. In addition, file will attempt to determine other characteristics of text-type files. If the lines of a file are terminated by CR, CRLF, or NEL, instead of the Unix-standard LF, this will be reported. Files that contain embedded escape sequences or overstriking will also be identified.</p>
+</blockquote>
+<p>言語テストについて記載されているようです。
+文字セットとかが影響するようです。
+テキストファイルと決定されると、テキストファイルのほかの特性についても調べてくれるようです。
+そこに改行コードの情報もあるようです。</p>
+<p><code>file</code> コマンドを実行してみました。</p>
+<pre><code>$ file *
+binary.exe: PE32 executable (GUI) Intel 80386, for MS Windows
+crlf.csv:   ASCII text, with CRLF line terminators
+cr.md:      ASCII text, with CR line terminators
+lf.txt:     ASCII text
+</code></pre><p>テキストファイルには &ldquo;xxx text&rdquo; と表示してくれるようです。
+いくつか文字セットを変えたファイルを用意して確認してみたところ次の通りでした。</p>
+<ul>
+<li>ASCII 文字だけ: &ldquo;ASCII text&rdquo;</li>
+<li>UTF-8: &ldquo;UTF-8 Unicode text&rdquo;</li>
+<li>Shift JIS: &ldquo;Non-ISO extended-ASCII text&rdquo;</li>
+</ul>
+<p>CRLF のファイルだと &ldquo;, with CRLF line terminators&rdquo; も併せて表示してくれるようです。
+CR のファイルだと &ldquo;, with CR line terminators&rdquo; も併せて表示してくれるようです。
+LF のファイルは Unix の標準の改行コードなので &ldquo;, with &hellip;&rdquo; は表示されないようです。</p>
+<h3 id="crlf-のファイルを探す-1">CRLF のファイルを探す</h3>
+<p>CRLF のファイルだけ検索する場合は次のように入力すればよさそうです。</p>
+<pre><code>$ file * | grep CRLF
+crlf.csv:   ASCII text, with CRLF line terminators
+</code></pre><h3 id="cr-のファイルを探す-1">CR のファイルを探す</h3>
+<p>CR のファイルだけ検索する場合は次のように入力すればよさそうです。</p>
+<pre><code>$ file * | grep 'with CR line'
+cr.md:      ASCII text, with CR line terminators
+</code></pre><h3 id="lf-のファイルを探す-1">LF のファイルを探す</h3>
+<p>LF のファイルだけ検索する場合は次のように入力すればよさそうです。</p>
+<pre><code>$ file * | grep -e 'text$'
+lf.txt:     ASCII text
+</code></pre><p>&ldquo;text&rdquo; で終わる行を検索しました。</p>
+<h3 id="再帰的に探す">再帰的に探す</h3>
+<p>再帰的に検索する場合は、 Stack Overflow にあったように、 <code>find</code> と組み合わせるとできそうです。</p>
+<blockquote>
+<p>find - search for files in a directory hierarchy</p>
+</blockquote>
+<pre><code>$ find . -type f | xargs file
+./binary.exe: PE32 executable (GUI) Intel 80386, for MS Windows
+./cr.md:      ASCII text, with CR line terminators
+./crlf.csv:   ASCII text, with CRLF line terminators
+./lf.txt:     ASCII text
+</code></pre><blockquote>
+<p>-type c</p>
+<p>File is of type c:</p>
+<p>f      regular file</p>
+</blockquote>
+<p><code>find</code> コマンドはオプションなしだとディレクトリーも返してくるので、 <code>-type f</code> のオプションをつけて通常のファイルだけを対象にしました。</p>
+<blockquote>
+<p>xargs - build and execute command lines from standard input</p>
+</blockquote>
+<p><code>xargs</code> コマンドは標準入力からの複数の行をまとめて繰り返し実行してくれます。</p>
+<p>CRLF のファイルだけ表示するには、またパイプでつなげて <code>grep</code> コマンドに渡してあげればよさそうです。</p>
+<pre><code>$ find . -type f | xargs file | grep CRLF
+./crlf.csv:   ASCII text, with CRLF line terminators
+</code></pre><h3 id="大きなファイル-1">大きなファイル</h3>
+<p><code>grep</code> コマンドでも使った次ファイルを検索してみました。</p>
+<ul>
+<li>1 行当たり 500 文字</li>
+<li>75 万行</li>
+<li>537MB</li>
+</ul>
+<p>一瞬で終わりました。
+<code>find</code> コマンドはファイルの大きさはあまり問題にならないのかもしれません。</p>
+<h2 id="終わり">終わり</h2>
+<p>Bash は 1 つのコマンドでたくさんのオプションをつけて無理やり実現しようとするより、複数の簡単なコマンドを組み合わせて実現した方がよさそうでした。</p>
+<p><code>file</code> コマンドを使ったパターンだとバイナリーファイルも対象外になるし、大きなファイルが検索対象にあっても遅くならなかったので、実用的かなと思います。</p>
+<h2 id="参考">参考</h2>
+<p>この記事の参照のない引用は <code>man xxx</code> からコピーしてきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

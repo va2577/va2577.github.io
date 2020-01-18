@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON サマータイム (DST) について調べました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python サマータイム (DST) について調べました</h1>
+    
+      <div><time>May 24, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/173/">前回の記事</a>でヒストリカルデータを使うのにサマータイムを考慮する必要があったので調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6</li>
+<li>pandas 0.23.0</li>
+</ul>
+<h2 id="サマータイム-dst">サマータイム (DST)</h2>
+<blockquote>
+<p>2006年までは、4月の第1日曜日午前2時から10月の最終日曜日午前2時までの期間の適用であったが、2007年以降は、3月の第2日曜日午前2時から11月の第1日曜日午前2時までの期間の適用に変更された。</p>
+<p><cite><a href="https://ja.wikipedia.org/wiki/%E6%9D%B1%E9%83%A8%E5%A4%8F%E6%99%82%E9%96%93">東部夏時間 - Wikipedia</a></cite></p>
+</blockquote>
+<p>2007 年以降とそれ以前で期間の定義が違うみたいです。</p>
+<p>この定義はアメリカのもののようです。
+現在の日本ではサマータイムってないので、世界のすべての国が同じ期間の定義でサマータイムを適用しているものだと思っていました。</p>
+<blockquote>
+<p>3月最終日曜日の午前3時（夏時間では午前4時）から10月最終日曜日の午前3時（夏時間では午前4時）までは、夏時間の東ヨーロッパ夏時間(Eastern European Summer Time) が使用される。</p>
+<p><cite><a href="https://ja.wikipedia.org/wiki/%E6%9D%B1%E3%83%A8%E3%83%BC%E3%83%AD%E3%83%83%E3%83%91%E6%99%82%E9%96%93">東ヨーロッパ時間 - Wikipedia</a></cite></p>
+</blockquote>
+<p>ヨーロッパあたりはまた別の期間の定義で適用しているようでした。</p>
+<p>外国為替ではアメリカの定義が適用されているようなので、この定義に従うことにしました。</p>
+<p><a href="/post/173/">前回の記事</a>で作った日足のヒストリカルデータでは、 UTC+3 や UTC+2 を設定することで月曜日の 0 時から始まるようにしましたけれども、サマータイムの期間の定義だけアメリカに従うって、少し混乱しました。
+UTC+3 や UTC+2 は東ヨーロッパ時間なのに、アメリカ(東部標準時(UTC-5)や東部夏時間(UTC-4))のサマータイムの定義なの？って。
+まあ、 UTC+3 や UTC+2 を設定したのは便宜的に日足を 5 本にしたかったからですし、外国為替のサマータイムがアメリカの期間の定義を適用しているのはルールですし、そういうものだと思って進めます。</p>
+<p>やりたいことは前回の記事に書きましたが、日足のヒストリカルデータを作るにあたって、サマータイムのときは UTC+3 に、それ以外のときは UTC+2 に設定したいということでした。</p>
+<h2 id="モジュール">モジュール</h2>
+<p>ここから Jupyter Notebook を使ってセルに入力しながら進めていきます。</p>
+<p>最初にモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> calendar
+<span style="color:#f92672">import</span> datetime
+<span style="color:#f92672">import</span> functools
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> pytz
+</code></pre></div><h2 id="pandas">pandas</h2>
+<p>pandas.Timestamp の dst 関数でサマータイムを判断することができるようでした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># pandasのTimestampのdst()でDSTを判断できる</span>
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-03-11 06:59:59</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0)</span>
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-03-11 07:00:00</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0, 3600)</span>
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-11-04 05:59:59</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0, 3600)</span>
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-11-04 06:00:00</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0)</span>
+</code></pre></div><p>datetime.timedelta の 2 つ目は seconds のようで、サマータイムは 3600 秒、 1 時間早くなっていることがわかります。</p>
+<p>2018 年の東部標準時から東部夏時間に切り替わる時間、東部夏時間から東部標準時に切り替わる時間を確認しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># サマータイムは次のようになっている</span>
+<span style="color:#75715e"># サマータイムが始まる日のESTの2時になると1時間進んでDSTの3時になる</span>
+<span style="color:#75715e"># サマータイムが終わる日のDSTの2時になると1時間戻ってESTの1時になる</span>
+
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-03-11 06:59:59</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>) <span style="color:#75715e"># Timestamp(&#39;2018-03-11 01:59:59-0500&#39;, tz=&#39;America/New_York&#39;)</span>
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-03-11 07:00:00</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>) <span style="color:#75715e"># Timestamp(&#39;2018-03-11 03:00:00-0400&#39;, tz=&#39;America/New_York&#39;)</span>
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-11-04 05:59:59</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>) <span style="color:#75715e"># Timestamp(&#39;2018-11-04 01:59:59-0400&#39;, tz=&#39;America/New_York&#39;)</span>
+pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-11-04 06:00:00</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>) <span style="color:#75715e"># Timestamp(&#39;2018-11-04 01:00:00-0500&#39;, tz=&#39;America/New_York&#39;)</span>
+</code></pre></div><p>ニューヨークのタイムゾーンでは、サマータイムが始まる日の 2 時からの 1 時間がないみたいです。
+逆にサマータイムが終わる日の 1 時からの 1 時間は東部夏時間と東部標準時で重複するみたいです。</p>
+<p>サマータイムの扱いを理解したところで、 pandas.Timestamp のパフォーマンスを計測してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># pandasのTimestampは遅い</span>
+<span style="color:#f92672">%</span>time [pd<span style="color:#f92672">.</span>Timestamp(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2018-03-11 06:59:59</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>tz_convert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dst() <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000000</span>)]
+</code></pre></div><p>ヒストリカルデータの 1 分足は 500 万行程度あったので、とりあえず 100 万行くらいで試してみました。</p>
+<p>結果です。</p>
+<pre><code class="language-console" data-lang="console">CPU times: user 44.3 s, sys: 2.48 s, total: 46.8 s
+Wall time: 45.4 s
+</code></pre><p>遅いです。
+ただ、サマータイムかそうでないか判断するだけで 45 秒もかかることになります。
+500 万行だとこの 5 倍はかかる見込みです。</p>
+<h2 id="pytz">pytz</h2>
+<p>pytz でもサマータイムを判断できるようでした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># pytzでもDSTを考慮してくれる</span>
+<span style="color:#75715e"># pandasのdst()はpytzのdst()なのかな？</span>
+pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>localize(datetime<span style="color:#f92672">.</span>datetime(<span style="color:#ae81ff">2018</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">59</span>, <span style="color:#ae81ff">59</span>))<span style="color:#f92672">.</span>astimezone(pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>))<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0)</span>
+pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>localize(datetime<span style="color:#f92672">.</span>datetime(<span style="color:#ae81ff">2018</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>astimezone(pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>))<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0, 3600)</span>
+pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>localize(datetime<span style="color:#f92672">.</span>datetime(<span style="color:#ae81ff">2018</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">59</span>, <span style="color:#ae81ff">59</span>))<span style="color:#f92672">.</span>astimezone(pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>))<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0, 3600)</span>
+pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UTC</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>localize(datetime<span style="color:#f92672">.</span>datetime(<span style="color:#ae81ff">2018</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>astimezone(pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>))<span style="color:#f92672">.</span>dst() <span style="color:#75715e"># datetime.timedelta(0)</span>
+</code></pre></div><p>pytz でもパフォーマンスを計測してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># pytzは遅い</span>
+tzny <span style="color:#f92672">=</span> pytz<span style="color:#f92672">.</span>timezone(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#f92672">%</span>time [pytz<span style="color:#f92672">.</span>utc<span style="color:#f92672">.</span>localize(datetime<span style="color:#f92672">.</span>datetime(<span style="color:#ae81ff">2018</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">59</span>, <span style="color:#ae81ff">59</span>))<span style="color:#f92672">.</span>astimezone(tzny)<span style="color:#f92672">.</span>dst() <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000000</span>)]
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">CPU times: user 14.7 s, sys: 31.2 ms, total: 14.7 s
+Wall time: 14.7 s
+</code></pre><p>pandas.Timestamp より速いみたいでした。
+けれども、まだ遅いです。</p>
+<h2 id="datetime">datetime</h2>
+<p>Python の標準の datetime でもパフォーマンスを計測してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># datetimeは比較的速い</span>
+<span style="color:#f92672">%</span>time [datetime<span style="color:#f92672">.</span>datetime(<span style="color:#ae81ff">2018</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">59</span>, <span style="color:#ae81ff">59</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000000</span>)]
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">CPU times: user 781 ms, sys: 156 ms, total: 938 ms
+Wall time: 996 ms
+</code></pre><p>1 秒以内で 100 万行を処理することができました。</p>
+<p>でも datetime だけではサマータイムを判断することができないみたいでした。</p>
+<h2 id="サマータイムの実装">サマータイムの実装</h2>
+<p>ここまでの考え方として、 1 分足のヒストリカルデータの 500 万行に対して 1 行ごとにサマータイムであるか判断しようとしていました。
+するとどうしても 500 万行に対しての処理が必要になります。</p>
+<p>そうじゃなくて、サマータイムの期間を求めて、その期間にあるものをまとめて UTC+3 に設定する。
+それ以外の期間にあるものはまとめて UTC+2 に設定する。
+のようにすれば 500 万行の繰り返しは必要なさそうだと考えました。</p>
+<p>pytz の dst のような関数が「サマータイムの期間はいつか？」という結果を返してくれればいいのですけれども、そういう関数はなさそうでした。
+「この日時はサマータイムか？」という結果を返す関数しかなさそうでした。</p>
+<p>だから datetime を使ってサマータイムの期間を自分で求めることにしました。</p>
+<p>Calendar クラスの itermonthdays2 を使うと、その年月の日と曜日のイテレーターを返してくれるみたいです。
+これを使って 3 月の第 2 日曜日と 11 月の第 1 日曜日を判断しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dstdt</span>(year, month, week, hours):
+    day <span style="color:#f92672">=</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> calendar<span style="color:#f92672">.</span>Calendar()<span style="color:#f92672">.</span>itermonthdays2(year, month) <span style="color:#66d9ef">if</span> i[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> i[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> calendar<span style="color:#f92672">.</span>SUNDAY][week][<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">return</span> datetime<span style="color:#f92672">.</span>datetime(year, month, day, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">+</span> datetime<span style="color:#f92672">.</span>timedelta(hours<span style="color:#f92672">=</span><span style="color:#f92672">-</span>hours)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dst</span>(year):
+    dic <span style="color:#f92672">=</span> {
+        <span style="color:#ae81ff">1918</span>: [(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>), (<span style="color:#ae81ff">10</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>)],
+        <span style="color:#ae81ff">2007</span>: [(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>), (<span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>)]
+    }
+    key <span style="color:#f92672">=</span> functools<span style="color:#f92672">.</span>reduce(<span style="color:#66d9ef">lambda</span> x, y: x <span style="color:#66d9ef">if</span> year <span style="color:#f92672">&lt;</span> y <span style="color:#66d9ef">else</span> y, dic<span style="color:#f92672">.</span>keys(), <span style="color:#ae81ff">0</span>)
+    <span style="color:#66d9ef">if</span> key <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#66d9ef">return</span> []
+    <span style="color:#66d9ef">return</span> [dstdt(year, i[<span style="color:#ae81ff">0</span>], i[<span style="color:#ae81ff">1</span>], i[<span style="color:#ae81ff">2</span>]) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dic[key]]
+
+year <span style="color:#f92672">=</span> <span style="color:#ae81ff">2018</span>
+<span style="color:#f92672">%</span>time dst(year)
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 102 µs
+
+[datetime.datetime(2018, 3, 11, 7, 0), datetime.datetime(2018, 11, 4, 6, 0)]
+</code></pre><p>パフォーマンスを計測してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1900年から2100年までの200年間でも19.7ms程度</span>
+<span style="color:#f92672">%</span>time [dst(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1900</span>, <span style="color:#ae81ff">2100</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)]
+</code></pre></div><p>ちょっとフェアなパフォーマンスの比較じゃない(100 万行のパフォーマンスじゃない)ですけれども、求めたい結果に対しては 1 秒もかからないパフォーマンスが得られました。</p>
+<p>結果です。</p>
+<pre><code class="language-console" data-lang="console">CPU times: user 15.6 ms, sys: 0 ns, total: 15.6 ms
+Wall time: 9.43 ms
+</code></pre><p>サマータイムの適用の期間として、最初 1900 年からとしていたのですが、 pytz の結果を見ると 1918 からサマータイムの運用が開始されたように見えました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># pytzの定義によると1918年からDSTが始まったように見える</span>
+[(pd<span style="color:#f92672">.</span>Timestamp(f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{i}-08-01</span><span style="color:#e6db74">&#39;</span>, tz<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">America/New_York</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dst(), i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1900</span>, <span style="color:#ae81ff">2020</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)]
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">[(datetime.timedelta(0), 1900),
+ (datetime.timedelta(0), 1901),
+ (datetime.timedelta(0), 1902),
+ (datetime.timedelta(0), 1903),
+ (datetime.timedelta(0), 1904),
+ (datetime.timedelta(0), 1905),
+ (datetime.timedelta(0), 1906),
+ (datetime.timedelta(0), 1907),
+ (datetime.timedelta(0), 1908),
+ (datetime.timedelta(0), 1909),
+ (datetime.timedelta(0), 1910),
+ (datetime.timedelta(0), 1911),
+ (datetime.timedelta(0), 1912),
+ (datetime.timedelta(0), 1913),
+ (datetime.timedelta(0), 1914),
+ (datetime.timedelta(0), 1915),
+ (datetime.timedelta(0), 1916),
+ (datetime.timedelta(0), 1917),
+ (datetime.timedelta(0, 3600), 1918),
+ (datetime.timedelta(0, 3600), 1919),
+ (datetime.timedelta(0, 3600), 1920),
+ (datetime.timedelta(0, 3600), 1921),
+ ...略...
+ (datetime.timedelta(0, 3600), 2018),
+ (datetime.timedelta(0, 3600), 2019),
+ (datetime.timedelta(0, 3600), 2020)]
+</code></pre><h2 id="gist">Gist</h2>
+<p>Jupyter Notebook のファイルを Gist にアップしました。</p>
+<ul>
+<li><a href="https://gist.github.com/va2577/a461e444fa4d222848d7b83456ae0f61">Python サマータイム (DST)</a></li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>調べているといろいろ知ることがあります。
+前回の記事で日足のヒストリカルデータを作るときに、サマータイムについて調べたことでした。
+今回はこれで終わります。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

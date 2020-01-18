@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Flask on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/flask/</link>
+    <description>Recent content in Flask on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Nov 2019 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/flask/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Highcharts でマルチタイムフレームのチャートを作った</title>
+      <link>https://va2577.github.io/post/2019-11-23-01/</link>
+      <pubDate>Sat, 23 Nov 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-11-23-01/</guid>
+      <description>&lt;p&gt;Highcharts を使ってマルチタイムフレームのチャートを作ったのでその記録。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Flask を使ってみました</title>
+      <link>https://va2577.github.io/post/159/</link>
+      <pubDate>Wed, 09 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/159/</guid>
+      <description>&lt;p&gt;Flask を使ってみたので、メモです。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

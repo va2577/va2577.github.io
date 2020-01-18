@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>期待値の表 - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>期待値の表</h1>
+    
+      <div><time>November 3, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>勝率とリスクリワードレシオの範囲で期待値を計算した表を作ってみました。</p>
+<h2 id="期待値の表">期待値の表</h2>
+<p>期待値が <code>0%</code> 以下のところを赤くしてみました。
+期待値が <code>20~30%</code> のところを青くしてみました。
+<code>20~30%</code> にしてみた根拠は、次の「システムトレード基本と原則」の引用の通りです。</p>
+<blockquote>
+<p>期待値</p>
+<p>非現実的な期待をすることは勝つことしか考えられないことに匹敵する不幸だ。
+両者が重なると感情は混乱する。
+例えば、大金を稼ぐことを期待しているのなら、ほぼ間違いなくトレーディングは破綻する。
+成功すを続けるために最も重要なことは、控えめな期待をすることだ。
+20~30%のリターンは50%以上のリターンよりもはるかに達成しやすく、それを目指すのは難しくない。
+ほとんどの人が負けるのは望みが高すぎるからだ。
+それは古き良き時代の強欲であり、非現実的な期待だ。</p>
+<hr>
+<p>世界の株式市場における収益は、過去20年で年平均8~12%だったようだ。
+おそらくあなたはリスク資産でこれ以上のリターンを得たいだろう。
+あなたが12カ月先まで時計を動かして結果を振り返ることができるなら、リスク資産に対するリターンが何パーセントなら満足だろうか？
+20%か30%だろうか？
+私は自分のリスク資産に対して年率20%台のリターンしか望まない。
+私にとって、それは無理なく達成できる数字だ。
+難しいのは一貫してそれを達成することだ。</p>
+<p><cite>システムトレード 基本と原則(ウィザードブックシリーズ) : ブレント・ペンフォールド</cite></p>
+</blockquote>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
+<style>
+  table, tr, th, td {
+    border-color: #dddddd;
+    border-style: solid;
+    border-width: thin;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  th {
+    text-align: center;
+  }
+  td {
+    text-align: right;
+  }
+</style>
+<div id="calculation"></div>
+<script type="text/babel">
+  const style = {
+    table: {
+      width: "100%"
+    },
+    th: {
+      width: "10%"
+    },
+    red: {
+      backgroundColor: "lightpink"
+    },
+    blue: {
+      backgroundColor: "paleturquoise"
+    },
+    small: {
+      fontSize: "small"
+    }
+  };
+  class Row extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+    render() {
+      const nodes = this.props.e.map(v => {
+        const round = Math.round(v * 100);
+        const s = (round <= 0) ? style.red : (20 <= round && round <= 30) ? style.blue : {};
+        return (
+          <td style={ s }>
+            { round }%
+          </td>
+        );
+      });
+      return (
+        <tr>
+          <th>{ this.props.r.toFixed(1) }</th>
+          { nodes }
+        </tr>
+      );
+    }
+  };
+  class Table extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+    render() {
+      const heads = this.props.P.map(v => {
+        return (
+          <th style={ style.th }>
+            { (v * 100).toFixed(0) }%
+          </th>
+        );
+      });
+      const nodes = this.props.E.map((currentVaule, index, array) => {
+        return (
+          <Row r={ this.props.R.get(index) } e={ currentVaule } />
+        );
+      });
+      return (
+        <table style={ style.table }>
+          <caption>期待値</caption>
+          <thead>
+            <tr>
+              <th style={ style.th }>R\P</th>
+              { heads }
+            </tr>
+          </thead>
+          <tbody>
+            { nodes }
+          </tbody>
+        </table>
+      );
+    }
+  };
+  class Calculation extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+    render() {
+      return (
+        <div>
+          <Table P={ this.props.P } R={ this.props.R } E={ this.props.E } />
+          <span style={ style.small }>P: 勝率, R: リスクリワードレシオ</span>
+        </div>
+      );
+    }
+  };
+  const calculateE = (P, R) => (P * (R) - (1 - P) * (1));
+  const P = Immutable.Range(0.1, 1, 0.1);
+  const R = Immutable.Range(0.1, 2, 0.1)
+    .concat(Immutable.Range(2, 10, 0.5))
+    .concat(Immutable.Range(10, 55, 5));
+  const E = R.map(R => P.map(P => calculateE(P, R)));
+  const mount = ReactDOM.render(
+    <Calculation P={ P } R={ R } E={ E } />,
+    document.getElementById('calculation')
+  );
+</script>
+<p>期待値がマイナスではいけないですし、非現実的な期待をすることもいけないです。
+が、<code>20~30%</code> っていうような現実的な期待値の範囲はあまり多くはないものだと認識しました。</p>
+<p>期待値の%の意味するところは、以前の記事(<a href="/post/50/">期待値の計算</a>)にも書きましたが、例えば、期待値が20%だとして、100万円の資金があったとしたら、20万円の利益が期待できるということです。</p>
+<p>この表を見ていたら気づいたんですけど、縦の関係は、勝率が10%の場合は、リスクリワードレシオが0.1増えるごとに期待値が1%ずつ増えています。
+勝率が20%の場合は、リスクリワードレシオが0.1増えるごとに期待値が2%ずつ増えています。
+同じように勝率が90%の場合は、リスクリワードレシオが0.1増えるごとに期待値が9%ずつ増えています。</p>
+<p>それから、横の関係は、リスクリワードレシオが0.1の場合は、勝率が10%ずつ上がるごとに期待値が11%ずつ増えています。
+リスクリワードレシオが0.2の場合は、勝率が10%ずつ上がるごとに期待値が12%ずつ増えています。
+リスクリワードレシオが1の場合は、勝率が10%ずつ上がるごとに期待値が20%ずつ増えています。
+リスクリワードレシオが2の場合は、勝率が10%ずつ上がるごとに期待値が30%ずつ増えています。
+リスクリワードレシオが3の場合は、勝率が10%ずつ上がるごとに期待値が40%ずつ増えています。
+同じようにリスクリワードレシオが10の場合は、勝率が10%ずつ上がるごとに期待値が110%ずつ増えています。</p>
+<p>計算式から見たら当然の結果か・・</p>
+<h2 id="ソース">ソース</h2>
+<p>ソースはこちらです。</p>
+<p><a href="https://facebook.github.io/react/index.html">React</a>のComponentを3つにしてみましたが、少しまとまりがない感じになってしまいました・・
+期待値の計算は<code>const calculateE</code>, <code>const P</code>, <code>const R</code>, <code>const E</code>の6行で終わっているのでスッキリできたかなと思っています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;期待値の表&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">style</span>&gt;
+      <span style="color:#f92672">table</span><span style="color:#f92672">,</span> <span style="color:#f92672">tr</span><span style="color:#f92672">,</span> <span style="color:#f92672">th</span><span style="color:#f92672">,</span> <span style="color:#f92672">td</span> {
+        <span style="color:#66d9ef">border-color</span>: <span style="color:#ae81ff">#dddddd</span>;
+        <span style="color:#66d9ef">border-style</span>: <span style="color:#66d9ef">solid</span>;
+        <span style="color:#66d9ef">border-width</span>: <span style="color:#66d9ef">thin</span>;
+      }
+      <span style="color:#f92672">table</span> {
+        <span style="color:#66d9ef">border-collapse</span>: <span style="color:#66d9ef">collapse</span>;
+      }
+      <span style="color:#f92672">th</span> {
+        <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">center</span>;
+      }
+      <span style="color:#f92672">td</span> {
+        <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">right</span>;
+      }
+    &lt;/<span style="color:#f92672">style</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;calculation&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/babel&#34;</span>&gt;
+      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">style</span> <span style="color:#f92672">=</span> {
+        <span style="color:#a6e22e">table</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;100%&#34;</span>
+        },
+        <span style="color:#a6e22e">th</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;10%&#34;</span>
+        },
+        <span style="color:#a6e22e">red</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">backgroundColor</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;lightpink&#34;</span>
+        },
+        <span style="color:#a6e22e">blue</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">backgroundColor</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;paleturquoise&#34;</span>
+        },
+        <span style="color:#a6e22e">small</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">fontSize</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;small&#34;</span>
+        }
+      };
+      <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Row</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+        <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
+          <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+        }
+        <span style="color:#a6e22e">render</span>() {
+          <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">nodes</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">v</span> =&gt; {
+            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">round</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">round</span>(<span style="color:#a6e22e">v</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>);
+            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">round</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">?</span> <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">red</span> <span style="color:#f92672">:</span> (<span style="color:#ae81ff">20</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">round</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">round</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">30</span>) <span style="color:#f92672">?</span> <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">blue</span> <span style="color:#f92672">:</span> {};
+            <span style="color:#66d9ef">return</span> (
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">s</span> }<span style="color:#f92672">&gt;</span>
+                { <span style="color:#a6e22e">round</span> }<span style="color:#f92672">%</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+            );
+          });
+          <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tr</span><span style="color:#f92672">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">th</span><span style="color:#f92672">&gt;</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">1</span>) }<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">h</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+              { <span style="color:#a6e22e">nodes</span> }
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+          );
+        }
+      };
+      <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Table</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+        <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
+          <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+        }
+        <span style="color:#a6e22e">render</span>() {
+          <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">heads</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">P</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">v</span> =&gt; {
+            <span style="color:#66d9ef">return</span> (
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">th</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">th</span> }<span style="color:#f92672">&gt;</span>
+                { (<span style="color:#a6e22e">v</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">0</span>) }<span style="color:#f92672">%</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">h</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+            );
+          });
+          <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">nodes</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">E</span>.<span style="color:#a6e22e">map</span>((<span style="color:#a6e22e">currentVaule</span>, <span style="color:#a6e22e">index</span>, <span style="color:#a6e22e">array</span>) =&gt; {
+            <span style="color:#66d9ef">return</span> (
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Row</span> <span style="color:#a6e22e">r</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">R</span>.<span style="color:#a6e22e">get</span>(<span style="color:#a6e22e">index</span>) } <span style="color:#a6e22e">e</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">currentVaule</span> } <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>
+            );
+          });
+          <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">table</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">table</span> }<span style="color:#f92672">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">caption</span><span style="color:#f92672">&gt;</span><span style="color:#a6e22e">期待値</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">c</span><span style="color:#960050;background-color:#1e0010">a</span><span style="color:#960050;background-color:#1e0010">p</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">i</span><span style="color:#960050;background-color:#1e0010">o</span><span style="color:#960050;background-color:#1e0010">n</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">thead</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tr</span><span style="color:#f92672">&gt;</span>
+                  <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">th</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">th</span> }<span style="color:#f92672">&gt;</span><span style="color:#a6e22e">R</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">P</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">h</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                  { <span style="color:#a6e22e">heads</span> }
+                <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">h</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">a</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tbody</span><span style="color:#f92672">&gt;</span>
+                { <span style="color:#a6e22e">nodes</span> }
+              <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">b</span><span style="color:#960050;background-color:#1e0010">o</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">y</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">a</span><span style="color:#960050;background-color:#1e0010">b</span><span style="color:#960050;background-color:#1e0010">l</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+          );
+        }
+      };
+      <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Calculation</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+        <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
+          <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+        }
+        <span style="color:#a6e22e">render</span>() {
+          <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Table</span> <span style="color:#a6e22e">P</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">P</span> } <span style="color:#a6e22e">R</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">R</span> } <span style="color:#a6e22e">E</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">E</span> } <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">span</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">small</span> }<span style="color:#f92672">&gt;</span><span style="color:#a6e22e">P</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">勝率</span>, <span style="color:#a6e22e">R</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">リスクリワードレシオ</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">s</span><span style="color:#960050;background-color:#1e0010">p</span><span style="color:#960050;background-color:#1e0010">a</span><span style="color:#960050;background-color:#1e0010">n</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">i</span><span style="color:#960050;background-color:#1e0010">v</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+          );
+        }
+      };
+      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">calculateE</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">P</span>, <span style="color:#a6e22e">R</span>) =&gt; (<span style="color:#a6e22e">P</span> <span style="color:#f92672">*</span> (<span style="color:#a6e22e">R</span>) <span style="color:#f92672">-</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">P</span>) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span>));
+      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">P</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Immutable</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.1</span>);
+      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">R</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Immutable</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.1</span>)
+        .<span style="color:#a6e22e">concat</span>(<span style="color:#a6e22e">Immutable</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.5</span>))
+        .<span style="color:#a6e22e">concat</span>(<span style="color:#a6e22e">Immutable</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">5</span>));
+      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">E</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">R</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">R</span> =&gt; <span style="color:#a6e22e">P</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">P</span> =&gt; <span style="color:#a6e22e">calculateE</span>(<span style="color:#a6e22e">P</span>, <span style="color:#a6e22e">R</span>)));
+      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">mount</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Calculation</span> <span style="color:#a6e22e">P</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">P</span> } <span style="color:#a6e22e">R</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">R</span> } <span style="color:#a6e22e">E</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">E</span> } <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>,
+        document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;calculation&#39;</span>)
+      );
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

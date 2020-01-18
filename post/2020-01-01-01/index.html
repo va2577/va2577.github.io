@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>2019 年のトレードの結果 - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>2019 年のトレードの結果</h1>
+    
+      <div><time>January 1, 2020</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>2019 年は月ごとにトレードの結果を書かなかった。
+だからまとめて書いた。</p>
+<h2 id="累積-r-倍数">累積 R 倍数</h2>
+<div>
+  <canvas id="canvas"></canvas>
+</div>
+<p>23 から 34 までの 12 連敗。
+1 トレードに 1% のリスクを取ったとすると 10% 以上の資金を失った。</p>
+<p>それまでも小さくしか勝てていなかった。
+35 回目のトレードから利益を伸ばせた。</p>
+<p>大して技術もないのに、小細工してブレイクイーブンにしようとしたり、わずかな利益で決済したり。
+連敗する前は利益になった時でもその幅がなかった。
+連敗してからは、エントリーしたらほぼ放置。
+エントリーする前に決めた価格で決済するようにした。
+それで連敗が増えたかもしれないけど、 5R 以上の利益を 2 回得られたことで結果的に -1R まで戻せた。</p>
+<p>まだわずかにマイナスで連敗も多いけど、最終的にゼロにはできる感覚はある気がする。
+プラスじゃないから意味がないと言えば、ない。</p>
+<p>この結果を見たり、検証の結果を見たり、するけど、やっぱりリスク・リワード・レシオは大きくしないといけないと感じる。
+でも、そうすると連敗が多くなる。
+連敗すると自信をなくす。
+トレードが嫌になる。
+自分に合わない気がする。</p>
+<p>最終的に結果は出せそうな方法がわかる気はするんだけど、それを続けていける気がしない。
+それじゃダメなんだ。
+そんな矛盾を乗り越えないと、いつまで経っても成長しないままだと思う。</p>
+<p>連敗しても自信をなくさないように催眠術でもかけてもらったら改善するかな・・
+まだ、「負け＝悪い」っていう思い込みがあるみたいだから・・</p>
+<hr>
+<p>それから気になること。
+1 回目のトレード、いきなり 2R 以上もの損失になっているけど、何があったんだろう。
+いつも 1R で逆指値を入れるはずなんだけど。
+それから 13 回目のトレードも損失が大きい。</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script>
+  const chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  }
+  const data = [
+    0.0,
+    -1.270000,
+    -2.445000,
+    -3.395000,
+    -3.365000,
+    -2.125000,
+    -0.935000,
+    -0.835000,
+    -0.735000,
+    0.270556,
+    1.026111,
+    1.082361,
+    1.069861,
+    2.464419,
+    0.296277,
+    0.565313,
+    0.565313,
+    0.455423,
+    1.767923,
+    0.777632,
+    -0.277924,
+    -1.288180,
+    0.314761,
+    0.666613,
+    -0.333387,
+    -1.358079,
+    -2.358079,
+    -3.358079,
+    -4.394442,
+    -5.402135,
+    -6.409227,
+    -7.409227,
+    -8.459227,
+    -9.465679,
+    -10.465679,
+    -11.465679,
+    -6.014551,
+    -7.020961,
+    -8.035776,
+    -0.957204,
+  ]
+  const data2 = [
+    -1.270000
+    -1.175000,
+    -0.950000,
+    0.030000,
+    1.240000,
+    1.190000,
+    0.100000,
+    0.100000,
+    1.005556,
+    0.755556,
+    0.056250,
+    -0.012500,
+    1.394558,
+    -2.168142,
+    0.269036,
+    0.000000,
+    -0.109890,
+    1.312500,
+    -0.990291,
+    -1.055556,
+    -1.010256,
+    1.602941,
+    0.351852,
+    -1.000000,
+    -1.024691,
+    -1.000000,
+    -1.000000,
+    -1.036364,
+    -1.007692,
+    -1.007092,
+    -1.000000,
+    -1.050000,
+    -1.006452,
+    -1.000000,
+    -1.000000,
+    5.451128,
+    -1.006410,
+    -1.014815,
+    7.078571,
+  ]
+  const data3 = data2.reduce((p, c) => [...p, p[p.length - 1] + c], [0])
+  const data4 = data3.map(v => Math.floor(v * Math.pow(10, 3)) / Math.pow(10, 3))
+  var ctx = document.getElementById('canvas').getContext('2d')
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+    // The data for our dataset
+    data: {
+      labels: [...Array(data4.length).keys()],
+      datasets: [{
+        label: '累積 R 倍数',
+        backgroundColor: chartColors.red,
+        borderColor: chartColors.red,
+        data: data4,
+        fill: false,
+      }],
+    },
+    // Configuration options go here
+    options: {
+      // title: {
+      //   display: true,
+      //   text: '2019',
+      // },
+    },
+  })
+</script>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

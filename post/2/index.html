@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HOMEBREWのインストール - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Homebrewのインストール</h1>
+    
+      <div><time>December 30, 2015</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Node.jsをインストールするのにnodebrewを使いたかったので、そのために必要なHomebrewをインストールしました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.2</li>
+<li>Homebrew バージョン 0.9.5</li>
+</ul>
+<h2 id="homebrew">Homebrew？</h2>
+<blockquote>
+<p>Homebrew は、Apple が用意していないあなたの必要なものをインストールします。</p>
+<p><cite><a href="http://brew.sh/index_ja.html">Homebrew</a></cite></p>
+</blockquote>
+<h2 id="インストール">インストール</h2>
+<p>Xcodeコマンドラインツールが必要なので先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/1/">Xcodeコマンドラインツールのインストール</a></li>
+</ul>
+<p>ターミナルからコマンドを入力します。</p>
+<pre><code>$ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+==&gt; This script will install:
+/usr/local/bin/brew
+/usr/local/Library/...
+/usr/local/share/man/man1/brew.1
+
+Press RETURN to continue or any other key to abort
+==&gt; /usr/bin/sudo /bin/mkdir /usr/local
+
+WARNING: Improper use of the sudo command could lead to data loss
+or the deletion of important system files. Please double-check your
+typing when using sudo. Type &quot;man sudo&quot; for more information.
+
+To proceed, enter your password, or type Ctrl-C to abort.
+
+Password:
+==&gt; /usr/bin/sudo /bin/chmod g+rwx /usr/local
+==&gt; /usr/bin/sudo /usr/bin/chgrp admin /usr/local
+==&gt; /usr/bin/sudo /bin/mkdir /Library/Caches/Homebrew
+==&gt; /usr/bin/sudo /bin/chmod g+rwx /Library/Caches/Homebrew
+==&gt; Downloading and installing Homebrew...
+remote: Counting objects: 3661, done.
+remote: Compressing objects: 100% (3493/3493), done.
+remote: Total 3661 (delta 36), reused 655 (delta 28), pack-reused 0
+Receiving objects: 100% (3661/3661), 2.97 MiB | 1.68 MiB/s, done.
+Resolving deltas: 100% (36/36), done.
+From https://github.com/Homebrew/homebrew
+ * [new branch]      master     -&gt; origin/master
+HEAD is now at d50f3a3 formula_installer: remove duplicated hold_locks check
+==&gt; Installation successful!
+==&gt; Next steps
+Run `brew help` to get started
+</code></pre><h2 id="確認">確認</h2>
+<p>ターミナルからコマンドを入力します。</p>
+<pre><code>$ brew -v
+Homebrew 0.9.5 (git revision 1d978; last commit 2015-12-29)
+</code></pre><h2 id="よく使うコマンド">よく使うコマンド</h2>
+<h3 id="マニュアル">マニュアル</h3>
+<pre><code>man brew
+</code></pre><h3 id="パッケージのインストール">パッケージのインストール</h3>
+<p>ここでは<code>tree</code>というパッケージをインストールしています。</p>
+<pre><code>$ brew install tree
+==&gt; Downloading https://homebrew.bintray.com/bottles/tree-1.7.0.el_capitan.bottl
+######################################################################## 100.0%
+==&gt; Pouring tree-1.7.0.el_capitan.bottle.1.tar.gz
+🍺  /usr/local/Cellar/tree/1.7.0: 7 files, 112.4K
+</code></pre><h3 id="パッケージのアンインストール">パッケージのアンインストール</h3>
+<p>ここでは<code>tree</code>というパッケージをアンインストールしています。</p>
+<pre><code>$ brew remove tree
+Uninstalling /usr/local/Cellar/tree/1.7.0... (7 files, 112.4K)
+</code></pre><h3 id="アップデート">アップデート</h3>
+<p>パッケージとHomebrew自体をアップデートします。</p>
+<pre><code>$ brew update
+Updated Homebrew from 1d978c8c to fc30a49c.
+==&gt; New Formulae
+dupseek                    jerasure                   libgig                   
+gf-complete                liberasurecode             powerline                
+==&gt; Updated Formulae
+bigdata         fzf             kibana          sqlitebrowser   wireshark     
+cdiff           git-extras      libpst          subliminal      youtube-dl    
+commonmark      glide           qt              subversion    
+corectl         godep           riak            taglib        
+d-bus           goffice         ruby-build      vim           
+f3              haproxy         skinny          vramsteg      
+</code></pre><h3 id="インストールされているパッケージの一覧">インストールされているパッケージの一覧</h3>
+<pre><code>$ brew list
+fdk-aac		gpac		nodebrew	rtmpdump	x264
+ffmpeg		lame		openssl		swftools	xvid
+gettext		libvo-aacenc	pkg-config	texi2html	yasm
+</code></pre><h3 id="クリーンアップ">クリーンアップ</h3>
+<p>これをするとファイルシステムからファイルが削除されます。
+<code>-s</code>をつけるとダウンロードしたキャッシュファイルも一緒に削除します。</p>
+<pre><code>$ brew cleanup
+Warning: Skipping ffmpeg: most recent version 2.8.4 not installed
+Warning: Skipping nodebrew: most recent version 0.9.2 not installed
+Warning: Skipping openssl: most recent version 1.0.2e not installed
+Removing: /Library/Caches/Homebrew/ffmpeg-2.8.3.el_capitan.bottle.tar.gz... (17.4M)
+Removing: /Library/Caches/Homebrew/openssl-1.0.2d_1.el_capitan.bottle.tar.gz... (3.5M)
+==&gt; This operation has freed approximately 20.9M of disk space.
+</code></pre><h3 id="トラブルシューティング">トラブルシューティング</h3>
+<p>システムの潜在的な問題をチェックするようです。</p>
+<pre><code>$ brew doctor
+Please note that these warnings are just used to help the Homebrew maintainers
+with debugging if you file an issue. If everything you use Homebrew for is
+working fine: please don't worry and just ignore them. Thanks!
+
+Warning: Your Homebrew is outdated.
+You haven't updated for at least 24 hours. This is a long time in brewland!
+To update Homebrew, run `brew update`.
+</code></pre><h3 id="パッケージのアップグレード">パッケージのアップグレード</h3>
+<p>古いパッケージを削除した時に<code>Warning: Skipping ffmpeg: most recent version 2.8.6 not installed</code>のように表示される場合は、更新の期限が切れて、<code>brew update</code>で更新できていないパッケージなので、アップグレードします。</p>
+<pre><code>$ brew upgrade
+==&gt; Upgrading 1 outdated package, with result:
+ffmpeg 2.8.6
+==&gt; Upgrading ffmpeg
+==&gt; Downloading https://homebrew.bintray.com/bottles/ffmpeg-2.8.6.el_capitan.bot
+######################################################################## 100.0%
+==&gt; Pouring ffmpeg-2.8.6.el_capitan.bottle.tar.gz
+==&gt; Caveats
+FFmpeg has been built without libfaac for licensing reasons;
+libvo-aacenc is used by default.
+To install with libfaac, you can:
+  brew reinstall ffmpeg --with-faac
+
+You can also use the experimental FFmpeg encoder, libfdk-aac, or
+libvo_aacenc to encode AAC audio:
+  ffmpeg -i input.wav -c:a aac -strict experimental output.m4a
+Or:
+  brew reinstall ffmpeg --with-fdk-aac
+  ffmpeg -i input.wav -c:a libfdk_aac output.m4a
+==&gt; Summary
+🍺  /usr/local/Cellar/ffmpeg/2.8.6: 210 files, 44.4M
+</code></pre><h2 id="アンインストール">アンインストール</h2>
+<p>いらなくなった時のためにHomebrewのアンインストールについて書いておきます。</p>
+<pre><code>$ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)&quot;
+</code></pre><h2 id="終わり">終わり</h2>
+<p>nodebrewとNode.jsのインストールを書いてみました。</p>
+<ul>
+<li><a href="/post/3/">nodebrew, Node.jsのインストール</a></li>
+</ul>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://brew.sh/index_ja.html">Homebrew</a></li>
+<li><a href="https://github.com/Homebrew/homebrew">Homebrew/homebrew - GitHub</a></li>
+<li><a href="https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md">El Capitan &amp; Homebrew</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stylus on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/stylus/</link>
+    <description>Recent content in Stylus on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 20 Apr 2018 12:39:59 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/stylus/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Stylus を使ってみました</title>
+      <link>https://va2577.github.io/post/140/</link>
+      <pubDate>Fri, 20 Apr 2018 12:39:59 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/140/</guid>
+      <description>&lt;p&gt;Hugo のテーマを作成したときに、少しだけ CSS を記述しました。
+SCSS にしようか、 LESS にしようか、とも思いましたが、 Stylus を使うことにしました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

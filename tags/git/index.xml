@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/git/</link>
+    <description>Recent content in Git on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Apr 2018 09:04:05 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git のすでにあるリポジトリーからサブモジュールにするためのリポジトリーを作成しました</title>
+      <link>https://va2577.github.io/post/141/</link>
+      <pubDate>Sat, 21 Apr 2018 09:04:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/141/</guid>
+      <description>&lt;p&gt;Hugo でウェブサイトを作っていて、テーマも自分で作っていたのですが、ウェブサイトとテーマが同じリポジトリーに含まれてしまっていたため、テーマだけのリポジトリーを独立して作成してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Code に WSL の Ubuntu の Git を設定する</title>
+      <link>https://va2577.github.io/post/83/</link>
+      <pubDate>Wed, 17 Jan 2018 16:49:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/83/</guid>
+      <description>&lt;p&gt;いつからだったか、Visual Studio Code を起動すると、勝手に「Git を探しています」みたいになって、「[警告] Git が見つかりません。Git をインストールするか &amp;lsquo;git.path&amp;rsquo; 設定で…」のようなメッセージが表示されるようになりました。&lt;/p&gt;
+&lt;p&gt;そのまま使っていたのですが、気になるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git で差分ファイルを抽出する時にパスにスペースがあるとエラーになる</title>
+      <link>https://va2577.github.io/post/61/</link>
+      <pubDate>Sat, 17 Dec 2016 16:45:36 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/61/</guid>
+      <description>&lt;p&gt;Visual Studio の &lt;code&gt;My Project&lt;/code&gt; フォルダーの中にあるファイルを抽出しようとしてエラーになりましたので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitHubのサインアップ</title>
+      <link>https://va2577.github.io/post/4/</link>
+      <pubDate>Thu, 31 Dec 2015 21:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/4/</guid>
+      <description>&lt;p&gt;GitHubはソースコードのバージョンを管理できるサービスですけど、GitHub PagesとJekyllを使うとブログができるということでGitHubにサインアップしてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VMware Workstation Player on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/vmware-workstation-player/</link>
+    <description>Recent content in VMware Workstation Player on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Feb 2018 13:50:54 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/vmware-workstation-player/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>VMware Workstation Player で VMware Fusion の仮想マシンを使用する</title>
+      <link>https://va2577.github.io/post/93/</link>
+      <pubDate>Tue, 13 Feb 2018 13:50:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/93/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/93-01.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;MacBook Pro から Surface Pro に変えて、 macOS の VMware Fusion も使わなくなりましたので、 Windows の VMware Workstation Player で使えないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

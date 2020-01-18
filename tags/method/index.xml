@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Method on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/method/</link>
+    <description>Recent content in Method on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 24 Feb 2018 16:10:39 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/method/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>システムの質を評価する</title>
+      <link>https://va2577.github.io/post/96/</link>
+      <pubDate>Sat, 24 Feb 2018 16:10:39 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/96/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/96-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;以前、 &lt;a href=&#34;https://va2577.github.io/post/91/&#34;&gt;R 倍数でトレードを考える&lt;/a&gt;を書きましたので、 R 倍数の分布を作成してからのことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>R 倍数でトレードを考える</title>
+      <link>https://va2577.github.io/post/91/</link>
+      <pubDate>Sat, 10 Feb 2018 13:35:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/91/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/91-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;R 倍数のことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>&#34;期待値を理由にトレードする&#34; ということを教えてくれた説明です</title>
+      <link>https://va2577.github.io/post/88/</link>
+      <pubDate>Wed, 07 Feb 2018 18:44:30 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/88/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/88-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;私の考えでは、トレーディングは期待値を上げる機会だけを求めて行うべきだ。&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;システムトレード　基本と原則　第９章　売買ルール　Methodology　No. 3487&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;ldquo;システムトレード　基本と原則&amp;rdquo; の著者である、ブレント・ペンフォールドさんは、引用のように、「トレーディングは期待値を上げる機会だけを求めて行うべきだ」、と言っています。&lt;/p&gt;
+&lt;p&gt;その具体的な意味を教えてくれた説明を書いてみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値の表</title>
+      <link>https://va2577.github.io/post/54/</link>
+      <pubDate>Thu, 03 Nov 2016 22:10:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/54/</guid>
+      <description>&lt;p&gt;勝率とリスクリワードレシオの範囲で期待値を計算した表を作ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値の計算</title>
+      <link>https://va2577.github.io/post/50/</link>
+      <pubDate>Wed, 12 Oct 2016 18:16:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/50/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/46/&#34;&gt;破産確率の計算&lt;/a&gt;をしてみましたので、次は期待値を計算してみます。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

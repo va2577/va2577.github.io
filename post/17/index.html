@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>VMWARE FUSIONにWINDOWS 10をクリーンインストールする - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>VMware FusionにWindows 10をクリーンインストールする</h1>
+    
+      <div><time>January 30, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>今回はすでにVMware FusionにWindows 10がインストールされていて(Windows 8.1からのアップグレード)、そこからWindows 10をクリーンインストールしてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>VMware Fusion バージョン 8.1.0 (3272237)</li>
+<li>Windows 10 Pro バージョン 1511</li>
+</ul>
+<h2 id="インストールの前に">インストールの前に</h2>
+<p>インストールの前に以下の点について確認しておきます。</p>
+<ul>
+<li>Windows 10のライセンス</li>
+<li>Windows 10のエディション</li>
+<li>Windows 10にインストールしているソフトウェアのライセンス</li>
+</ul>
+<h3 id="windows-10のライセンス">Windows 10のライセンス</h3>
+<blockquote>
+<p>Windows 10 セットアップ中のプロダクト キーの入力を省略できるようになります。無償アップグレードを行ったデバイスでは、Windows 10 は自動でオンライン認証されます。プロダクト キーの入力を省略するオプションは、メディアからブートしセットアップを開始する時のみ有効です。</p>
+<p>Q：Windows 10 デバイスのハードウェア構成を変更すると、何が起こりますか？</p>
+<p>A：Windows 10 デバイスのハードウェアの構成を変更した場合 (例えば、マザーボードの交換など)、そのデバイスの Windows の再認証が必要になると考えられます。これは以前のバージョンの Windows (Windows 7 や 8.1 など) と同様の動作です。無償アップグレードでは、このようなハードウェア変更の認証リセットのシナリオは Windows 10 の認証に適用されません。</p>
+<p><cite><a href="http://answers.microsoft.com/ja-jp/windows/forum/windows_10-windows_install/%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC/2131d8c8-60f7-4388-94a4-e4b1ac9b7862?auth=1">アップグレード後の Windows 10 再インストールについて - マイクロソフト コミュニティ</a></cite></p>
+</blockquote>
+<p>Windows 7あたりからプロダクト キー(プロダクト IDではない)はWindowsの標準の機能で確認することはできなくなっているようです。
+フリー(寄付？)のソフトウェアで確認するように記載されている記事もみますが、それをしなくてもいいと記載されています。
+<code>無償アップグレードを行ったデバイスでは、Windows 10 は自動でオンライン認証されます。</code>とのことです。</p>
+<blockquote>
+<p>ライセンス認証と正規の Windows はどのように連係していますか?
+ライセンス認証では、プロダクト キーとハードウェア構成を組み合わせて、Microsoft ソフトウェア ライセンス条項で許可されている台数より多くのコンピューターで Windows が使われていないかを確認します。通常は、大幅にハードウェアを変更しない限り、Windows のライセンス認証は 1 回だけ行う必要があります。</p>
+<p><cite><a href="http://windows.microsoft.com/ja-jp/windows/genuine">正規の Windows - Windows ヘルプ</a></cite></p>
+</blockquote>
+<p>自動でオンライン認証というのは<code>プロダクト キーとハードウェア構成を組み合わせて</code>確認しているということです。
+なので、VMware Fusionを使っている場合は注意が必要で、新しい仮想マシンを作成してしまうとライセンス認証できないので、今まで使っていたWindows 10の仮想マシンにクリーンインストールする必要があります。
+それから、無償アップグレードした直後だったりして、Windows 10の認証をしていないうちにクリーンインストールを始めてしまうと、Windows 10のプロダクト キーがないことになりますので、クリーンインストール後の認証ができないことになります。
+必ずインストールごとに認証の確認をしておく必要があります。</p>
+<h3 id="windows-10のエディション">Windows 10のエディション</h3>
+<p>Home、Proのうちのどのエディションである確認します。
+Enterprise、Educationの場合は無償アップグレードでWindows 10にしたものではないでしょうから、ここで記載するのとはまた手順や扱いが異なるかもしれません。
+Windowsから<code>スタート</code>-<code>設定</code>-<code>システム</code>-<code>バージョン情報</code>と選択していきます。
+エディションのところに<code>Windows 10 Pro</code>と表示されていることを確認しました。
+これからクリーンインストールするWindows 10もこれと同じエディションを選択する必要があります。</p>
+<p><img src="/img/17-01.png" alt=""></p>
+<h3 id="windows-10にインストールしているソフトウェアのライセンス">Windows 10にインストールしているソフトウェアのライセンス</h3>
+<p>自分の場合はあまりWindows 10にソフトウェアをインストールしていないんですけど、画面キャプチャーのためのSnagitとかをインストールしていたので、製品のホームページで<code>ソフトウェアを別のコンピューターに移動させる方法</code>とかを確認して、レジストレーションキーを控えることと、ソフトウェアのアンインストールをしておきました。</p>
+<h2 id="windows-10のディスク-イメージ-iso-ファイルのダウンロード">Windows 10のディスク イメージ (ISO ファイル)のダウンロード</h2>
+<p><a href="https://www.microsoft.com/ja-jp/software-download/windows10ISO">Windows 10 ISO</a>からページの案内に従ってダウンロードします。</p>
+<p>エディションの選択については普通は<code>Windows 10</code>を選択します。
+その他の選択について調べた内容を記載しておきます。</p>
+<blockquote>
+<p>Windows の 10 の N および KN エディションには、メディアに関連するテクノロジ (Windows Media Player) と特定のメディアがプレインストールされているアプリケーション (Groove の音楽、ビデオ、ボイス レコーダー、および Skype) を除いて、Windows の 10 のと同じ機能が含まれます。</p>
+<p><cite><a href="https://support.microsoft.com/ja-jp/kb/3010081">メディア 10 N の Windows および Windows 10 KN エディション用のパックを機能します。</a></cite></p>
+</blockquote>
+<p><code>Windows 10 N</code>や<code>Windows 10 KN</code>というのは、日本以外の国における権利とかの都合上、インストールする機能を制限したもののようです。</p>
+<blockquote>
+<p>Windows 10 の追加言語をダウンロードし、インストールすると、言語のコントロール パネルを使用して、メニュー、ダイアログ ボックス、その他のユーザー インターフェイス項目を指定した言語で表示できるようになります。</p>
+<p><cite><a href="http://windows.microsoft.com/ja-jp/windows/language-packs#lptabs=win10">言語パック - Microsoft Windows</a></cite></p>
+</blockquote>
+<p><code>Windows 10 Single Language</code>というのは、1つの言語のみ使えるように制限されたもののようです。
+普通のものは言語パックによって複数の言語(英語やフランス語とか)を使えるようになっているようです。</p>
+<h2 id="インストール">インストール</h2>
+<h3 id="windows-10のディスク-イメージ-iso-ファイルの設定">Windows 10のディスク イメージ (ISO ファイル)の設定</h3>
+<p>仮想マシンはシャットダウンしておきます。
+MacのVMware Fusionのメニューバーの<code>仮想マシン</code>-<code>設定</code>-<code>CD/DVD(SATA)</code>を選択します。
+<code>この CD/DVD ドライブは次を使用するように構成されています：</code>のところからダウンロードしたWindows 10のディスク イメージ (ISO ファイル)を選択します。</p>
+<p><img src="/img/17-02.png" alt=""></p>
+<p>設定したディスク イメージ (ISO ファイル)から起動したいので、MacのVMware Fusionのメニューバーの<code>仮想マシン</code>-<code>設定</code>-<code>起動ディスク</code>から<code>CD/DVD</code>を選択します。</p>
+<p><img src="/img/17-03.png" alt=""></p>
+<p>左上の赤い<code>×</code>で設定ウィンドウを閉じます。</p>
+<h3 id="windows-10のインストール">Windows 10のインストール</h3>
+<p>MacのVMware Fusionのメニューバーの<code>仮想マシン</code>-<code>スタートアップ</code>から仮想マシンを起動します。
+<code>Press any key to boot from CD or DVD.</code>と表示されるところで何かキー(enterとか)を押します。</p>
+<p><img src="/img/17-04.png" alt=""></p>
+<p>後は画面の案内に従ってインストールを進めていきます。
+自分の気になったところは画面とメモを記載しておきます。</p>
+<p>ライセンス認証のところは無償アップグレードからのクリーンインストールをしますので、画面に記載されている通り<code>プロダクト キーがありません(I)</code>を選択します。
+そうすると後で自動的にライセンス認証されます。</p>
+<p><img src="/img/17-05.png" alt=""></p>
+<p>インストールするオペレーティングシステムのところは最初に確認したエディションを選択します。</p>
+<p><img src="/img/17-06.png" alt=""></p>
+<p>インストールの種類のところはクリーンインストールをしますので<code>カスタム：Windows のみをインストールする（詳細設定）(C)</code>を選択しました。</p>
+<p><img src="/img/17-07.png" alt=""></p>
+<p>インストール場所のところはクリーンインストールをしますので念のため<code>ドライブ 0 パーティション 1</code>の方だけフォーマットをしておきました。
+最初に仮想マシンを作った時はVMware Fusionにお任せで作りましたが<code>OEM (予約済み)</code>のパーティションが作られていたんですね。
+何かわからないですがそのままにしておきました。</p>
+<p><img src="/img/17-08.png" alt=""></p>
+<p>インストールが始まると何度か再起動しますのでそのまま待ちます。
+自分のは15分もかからずにインストールできていました。</p>
+<p>途中のWindowsの初期設定のようなところで<code>この PC は誰が所有していますか？</code>と聞かれました。</p>
+<p><img src="/img/17-09.png" alt=""></p>
+<blockquote>
+<p>この選択は重要で、後で切り替えることは簡単ではありません。</p>
+</blockquote>
+<p>って言われると困るんですけど。
+組織で使うのではないため<code>私が所有しています</code>を選択しました。
+<code>自分の組織</code>の方は<code>組織の ID でサインイン</code>、<code>重要なリソースにアクセス</code>と記載されているところからActive Directoryのドメインに参加することになるんだと思っています。
+気になったので試しに<code>自分の組織</code>の方を選択してみたら<code>Azure AD に参加する</code>と<code>ドメインに参加する</code>が選択できるようでした。
+やっぱりドメインの関係でした。</p>
+<p>インストールが終わったらWindowsから<code>スタート</code>-<code>設定</code>-<code>更新とセキュリティ</code>-<code>ライセンス認証</code>を確認します。
+<code>Windows はライセンス認証されています</code>と表示されていれば大丈夫でしょう。</p>
+<p><img src="/img/17-10.png" alt=""></p>
+<h3 id="vmware-toolsのインストール">VMware Toolsのインストール</h3>
+<p>そのままだと画面のサイズとかが適正にならないのでVMware Toolsをインストールします。
+以下のサイトの手順通りにインストールしました。</p>
+<blockquote>
+<ol>
+<li>仮想マシンをパワーオンしてログインします。</li>
+<li>Apple メニュー バーから、仮想マシン &gt; VMware Tools のインストール に移動します。</li>
+<li>プロンプトが表示されたら、インストール をクリックします。</li>
+<li>VMware Tools ボリュームがマウントされ、自動的に開きます。VMware Tools のインストール をダブルクリックします。</li>
+<li>インストール プロセスの承諾、プロセスの開始、および起動ボリュームへの Tools &gt; 2. のインストールの同意に関する最初の 3 つのプロンプトまで、続行 をクリックします。</li>
+<li>インストール をクリックします。</li>
+<li>管理者パスワードを入力してインストールを許可します。</li>
+<li>インストールを続行する をクリックし、インストール完了後の仮想マシンの再起動を許可します。</li>
+<li>今すぐ再起動する をクリックします。</li>
+</ol>
+<p><cite><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2078926">VMware KB: Mac OS ゲストでの VMware Tools のインストール</a></cite></p>
+</blockquote>
+<h3 id="windows-10のディスク-イメージ-iso-ファイルの解除">Windows 10のディスク イメージ (ISO ファイル)の解除</h3>
+<p>最後にVMware Fusionの設定を戻しておきます。
+仮想マシンはシャットダウンしておきます。</p>
+<p>MacのVMware Fusionのメニューバーの<code>仮想マシン</code>-<code>設定</code>-<code>CD/DVD(SATA)</code>を選択します。
+<code>この CD/DVD ドライブは次を使用するように構成されています：</code>のところから<code>自動検出</code>を選択します。
+自分の場合はCD/DVDドライブを常に接続していないため<code>CD/DVDドライブを接続</code>のチェックも外しておきました。</p>
+<p><img src="/img/17-11.png" alt=""></p>
+<p>MacのVMware Fusionのメニューバーの<code>仮想マシン</code>-<code>設定</code>-<code>起動ディスク</code>から<code>デフォルトにリストア</code>を選択します。</p>
+<p><img src="/img/17-12.png" alt=""></p>
+<p>左上の赤い<code>×</code>で設定ウィンドウを閉じます。</p>
+<h2 id="終わり">終わり</h2>
+<p>これで仮想マシンのWindowsがクリーンになりました。
+ライセンスのところは説明を読んでもよくわからないことが多いですが、ちゃんとできました。
+このクリーンな状態の仮想マシンのファイルをごっそりバックアップとしてコピーしておこう。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://answers.microsoft.com/ja-jp/windows/forum/windows_10-windows_install/%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC/2131d8c8-60f7-4388-94a4-e4b1ac9b7862?auth=1">アップグレード後の Windows 10 再インストールについて - マイクロソフト コミュニティ</a></li>
+<li><a href="https://www.microsoft.com/ja-jp/software-download/windows10ISO">Windows 10 ISO</a></li>
+<li><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2078926">VMware KB: Mac OS ゲストでの VMware Tools のインストール</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

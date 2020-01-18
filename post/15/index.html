@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ECMASCRIPT® 2015とBABELを使う - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ECMAScript® 2015とBabelを使う</h1>
+    
+      <div><time>January 23, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>2015年6月にECMAScript® 2015の仕様が策定されました。
+しかしブラウザーで使う場合は、まだ実装されていないものもあるようです。
+そのためBabelでECMAScript 5に変換してから使うのが主流のようですが、変換する方法がいくつもあって、結局どれが良いのかわからなかったので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Node.js バージョン 5.4.1</li>
+<li>gulp バージョン 3.9.0</li>
+<li>gulp-babel バージョン 6.1.1</li>
+<li>babel-preset-es2015 バージョン 6.3.13</li>
+</ul>
+<h2 id="ecmascript-2015">ECMAScript® 2015？</h2>
+<blockquote>
+<p>Standard ECMA-262</p>
+<p>6th Edition / June 2015</p>
+<p>ECMAScript® 2015 Language Specification</p>
+<p>This is the HTML rendering of ECMA-262 6th Edition, The ECMAScript 2015 Language Specification.</p>
+<p><cite><a href="http://www.ecma-international.org/ecma-262/6.0/index.html">ECMAScript 2015 Language Specification – ECMA-262 6th Edition</a></cite></p>
+</blockquote>
+<p>興味深い記事です。</p>
+<ul>
+<li><a href="http://codezine.jp/article/detail/9071">ECMAScript 2015はなぜ策定まで時間がかかったか？ 仕様策定のリーダー、アレン・ワーフスブラック氏に聞く：CodeZine（コードジン）</a></li>
+</ul>
+<h2 id="babel">Babel？</h2>
+<blockquote>
+<p>Babel is a JavaScript compiler.</p>
+<p><cite><a href="https://babeljs.io">Babel · The compiler for writing next generation JavaScript</a></cite></p>
+</blockquote>
+<h2 id="ツール">ツール</h2>
+<blockquote>
+<p>How to use Babel with your tool of choice</p>
+<ol>
+<li>Choose your tool</li>
+</ol>
+<p><cite><a href="https://babeljs.io/docs/setup/">Using Babel · Babel</a></cite></p>
+</blockquote>
+<p>ツールの種類を見てみます。</p>
+<ul>
+<li>Babel built-ins
+<ul>
+<li>CLI</li>
+<li>Require hook</li>
+</ul>
+</li>
+<li>Build systems
+<ul>
+<li>Broccoli</li>
+<li>Browserify</li>
+<li>Brunch</li>
+<li>Duo</li>
+<li>Gobble</li>
+<li>Grunt</li>
+<li>Gulp</li>
+<li>jspm</li>
+<li>Make</li>
+<li>MSBuild</li>
+<li>RequireJS</li>
+<li>Rollup</li>
+<li>Sprockets</li>
+<li>Webpack</li>
+<li>Fly</li>
+</ul>
+</li>
+<li>Frameworks
+<ul>
+<li>Ember</li>
+<li>Meteor</li>
+<li>Rails</li>
+<li>Sails</li>
+</ul>
+</li>
+<li>Test frameworks
+<ul>
+<li>Jasmine</li>
+<li>Jest</li>
+<li>Karma</li>
+<li>Mocha</li>
+</ul>
+</li>
+<li>Utilities
+<ul>
+<li>Connect</li>
+<li>Nodemon</li>
+</ul>
+</li>
+<li>Language APIs
+<ul>
+<li>C# / .NET</li>
+<li>Node</li>
+<li>Ruby</li>
+</ul>
+</li>
+<li>Template engines
+<ul>
+<li>Jade</li>
+</ul>
+</li>
+<li>Editors and IDEs
+<ul>
+<li>WebStorm</li>
+</ul>
+</li>
+<li>Debuggers
+<ul>
+<li>Node Inspector</li>
+</ul>
+</li>
+</ul>
+<p>たくさんのツールがあります。</p>
+<p>変換する方法を検索した時に、Gulpを使った方法とBrowserifyを使った方法が記載されていたり、Gulpを使った方法とWebpackを使った方法が記載されていたりして混乱しました。
+複数のツールを組み合わせて成り立っているので、その相互の関連がわからなかったんです。
+でもBrowserifyもWebpackもGulpのプラグインがあるんだから全部Gulpのビルドシステムから使えばいいと考えたらシンプルになりました。
+結局、Gulpで結合(concat)したり、圧縮(uglify=醜くするという意味なんですね)したり、CSSのコンパイル(sass)したりしているんだからBabelを使うところだけコマンドで<code>browserify ...</code>としたり、<code>webpack ...</code>としたりするのは違和感があったんです。
+gulpからプラグインを経由せずに<code>browserify</code>や<code>webpack</code>をするのも違和感があります。</p>
+<p>なので、GulpのプラグインからBabelを使う方法を書いていきます。</p>
+<h2 id="gulpのプラグインからbabelを使う">GulpのプラグインからBabelを使う</h2>
+<h3 id="プロジェクトディレクトリーの作成">プロジェクトディレクトリーの作成</h3>
+<p>プロジェクトを最初から作ることとして、ターミナルからプロジェクトのディレクトリーを作成します。
+<code>[project-name]</code>は任意のディレクトリーの名前に変えます。</p>
+<pre><code>$ mkdir [project-name]
+$ cd [project-name]
+</code></pre><h3 id="packagejsonファイルの作成"><code>package.json</code>ファイルの作成</h3>
+<p>GulpやBabelのパッケージを管理するため<code>package.json</code>ファイルを作成します。</p>
+<pre><code>$ npm init -y
+</code></pre><h3 id="パッケージのインストール">パッケージのインストール</h3>
+<p>GulpとそのプラグインのBabelをインストールします。
+Gulpは実行の仕組み上、グローバルとローカルに必要なので<code>--global</code>と<code>--save-dev</code>の両方のオプションでインストールします。
+Babelは開発時だけ使うツールなので<code>--save-dev</code>オプションを指定してインストールします。
+<code>--save</code>オプションは開発時じゃなくて実行時に使うものをインストールする時に使います。</p>
+<pre><code>$ npm install --global gulp
+$ npm install --save-dev gulp
+$ npm install --save-dev gulp-babel
+$ npm install --save-dev babel-preset-es2015
+</code></pre><h3 id="gulpfilejsファイルの作成"><code>gulpfile.js</code>ファイルの作成</h3>
+<p><code>gulpfile.js</code>ファイルを以下の内容で作成します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">gulp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp&#34;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">babel</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;gulp-babel&#34;</span>);
+
+<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">task</span>(<span style="color:#e6db74">&#34;default&#34;</span>, <span style="color:#66d9ef">function</span> () {
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">src</span>(<span style="color:#e6db74">&#34;src/app.js&#34;</span>)
+    .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">babel</span>())
+    .<span style="color:#a6e22e">pipe</span>(<span style="color:#a6e22e">gulp</span>.<span style="color:#a6e22e">dest</span>(<span style="color:#e6db74">&#34;dist&#34;</span>));
+});
+</code></pre></div><h3 id="babelrcファイルの作成"><code>.babelrc</code>ファイルの作成</h3>
+<p><code>.babelrc</code>ファイルを作成します。
+<a href="https://babeljs.io/docs/plugins/preset-es2015/">ES2015 preset · Babel</a>、<a href="http://babeljs.io/docs/usage/options/">Options · Babel</a>を参考にBabelのオプションのファイルを作成します。
+ここでは最低限の設定として以下のファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;presets&#34;</span>: [<span style="color:#e6db74">&#34;es2015&#34;</span>]
+}
+</code></pre></div><h3 id="実行ファイルの作成">実行ファイルの作成</h3>
+<p>確認のための<code>src/app.js</code>ファイルを作成します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">evens</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">10</span>];
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fives</span> <span style="color:#f92672">=</span> [];
+
+<span style="color:#75715e">// Expression bodies
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">odds</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">evens</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">v</span> =&gt; <span style="color:#a6e22e">v</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">nums</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">evens</span>.<span style="color:#a6e22e">map</span>((<span style="color:#a6e22e">v</span>, <span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">v</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">i</span>);
+
+<span style="color:#75715e">// Statement bodies
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">nums</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">v</span> =&gt; {
+  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">v</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">0</span>)
+    <span style="color:#a6e22e">fives</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">v</span>);
+});
+
+<span style="color:#75715e">// Lexical this
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bob</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">_name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Bob&#34;</span>,
+  <span style="color:#a6e22e">_friends</span><span style="color:#f92672">:</span> [],
+  <span style="color:#a6e22e">printFriends</span>() {
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">_friends</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">f</span> =&gt;
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">_name</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; knows &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">f</span>));
+  }
+};
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">odds: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">odds</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">nums: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">nums</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">fives: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">fives</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+
+<span style="color:#a6e22e">bob</span>.<span style="color:#a6e22e">_friends</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;friends1&#39;</span>, <span style="color:#e6db74">&#39;friends2&#39;</span>, <span style="color:#e6db74">&#39;friends3&#39;</span>];
+<span style="color:#a6e22e">bob</span>.<span style="color:#a6e22e">printFriends</span>();
+</code></pre></div><h3 id="ファイルの確認">ファイルの確認</h3>
+<p>ここまでで以下のようなディレクトリー構成になっています。</p>
+<pre><code>.
+├── .babelrc
+├── gulpfile.js
+├── package.json
+└── src
+    └── app.js
+</code></pre><h3 id="変換">変換</h3>
+<p>変換してみます。</p>
+<pre><code>$ gulp
+</code></pre><p><code>dist/app.js</code>ファイルが作成されます。</p>
+<pre><code>..
+├── .babelrc
+├── dist
+│   └── app.js
+├── gulpfile.js
+├── package.json
+└── src
+    └── app.js
+</code></pre><h3 id="実行">実行</h3>
+<p>実行してみます。</p>
+<pre><code>$ node dist/app.js
+odds: 1,3,5,7,9,11
+nums: 0,3,6,9,12,15
+fives: 0,15
+Bob knows friends1
+Bob knows friends2
+Bob knows friends3
+</code></pre><p>Node.jsで実行してしまってるので、ちゃんとした確認は各ブラウザーでした方がいいのかもしれないですけど、それでも実行できました。</p>
+<h2 id="終わり">終わり</h2>
+<p>今までもBabelを使っていましたけど、パッケージのソースをGitHubで見たりすると、たくさんのツールが使われていて、それぞれのツールの境界が複雑に見えてしまっていました。
+今回、調べてみたことで少し関連が理解できましたので、良い機会になりました。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html">ECMAScript 2015 Language Specification – ECMA-262 6th Edition</a></li>
+<li><a href="https://babeljs.io/docs/learn-es2015/">Learn ES2015 · Babel</a></li>
+<li><a href="https://babeljs.io/docs/setup/">Using Babel · Babel</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

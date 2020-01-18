@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>IPHONEのメッセージアプリのメッセージを保存する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>iPhoneのメッセージアプリのメッセージを保存する</h1>
+    
+      <div><time>October 14, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>iPhoneのメッセージアプリをMacに保存できないかと思って調べてみました。</p>
+<p>iTunesのバックアップのファイルから取り出すことができるみたいですね。</p>
+<p><code>~/Library/Application\ Support/MobileSync/Backup/[UDID]/3d/3d0d7e5fb2ce288813306e4d4636395e047a3d28</code></p>
+<p>識別子(UDID)はそれぞれのiPhoneによって変わります。</p>
+<p><code>3d0d</code>から始まる長いファイルの名前ですが、このファイルはiPhoneで使用されている時(バックアップされたファイルではなく)は<code>sms.db</code>という名前のSQLiteのデータベースファイルになっているようです。
+なので、SQLiteでアクセスしてメッセージを取り出してみます。</p>
+<p>iTunesのバックアップで暗号化をする設定にしていたら、SQLiteでアクセスした際に<code>Error: file is encrypted or is not a database</code>のようなエラーとなりました。
+なので、iTunesのバックアップで暗号化している場合は、一度、暗号化の設定をしていない状態でバックアップしてからファイルをコピーします。
+コピーしたらまた暗号化の設定をしておきます。</p>
+<h2 id="table">table</h2>
+<p>最初にテーブルについて定義を確認しました。</p>
+<h3 id="_sqlitedatabaseproperties">_SqliteDatabaseProperties</h3>
+<!-- `CREATE TABLE _SqliteDatabaseProperties (key TEXT, value TEXT, UNIQUE(key))` -->
+<table>
+<thead>
+<tr>
+<th align="left">column-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">key</td>
+<td align="left">TEXT</td>
+<td align="left">UNIQUE</td>
+</tr>
+<tr>
+<td align="left">value</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="message">message</h3>
+<!-- `CREATE TABLE message (ROWID INTEGER PRIMARY KEY AUTOINCREMENT, guid TEXT UNIQUE NOT NULL, text TEXT, replace INTEGER DEFAULT 0, service_center TEXT, handle_id INTEGER DEFAULT 0, subject TEXT, country TEXT, attributedBody BLOB, version INTEGER DEFAULT 0, type INTEGER DEFAULT 0, service TEXT, account TEXT, account_guid TEXT, error INTEGER DEFAULT 0, date INTEGER, date_read INTEGER, date_delivered INTEGER, is_delivered INTEGER DEFAULT 0, is_finished INTEGER DEFAULT 0, is_emote INTEGER DEFAULT 0, is_from_me INTEGER DEFAULT 0, is_empty INTEGER DEFAULT 0, is_delayed INTEGER DEFAULT 0, is_auto_reply INTEGER DEFAULT 0, is_prepared INTEGER DEFAULT 0, is_read INTEGER DEFAULT 0, is_system_message INTEGER DEFAULT 0, is_sent INTEGER DEFAULT 0, has_dd_results INTEGER DEFAULT 0, is_service_message INTEGER DEFAULT 0, is_forward INTEGER DEFAULT 0, was_downgraded INTEGER DEFAULT 0, is_archive INTEGER DEFAULT 0, cache_has_attachments INTEGER DEFAULT 0, cache_roomnames TEXT, was_data_detected INTEGER DEFAULT 0, was_deduplicated INTEGER DEFAULT 0, is_audio_message INTEGER DEFAULT 0, is_played INTEGER DEFAULT 0, date_played INTEGER, item_type INTEGER DEFAULT 0, other_handle INTEGER DEFAULT -1, group_title TEXT, group_action_type INTEGER DEFAULT 0, share_status INTEGER, share_direction INTEGER, is_expirable INTEGER DEFAULT 0, expire_state INTEGER DEFAULT 0, message_action_type INTEGER DEFAULT 0, message_source INTEGER DEFAULT 0, associated_message_guid STRING DEFAULT NULL, balloon_bundle_id STRING DEFAULT NULL, payload_data BLOB, associated_message_type INTEGER DEFAULT 0, expressive_send_style_id STRING DEFAULT NULL, associated_message_range_location INTEGER DEFAULT 0, associated_message_range_length INTEGER DEFAULT 0, time_expressive_send_played INTEGER DEFAULT 0, message_summary_info BLOB DEFAULT NULL)` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ROWID</td>
+<td align="left">INTEGER</td>
+<td align="left">PRIMARY KEY AUTOINCREMENT</td>
+</tr>
+<tr>
+<td align="left">guid</td>
+<td align="left">TEXT</td>
+<td align="left">UNIQUE NOT NULL</td>
+</tr>
+<tr>
+<td align="left">text</td>
+<td align="left">TEXT</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">replace</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">service_center</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">handle_id</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">subject</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">country</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">attributedBody</td>
+<td align="left">BLOB</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">version</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">service</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">account</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">account_guid</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">error</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">date</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">date_read</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">date_delivered</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">is_delivered</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_finished</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_emote</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_from_me</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_empty</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_delayed</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_auto_reply</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_prepared</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_read</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_system_message</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_sent</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">has_dd_results</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_service_message</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_forward</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">was_downgraded</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_archive</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">cache_has_attachments</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">cache_roomnames</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">was_data_detected</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">was_deduplicated</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_audio_message</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_played</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">date_played</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">item_type</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">other_handle</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT -1</td>
+</tr>
+<tr>
+<td align="left">group_title</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">group_action_type</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">share_status</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">share_direction</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">is_expirable</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">expire_state</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">message_action_type</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">message_source</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">associated_message_guid</td>
+<td align="left">STRING</td>
+<td align="left">DEFAULT NULL</td>
+</tr>
+<tr>
+<td align="left">balloon_bundle_id</td>
+<td align="left">STRING</td>
+<td align="left">DEFAULT NULL</td>
+</tr>
+<tr>
+<td align="left">payload_data</td>
+<td align="left">BLOB</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">associated_message_type</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">expressive_send_style_id</td>
+<td align="left">STRING</td>
+<td align="left">DEFAULT NULL</td>
+</tr>
+<tr>
+<td align="left">associated_message_range_location</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">associated_message_range_length</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">time_expressive_send_played</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">message_summary_info</td>
+<td align="left">BLOB</td>
+<td align="left">DEFAULT NULL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sqlite_sequence">sqlite_sequence</h3>
+<!-- `CREATE TABLE sqlite_sequence(name,seq)` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">seq</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="chat">chat</h3>
+<!-- `CREATE TABLE chat (ROWID INTEGER PRIMARY KEY AUTOINCREMENT, guid TEXT UNIQUE NOT NULL, style INTEGER, state INTEGER, account_id TEXT, properties BLOB, chat_identifier TEXT, service_name TEXT, room_name TEXT, account_login TEXT, is_archived INTEGER DEFAULT 0, last_addressed_handle TEXT, display_name TEXT, group_id TEXT, is_filtered INTEGER DEFAULT 0, successful_query INTEGER DEFAULT 1)` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ROWID</td>
+<td align="left">INTEGER</td>
+<td align="left">PRIMARY KEY AUTOINCREMENT</td>
+</tr>
+<tr>
+<td align="left">guid</td>
+<td align="left">TEXT</td>
+<td align="left">UNIQUE NOT NULL</td>
+</tr>
+<tr>
+<td align="left">style</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">state</td>
+<td align="left">INTEGER</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">account_id</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">properties</td>
+<td align="left">BLOB</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">chat_identifier</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">service_name</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">room_name</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">account_login</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">is_archived</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">last_addressed_handle</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">display_name</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">group_id</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">is_filtered</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">successful_query</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="attachment">attachment</h3>
+<!-- `CREATE TABLE attachment (ROWID INTEGER PRIMARY KEY AUTOINCREMENT, guid TEXT UNIQUE NOT NULL, created_date INTEGER DEFAULT 0, start_date INTEGER DEFAULT 0, filename TEXT, uti TEXT, mime_type TEXT, transfer_state INTEGER DEFAULT 0, is_outgoing INTEGER DEFAULT 0, user_info BLOB, transfer_name TEXT, total_bytes INTEGER DEFAULT -1, is_sticker INTEGER DEFAULT 0, sticker_user_info BLOB, attribution_info BLOB, hide_attachment INTEGER DEFAULT 0)` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ROWID</td>
+<td align="left">INTEGER</td>
+<td align="left">PRIMARY KEY AUTOINCREMENT</td>
+</tr>
+<tr>
+<td align="left">guid</td>
+<td align="left">TEXT</td>
+<td align="left">UNIQUE NOT NULL</td>
+</tr>
+<tr>
+<td align="left">created_date</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">start_date</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">filename</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">uti</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">mime_type</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">transfer_state</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">is_outgoing</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">user_info</td>
+<td align="left">BLOB</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">transfer_name</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">total_bytes</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT -1</td>
+</tr>
+<tr>
+<td align="left">is_sticker</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+<tr>
+<td align="left">sticker_user_info</td>
+<td align="left">BLOB</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">attribution_info</td>
+<td align="left">BLOB</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">hide_attachment</td>
+<td align="left">INTEGER</td>
+<td align="left">DEFAULT 0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="handle">handle</h3>
+<!-- `CREATE TABLE handle ( ROWID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, id TEXT NOT NULL, country TEXT, service TEXT NOT NULL, uncanonicalized_id TEXT, UNIQUE (id, service) )` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ROWID</td>
+<td align="left">INTEGER</td>
+<td align="left">PRIMARY KEY AUTOINCREMENT UNIQUE</td>
+</tr>
+<tr>
+<td align="left">id</td>
+<td align="left">TEXT</td>
+<td align="left">NOT NULL, UNIQUE</td>
+</tr>
+<tr>
+<td align="left">country</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">service</td>
+<td align="left">TEXT</td>
+<td align="left">NOT NULL, UNIQUE</td>
+</tr>
+<tr>
+<td align="left">uncanonicalized_id</td>
+<td align="left">TEXT</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="message_attachment_join">message_attachment_join</h3>
+<!-- `CREATE TABLE message_attachment_join ( message_id INTEGER REFERENCES message (ROWID) ON DELETE CASCADE, attachment_id INTEGER REFERENCES attachment (ROWID) ON DELETE CASCADE, UNIQUE(message_id, attachment_id))` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">message_id</td>
+<td align="left">INTEGER</td>
+<td align="left">REFERENCES message (ROWID) ON DELETE CASCADE, UNIQUE</td>
+</tr>
+<tr>
+<td align="left">attachment_id</td>
+<td align="left">INTEGER</td>
+<td align="left">REFERENCES attachment (ROWID) ON DELETE CASCADE, UNIQUE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chat_handle_join">chat_handle_join</h3>
+<!-- `CREATE TABLE chat_handle_join ( chat_id INTEGER REFERENCES chat (ROWID) ON DELETE CASCADE, handle_id INTEGER REFERENCES handle (ROWID) ON DELETE CASCADE, UNIQUE(chat_id, handle_id))` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">chat_id</td>
+<td align="left">INTEGER</td>
+<td align="left">REFERENCES chat (ROWID) ON DELETE CASCADE, UNIQUE</td>
+</tr>
+<tr>
+<td align="left">handle_id</td>
+<td align="left">INTEGER</td>
+<td align="left">REFERENCES handle (ROWID) ON DELETE CASCADE, UNIQUE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chat_message_join">chat_message_join</h3>
+<!-- `CREATE TABLE chat_message_join ( chat_id INTEGER REFERENCES chat (ROWID) ON DELETE CASCADE, message_id INTEGER REFERENCES message (ROWID) ON DELETE CASCADE, PRIMARY KEY (chat_id, message_id))` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">chat_id</td>
+<td align="left">INTEGER</td>
+<td align="left">REFERENCES chat (ROWID) ON DELETE CASCADE, PRIMARY KEY</td>
+</tr>
+<tr>
+<td align="left">message_id</td>
+<td align="left">INTEGER</td>
+<td align="left">REFERENCES message (ROWID) ON DELETE CASCADE, PRIMARY KEY</td>
+</tr>
+</tbody>
+</table>
+<h3 id="deleted_messages">deleted_messages</h3>
+<!-- `CREATE TABLE deleted_messages (ROWID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, guid TEXT NOT NULL)` -->
+<table>
+<thead>
+<tr>
+<th align="left">colmun-name</th>
+<th align="left">type-name</th>
+<th align="left">column-constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ROWID</td>
+<td align="left">INTEGER</td>
+<td align="left">PRIMARY KEY AUTOINCREMENT UNIQUE</td>
+</tr>
+<tr>
+<td align="left">guid</td>
+<td align="left">TEXT</td>
+<td align="left">NOT NULL</td>
+</tr>
+</tbody>
+</table>
+<p><code>message</code>テーブルにメッセージがありそうですね。
+<code>attachment</code>テーブルに添付ファイルの情報がありそうですが、実際の添付されたファイルは別のところにありそうで、今回はそこまで調べていません。
+<code>chat</code>テーブルはLINEでいうところのトークルームのような情報がありそうです。
+<code>handle</code>に相手のアドレスの情報があるようです。</p>
+<h2 id="取り出す">取り出す</h2>
+<p>簡単に取り出すために次のようなコマンドとSQLにしてみました。
+カレントディレクトリに<code>sms.csv</code>という名前でファイルを作成します。
+CSV的な結果になるようにしていますが、文字コードの問題があるので、Excelでは文字化けしてしまいます。
+でも、UTF-8なので、絵文字はちゃんと表示されます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#960050;background-color:#1e0010">$</span> sqlite3 <span style="color:#ae81ff">3</span>d0d7e5fb2ce288813306e4d4636395e047a3d28
+sqlite<span style="color:#f92672">&gt;</span> .<span style="color:#66d9ef">output</span> .<span style="color:#f92672">/</span>sms.csv
+sqlite<span style="color:#f92672">&gt;</span> .separator ,
+sqlite<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">SELECT</span>
+  <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">|</span><span style="color:#f92672">|</span> T2.text <span style="color:#f92672">|</span><span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;</span>
+  , T2.subject
+  , datetime(T2.date <span style="color:#f92672">+</span> <span style="color:#ae81ff">978307200</span>, <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">unixepoch</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">localtime</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">AS</span> date
+  , <span style="color:#66d9ef">CASE</span> T2.is_from_me <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">THEN</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Received</span><span style="color:#e6db74">&#39;</span> <span style="color:#66d9ef">WHEN</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">THEN</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Sent</span><span style="color:#e6db74">&#39;</span> <span style="color:#66d9ef">ELSE</span> <span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Unknown</span><span style="color:#e6db74">&#39;</span> <span style="color:#66d9ef">END</span> <span style="color:#66d9ef">AS</span> is_from_me
+  , T3.id
+<span style="color:#66d9ef">FROM</span>
+  chat_message_join T0
+  <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span>
+    chat T1
+  <span style="color:#66d9ef">ON</span>
+    T0.chat_id <span style="color:#f92672">=</span> T1.ROWID
+  <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span>
+    message T2
+  <span style="color:#66d9ef">ON</span>
+    T0.message_id <span style="color:#f92672">=</span> T2.ROWID
+  <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span>
+    handle T3
+  <span style="color:#66d9ef">ON</span>
+    T2.handle_id <span style="color:#f92672">=</span> T3.ROWID
+<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span>
+  T2.date <span style="color:#66d9ef">DESC</span>;
+</code></pre></div><h2 id="nodejsとsqlite">Node.jsとSQLite</h2>
+<p>Node.jsとSQLiteからアクセスしたソースも書いておきます。
+こちらはExcelで開けるように<code>Shift_JIS</code>に変換してみました。
+その代わり絵文字は文字化けしてしまいます。</p>
+<p><a href="https://www.npmjs.com/package/sqlite3">sqlite3</a>と<a href="https://www.npmjs.com/package/iconv">iconv</a>のnpmパッケージを使ってみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sqlite3</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;sqlite3&#39;</span>).<span style="color:#a6e22e">verbose</span>();
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">db</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">sqlite3</span>.<span style="color:#a6e22e">Database</span>(<span style="color:#e6db74">&#39;./3d0d7e5fb2ce288813306e4d4636395e047a3d28&#39;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Iconv</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;iconv&#39;</span>).<span style="color:#a6e22e">Iconv</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sjis</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Iconv</span>(<span style="color:#e6db74">&#39;UTF-8&#39;</span>, <span style="color:#e6db74">&#39;Shift_JIS//TRANSLIT//IGNORE&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;fs&#39;</span>);
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">filename</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./sms.csv&#39;</span>;
+<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">serialize</span>(() =&gt; {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sql</span> <span style="color:#f92672">=</span> [];
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;SELECT&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  T2.text&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  , T2.subject&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  , datetime(T2.date + 978307200, \&#39;unixepoch\&#39;, \&#39;localtime\&#39;) AS date&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  , CASE T2.is_from_me WHEN 0 THEN \&#39;Received\&#39; WHEN 1 THEN \&#39;Sent\&#39; ELSE \&#39;Unknown\&#39; END AS is_from_me&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  , T3.id&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;FROM&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  chat_message_join T0&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  INNER JOIN&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;    chat T1&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  ON&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;    T0.chat_id = T1.ROWID&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  INNER JOIN&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;    message T2&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  ON&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;    T0.message_id = T2.ROWID&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  INNER JOIN&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;    handle T3&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  ON&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;    T2.handle_id = T3.ROWID&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;ORDER BY&#39;</span>);
+  <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">push</span>(<span style="color:#e6db74">&#39;  T2.date DESC&#39;</span>);
+  <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">each</span>(<span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#39; &#39;</span>), (<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">row</span>) =&gt; {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">err</span>) {
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">err</span>));
+      <span style="color:#66d9ef">return</span>;
+    }
+    <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">appendFile</span>(<span style="color:#a6e22e">filename</span>, <span style="color:#a6e22e">sjis</span>.<span style="color:#a6e22e">convert</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">row</span>.<span style="color:#a6e22e">date</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">row</span>.<span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">row</span>.<span style="color:#a6e22e">is_from_me</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">row</span>.<span style="color:#a6e22e">subject</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, </span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">row</span>.<span style="color:#a6e22e">text</span><span style="color:#e6db74">}</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">r</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">n</span><span style="color:#e6db74">`</span>));
+  });
+});
+
+<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">close</span>();
+</code></pre></div><h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://www.matt.elementfx.com/forensics/index.php#manip">Digital Forensics</a></li>
+<li><a href="https://discussionsjapan.apple.com/thread/10142489?start=15&amp;tstart=0">SMSを書き出す方法はありますか？ | 公式 Apple サポートコミュニティ</a></li>
+<li><a href="http://linuxsleuthing.blogspot.jp/2012/10/whos-texting-ios6-smsdb.html">Linux Sleuthing: Who's Texting? The iOS6 sms.db</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

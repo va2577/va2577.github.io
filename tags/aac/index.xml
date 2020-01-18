@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AAC on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/aac/</link>
+    <description>Recent content in AAC on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 14 Jan 2018 18:58:57 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/aac/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>radiko.jp で録音（保存、ダウンロード）したファイルが iOS の CloudBeats や OneDrive で聞けない</title>
+      <link>https://va2577.github.io/post/82/</link>
+      <pubDate>Sun, 14 Jan 2018 18:58:57 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/82/</guid>
+      <description>&lt;p&gt;iOS の CloudBeats で音楽を聴くようになったのですが、radiko.jp で録音した m4a ファイルが CloudBeats で聴けなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>radiko.jp のタイムフリーの録音(保存、ダウンロード)</title>
+      <link>https://va2577.github.io/post/72/</link>
+      <pubDate>Fri, 28 Apr 2017 11:08:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/72/</guid>
+      <description>&lt;p&gt;radiko.jp のタイムフリーの録音(保存、ダウンロード)ができないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルから指定した時間を無劣化で切り取る</title>
+      <link>https://va2577.github.io/post/41/</link>
+      <pubDate>Thu, 19 May 2016 18:06:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/41/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/28/&#34;&gt;FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する&lt;/a&gt;
+でAACファイルを抽出していたのですが、音楽が流れている部分だけ切り取りたいと思いましたので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する</title>
+      <link>https://va2577.github.io/post/28/</link>
+      <pubDate>Wed, 10 Feb 2016 12:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/28/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/24/&#34;&gt;らじる★らじる&lt;/a&gt;、&lt;a href=&#34;https://va2577.github.io/post/25/&#34;&gt;radiko.jp&lt;/a&gt;で録音したファイルから&lt;a href=&#34;https://va2577.github.io/post/27/&#34;&gt;AACファイルを抽出&lt;/a&gt;しましたが、MacのFinderから再生することはできるんですけど、iTunesでは再生できませんでした。
+なので今回はiTunesで再生できるようになるまでを調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルからAACファイルを抽出する</title>
+      <link>https://va2577.github.io/post/27/</link>
+      <pubDate>Tue, 09 Feb 2016 15:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/27/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/24/&#34;&gt;らじる★らじる&lt;/a&gt;、&lt;a href=&#34;https://va2577.github.io/post/25/&#34;&gt;radiko.jp&lt;/a&gt;で録音したファイルは&lt;a href=&#34;https://ja.wikipedia.org/wiki/Flash_Video&#34;&gt;Flash Video&lt;/a&gt;という&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88&#34;&gt;コンテナ型のファイルフォーマット&lt;/a&gt;なのでそのままだとMacで再生しづらいです。
+今回はFLVファイルからAACファイルを抽出することについて調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

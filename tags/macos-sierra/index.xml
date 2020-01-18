@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>macOS Sierra on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/macos-sierra/</link>
+    <description>Recent content in macOS Sierra on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Oct 2016 09:57:49 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/macos-sierra/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>macOS Sierraにアップグレード</title>
+      <link>https://va2577.github.io/post/48/</link>
+      <pubDate>Tue, 11 Oct 2016 09:57:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/48/</guid>
+      <description>&lt;p&gt;macOS Sierra にアップグレードして設定したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

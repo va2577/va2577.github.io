@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>SUPERAGENTでXMLのレスポンスのTEXTがUNDEFINEDになる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>SuperAgentでXMLのレスポンスのtextがundefinedになる</h1>
+    
+      <div><time>February 2, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>SuperAgentでXMLにアクセスした時にレスポンスのbodyやtextが取れなかったので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Node.js バージョン 5.5.0</li>
+<li>SuperAgent バージョン 1.7.2</li>
+<li>superagent-xml2jsparser バージョン 0.1.1</li>
+</ul>
+<h2 id="superagent">SuperAgent？</h2>
+<blockquote>
+<p>Super Agent is light-weight progressive ajax API crafted for flexibility, readability, and a low learning curve after being frustrated with many of the existing request APIs. It also works with Node.js!</p>
+<p><cite><a href="http://visionmedia.github.io/superagent/">SuperAgent - Ajax with less suck</a></cite></p>
+</blockquote>
+<h2 id="単純にgetする">単純にgetする</h2>
+<p>適当なXMLとして、復旧・復興支援制度データベース API V2 リファレンから、例にある <a href="http://api.r-assistance.go.jp/v2/supports.xml?appkey=0">http://api.r-assistance.go.jp/v2/supports.xml?appkey=0</a> にアクセスしてみます。
+appkeyは「常に0を指定してください。」というAPI共通仕様のようなので、クエリーストリング(<code>.query()</code>)で指定しています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// a.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;superagent&#39;</span>);
+
+(() =&gt; {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://api.r-assistance.go.jp/v2/supports.xml&#39;</span>;
+  <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">get</span>(<span style="color:#a6e22e">url</span>)
+    .<span style="color:#a6e22e">query</span>({ <span style="color:#a6e22e">appkey</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span> })
+    .<span style="color:#a6e22e">end</span>((<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">res.text: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">text</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+    });
+})();
+</code></pre></div><p>実行してみるとundefinedになりました。</p>
+<pre><code>$ node a.js
+res.text: undefined
+</code></pre><h2 id="bufferをする">buffer()をする</h2>
+<blockquote>
+<p>in later superagents you have to do <code>.buffer()</code> if the response is not <code>text/*</code> or <code>application/json</code></p>
+<p><cite><a href="https://github.com/visionmedia/superagent/issues/129">res.text is undefined · Issue #129 · visionmedia/superagent · GitHub</a></cite></p>
+</blockquote>
+<p>ここで<a href="https://github.com/tj">tj</a>さんが「レスポンスの<code>content-type</code>が<code>text/*</code>か<code>application/json</code>以外の場合は<code>.buffer()</code>をする」ように言っていました。</p>
+<p>以下のところでもそういった内容が記載されていました。</p>
+<blockquote>
+<p>To force buffering of response bodies as <code>res.text</code> you may invoke <code>req.buffer()</code>. To undo the default of buffering for text responses such as &ldquo;text/plain&rdquo;, &ldquo;text/html&rdquo; etc you may invoke <code>req.buffer(false)</code>.</p>
+<p>When buffered the <code>res.buffered</code> flag is provided, you may use this to handle both buffered and unbuffered responses in the same callback.</p>
+<p><cite><a href="http://visionmedia.github.io/superagent/#buffering-responses">SuperAgent - Ajax with less suck</a></cite></p>
+</blockquote>
+<p>なので、<code>.buffer()</code>をしてみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// a.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;superagent&#39;</span>);
+
+(() =&gt; {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://api.r-assistance.go.jp/v2/supports.xml&#39;</span>;
+  <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">get</span>(<span style="color:#a6e22e">url</span>)
+    .<span style="color:#a6e22e">query</span>({ <span style="color:#a6e22e">appkey</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span> })
+    .<span style="color:#a6e22e">buffer</span>()
+    .<span style="color:#a6e22e">end</span>((<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">res.text: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">text</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+    });
+})();
+</code></pre></div><p>実行してみるとtextが取れました。</p>
+<pre><code>$ node a.js
+res.text: &lt;supports_response xmlns:i=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;total_count&gt;1136&lt;/total_count&gt;&lt;supports&gt;&lt;support&gt;&lt;id&gt;6039&lt;/id&gt;&lt;name&gt;住まいの復興給付金&lt;/name&gt;
+# ... 略
+</code></pre><h2 id="xmlをパースする">XMLをパースする</h2>
+<p>superagent-xml2jsparserを使うとJSONに変換した状態のものをbodyに入れてくれるようなので使ってみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// a.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;superagent&#39;</span>);
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">xml2jsParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;superagent-xml2jsparser&#39;</span>);
+
+(() =&gt; {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://api.r-assistance.go.jp/v2/supports.xml&#39;</span>;
+  <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">get</span>(<span style="color:#a6e22e">url</span>)
+    .<span style="color:#a6e22e">query</span>({ <span style="color:#a6e22e">appkey</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span> })
+    .<span style="color:#a6e22e">accept</span>(<span style="color:#e6db74">&#39;xml&#39;</span>)
+    .<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">xml2jsParser</span>)
+    .<span style="color:#a6e22e">buffer</span>()
+    .<span style="color:#a6e22e">end</span>((<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">res.body: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">body</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+    });
+})();
+</code></pre></div><p>実行してみると使いやすいJSONに変換することができました。</p>
+<pre><code>$ node a.js
+res.body: {&quot;supports_response&quot;:{&quot;$&quot;:{&quot;xmlns:i&quot;:&quot;http://www.w3.org/2001/XMLSchema-instance&quot;},&quot;total_count&quot;:[&quot;1136&quot;],&quot;supports&quot;:[{&quot;support&quot;:[{&quot;id&quot;:[&quot;6039&quot;],&quot;name&quot;:[&quot;住まいの復興給付金&quot;],
+# ... 略
+</code></pre><h2 id="終わり">終わり</h2>
+<p>superagent-xml2jsparserのUsageに次のようなコードが記載されていたんですけど、ここに<code>.buffer()</code>と記載されていたらわかりやすかったと思いました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">request</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;superagent&#39;</span>);
+<span style="color:#a6e22e">xml2jsParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;superagent-xml2jsparser&#39;</span>);
+
+<span style="color:#a6e22e">request</span>
+  .<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;http://api.openweathermap.org/data/2.5/weather?q=Los Angeles&amp;mode=xml&#39;</span>)
+  .<span style="color:#a6e22e">accept</span>(<span style="color:#e6db74">&#39;xml&#39;</span>)
+  .<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">xml2jsParser</span>) <span style="color:#75715e">// add the parser function
+</span><span style="color:#75715e"></span>  .<span style="color:#a6e22e">end</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">res</span>){
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">body</span>)
+  })
+</code></pre></div><h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://visionmedia.github.io/superagent/">SuperAgent - Ajax with less suck</a></li>
+<li><a href="https://www.npmjs.com/package/superagent-xml2jsparser#usage">superagent-xml2jsparser</a></li>
+<li><a href="https://www.r-assistance.go.jp/blob/ssdb-apidoc/API-reference.html">復旧・復興支援制度データベース API V2 リファレンス</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

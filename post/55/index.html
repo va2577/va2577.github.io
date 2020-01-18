@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>META TRADER 5 のインディケーター (GERALD APPEL の MACD) を作る - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Meta Trader 5 のインディケーター (Gerald Appel の MACD) を作る</h1>
+    
+      <div><time>November 6, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>為替の取引をするのに Meta Trader 5(MT5) を使っているのですが、MACD を使おうと思った時に、このインディケーターの開発者である Gerald Appel の提唱するものと違うようなので、自分で作ってみました。</p>
+<h2 id="違い">違い</h2>
+<p>次の画像のインディケーターの上側が MT5 の標準の MACD です。
+下側が Gerald Appel の提唱する MACD です。</p>
+<p><img src="/img/55-01.png" alt=""></p>
+<p>上側のヒストグラムで描画されているものが MACD ラインです。
+下側の青いラインで描画されているラインに対応します。</p>
+<p>上側と下側の赤い点線で描画されているものがシグナルラインです。
+シグナルラインは同じに描画されているように見えますが、上側が単純移動平均で、下側が指数平滑移動平均になっています。</p>
+<p>MT5 の標準の MACD には Gerald Appel のいうところのヒストグラムがありません。
+MACD ラインがヒストグラムで描画されているため少し混乱しますね。</p>
+<h2 id="macd">MACD?</h2>
+<p>MACD の計算方法と活用方法については検索すればたくさん出てきます。
+次のリンクとかを参考にしています。</p>
+<p><a href="http://www.gaitameonline.com/academy_chart02.jsp">FX 実戦チャート術 第2回 ボリンジャーバンド・MACD｜FX｜外為オンライン　FX取引 － あなたの為の、外為を。</a></p>
+<p>MACD を使いたかったのは、投資苑を読んで、ダイバージェンスとして活用したかったからです。</p>
+<h2 id="ソース">ソース</h2>
+<p>MT5 の標準の MACD のソースを修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//|                                                        MACD2.mq5 |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//|                        Copyright 2009, MetaQuotes Software Corp. |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//|                                              http://www.mql5.com |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property copyright   &#34;2009, MetaQuotes Software Corp.&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property link        &#34;http:</span><span style="color:#75715e">//www.mql5.com&#34;
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property description &#34;Moving Average Convergence</span><span style="color:#75715e">/</span><span style="color:#75715e">Divergence&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;MovingAverages.mqh&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">//--- indicator settings
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_separate_window</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_buffers 5</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_plots   3</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_type1   DRAW_LINE</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_type2   DRAW_LINE</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_type3   DRAW_HISTOGRAM</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_color1  Blue</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_color2  Red</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_color3  Silver</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_width1  1</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_width2  1</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_width3  1</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_label1  &#34;MACD&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_label2  &#34;Signal&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_label3  &#34;Histogram&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_style1  STYLE_SOLID</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_style2  STYLE_DOT</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_style3  STYLE_SOLID</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">//--- input parameters
+</span><span style="color:#75715e"></span>input <span style="color:#66d9ef">int</span>                InpFastEMA<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span>;               <span style="color:#75715e">// Fast EMA period
+</span><span style="color:#75715e"></span>input <span style="color:#66d9ef">int</span>                InpSlowEMA<span style="color:#f92672">=</span><span style="color:#ae81ff">26</span>;               <span style="color:#75715e">// Slow EMA period
+</span><span style="color:#75715e"></span>input <span style="color:#66d9ef">int</span>                InpSignalEMA<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span>;              <span style="color:#75715e">// Signal EMA period
+</span><span style="color:#75715e"></span>input ENUM_APPLIED_PRICE InpAppliedPrice<span style="color:#f92672">=</span>PRICE_CLOSE; <span style="color:#75715e">// Applied price
+</span><span style="color:#75715e"></span><span style="color:#75715e">//--- indicator buffers
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">double</span>                   ExtMacdBuffer[];
+<span style="color:#66d9ef">double</span>                   ExtSignalBuffer[];
+<span style="color:#66d9ef">double</span>                   ExtHistogramBuffer[];
+<span style="color:#66d9ef">double</span>                   ExtFastMaBuffer[];
+<span style="color:#66d9ef">double</span>                   ExtSlowMaBuffer[];
+<span style="color:#75715e">//--- MA handles
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span>                      ExtFastMaHandle;
+<span style="color:#66d9ef">int</span>                      ExtSlowMaHandle;
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//| Custom indicator initialization function                         |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">OnInit</span>()
+  {
+<span style="color:#75715e">//--- indicator buffers mapping
+</span><span style="color:#75715e"></span>   SetIndexBuffer(<span style="color:#ae81ff">0</span>,ExtMacdBuffer,INDICATOR_DATA);
+   SetIndexBuffer(<span style="color:#ae81ff">1</span>,ExtSignalBuffer,INDICATOR_DATA);
+   SetIndexBuffer(<span style="color:#ae81ff">2</span>,ExtHistogramBuffer,INDICATOR_DATA);
+   SetIndexBuffer(<span style="color:#ae81ff">3</span>,ExtFastMaBuffer,INDICATOR_CALCULATIONS);
+   SetIndexBuffer(<span style="color:#ae81ff">4</span>,ExtSlowMaBuffer,INDICATOR_CALCULATIONS);
+<span style="color:#75715e">//--- sets first bar from what index will be drawn
+</span><span style="color:#75715e"></span>   PlotIndexSetInteger(<span style="color:#ae81ff">1</span>,PLOT_DRAW_BEGIN,InpSignalEMA<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+<span style="color:#75715e">//--- name for Dindicator subwindow label
+</span><span style="color:#75715e"></span>   IndicatorSetString(INDICATOR_SHORTNAME,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">MACD(</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">+</span>string(InpFastEMA)<span style="color:#f92672">+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">,</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">+</span>string(InpSlowEMA)<span style="color:#f92672">+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">,</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">+</span>string(InpSignalEMA)<span style="color:#f92672">+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>);
+<span style="color:#75715e">//--- get MA handles
+</span><span style="color:#75715e"></span>   ExtFastMaHandle<span style="color:#f92672">=</span>iMA(NULL,<span style="color:#ae81ff">0</span>,InpFastEMA,<span style="color:#ae81ff">0</span>,MODE_EMA,InpAppliedPrice);
+   ExtSlowMaHandle<span style="color:#f92672">=</span>iMA(NULL,<span style="color:#ae81ff">0</span>,InpSlowEMA,<span style="color:#ae81ff">0</span>,MODE_EMA,InpAppliedPrice);
+<span style="color:#75715e">//--- initialization done
+</span><span style="color:#75715e"></span>  }
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//| Moving Averages Convergence/Divergence                           |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">OnCalculate</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> rates_total,
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> prev_calculated,
+                <span style="color:#66d9ef">const</span> datetime <span style="color:#f92672">&amp;</span>time[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>open[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>high[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>low[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>close[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">long</span> <span style="color:#f92672">&amp;</span>tick_volume[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">long</span> <span style="color:#f92672">&amp;</span>volume[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>spread[])
+  {
+<span style="color:#75715e">//--- check for data
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">if</span>(rates_total<span style="color:#f92672">&lt;</span>InpSignalEMA)
+      <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>);
+<span style="color:#75715e">//--- not all data may be calculated
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">int</span> calculated<span style="color:#f92672">=</span>BarsCalculated(ExtFastMaHandle);
+   <span style="color:#66d9ef">if</span>(calculated<span style="color:#f92672">&lt;</span>rates_total)
+     {
+      Print(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Not all data of ExtFastMaHandle is calculated (</span><span style="color:#e6db74">&#34;</span>,calculated,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">bars ). Error</span><span style="color:#e6db74">&#34;</span>,GetLastError());
+      <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>);
+     }
+   calculated<span style="color:#f92672">=</span>BarsCalculated(ExtSlowMaHandle);
+   <span style="color:#66d9ef">if</span>(calculated<span style="color:#f92672">&lt;</span>rates_total)
+     {
+      Print(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Not all data of ExtSlowMaHandle is calculated (</span><span style="color:#e6db74">&#34;</span>,calculated,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">bars ). Error</span><span style="color:#e6db74">&#34;</span>,GetLastError());
+      <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>);
+     }
+<span style="color:#75715e">//--- we can copy not all data
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">int</span> to_copy;
+   <span style="color:#66d9ef">if</span>(prev_calculated<span style="color:#f92672">&gt;</span>rates_total <span style="color:#f92672">|</span><span style="color:#f92672">|</span> prev_calculated<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>) to_copy<span style="color:#f92672">=</span>rates_total;
+   <span style="color:#66d9ef">else</span>
+     {
+      to_copy<span style="color:#f92672">=</span>rates_total<span style="color:#f92672">-</span>prev_calculated;
+      <span style="color:#66d9ef">if</span>(prev_calculated<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>) to_copy<span style="color:#f92672">+</span><span style="color:#f92672">+</span>;
+     }
+<span style="color:#75715e">//--- get Fast EMA buffer
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">if</span>(IsStopped()) <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>); <span style="color:#75715e">//Checking for stop flag
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">if</span>(CopyBuffer(ExtFastMaHandle,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,to_copy,ExtFastMaBuffer)<span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+     {
+      Print(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Getting fast EMA is failed! Error</span><span style="color:#e6db74">&#34;</span>,GetLastError());
+      <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>);
+     }
+<span style="color:#75715e">//--- get Slow EMA buffer
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">if</span>(IsStopped()) <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>); <span style="color:#75715e">//Checking for stop flag
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">if</span>(CopyBuffer(ExtSlowMaHandle,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,to_copy,ExtSlowMaBuffer)<span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+     {
+      Print(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Getting slow SMA is failed! Error</span><span style="color:#e6db74">&#34;</span>,GetLastError());
+      <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>);
+     }
+<span style="color:#75715e">//---
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">int</span> limit;
+   <span style="color:#66d9ef">if</span>(prev_calculated<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+      limit<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+   <span style="color:#66d9ef">else</span> limit<span style="color:#f92672">=</span>prev_calculated<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+<span style="color:#75715e">//--- calculate MACD
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>limit;i<span style="color:#f92672">&lt;</span>rates_total <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> <span style="color:#f92672">!</span>IsStopped();i<span style="color:#f92672">+</span><span style="color:#f92672">+</span>)
+      ExtMacdBuffer[i]<span style="color:#f92672">=</span>ExtFastMaBuffer[i]<span style="color:#f92672">-</span>ExtSlowMaBuffer[i];
+<span style="color:#75715e">//--- calculate Signal
+</span><span style="color:#75715e"></span>   ExponentialMAOnBuffer(rates_total,prev_calculated,<span style="color:#ae81ff">0</span>,InpSignalEMA,ExtMacdBuffer,ExtSignalBuffer);
+   <span style="color:#75715e">//--- calculate Histogram
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>limit;i<span style="color:#f92672">&lt;</span>rates_total <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> <span style="color:#f92672">!</span>IsStopped();i<span style="color:#f92672">+</span><span style="color:#f92672">+</span>)
+      ExtHistogramBuffer[i]<span style="color:#f92672">=</span>(ExtMacdBuffer[i]<span style="color:#f92672">-</span>ExtSignalBuffer[i])<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>;
+<span style="color:#75715e">//--- OnCalculate done. Return new prev_calculated.
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">return</span>(rates_total);
+  }
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span></code></pre></div><h2 id="コンパイル">コンパイル</h2>
+<ol>
+<li>
+<p>ソースのファイルを MACD2.mq5 の名前で保存します。</p>
+</li>
+<li>
+<p>MT5 のメニューから[ファイル]-[データフォルダを開く]をクリックして、データフォルダを表示します。</p>
+</li>
+<li>
+<p>データフォルダの中の[MQL5]-[Indicators]フォルダに MACD2.mq5 ファイルを保存します。</p>
+</li>
+<li>
+<p>MT5 のメニューから[ツール]-[MetaQuotes 言語エディタ]をクリックして、MetaEditor を表示します。</p>
+</li>
+<li>
+<p>MetaEditor の左側の[Navigator]から[Indicators]-[MACD2.mq5]を右クリックして[Compile]をクリックします。
+Navigator が表示されていなければ[View]-[Navigator]をクリックして表示します。</p>
+</li>
+<li>
+<p>Indicators フォルダに MACD2.ex5 ファイルが作成されます。</p>
+</li>
+</ol>
+<h2 id="インディケーターの追加">インディケーターの追加</h2>
+<ol>
+<li>
+<p>MT5 のメニューから[挿入]-[インディケータ]-[カスタム]-[MACD2]をクリックします。</p>
+</li>
+<li>
+<p>表示されたインディケーターのダイアログの[インプット]タブからパラメーターを指定して、OK をクリックします。</p>
+</li>
+</ol>
+<p>パラメーターの内容は次の通りです。</p>
+<ul>
+<li>Fast EMA period: 短期の移動平均を計算する際の期間</li>
+<li>Slow EMA period: 長期の移動平均を計算する際の期間</li>
+<li>Signal EMA period: シグナルラインの移動平均を計算する際の期間</li>
+<li>Applied Price: 短期の移動平均と長期の移動平均を計算する際に適用する価格(始値、高値、安値、終値)</li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>MQL5 は初めて使ってみましたが、C 言語に近いのかな？と感じました。
+C 言語もあまり使ったことはないですけど・・</p>
+<p><code>#property indicator_type1</code> のようにインディケーターを番号で指定しているところがあまり好きになれないです・・</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

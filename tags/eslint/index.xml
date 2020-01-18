@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ESLint on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/eslint/</link>
+    <description>Recent content in ESLint on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 14 Mar 2018 18:56:06 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/eslint/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ESLint を使ってみました</title>
+      <link>https://va2577.github.io/post/103/</link>
+      <pubDate>Wed, 14 Mar 2018 18:56:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/103/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://eslint.org/docs/user-guide/getting-started&#34;&gt;Getting Started&lt;/a&gt; を参考に ESLint を使ってみます。
+軽く使えればよかったため、 Gulp とかのツールを使わずに、純粋な ESLint を使うことにしました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のテンプレートで &lt;META&gt; の KEYWORDS が配列になってしまうので調べました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のテンプレートで &lt;meta&gt; の keywords が配列になってしまうので調べました</h1>
+    
+      <div><time>April 13, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>SEO を考慮すると、 HTML の &lt;meta&gt; の description と keywords を記述しておくと良いそうですので、 Hugo のテーマを作るのに &lt;meta&gt; を記述しました。
+が、 keywords が &ldquo;word1, word2, word3&rdquo; ではなく、 &ldquo;[word1, word2, word3]&rdquo; のようになってしまったので調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Hugo Static Site Generator v0.38.2</li>
+</ul>
+<h2 id="問題">問題</h2>
+<p>front matter に次のように記述しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: sample
+date: 2018-04-13
+description: 記事の概要です。
+keywords: &#34;word1, word2, word3&#34;
+---
+This is sample content.
+</code></pre></div><p>baseof.html ファイル (theme/&lt;THEME&gt;/layouts/_default/baseof.html) を次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;description&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ .Description }}&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;keywords&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ .Keywords }}&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">main</span>&gt;
+      {{ block &#34;main&#34; }}
+        {{ .Content }}
+      {{ end }}
+    &lt;/<span style="color:#f92672">main</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>single.html ファイル (theme/&lt;THEME&gt;/layouts/_default/single.html) を次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;main&#34; }}
+  {{ .Content }}
+{{ end }}
+</code></pre></div><p>そして、 Hugo のサーバーで確認すると、生成された HTML は次のようになっていました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;description&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;記事の概要です。&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;keyword&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[word1, word2, word3]&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;sample&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">main</span>&gt;
+      &lt;<span style="color:#f92672">p</span>&gt;This is sample content.&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;/<span style="color:#f92672">main</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>[]</code> で囲まれているので、配列になってしまっているようです。</p>
+<h2 id="hugo-discussion">Hugo Discussion</h2>
+<p>Hugo Discussion に同じような質問がありました。</p>
+<blockquote>
+<pre><code>&lt;meta name=&quot;KEYWORDS&quot; content=&quot;[word1, expression2, phrase3]&quot;&gt;
+</code></pre>
+<p>How can I get rid of those [ ] in the rendered keywords metatag?</p>
+<p>…略…</p>
+<pre><code>{{ with .Keywords }}&lt;meta name=&quot;keywords&quot; content=&quot;{{ range $i, $e := . }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}&quot;&gt;{{ end }}
+</code></pre>
+<p>(on an unrelated side note: Hugo 0.17 is very old and I would recommend you update to something newer)</p>
+<p><cite><a href="https://discourse.gohugo.io/t/meta-name-keywords/8901">Meta name=&quot;keywords&rdquo; - support - Hugo Discussion</a></cite></p>
+</blockquote>
+<p><code>range</code> で 1 つずつ処理しているようでした。</p>
+<h2 id="delimit">delimit</h2>
+<p>配列を分割できないかと思って調べていたら、 <code>delimit</code> Functions があるようでした。</p>
+<blockquote>
+<p>delimit</p>
+<p>Loops through any array, slice, or map and returns a string of all the values separated by a delimiter.</p>
+<p><cite><a href="https://gohugo.io/functions/delimit/">delimit | Hugo</a></cite></p>
+</blockquote>
+<p>配列 (array, slice, map) と delimit を渡すと、配列を delimit で区切った文字列にして返してくれるようです。</p>
+<blockquote>
+<p>The examples of delimit that follow all use the same front matter:
+delimit-example-front-matter.toml</p>
+<pre><code>+++
+title: I love Delimit
+keywords: [ &quot;tag1&quot;, &quot;tag2&quot;, &quot;tag3&quot; ]
++++
+</code></pre>
+<p><cite><a href="https://gohugo.io/functions/delimit/">delimit | Hugo</a></cite></p>
+</blockquote>
+<p>これを見ると、 front matter の keywords は配列で記述するようでした。
+string で <code>keywords: &quot;word1, word2, word3&quot;</code> のように記述することはあまり良くなさそうです。</p>
+<h2 id="修正">修正</h2>
+<p>front matter を次のように修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: sample
+date: 2018-04-13
+description: 記事の概要です。
+keywords:
+  <span style="color:#66d9ef">-</span> word1
+  <span style="color:#66d9ef">-</span> word2
+  <span style="color:#66d9ef">-</span> word3
+---
+This is sample content.
+</code></pre></div><p>baseof.html ファイル (theme/&lt;THEME&gt;/layouts/_default/baseof.html) を次のように修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;description&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ .Description }}&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;keywords&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ delimit .Keywords &#34;</span><span style="color:#960050;background-color:#1e0010">,</span> <span style="color:#960050;background-color:#1e0010">&#34;</span> <span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">main</span>&gt;
+      {{ block &#34;main&#34; }}
+        {{ .Content }}
+      {{ end }}
+    &lt;/<span style="color:#f92672">main</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h2 id="確認">確認</h2>
+<p>Hugo のサーバーで確認しました。
+生成された HTML は次のようになっていました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;description&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;記事の概要です。&#34;</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;keywords&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;word1, word2, word3&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;sample&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">main</span>&gt;
+      &lt;<span style="color:#f92672">p</span>&gt;This is sample content.&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;/<span style="color:#f92672">main</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>うまくできたようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>SEO について検索してみたら、 keywords はそれほど重要でもないみたいでした。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://discourse.gohugo.io/t/meta-name-keywords/8901">Meta name=&quot;keywords&rdquo; - support - Hugo Discussion</a></li>
+<li><a href="https://gohugo.io/functions/delimit/">delimit | Hugo</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

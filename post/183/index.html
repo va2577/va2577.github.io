@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON SCIPY でランダムウォークを確認してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python SciPy でランダムウォークを確認してみました</h1>
+    
+      <div><time>June 3, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>『禁断の市場』という本を読みました。
+ランダムウォークのことが書かれていたので、 SciPy を使ってランダムウォークのグラフを作ってみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6</li>
+<li>Jupyter Notebook 5.2.0</li>
+<li>NumPy 1.14.4</li>
+<li>pandas 0.23.0</li>
+<li>matplotlib 2.2.2</li>
+</ul>
+<h2 id="ランダムウォーク">ランダムウォーク</h2>
+<blockquote>
+<p>１７世紀のフランスではパスカルとフェルマー（彼の有名な「大定理」は証明されるのに３５０年もかかりました）がギャンブル好きの貴族のために確率論を発明しました。
+そして、１９００年にバシェリエは、ファンダメンタル分析とテクニカル分析のどちらともまったく違う視点に立ち、確率論に基づく定式化を行い、フランス国債の相場の問題に応用したのです。
+ランダムウォークと呼ばれるこのモデルは、パスカルとフェルマーのモデルによく似ていました。
+彼は、相場はコインの表・裏とまったく同様に等しい確率で上下すると考えました。
+ラジオから聞こえてくるザーという雑音のように、市場価格の変化は無意味で特徴のないものだと想定したのです。
+そして、上がり下がりの予測をするのではなく、変動の分布を考察しました。
+もしも、市場価格がランダムウォークなら、６８％の確率でデータは標準偏差の範囲内に入るはずです。
+標準偏差の２倍に枠を広げれば、９５％の変動をカバーすることができることになります。</p>
+<p><cite>禁断の市場 第１章 リスクとリターン</cite></p>
+</blockquote>
+<p>ランダムウォークの提唱者はバシェリエという人みたいです。
+知らない人でした。</p>
+<p>フェルマーは名前だけ聞いたことがあります。
+彼の有名な「大定理」(<a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%83%AB%E3%83%9E%E3%83%BC%E3%81%AE%E6%9C%80%E7%B5%82%E5%AE%9A%E7%90%86">フェルマーの最終定理 - Wikipedia</a>)も内容は知らないですけれども、名前だけは聞いたことがあります。</p>
+<h2 id="コインの表裏">コインの表・裏</h2>
+<p>ここから Jupyter Notebook のセルに入力しながら進めます。</p>
+<p>必要なモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>コインの表・裏なので、表は 1 、裏は -1 になるようにしました。
+ランダムに 1 と -1 が決まるようにしました。
+サイズは 10000 にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], size<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>))
+</code></pre></div><p>コインの表・裏のように決めたデータを積み上げて <code>s2</code> にしました。
+それを折れ線グラフで表示しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s2 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>cumsum()
+s2<span style="color:#f92672">.</span>plot()
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/183-01.png" alt="img"></p>
+<p>コインの表・裏のように決めたデータ <code>s</code> の分布を表示しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n, bins, patches <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>hist(s, <span style="color:#ae81ff">100</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/183-02.png" alt="img"></p>
+<p>1 か -1 のデータなので分布は両極端になりました。</p>
+<p>ちょっとイメージしていたものと違いました。
+正規分布のグラフを作りたかったのですけれども。</p>
+<p>ランダムウォークの説明でよくある“コインの表・裏”という例えは“確率”だけのことを言っているみたいでした。
+変動幅については言ってないように感じました。
+たぶん。</p>
+<blockquote>
+<p>彼は、相場はコインの表・裏とまったく同様に等しい確率で上下すると考えました。</p>
+</blockquote>
+<p>上の引用でもこのコインの表・裏の例えのところには“確率”って書いてありました。</p>
+<p>せっかくなので作ったデータの確率を確認しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s[s <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.4973
+</code></pre><p>表が出た確率は 49.7% だったみたいです。
+折れ線グラフではプラス側で終わっていたので少し偏りがあったみたいです。
+でも 50% に近いので等しい確率で上下していると言っていいと思っています。</p>
+<h2 id="ランダムなデータ">ランダムなデータ</h2>
+<blockquote>
+<p>ラジオから聞こえてくるザーという雑音のように、市場価格の変化は無意味で特徴のないものだと想定したのです。</p>
+</blockquote>
+<p>正規分布のグラフを作りたかったので変動もランダムなデータで確認してみます。</p>
+<p>ランダムなデータを作りました。
+サイズは 10000 にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s11 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">10000</span>))
+</code></pre></div><p>ランダムに作ったデータを積み上げて <code>s12</code> にしました。
+米ドル円のレートをイメージして 110 円から始まるようにしました。
+そしてそれを折れ線グラフで表示しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s12 <span style="color:#f92672">=</span> s11<span style="color:#f92672">.</span>cumsum() <span style="color:#f92672">+</span> <span style="color:#ae81ff">110</span>
+s12<span style="color:#f92672">.</span>plot()
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/183-03.png" alt="img"></p>
+<p>ランダムに作ったデータ <code>s11</code> の分布を表示しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n, bins, patches <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>hist(s11, <span style="color:#ae81ff">50</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/183-04.png" alt="img"></p>
+<p>正規分布ぽいグラフができたと思います。</p>
+<h2 id="終わり">終わり</h2>
+<p>正規分布のグラフが作れたので今回はこれで終わりにします。</p>
+<p><a href="https://gist.github.com/va2577/8e3ca9840d40594cea3a191c5ca3ae97">Gist</a> に Jupyter Notebook をアップしておきました。</p>
+<h2 id="9-june-2018-追記">9 June 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/184/">ランダムウォークのグラフと米ドル／円のグラフを比較してみました</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

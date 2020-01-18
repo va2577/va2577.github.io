@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のテーマを作ってみます 4(TAXONOMY TEMPLATES) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のテーマを作ってみます 4(Taxonomy Templates)</h1>
+    
+      <div><time>April 6, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/117/">前回の記事</a>では、 <a href="https://gohugo.io/templates/homepage/">Homepage Templates</a> を使ってみました。
+今回は、 <a href="https://gohugo.io/templates/taxonomy-templates/">Taxonomy Templates</a> を使ってみます。</p>
+<p>最初に、<a href="/post/115/">この記事</a>の通り、サイトとテーマの骨組みを作成しておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Hugo Static Site Generator v0.31.1</li>
+</ul>
+<h2 id="taxonomy">Taxonomy?</h2>
+<blockquote>
+<p>[名詞]</p>
+<ol>
+<li>分類法.</li>
+<li>〔生物〕 分類学：生物の記載・確認・命名・分類を扱う科学.</li>
+</ol>
+<p><cite><a href="https://dictionary.goo.ne.jp/word/en/taxonomy/">taxonomyの意味 - goo辞書 英和和英</a></cite></p>
+</blockquote>
+<p>Taxonomy という単語をあまり聞いたことがなかったのですが、分類のことのようです。</p>
+<blockquote>
+<p>Taxonomy Templates</p>
+<p>Taxonomy templating includes taxonomy list pages, taxonomy terms pages, and using taxonomies in your single page templates.</p>
+<p><cite><a href="https://gohugo.io/templates/taxonomy-templates/">Taxonomy Templates | Hugo</a></cite></p>
+</blockquote>
+<p>Taxonomy Templates は、分類リストページを表示すること、分類用語ページを表示すること、シングルページ(記事)の中で分類を使うこと、ができるようです。</p>
+<h2 id="taxonomy-list-pages">Taxonomy List Pages</h2>
+<blockquote>
+<p>Taxonomy List Templates</p>
+<p>Taxonomy list page templates are lists and therefore have all the variables and methods available to list pages.</p>
+<p><cite><a href="https://gohugo.io/templates/taxonomy-templates/#taxonomy-list-templates">Taxonomy Templates | Hugo</a></cite></p>
+</blockquote>
+<p>taxonomy list pages は、 list pages と同じように扱うことができるようです。</p>
+<blockquote>
+<p>Examples: Layout Lookup for Taxonomy List Pages</p>
+<pre><code>[
+  layouts/categories/category.html.html
+  …略…
+  layouts/_default/list.html
+]
+</code></pre>
+<p><cite><a href="https://gohugo.io/templates/lookup-order/#examples-layout-lookup-for-taxonomy-list-pages">Hugo's Lookup Order | Hugo</a></cite></p>
+</blockquote>
+<p>Layout Lookup の一番優先度の低いところに layouts/_default/list.html があります。
+<a href="/post/116/">以前の記事</a>の中で theme/&lt;THEME&gt;/layouts/_default/list.html を作成しましたので、結果的には taxonomy list pages を作成したことにもなっていたようです。</p>
+<p>確認してみたいと思います。</p>
+<h3 id="baseofhtml">baseof.html</h3>
+<p><a href="/post/116/">以前の記事</a>と同じように、次のファイル (theme/&lt;THEME&gt;/layouts/_default/baseof.html) を作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;
+      {{ block &#34;title&#34; . }}
+        {{/* <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Blocks may include default content. </span><span style="color:#75715e">--&gt;</span> */}}
+        {{ .Site.Title }}
+      {{ end }}
+    &lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Code that all your templates share, like a header </span><span style="color:#75715e">--&gt;</span>
+    {{ block &#34;main&#34; . }}
+      <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> The part of the page that begins to differ between templates </span><span style="color:#75715e">--&gt;</span>
+    {{ end }}
+    {{ block &#34;footer&#34; . }}
+      <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> More shared code, perhaps a footer but that can be overridden if need be in  </span><span style="color:#75715e">--&gt;</span>
+    {{ end }}
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h3 id="listhtml">list.html</h3>
+<p><a href="/post/116/">以前の記事</a>と同じように、次のファイル (theme/&lt;THEME&gt;/layouts/_default/list.html) を作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;main&#34; }}
+  &lt;<span style="color:#f92672">h1</span>&gt;Posts&lt;/<span style="color:#f92672">h1</span>&gt;
+  {{ range .Data.Pages }}
+    &lt;<span style="color:#f92672">article</span>&gt;
+      &lt;<span style="color:#f92672">h2</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">h2</span>&gt;
+      {{ .Content }}
+    &lt;/<span style="color:#f92672">article</span>&gt;
+  {{ end }}
+{{ end }}
+</code></pre></div><h3 id="content">content</h3>
+<p>content/post ディレクトリーに次の 2 つの examples の記事を作成しました。</p>
+<ul>
+<li>hello-hugo.md</li>
+<li>another-post.md</li>
+</ul>
+<p>次のコマンドでダウンロードしました。</p>
+<pre><code>$ install -d content/post
+$ curl -L -o content/post/hello-hugo.md 'https://raw.githubusercontent.com/gohugoio/hugo/master/examples/blog/content/post/hello-hugo.md'
+$ curl -L -o content/post/another-post.md 'https://raw.githubusercontent.com/gohugoio/hugo/master/examples/blog/content/post/another-post.md'
+</code></pre><h3 id="hugo-のサーバーで確認">Hugo のサーバーで確認</h3>
+<p>Hugo のサーバーで確認するために次のコマンドを入力します。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/categories/hello/ にアクセスします。</p>
+<p>すると、 front matter で、 <code>categories = [&quot;hello&quot;]</code> (TOML の例) と記述した記事の一覧が表示されます。</p>
+<p><img src="/img/126-01.png" alt=""></p>
+<p>今度は、 http://localhost:1313/tags/hugo/ にアクセスします。</p>
+<p>すると、 front matter で、 <code>tags = [&quot;hugo&quot;]</code> (TOML の例) と記述した記事一覧が表示されます。</p>
+<p><img src="/img/126-02.png" alt=""></p>
+<p>Ctrl + C で Hugo のサーバーを終了しておきます。</p>
+<h2 id="taxonomy-terms-pages">Taxonomy Terms Pages</h2>
+<blockquote>
+<p>Examples: Layout Lookup for Taxonomy Terms Pages</p>
+<pre><code>[
+  layouts/categories/category.terms.html.html
+  …略…
+  layouts/_default/terms.html
+  layouts/_default/list.html
+]
+</code></pre>
+<p><cite><a href="https://gohugo.io/templates/lookup-order/#examples-layout-lookup-for-taxonomy-terms-pages">Hugo's Lookup Order | Hugo</a></cite></p>
+</blockquote>
+<p>この Layout Lookup を見ると、 layouts/_default/list.html を作成しておけば、このレイアウトが適用されて表示してくれそうに見えましたが、表示されないようでした。</p>
+<blockquote>
+<p>Since section lists and taxonomy lists (N.B., not taxonomy terms lists) are both lists with regards to their templates</p>
+<p><cite><a href="https://gohugo.io/templates/lists/#default-templates">Lists of Content in Hugo | Hugo</a></cite></p>
+</blockquote>
+<p>(N.B., not taxonomy terms lists) なので、 Taxonomy Terms Pages は対象外なのかもしれません。</p>
+<h3 id="termshtml">terms.html</h3>
+<p>なので、 2 番目に優先度の低いファイル (theme/&lt;THEME&gt;/layouts/_default/terms.html) を次のように作成してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;main&#34; }}
+  &lt;<span style="color:#f92672">ul</span>&gt;
+    {{ $data := .Data }}
+    {{ range $key, $value := .Data.Terms.Alphabetical }}
+      &lt;<span style="color:#f92672">li</span>&gt;
+        &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ $.Site.LanguagePrefix }}/{{ $data.Plural | urlize }}/{{ $value.Name | urlize }}/&#34;</span>&gt;{{ $value.Name }}&lt;/<span style="color:#f92672">a</span>&gt;
+        {{ $value.Count }}
+      &lt;/<span style="color:#f92672">li</span>&gt;
+    {{ end }}
+  &lt;/<span style="color:#f92672">ul</span>&gt;
+{{ end }}
+</code></pre></div><h3 id="hugo-のサーバーで確認-1">Hugo のサーバーで確認</h3>
+<p>http://localhost:1313/categories/ にアクセスします。</p>
+<p>すると、サイトで作成した記事の front matter の、 <code>categories = [&quot;xxx&quot;]</code> (TOML の例) の <code>xxx</code> の一覧が表示されます。
+カテゴリーの一覧です。
+そのカテゴリーの中の記事の数も表示されます。</p>
+<p><img src="/img/126-03.png" alt=""></p>
+<p>カテゴリー名前はリンクになっていて、クリックすると、カテゴリー内の記事の一覧のページ (Taxonomy List Pages) が表示されます。</p>
+<p>次に、 http://localhost:1313/tags/ にアクセスします。</p>
+<p>すると、サイトで作成した記事の front matter の、 <code>tags = [&quot;xxx&quot;]</code> (TOML の例) の <code>xxx</code> の一覧が表示されます。
+タグの一覧です。
+そのタグの中の記事の数も表示されます。</p>
+<p><img src="/img/126-04.png" alt=""></p>
+<p>タグの名前はリンクになっていて、クリックすると、タグ内の記事の一覧のページ (Taxonomy List Pages) が表示されます。</p>
+<p>Ctrl + C で Hugo のサーバーを停止しておきます。</p>
+<h2 id="display-a-single-piece-of-contents-taxonomies">Display a Single Piece of Content’s Taxonomies</h2>
+<p>記事を表示するページで Taxonomies を表示してみます。</p>
+<blockquote>
+<p>Display a Single Piece of Content’s Taxonomies</p>
+<p>Within your content templates, you may wish to display the taxonomies that piece of content is assigned to.</p>
+<p>Because we are leveraging the front matter system to define taxonomies for content, the taxonomies assigned to each content piece are located in the usual place (i.e., .Params.&lt;TAXONOMYPLURAL&gt;).</p>
+<p><cite><a href="https://gohugo.io/templates/taxonomy-templates/#display-a-single-piece-of-content-s-taxonomies">Taxonomy Templates | Hugo</a></cite></p>
+</blockquote>
+<p><code>.Params.&lt;TAXONOMYPLURAL&gt;</code> 変数を使うようです。</p>
+<h3 id="singlehtml">single.html</h3>
+<p>シングルコンテンツページのファイル (themes/&lt;THEME&gt;/layouts/_default/single.html) を次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;title&#34; }}
+  {{/* <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> This will override the default value set in baseof.html; i.e., &#34;{{.Site.Title}}&#34; in the original example</span><span style="color:#75715e">--&gt;</span> */}}
+  {{ .Title }} &amp;ndash; {{ .Site.Title }}
+{{ end }}
+{{ define &#34;main&#34; }}
+  &lt;<span style="color:#f92672">h1</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">ul</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tags&#34;</span>&gt;
+    {{ range .Params.tags }}
+      &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ &#34;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">tags</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">&#34;</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#a6e22e">relLangURL</span> <span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">{</span><span style="color:#960050;background-color:#1e0010">{</span> <span style="color:#960050;background-color:#1e0010">.</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#a6e22e">urlize</span> <span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">&#34;</span>&gt;{{ . }}&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+    {{ end }}
+  &lt;/<span style="color:#f92672">ul</span>&gt;
+  {{ .Content }}
+{{ end }}
+</code></pre></div><p>記事の中のタグを扱うには、 <code>.Params.tags</code> を使うようです。
+記事の中のカテゴリーを扱うには、 <code>.Params.categories</code> を使うようです。</p>
+<h3 id="hugo-のサーバーで確認-2">Hugo のサーバーで確認</h3>
+<p>Hugo のサーバーで確認するために次のコマンドを入力します。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/post/hello-hugo/ にアクセスします。</p>
+<p>すると、見出しの次に、表示中の記事につけられたタグの一覧が表示されます。</p>
+<p><img src="/img/126-05.png" alt=""></p>
+<p>Ctrl + C で Hugo のサーバーを停止しておきます。</p>
+<h2 id="render-a-sites-taxonomies">Render a Site’s Taxonomies</h2>
+<p>サイトの中のすべての Taxonomies を表示してみます。</p>
+<blockquote>
+<p>Render a Site’s Taxonomies</p>
+<p>If you wish to display the list of all keys for your site’s taxonomy, you can retrieve them from the .Site variable available on every page.</p>
+<p><cite><a href="https://gohugo.io/templates/taxonomy-templates/#render-a-site-s-taxonomies">Taxonomy Templates | Hugo</a></cite></p>
+</blockquote>
+<p><code>.Site</code> 変数を使うようです。</p>
+<h3 id="indexhtml">index.html</h3>
+<p>トップのページのファイル (themes/&lt;THEME&gt;/layouts/index.html) を次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;main&#34; }}
+  &lt;<span style="color:#f92672">main</span> <span style="color:#a6e22e">aria-role</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
+    &lt;<span style="color:#f92672">header</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;homepage-header&#34;</span>&gt;
+      &lt;<span style="color:#f92672">h1</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">h1</span>&gt;
+      {{ with .Params.subtitle }}
+        &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;subtitle&#34;</span>&gt;{{ . }}&lt;/<span style="color:#f92672">span</span>&gt;
+      {{ end }}
+    &lt;/<span style="color:#f92672">header</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;homepage-content&#34;</span>&gt;
+      <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Note that the content for index.html, as a sort of list page, will pull from content/_index.md </span><span style="color:#75715e">--&gt;</span>
+      {{.Content}}
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;
+      <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Note that .Data.Pages is the equivalent of .Site.Pages on the homepage template. </span><span style="color:#75715e">--&gt;</span>
+      {{ range first 10 .Data.Pages }}
+        {{ .Render &#34;summary&#34; }}
+      {{ end }}
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;
+      &lt;<span style="color:#f92672">ul</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all-tags&#34;</span>&gt;
+        {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+          &lt;<span style="color:#f92672">li</span>&gt;
+            &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{{ &#34;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">tags</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">&#34;</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#a6e22e">relLangURL</span> <span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">{</span><span style="color:#960050;background-color:#1e0010">{</span> <span style="color:#960050;background-color:#1e0010">$</span><span style="color:#a6e22e">name</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#a6e22e">urlize</span> <span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">}</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">&#34;</span>&gt;{{ $name }}&lt;/<span style="color:#f92672">a</span>&gt;
+            {{ $taxonomy.Count }}
+          &lt;/<span style="color:#f92672">li</span>&gt;
+        {{ end }}
+      &lt;/<span style="color:#f92672">ul</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;/<span style="color:#f92672">main</span>&gt;
+{{ end }}
+</code></pre></div><p>サイトの中のすべてのタグを扱うには、 <code>.Site.Taxonomies.tags</code> を使うようです。
+サイトの中のすべてのカテゴリーを扱うには、 <code>.Site.Taxonomies.categories</code> を使うようです。</p>
+<h3 id="hugo-のサーバーで確認-3">Hugo のサーバーで確認</h3>
+<p>Hugo のサーバーで確認するために次のコマンドを入力します。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/ にアクセスします。</p>
+<p>すると、一番下に、サイトの中のすべてのタグの一覧が表示されました。</p>
+<p><img src="/img/126-06.png" alt=""></p>
+<p>Ctrl + C で Hugo のサーバーを停止しておきます。</p>
+<h2 id="taxonomy-configuration">Taxonomy Configuration</h2>
+<p>分類のページを作成するための設定があるようです。</p>
+<blockquote>
+<p>Hugo Taxonomy Defaults</p>
+<p>Hugo natively supports taxonomies.</p>
+<p>Without adding a single line to your site’s configuration file, Hugo will automatically create taxonomies for tags and categories. If you do not want Hugo to create any taxonomies, set disableKinds in your site’s configuration to the following:</p>
+<pre><code>disableKinds = [&quot;taxonomy&quot;,&quot;taxonomyTerm&quot;]
+</code></pre>
+<p><cite><a href="https://gohugo.io/content-management/taxonomies#hugo-taxonomy-defaults">Taxonomies | Hugo</a></cite></p>
+</blockquote>
+<p>categories や tags の分類は、 Hugo がデフォルトの設定で作成してくれるもののようです。
+作成したくなければ、設定ファイル (config.(toml|yaml|json)) に <code>disableKinds = [&quot;taxonomy&quot;,&quot;taxonomyTerm&quot;]</code> (TOML の例) と記述しておけばよいみたいです。</p>
+<p>分類は、 categories や tags だけではなく、サイトを作成する利用者が任意に分類できるようです。</p>
+<blockquote>
+<p>Example Taxonomy: Movie Website</p>
+<p>Let’s assume you are making a website about movies. You may want to include the following taxonomies:</p>
+<ul>
+<li>Actors</li>
+<li>Directors</li>
+<li>Studios</li>
+<li>Genre</li>
+<li>Year</li>
+<li>Awards</li>
+</ul>
+<p><cite><a href="https://gohugo.io/content-management/taxonomies#example-taxonomy-movie-website">Taxonomies | Hugo</a></cite></p>
+</blockquote>
+<p>映画を扱うウェブサイトだったら、俳優の分類を作成したり、監督の分類を作成したりできるようです。</p>
+<p>どの分類を作成するかは、設定ファイル (config(.toml|.yaml|.json)) に記述すればよいみたいです。
+次は、 TOML の設定ファイルの例です。</p>
+<blockquote>
+<p>Example: TOML Taxonomy Configuration</p>
+<pre><code>[taxonomies]
+  tag = &quot;tags&quot;
+  category = &quot;categories&quot;
+  series = &quot;series&quot;
+</code></pre>
+<p><cite><a href="https://gohugo.io/content-management/taxonomies#example-toml-taxonomy-configuration">Taxonomies | Hugo</a></cite></p>
+</blockquote>
+<p>このように設定すると、 tags, categories, series の分類を作成してくれるようです。
+tags と categories は Hugo がデフォルトで作成してくれる分類ですが、独自の分類を記述することで自動的に作成してくれなくなるようなので、明示的に記述する必要があるみたいです。
+この例では series がサイトの独自の分類になるようです。</p>
+<p>キー(左辺)は任意に記述していいのかな。
+この文字列がどこかに影響しているようには見えませんでした。
+でも、慣習として、値(右辺)の単数形になっているようでした。</p>
+<p>値(右辺)は記事の front matter と一致させる形で記述するようです。
+この値(右辺)は、ページにアクセスする際のアドレス (http://localhost:1313/categories/hello/) に含まれている <code>categories</code> に表れてくるようです。
+慣習として複数形にするようです。</p>
+<h3 id="映画を扱ったサイトの例で独自の分類を作成">映画を扱ったサイトの例で独自の分類を作成</h3>
+<p>先に引用した映画のウェブサイトの例で、俳優 (actors) という分類を作成して、表示してみたいと思います。</p>
+<h4 id="configtoml">config.toml</h4>
+<p>設定ファイル (config.(toml|yaml|json)) に次の記述を追加しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">taxonomies</span>]
+  <span style="color:#a6e22e">tag</span> = <span style="color:#e6db74">&#34;tags&#34;</span>
+  <span style="color:#a6e22e">category</span> = <span style="color:#e6db74">&#34;categories&#34;</span>
+  <span style="color:#a6e22e">actor</span> = <span style="color:#e6db74">&#34;actors&#34;</span>
+</code></pre></div><p><code>actor = &quot;actors&quot;</code> がサイトの独自の分類です。</p>
+<h4 id="content-1">content</h4>
+<p>俳優 (actors) の分類に該当する記事をいくつか作成してみます。</p>
+<p>一つ目の記事 (content/movie/unbreakable.md) は、次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: &#34;Unbreakable&#34;
+date: &#34;2014-10-01&#34;
+actors:
+  <span style="color:#66d9ef">-</span> &#34;Bruce Willis&#34;
+  <span style="color:#66d9ef">-</span> &#34;Samuel L. Jackson&#34;
+---
+
+映画[アンブレイカブル - Wikipedia](https://ja.wikipedia.org/wiki/アンブレイカブル) についてです。
+</code></pre></div><p>二つ目の記事 (content/movie/moonrise-kingdom.md) は、次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: &#34;Moonrise Kingdom&#34;
+date: &#34;2014-10-02&#34;
+actors:
+  <span style="color:#66d9ef">-</span> &#34;Bruce Willis&#34;
+  <span style="color:#66d9ef">-</span> &#34;Bill Murray&#34;
+---
+
+映画[ムーンライズ・キングダム - Wikipedia](https://ja.wikipedia.org/wiki/ムーンライズ・キングダム) についてです。
+</code></pre></div><h4 id="hugo-のサーバーで確認-4">Hugo のサーバーで確認</h4>
+<p>Hugo のサーバーで確認するために次のコマンドを入力します。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/actors/ にアクセスしてみます。</p>
+<p>すると、俳優 (actors) の分類の一覧が表示されました。</p>
+<p><img src="/img/126-07.png" alt=""></p>
+<p>これは、 Taxonomy Terms Pages のレイアウト (baseof.html, terms.html) が適用されています。</p>
+<p>次に、 http://localhost:1313/actors/bruce-willis/ にアクセスしてみます。</p>
+<p>すると、俳優 (actors) の分類の中の Bruce Willis の記事の一覧が表示されました。</p>
+<p><img src="/img/126-08.png" alt=""></p>
+<p>これは Taxonomy List Pages のレイアウト (baseof.html, list.html) が適用されています。</p>
+<p>Ctrl + C で Hugo のサーバーを停止しておきます。</p>
+<h2 id="終わり">終わり</h2>
+<p>独自の分類についても記載してみましたが、これはテーマで作成するところじゃなくて、テーマを利用するサイト側で作成するところかなと思っています。</p>
+<p>今回は、これで終わりにします。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gohugo.io/templates/taxonomy-templates/">Taxonomy Templates</a></li>
+</ul>
+<h2 id="11-april-2018-追記">11 April 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/131/">Hugo のテーマを作ってみます 5(Custom 404 Page)</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

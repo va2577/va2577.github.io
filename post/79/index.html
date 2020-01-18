@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>WSL の UBUNTU の PYTHON に PIP がない - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>WSL の Ubuntu の Python に pip がない</h1>
+    
+      <div><time>January 5, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>WSL の Ubuntu には Python が標準でインストールされていましたので、Python を主に使っていこうと思っています。
+が、Python で仮想環境を作成しようとしたらエラーになったので調べてみました。</p>
+<h2 id="エラーの内容">エラーの内容</h2>
+<p>エラーの内容は次の通りです。</p>
+<pre><code>$ python3 -m venv &lt;DIR&gt;
+The virtual environment was not created successfully because ensurepip is not
+available.  On Debian/Ubuntu systems, you need to install the python3-venv
+package using the following command.
+
+    apt-get install python3-venv
+
+You may need to use sudo with that command.  After installing the python3-venv
+package, recreate your virtual environment.
+
+Failing command: ['&lt;DIR&gt;/bin/python3', '-Im', 'ensurepip', '--upgrade', '--default-pip']
+</code></pre><h2 id="調査">調査</h2>
+<p>メッセージに <code>python3-venv</code> のパッケージをインストールするように記載されていましたので、</p>
+<pre><code>$ apt search python3-venv
+Sorting... Done
+Full Text Search... Done
+</code></pre><p>リポジトリーから <code>python3-venv</code> のパッケージを探してみましたが、見つかりませんでした。</p>
+<blockquote>
+<p>… pip を 3.4 より前のバージョンの Python でインストールするには？</p>
+<p>pip が Python に付属するのは 3.4 以降です。それ以前のバージョンでは、 &ldquo;Python Packaging User Guide&rdquo; の記載にしたがって pip 自体をインストールする必要があります。</p>
+<p>参考 <a href="https://packaging.python.org/installing/#requirements-for-installing-packages">Python Packaging User Guide: Requirements for Installing Packages</a></p>
+<p><cite><a href="https://docs.python.jp/3/installing/index.html">Python モジュールのインストール — Python 3.6.3 ドキュメント</a></cite></p>
+</blockquote>
+<pre><code>$ python3 --version
+Python 3.5.2
+</code></pre><p>Python のバージョンは 3.5 なので pip もあるはずだと思っているのですけど。</p>
+<h2 id="解決策">解決策</h2>
+<p>メッセージで検索すると次の記事が見つかりました。</p>
+<blockquote>
+<p>To resolve this problem, first install the venv, without pip, like this</p>
+<p>And then if you install pip, like this, it will still fail</p>
+<p>So, you need to install, pip separately, like mentioned in the pip's official documentation. So, the actual list of steps go like this</p>
+<p><cite><a href="http://thefourtheye.in/2014/12/30/Python-venv-problem-with-ensurepip-in-Ubuntu/">Python's Venv Problem With Ensurepip in Ubuntu - thefourtheye's weblog</a></cite></p>
+</blockquote>
+<p>Ubuntu 14.04 の頃の話なので、結構前なのかもしれません。
+それによると、その頃の Ubuntu の Python の ensurepip モジュールにバグがあったみたいなのですが、それが今にも続いているということなのでしょうか。</p>
+<p>解決策として、pip なしで仮想環境を作成して、その仮想環境の中に pip を個別でインストールしているようです。</p>
+<h2 id="実際に確認してみる">実際に確認してみる</h2>
+<pre><code>$ python3 -m venv --without-pip testdir
+$ cd testdir
+$ source bin/activate
+(testdir) $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1558k  100 1558k    0     0   485k      0  0:00:03  0:00:03 --:--:--  485k
+(testdir) $ python get-pip.py
+Collecting pip
+  Downloading pip-9.0.1-py2.py3-none-any.whl (1.3MB)
+    100% |████████████████████████████████| 1.3MB 492kB/s
+Collecting setuptools
+  Downloading setuptools-38.2.3-py2.py3-none-any.whl (489kB)
+    100% |████████████████████████████████| 491kB 1.9MB/s
+Collecting wheel
+  Downloading wheel-0.30.0-py2.py3-none-any.whl (49kB)
+    100% |████████████████████████████████| 51kB 2.3MB/s
+Installing collected packages: pip, setuptools, wheel
+Successfully installed pip-9.0.1 setuptools-38.2.3 wheel-0.30.0
+</code></pre><p>pip がインストールできたようです。</p>
+<pre><code>(testdir) $ which pip
+/path/to/testdir/bin/pip
+(testdir) $ pip -V
+pip 9.0.1 from /path/to/testdir/lib/python3.5/site-packages (python 3.5)
+</code></pre><p>仮想環境の中に pip があることが確認できました。
+pip のバージョンは 9.0.1 でした。</p>
+<pre><code>(testdir) $ deactivate
+$ which pip
+</code></pre><p>仮想環境の外には pip がないことが確認できました。</p>
+<h2 id="グローバルな環境に-pip-をインストールする場合は">グローバルな環境に pip をインストールする場合は</h2>
+<p>仮想環境の外で get-pip.py をダウンロードして実行すれば良さそうでしょうか。</p>
+<h2 id="終わり">終わり</h2>
+<p>Python の仮想環境は bin/activate に絶対パスが記述されていて、仮想環境のディレクトリーを移動したりすると、もう一度 <code>python3 -m venv</code> をしなければいけないところがあまり好きになれないです。</p>
+<h2 id="1-july-2018-追記">1 July 2018 追記</h2>
+<p>Qiita に引用していただいていたのを見ました。
+読んでいただきましてありがとうございます。</p>
+<p>原因をちゃんと書いてなかったので追記しようと思います。
+ここに書いてもまた読んでもらえるとは思わないですけれども。</p>
+<blockquote>
+<p>venv is available by default in Python 3.3 and later, and installs pip and setuptools into created virtual environments in Python 3.4 and later.</p>
+<p><cite><a href="https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments">Creating Virtual Environments</a></cite></p>
+</blockquote>
+<p><code>python3 -m venv</code> のデフォルトの動作はグローバルにある pip を仮想環境の中にインストールしているんだと思います。
+けれども、 WSL の Ubuntu にある Python は、なぜかグローバルに pip がないみたいです。
+だからグローバルにない pip を仮想環境にインストールしようとしてエラーになっているということだと思っています。</p>
+<p>原因はグローバルに pip がないことだと思います。</p>
+<p>タイトルに書いたので書いたつもりになって、本文にそのことを書いていませんでした。</p>
+<p>対処の一つとして、 <code>python3 -m venv --without-pip testdir</code> とすることで pip をインストールしないで仮想環境を作成しました。
+そして後から仮想環境の中に pip をインストールしました。</p>
+<p>それじゃ毎回 <code>--without-pip</code> と pip のインストールをするのが面倒くさいという意見もあるかもしれません。
+その場合はグローバルに pip をインストールすれば解消できると思います。
+多分。</p>
+<p>次のようなコマンドになると思います。</p>
+<p>最初にグローバルに pip をインストールします。
+ここではまだ仮想環境を作っていないですし、仮想環境の中でもありません。</p>
+<pre><code>$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python3 get-pip.py
+</code></pre><p>一度グローバルに pip をインストールしてしまったら後はもう pip をインストールする必要はありません。</p>
+<p>仮想環境を作ります。
+これはグローバルに pip があるときと同じように(実際にあるし)デフォルトのオプションで仮想環境を作っています。</p>
+<pre><code>$ python3 -m venv testdir
+$ cd testdir
+$ source bin/activate
+(testdir) $
+</code></pre><blockquote>
+<p>Install to the user site [3]:</p>
+<pre><code>python get-pip.py --user
+</code></pre>
+<p><cite><a href="https://pip.pypa.io/en/stable/installing/#get-pip-py-options">get-pip.py options</a></cite></p>
+</blockquote>
+<p>pip をインストールする場合は <code>--user</code> をつけた方がシステム領域を汚さないのでいいと思っています。
+こうすると ~/.local/ の中に pip をインストールしてくれます。
+sudo する必要もありません。</p>
+<p>次の記事にグローバルに pip をインストールしたときのことを書きました。</p>
+<p><a href="/post/179/#pip-のインストール">Python の Pipenv を使ってみました</a></p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SciPy on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/scipy/</link>
+    <description>Recent content in SciPy on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 31 May 2018 17:33:44 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/scipy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に SciPy をインストールしてみました</title>
+      <link>https://va2577.github.io/post/181/</link>
+      <pubDate>Thu, 31 May 2018 17:33:44 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/181/</guid>
+      <description>&lt;p&gt;Jupyter Notebook と NumPy と pandas を個別にインストールしていたのですが、まとめて使いたいので SciPy をインストールしようと思いました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

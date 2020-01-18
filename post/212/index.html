@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>エントロピーの定義から市場の秩序と無秩序を考えてみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>エントロピーの定義から市場の秩序と無秩序を考えてみました</h1>
+    
+      <div><time>December 15, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="https://www.amazon.co.jp/dp/4152096837/"><img src="https://images-na.ssl-images-amazon.com/images/I/51Uc%2BtrI5XL.jpg" alt=""></a></p>
+<p>『情報と秩序』を読みました。</p>
+<p>『<a href="/post/200/">市場の秩序と無秩序についてです</a>』の記事で秩序について考えました。
+『情報と秩序』の内容をもとに、もう少しだけ秩序について考えてみました。</p>
+<h2 id="ボルツマンの定義">ボルツマンの定義</h2>
+<blockquote>
+<p>ボルツマンとシャノンのエントロピーの定義の違いを理解するため、半分座席の埋まったスタジアムを考えてみよう。
+半分座席の埋まったスタジアムには、ある重要な特徴がある。
+座席の埋まり方にさまざまな組み合わせがありうる、という点だ。
+その組み合わせについて考察すれば、エントロピーの意味が説明できる。</p>
+<p>まず、人々が自由に席を移動できるケースを考えてみる。
+この場合、半分座席の埋まった状態として、座席の上半分を空席にし、全員がフィールド側に寄り固まるケースが考えられる。
+もうひとつ考えられるのは、下半分を空席にし、全員がフィールド側から遠い側に寄り固まるケース。
+また、人々がランダムな座席に座るケースも考えられるだろう。</p>
+<p>さて、このスタジアムの例を用いてエントロピーを説明するため、あとふたつ概念を導入しておこう。
+ひとつめに、スタジアムに座っている人々の一つひとつの配置のことを、その系の「状態」（正確には「微視的状態」と呼ぶ）。
+ふたつめに、何らかの尺度を用いて、同等な配置というものを特定できると仮定する。
+この例でいえば、「埋まっている座席の列番号の平均」という単純な尺度でもかまわない。</p>
+<p>この例の場合、エントロピーの統計物理学的な定義は、同等なすべての状態の数の割合である（厳密にいうとその「対数」だが、私が言おうとしている点にとってはあまり重要でない）。
+したがって、エントロピーが最小になるのは、全員がフィールド側またはその反対側に固まっている場合だ。
+そのように座る方法は、ただ一通りしかないからだ。
+エントロピーが最大になるのは、埋まっている座席の列番号の平均がちょうど真ん中の列である場合だ。
+埋まっている座席の列番号の平均がちょうど真ん中の列になるような座り方はたくさんあるからだ。
+ボルツマンの定義では、エントロピーとは同等な状態の「多重度」である。
+スタジアムの例の場合、同等な状態の数が最大になるのは、埋まっている座席の列番号の平均がちょうど真ん中の列になる場合だ。</p>
+<p><cite>情報と秩序 第２章 無意味の実体</cite></p>
+</blockquote>
+<p>ボルツマンの定義では同等な状態の「多重度」のことをエントロピーというみたいです。</p>
+<p>この例にあるような図を作って確認していくことにしました。
+最初に x 軸に 10 個、 y 軸に 10 個、合計 100 個の点がある図を作りました。</p>
+<p><img src="/img/212-01.png" alt=""></p>
+<p>ここに 50 個の点を埋めていきます。</p>
+<h2 id="エントロピーが最小">エントロピーが最小</h2>
+<p>エントロピーが最小になるケースの図を作りました。</p>
+<p>下半分を埋めたケースです。</p>
+<p><img src="/img/212-02.png" alt=""></p>
+<p>「埋まっている点の y 軸の値の平均」が 2 になりました。</p>
+<p>上半分を埋めたケースです。</p>
+<p><img src="/img/212-03.png" alt=""></p>
+<p>「埋まっている点の y 軸の値の平均」が 7 になりました。</p>
+<p>「埋まっている点の y 軸の値の平均」が 2 になるのも、 7 になるのも、上の図の配置以外にありません。
+それぞれ 1 つだけなので、「多重」ではありません。
+こういうのをエントロピーが最小というみたいです。</p>
+<h2 id="エントロピーが最大">エントロピーが最大</h2>
+<p>エントロピーが最大になるケースの図をいくつか作りました。</p>
+<p><img src="/img/212-04.png" alt=""></p>
+<p><img src="/img/212-05.png" alt=""></p>
+<p><img src="/img/212-06.png" alt=""></p>
+<p><img src="/img/212-07.png" alt=""></p>
+<p>4 つだけ載せてみました。
+どれも「埋まっている点の y 軸の値の平均」が 4.5 になっています。
+組み合わせがたくさんありそうで、全部は確認していませんけれども…（いくつあるんだろう？）。
+少なくとも「エントロピーが最小」のところで挙げた 2 と 7 よりは 4.5 の方が多重度が高いです。
+ここに挙げただけでも、もうすでに同等な状態が 4 つはあるわけですし。</p>
+<h2 id="ランダム">ランダム</h2>
+<p>ランダムに点を埋めた図を作ってみました。</p>
+<p><img src="/img/212-08.png" alt=""></p>
+<p>「埋まっている点の y 軸の値の平均」が 4.48 でした。
+4.5 に近いのでエントロピーが大きい方だと言えるんじゃないかと思います。</p>
+<h2 id="市場">市場</h2>
+<p>ここから市場に置き換えて考えてみました。
+前提として次のような認識を持っていました。</p>
+<ul>
+<li>エントロピーが最小＝秩序＝トレードするところ</li>
+<li>エントロピーが最大＝無秩序＝トレードしてはいけないところ</li>
+</ul>
+<p>エントロピーが最小の図から考えてみます。</p>
+<p>「埋まっている点の y 軸の値の平均」が 2 の図は下半分の点が埋まっていました。
+下なので売りに偏っている、とでも見たら良いのでしょうか。
+そうだとすると「トレードするところ」と認識していても良さそうです。</p>
+<p>「埋まっている点の y 軸の値の平均」が 7 の図は上半分の点が埋まっていました。
+上なので買いに偏っている、とでも見たら良いのでしょうか。
+そうだとすると「トレードするところ」と認識していても良さそうです。</p>
+<p>同等な状態の数が 1 つなので、不確実ではなくて確実とも言えると思います。
+確実なところでトレードした方がいいというのも納得できる理由です。</p>
+<hr>
+<p>エントロピーが最大の図は難しそうなので置いておいて、先にランダムな図を考えてみます。</p>
+<p>エントロピーが最大ではないですが、大きくて、ぱっと見でも無秩序そうに見えます（主観的すぎますか？）。
+上にも下にも点がまばらにあるので、買いも売りも入り混じっている、とでも見たら良いのでしょうか。
+そうだとすると「トレードしてはいけないところ」と認識していても良さそうです。</p>
+<p>同等な状態の数がたくさんあるので、確実ではなくて不確実とも言えると思います。
+不確実なところではトレードしない方がいいというのも納得できる理由です。</p>
+<hr>
+<p>最後に、エントロピーが最大の図を考えてみます。</p>
+<p>上にも下にも点があって、買いも売りも入り混じっている、と見える…かもしれません。
+同等な状態の数がたくさんあるので、確実ではなくて不確実とも言える…かもしれません。
+ここまで書いてきたような認識の流れなら…。
+でも、この記事に載せた 4 つの図は、ぱっと見、無秩序そうには見えないんです（主観的すぎますか？）
+整然としていて、規則正しくありそうに見えます。
+これら（「整然」「規則」「一貫性」）は、『<a href="/post/200/">市場の秩序と無秩序についてです</a>』の記事で『複雑で単純な世界』の中から秩序と無秩序を整理したときに出てきた単語です。</p>
+<blockquote>
+<p>念のため述べておくと、エントロピーと聞いて無秩序を連想する人も多いと思うが、エントロピーは必ずしも無秩序の尺度ではない。
+エントロピーはある状態の多重度（同等な状態の数）を測るものである。
+ただし、無秩序な状態というのは多重度が高いことが多い。
+したがって、現実には、エントロピーの高い状態というのは無秩序である可能性がきわめて高い。
+そのため、無秩序とエントロピーを同一視するのは、あながち悪い単純化とはいえない。
+ただ、無秩序が増大しなくてもエントロピーが増大するケースもありうる。
+たとえば、箱の大きさが二倍になったときの気体の拡散について考えてみよう（スタジアムのサイズが二倍になったときの人々の拡散でもいい）。
+この気体のエントロピーは、箱の大きさとともに増加する。
+箱が大きければ大きいほど、気体の粒子の可能な配列方法は増えるからだ。
+ところが、小さな箱よりも大きな箱のなかの気体のほうが無秩序だ、とはいえない。</p>
+<p><cite>情報と秩序 第２章 無意味の実体</cite></p>
+</blockquote>
+<p>どうやら必ずしも「エントロピーが最大＝無秩序」ということではないみたいでした。
+言葉の定義って難しい…。</p>
+<p>この記事に載せた 4 つの図は、エントロピーが最大ではあるものの無秩序ではない、と言ってもいいのかなあ。
+整然としていて、規則正しい、と言ってもいいのかなあ。
+一貫性があって、予測が可能そう、と言ってもいいのかなあ。
+そして、トレードをしてもいい、のかなあ。</p>
+<h2 id="終わり">終わり</h2>
+<blockquote>
+<p>つまり、シャノンの用語でいえば、情報とエントロピーは機能的に同等ということになる。</p>
+<p><cite>情報と秩序 第２章 無意味の実体</cite></p>
+</blockquote>
+<p>この記事ではボルツマンの定義のエントロピーを確認してみました。
+けれども、エントロピーの定義はそれだけではないようです。</p>
+<p>何か知ると、何か知らないことが増えます…。</p>
+<p>作った図が含まれている Jupyter Notebook のファイルを <a href="https://gist.github.com/va2577/cf34214297c8dbfc7314e4d89af89503">Gist</a> にアップロードしておきました。</p>
+<hr>
+<p>最後に、著者の確立した「経済複雑性」という指標は興味深いです。</p>
+<blockquote>
+<p>このプロセスの結果として、私が二〇〇八年に確立したのが、「経済複雑性（economic complexity）」という指標だ。
+あとで説明するとおり、この指標の特徴は、将来の経済成長をかなり正確に予測できるという点だ。</p>
+<p><cite>情報と秩序 第１０章 第六の物質</cite></p>
+</blockquote>
+<p><a href="https://atlas.media.mit.edu/ja/">OEC: 経済複雑性の観測</a> から見ることができるみたいです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

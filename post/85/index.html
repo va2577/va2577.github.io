@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>CTRADER で為替レートのアラートメールを送る - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>cTrader で為替レートのアラートメールを送る</h1>
+    
+      <div><time>January 31, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>iOS のアプリで為替レートのプッシュ通知ができるものを調べてみました。</p>
+<p>結果的に無料の iOS のアプリで満足するものが見つからなかったので、 <a href="www.spotware.jp/">cTrader</a> のアラートメール機能を使うことにしました。
+が、調べたことを書いておきます。</p>
+<h2 id="みんなの外為-の-smartfx-が終了している">みんなの外為 の SmartFX が終了している</h2>
+<blockquote>
+<p>この度、smartFXは2017年11月4日（土）をもってサービス終了させていただくこととなりました。</p>
+<p><cite><a href="smartfx.minkabu.jp/">サービス終了のお知らせ｜SmartFX powerd by みんなの外為</a></cite></p>
+</blockquote>
+<p>このアプリの為替レートのプッシュ通知機能は、一つの通貨ペアに対して上限と下限の二つだけしか設定できませんでした。
+けれど、通貨ペアの数に制限はありませんでした。</p>
+<p>通知の遅れもあまり気にならない感じで使えていました。</p>
+<p>便利で需要もあったと思うのですが、終了してしまって残念です。</p>
+<h2 id="外為ウォッチ">外為ウォッチ</h2>
+<p>次に外為ウォッチを試してみました。</p>
+<p>これは、 FX プライム byGMO のアプリのようです。
+だから、FX プライム byGMO の口座を開設していないと、 1 つの通貨ペアに対して 1 つだけしか為替レートの設定をすることができないようです。
+トレードのスタイルによっては、この制限の範囲でも十分かもしれません。</p>
+<p>そして、口座を開設していても最大 30 件までが上限になるようです。
+30 件もあれば十分かな、とは思います。</p>
+<p>それから、ボラティリティ通知とシグナル通知もあるようです。</p>
+<p>お試しで為替レートの通知をしてみましたが、遅れもあまり感じることなく通知が来ました。</p>
+<p>口座の維持は無料なので、実際のところ無料で使えることになるのですが、口座の開設というのは自分としては心理的な負担がかかるので、やめました。</p>
+<h2 id="fxalert">FXAlert</h2>
+<p>こちらはディベロッパーが &ldquo;ITMarlin&rdquo; となっています。
+<a href="http://www.itmarlin.com">Web サイトのトップページ</a> を見ても企業情報的な内容が記載されていないので、個人のディベロッパーなのかな、と思っています。</p>
+<p>このアプリを使うには基本的にプレミアム会員になる必要がありそうです。
+無料の範囲で使おうとした場合、起動すると、広告動画が 5 秒とか表示されます。
+アプリを開発するのもタダじゃないことは認識していますけど、毎回この広告は煩わしい。
+プッシュ通知なので、サーバーの維持費もかかっているでしょうから、個人のディベロッパーだとしたら頑張ってるな、と思います。
+応援してあげたいけど、今後を考えると自分も余裕があるわけではないので、プレミアム会員にはなれません。
+ごめんなさい。</p>
+<p>それから、無料の範囲だとアラートの設定数の上限が 2 つまでのようです。
+2 つだけだと少し心もとないです。</p>
+<p>お試しで為替レートの通知をしてみましたが、外為ウォッチと比べて少し遅れがありました。
+ただこれは、試してみたそのときの環境による誤差だったのかもしれません。</p>
+<p>参考までに費用は次の通りでした。</p>
+<ul>
+<li>アラート設定 10 個(240 円 / 月)</li>
+<li>アラート設定 10 個(2400 円 / 年)</li>
+<li>アラート設定 10 個 + 広告なし(480 円 / 月)</li>
+<li>アラート設定 10 個 + 広告なし(4800 円 / 年)</li>
+<li>アラート設定 15 個(480 円 / 月)</li>
+<li>アラート設定 15 個(4,800 円 / 年)</li>
+<li>アラート設定 15 個 + 広告なし(720 円 / 月)</li>
+<li>アラート設定 15 個 + 広告なし(7,200 円 / 年)</li>
+<li>アラート設定 20 個(720 円 / 月)</li>
+<li>アラート設定 20 個(7,200 円 / 年)</li>
+<li>アラート設定 20 個 + 広告なし(960 円 / 月)</li>
+<li>アラート設定 20 個 + 広告なし(9,600 円 / 年)</li>
+</ul>
+<h2 id="ctrader-のアラート機能">cTrader のアラート機能</h2>
+<p>PC のプラットフォームにおけるアラート機能はあまり期待していなくて。</p>
+<p>自分の持っていた、 PC のプラットフォームにおけるアラート機能のイメージは MetaTrader の通知機能、 E ・メール機能でした。
+この仕組みって、通知、送信のきっかけが PC の MetaTrader にあるので、 MetaTrader を常時起動しておく必要があります。</p>
+<p>この常時起動ために <a href="http://www.onamae-desktop.com/fx/">FX自動売買に便利なメタトレーダー（metatrader）やMT4の利用に最適なfor FXプラン | お名前.comデスクトップクラウド</a> のようなサービスを使いたくはないし。</p>
+<p>だから、あまり期待することなく cTrader のアラート機能を使ってみました。</p>
+<h3 id="アラートの設定画面">アラートの設定画面</h3>
+<p>アラートの設定画面です。</p>
+<p><img src="/img/85-01.png" alt=""></p>
+<p>次の内容が設定できるようです。</p>
+<ul>
+<li>通貨ペア</li>
+<li>ASK か BID</li>
+<li>最高値か最安値(cTrader はところどころ日本語が微妙な感じがありますが、上限か下限かという意味だと思います。)</li>
+<li>レート</li>
+<li>PC のポップアップ表示とサウンドを鳴らすか</li>
+<li>メールを送るか</li>
+<li>メッセージオプションタイプ(追加で表示する・送ることのできる文字情報だと思います。)</li>
+</ul>
+<h3 id="アラートリストの画面">アラートリストの画面</h3>
+<p>アラートリストの画面です。</p>
+<p><img src="/img/85-02.png" alt=""></p>
+<p>二つ三つ、設定してみましたが、まだ上限はわかりません。
+あるのかな？ないのかな？
+自分としては 10 個も設定できれば十分です。</p>
+<h3 id="アラートメールの内容">アラートメールの内容</h3>
+<p>アラートメールの内容です。</p>
+<p><img src="/img/85-03.png" alt=""></p>
+<p>あまり期待していなくて、仕組みは MetaTrader と同じだろうと思っていました。
+だから、 PC もスリープにしていて、 cTrader も終了して、ジムに行き、アラートメールのことは放置していました。
+が、その状況でもメールが届きました！</p>
+<p>よく考えてみたら、 MetaTrader の E ・メール機能は、 SMTP サーバーを設定する必要があって、いかにもその MetaTrader 自身(PC 自身)が SMTP サーバーに対してメールの送信依頼をしています。
+だから、 PC を常時起動しておく必要があるのですけど。</p>
+<p>でも、 cTrader は、 SMTP サーバーを設定するところはなくて、おそらく為替証拠金取引の業者か cTrader の開発会社である <a href="https://spotware.com/">Spotware</a> のサーバーから、決められた SMTP サーバーにメールの送信依頼をしているのだと思います。
+メールの送信元も自分自身ではなくて、 &ldquo;<a href="mailto:noreply@ctrader.com">noreply@ctrader.com</a>&rdquo; となっています。</p>
+<p>このあたりの具体的な仕組みはよく見えないところではあります。
+が、為替レートのメールをしてくれるのはありがたいサービスだと思いました。</p>
+<p>仕組みはよく見えないのですが、 cTrader を使うに当たって、為替証拠金取引の業者のデモ口座とは別に、 <a href="https://id.ctrader.com">cTrader ID</a> のアカウントを登録しました。
+アカウントの削除についてのページが簡単に見つからないので、メールとかで個別に依頼する必要があるかもしれないです。
+このあたり、個人情報保護に神経質になる方には向かないかもしれません。</p>
+<h2 id="終わり">終わり</h2>
+<p>自分の場合、探すきっかけは iOS のアプリのプッシュ通知機能だったので、本来の目的は達成できていません。
+が、 PC を常時起動せずに為替レートのアラートを教えてくれさえすれば、プッシュ通知機能でも、メール機能でもどちらでも良かったので、しばらく cTrader のアラートメール機能を使っていこうと思います。</p>
+<p>cTrader は Web アプリと iOS のアプリと、それから Android のアプリもあって、そちらはまだ使っていないのですが、そちらからもアラートが設定できるのかな？
+後でチェックしてみようと思います。</p>
+<p>自分は、 PC でチャートをチェックして、 iPhone から注文しているんですけど、 cTrader のスマホアプリでもアラートが設定できるとトレードの幅も広がるかもしれないと思っています。</p>
+<p>人によっては、プッシュ通知機能でなきゃダメという人がいるかもしれません。
+そういう人には向かないサービスになります。</p>
+<h2 id="9-february-2018-追記">9 February 2018 追記</h2>
+<p><a href="/post/90/">iOS の cTrader で 為替レートのアラート機能 (Price Alerts) を使ってみました</a> の記事を書きました。</p>
+<h2 id="15-february-2018-追記">15 February 2018 追記</h2>
+<p>cTrader ID のアカウントの削除について、次のように記載されていました。</p>
+<blockquote>
+<p>Delete cTID:</p>
+<p>You cannot delete your cTrader ID, neither will Spotware delete it for you. In case you don't want to use your cTID any more, you can just unlink your trading accounts and link them to another cTrader ID.</p>
+<p><cite><a href="http://help.spotware.com/ctid#deletectid">cTrader ID (cTID)</a></cite></p>
+</blockquote>
+<p>アカウントの削除はできないようです。
+使わない場合は取引口座からリンクを外すことしかできないようです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

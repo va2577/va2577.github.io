@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SuperAgent on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/superagent/</link>
+    <description>Recent content in SuperAgent on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Feb 2016 20:51:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/superagent/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SuperAgentでXMLのレスポンスのtextがundefinedになる</title>
+      <link>https://va2577.github.io/post/19/</link>
+      <pubDate>Tue, 02 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/19/</guid>
+      <description>&lt;p&gt;SuperAgentでXMLにアクセスした時にレスポンスのbodyやtextが取れなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

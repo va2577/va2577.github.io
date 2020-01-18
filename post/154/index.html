@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>JAVASCRIPT で IMMUTABLE.RANGE() のようなことがしたかったので調べました (ECMASCRIPT 2015) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>JavaScript で Immutable.Range() のようなことがしたかったので調べました (ECMAScript 2015)</h1>
+    
+      <div><time>May 4, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><code>for</code> とか使わずに連番を持つ配列を作ってみました。
+でも、 <a href="https://facebook.github.io/immutable-js/">Immutable.js</a> の <code>Immutable.Range()</code> のような無限の配列ではありません。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Microsoft EdgeHTML 17.17134</li>
+<li>Firefox 59.0.3</li>
+</ul>
+<h2 id="arrayfrom-メソッド">Array.from() メソッド</h2>
+<blockquote>
+<p><code>Array.from()</code> メソッドは、配列型 (array-like) オブジェクトや反復可能 (iterable) オブジェクトから新しい <code>Array</code> インスタンスを生成します。</p>
+<p><cite><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/from">Array.from() - JavaScript | MDN</a></cite></p>
+</blockquote>
+<p><code>Array.from()</code> メソッドを使うと、新しい <code>Array</code> インスタンスを生成してくれるようです。</p>
+<p>次のように記述したらできました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(Array.<span style="color:#a6e22e">from</span>(Array(<span style="color:#ae81ff">10</span>).<span style="color:#a6e22e">keys</span>()));
+<span style="color:#75715e">// 0,1,2,3,4,5,6,7,8,9
+</span></code></pre></div><p><code>Array(10)</code> で 10 個の空の配列を作って、 <code>Array.prototype.keys()</code> メソッドで配列のイテレーターを取ってきています。
+この配列のイテレーターに 0 から 9 までの連番があります。
+その配列のイテレーターを <code>Array.from()</code> メソッドに渡しました。</p>
+<p>1~5 までの数値が欲しいときは <code>Array.prototype.slice()</code> メソッドを使って、次のように記述すればよさそうです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(Array.<span style="color:#a6e22e">from</span>(Array(<span style="color:#ae81ff">10</span>).<span style="color:#a6e22e">keys</span>()).<span style="color:#a6e22e">slice</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>));
+<span style="color:#75715e">// 1,2,3,4,5
+</span></code></pre></div><p>あるいは、 <code>Array.prototype.filter()</code> メソッドを使って、次のように記述すればよさそうです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(Array.<span style="color:#a6e22e">from</span>(Array(<span style="color:#ae81ff">10</span>).<span style="color:#a6e22e">keys</span>()).<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">e</span> =&gt; <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">5</span>));
+<span style="color:#75715e">// 1,2,3,4,5
+</span></code></pre></div><p>こちらの方が 1~5 までであることが認識しやすいかもしれません。</p>
+<h2 id="スプレッド構文">スプレッド構文</h2>
+<blockquote>
+<p>スプレッド構文を使うと、関数呼び出しでは 0 個以上の引数として、Array リテラルでは 0 個以上の要素として、Object リテラルでは 0 個以上の key-value のペアとして、Array や String などの iterable オブジェクトをその場で展開します。</p>
+<p><cite><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Spread_syntax">スプレッド構文 - JavaScript | MDN</a></cite></p>
+</blockquote>
+<p>スプレッド構文でもできるようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>([...Array(<span style="color:#ae81ff">10</span>).<span style="color:#a6e22e">keys</span>()]);
+<span style="color:#75715e">// 0,1,2,3,4,5,6,7,8,9
+</span></code></pre></div><p>配列のリテラル (<code>[]</code>) に <code>Array(10).keys()</code> の配列のイテレーターを渡しました。
+スプレッド構文は、配列のイテレーターをその場で展開してくれるようなので、 <code>[...Array(3).keys()]</code> と記述すると、 <code>[ 0, 1, 2 ]</code> と記述したのと同じ意味になるようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>Ruby の <a href="https://ruby-doc.org/core-2.5.0/Range.html">Range</a> クラスや Python の <a href="https://docs.python.org/3/library/functions.html#func-range">range</a> 関数はあるのに、 ECMAScript には言語仕様の range はないみたいでした。
+いずれ取り入れられるかな。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/docker/</link>
+    <description>Recent content in Docker on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Apr 2017 12:59:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker のインストールから Docker の Anaconda(Jupyter, Numba) を使うまで</title>
+      <link>https://va2577.github.io/post/71/</link>
+      <pubDate>Sat, 08 Apr 2017 12:59:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/71/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/70/&#34;&gt;[Python]pip で Numba をインストールする時にエラーになる&lt;/a&gt;という状況でしたので、結果的に Docker で Anaconda を使うまでを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>VISUAL STUDIO CODE に WSL の UBUNTU の GIT を設定する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Visual Studio Code に WSL の Ubuntu の Git を設定する</h1>
+    
+      <div><time>January 17, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>いつからだったか、Visual Studio Code を起動すると、勝手に「Git を探しています」みたいになって、「[警告] Git が見つかりません。Git をインストールするか &lsquo;git.path&rsquo; 設定で…」のようなメッセージが表示されるようになりました。</p>
+<p>そのまま使っていたのですが、気になるので調べてみました。</p>
+<h2 id="調査">調査</h2>
+<p>方針として、Windows の Git はあまりインストールしたくありませんでした。</p>
+<p>Git for Windows は、それをインストールすると、Linux のコマンドが使えて便利だったのですが、せっかく WSL の Ubuntu が使えるので、そちらの標準で使える Git を使いたかったのです。</p>
+<p>次のページを参考にしました。</p>
+<ul>
+<li><a href="https://github.com/Microsoft/vscode/issues/28315">Use WSL Git as integrated VSCode Git · Issue #28315 · Microsoft/vscode · GitHub</a></li>
+</ul>
+<p>Windows 側から Ubuntu 側のコマンドを呼び出すためにバッチファイルを作成するようです。
+Visual Studio Code からはこのバッチファイルを呼び出すことになるようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-batchfile" data-lang="batchfile">@<span style="color:#66d9ef">echo</span> off
+bash -c &#39;git %*&#39;
+</code></pre></div><p>上のバッチファイルを任意のフォルダーに保存しました。</p>
+<h2 id="設定">設定</h2>
+<p>警告にあったように、 &ldquo;git.path&rdquo; を設定します。
+Visual Studio Code のメニューから、[ファイル]-[基本設定 (P)]-[設定 (S)] を選択します。
+ユーザー設定に次の内容を追加します。
+実際のパスは上で作成したバッチファイルのパスに合わせます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">    <span style="color:#e6db74">&#34;git.path&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#e6db74">&#34;C:\\path\\to\\git.bat&#34;</span>
+</code></pre></div><p>Visual Studio Code を起動し直すと、警告が表示されなくなりました。</p>
+<p>まだ、使い込んでないのですが、実際に Git が使えるかどうか、もしかしたら、参考にしたページにあるように、 &ldquo;terminal.integrated.shell.windows&rdquo; の内容も追加する必要があるかもしれません。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">    <span style="color:#e6db74">&#34;terminal.integrated.shell.windows&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#e6db74">&#34;C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\ubuntu.exe&#34;</span>
+</code></pre></div><h2 id="終わり">終わり</h2>
+<p>Windows で WSL の Git を使う場合に注意があるようで、Windows 側のファイルの権限を Ubuntu 側から見ると、すべて 777 になっているようです。
+だから、Git の設定で、権限の変更を検出対象外(core.filemode = false)にしておく必要がありそうです。
+権限の変更が必要な場合は Ubuntu 側で Clone しておいたものを別途用意しておいて、そちらから変更することになりそうです。</p>
+<p>素直に Git for Windows を使っておいた方がシンプルかな？</p>
+<p>macOS のときは Atom エディターを使っていたのですが、Windows なので、Visual Studio Code を使うことにしました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HIGHCHARTS でマルチタイムフレームのチャートを作った - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Highcharts でマルチタイムフレームのチャートを作った</h1>
+    
+      <div><time>November 23, 2019</time></div>
+    
+    
+      <div><img alt="" src="/img/2019-11-23-01-01.png"></div>
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Highcharts を使ってマルチタイムフレームのチャートを作ったのでその記録。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>macOS Catalina バージョン 10.15.0</li>
+<li>Python 3.7.4</li>
+<li>Flask 1.1.1</li>
+<li>numpy 1.17.2</li>
+<li>pandas 0.25.1</li>
+<li>requests 2.22.0</li>
+<li>Highstock JS v7.2.1 (2019-10-31)</li>
+</ul>
+<h2 id="みんかぶ-fx">みんかぶ FX</h2>
+<!-- ![](/img/2019-11-23-01-01.png) -->
+<div class="container" id="container">
+  <div class="column container1" id="container1"></div>
+  <div class="column container2" id="container2"></div>
+  <div class="column container3" id="container3"></div>
+  <div class="column container4" id="container4"></div>
+</div>
+<div class="margin"></div>
+<p><a href="https://fx.minkabu.jp/pair/USDJPY">みんかぶ FX</a> のデータのチャート。
+今回取得したデータの中では一番綺麗に見ることができた。</p>
+<p>できるだけ広く表示したかったので、余白を可能なだけ少なくした。
+軸ラベルも小さくした。
+足の数は２４０本にした。
+日足だと１年分程度表示できることになる。</p>
+<p>それから [1] キーを押すとフルスクリーンになるようにしたので、ブラウザーのバーとかの部分もチャートを表示することができる。</p>
+<h2 id="the-wall-street-journal">The Wall Street Journal</h2>
+<!-- ![](/img/2019-11-23-01-02.png) -->
+<div class="container" id="container-wsj">
+  <div class="column container1" id="container1-wsj"></div>
+  <div class="column container2" id="container2-wsj"></div>
+  <div class="column container3" id="container3-wsj"></div>
+  <div class="column container4" id="container4-wsj"></div>
+</div>
+<div class="margin"></div>
+<p><a href="https://www.wsj.com/market-data/quotes/fx/USDJPY">The Wall Street Journal</a> のデータのチャート。
+４時間足のデータを取ってくるAPIはないので、１時間足を４倍取ってきて４時間足にリサンプルする、というようなことをしている。
+ただ、１時間足で取ってこれる範囲に限界があるようで、４時間足が短い期間しか表示できなかった。</p>
+<p>[2] キーを押すとフルスクリーンになる。</p>
+<h2 id="yahoo-finance">Yahoo Finance</h2>
+<!-- ![](/img/2019-11-23-01-03.png) -->
+<div class="container" id="container-yahoo">
+  <div class="column container1" id="container1-yahoo"></div>
+  <div class="column container2" id="container2-yahoo"></div>
+  <div class="column container3" id="container3-yahoo"></div>
+  <div class="column container4" id="container4-yahoo"></div>
+</div>
+<div class="margin"></div>
+<p><a href="https://finance.yahoo.com/quote/JPY=X?p=JPY=X&amp;guccounter=1">Yahoo Finance</a> のデータのチャート。
+日足がおかしい。
+始値か終値が違うのかな。
+１５分足もみんかぶ FX に比べてヒゲが多いのも気になる。</p>
+<p>[3] キーを押すとフルスクリーンになる。</p>
+<h2 id="終わり">終わり</h2>
+<p>macOS にしてから cTrader Web を使うようにしているのだけど、起動が少し遅いので、素早くチェックするのに便利かなと思っている。</p>
+<p>Flask を含めたソースを GitHub にアップした。</p>
+<link href="https://fonts.googleapis.com/css?family=Unica+One" rel="stylesheet" type="text/css">
+<script src="/js/highstock.js"></script>
+<script src="/js/indicators.js"></script>
+<script>
+  // theme
+  const offset = 40
+  const tooltipX = offset
+  const tooltipY = document.querySelector('#container').offsetHeight
+  const yAxisLabelsX = document.querySelector('#container').offsetWidth * -1 + offset
+  Highcharts.theme = {
+    chart: {
+      backgroundColor: "#000000",
+      // borderColor: "#ffffff",
+      // borderWidth: 1,
+      marginBottom: 24,
+      marginLeft: 2,
+      marginRight: 2,
+      marginTop: 0,
+      style: {
+        fontFamily: '\'Unica One\', sans-serif',
+      },
+    },
+    credits: {
+      enabled: false,
+    },
+    plotOptions: {
+      candlestick: {
+        color: '#FF6384', // '#845dde', // '#e85f82', // '#aa0000',
+        dataGrouping: {
+          enabled: false,
+        },
+        lineColor: '#FF83A4', // '#946dee', // '#f86f92', // '#ff4444',
+        lineWidth: 0.4,
+        upColor: '#36A2EB', // '#1893fb', // '#0000aa',
+        upLineColor: '#56C2EB', // '#28a3ff', // '#4444ff',
+      },
+    },
+    navigator: {
+      enabled: false,
+    },
+    rangeSelector: {
+      selected: 5,
+      enabled: false,
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    subtitle: {
+      // align: "right",
+    },
+    time: {
+      timezoneOffset: (new Date()).getTimezoneOffset() / 60,
+      useUTC: false,
+    },
+    title: {
+      // align: "right",
+      style: {
+        color: '#333333', // #333333
+      },
+    },
+    tooltip: {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      borderWidth: 0,
+      formatter: function () {
+        const point = this.points[0].point
+        const props = ['open', 'high', 'low', 'close']
+        const ohlc = props.map(x => `${x}: ${point[x] < 10 ? point[x].toFixed(5): point[x].toFixed(3)}`)
+        return `datetime: ${Highcharts.dateFormat(undefined, this.x)} ${ohlc.join(' ')}`
+      },
+      positioner: () => ({
+        x: tooltipX,
+        y: tooltipY,
+      }),
+      shadow: false,
+      style: {
+        // color: '#666666', // #333333
+      },
+    },
+    xAxis: {
+      crosshair: {
+        width: 0,
+      },
+      // gridLineWidth: 0.1,
+      labels: {
+        style: {
+          // color: '#666666', // #666666
+        },
+      },
+      lineWidth: 0,
+      tickLength: 0,
+    },
+    yAxis: {
+      endOnTick: false,
+      gridLineWidth: 0,
+      labels: {
+        x: yAxisLabelsX,
+        style: {
+          // color: '#666666', // #666666
+        },
+      },
+    },
+  }
+  Highcharts.setOptions(Highcharts.theme)
+</script>
+<script>
+  const values = [
+    { 'container': 'container1', 'url': '/json/minkabu-usdjpy-daily.json', 'title': 'usdjpy', 'subtitle': 'daily' },
+    { 'container': 'container2', 'url': '/json/minkabu-usdjpy-4h.json', 'title': 'usdjpy', 'subtitle': '4h' },
+    { 'container': 'container3', 'url': '/json/minkabu-usdjpy-1h.json', 'title': 'usdjpy', 'subtitle': '1h' },
+    { 'container': 'container4', 'url': '/json/minkabu-usdjpy-15m.json', 'title': 'usdjpy', 'subtitle': '15m' },
+  ]
+  const wsj = [
+    { 'container': 'container1-wsj', 'url': '/json/wsj-usdjpy-daily.json', 'title': 'usdjpy', 'subtitle': 'daily' },
+    { 'container': 'container2-wsj', 'url': '/json/wsj-usdjpy-4h.json', 'title': 'usdjpy', 'subtitle': '4h' },
+    { 'container': 'container3-wsj', 'url': '/json/wsj-usdjpy-1h.json', 'title': 'usdjpy', 'subtitle': '1h' },
+    { 'container': 'container4-wsj', 'url': '/json/wsj-usdjpy-15m.json', 'title': 'usdjpy', 'subtitle': '15m' },
+  ]
+  const yahoo = [
+    { 'container': 'container1-yahoo', 'url': '/json/yahoo-usdjpy-daily.json', 'title': 'usdjpy', 'subtitle': 'daily' },
+    { 'container': 'container2-yahoo', 'url': '/json/yahoo-usdjpy-4h.json', 'title': 'usdjpy', 'subtitle': '4h' },
+    { 'container': 'container3-yahoo', 'url': '/json/yahoo-usdjpy-1h.json', 'title': 'usdjpy', 'subtitle': '1h' },
+    { 'container': 'container4-yahoo', 'url': '/json/yahoo-usdjpy-15m.json', 'title': 'usdjpy', 'subtitle': '15m' },
+  ]
+  document.addEventListener('DOMContentLoaded', () => {
+    const stockChart = (id = 'container', url = '/static/daily.json', title = undefined, subtitle = undefined) => {
+      const get = function (event) {
+        console.log(url)
+        const chart = this
+        fetch(url)
+          .then(response => response.json())
+          .then(json => chart.series[0].setData(json))
+          .then(() => {
+            setTimeout(() => get.bind(chart)(), 1000 * 60 * 15);
+          })
+      }
+      return Highcharts.stockChart(id, {
+        chart: {
+          events: {
+            load: get,
+          },
+        },
+        series: [{
+          type: 'candlestick',
+          // name: 'AAPL Stock Price',
+          // data: data,
+          data: [],
+          id: 'candlestick',
+        },
+        {
+          type: 'sma',
+          color: 'rgb(255, 205, 86)',
+          lineWidth: 0.4,
+          linkedTo: 'candlestick',
+          marker: {
+            enabled: false,
+          },
+          params: {
+            index: 3,
+            period: 20,
+          },
+          // visible: false,
+        },
+        {
+          type: 'sma',
+          color: 'rgb(255, 159, 64)',
+          lineWidth: 0.4,
+          linkedTo: 'candlestick',
+          marker: {
+            enabled: false,
+          },
+          params: {
+            index: 3,
+            period: 75,
+          },
+          visible: false,
+        }],
+        subtitle: {
+          // text: 'subtitle',
+          text: subtitle,
+        },
+        title: {
+          // text: 'AAPL Stock Price',
+          text: title,
+        },
+      })
+    }
+    const charts1 = values.map(v => stockChart(v['container'], v['url'], title=v['title'], subtitle=v['subtitle']))
+    const charts2 = wsj.map(v => stockChart(v['container'], v['url'], title=v['title'], subtitle=v['subtitle']))
+    const charts3 = yahoo.map(v => stockChart(v['container'], v['url'], title=v['title'], subtitle=v['subtitle']))
+    const charts = [...charts1, ...charts2, ...charts3]
+    // resize
+    // tooltip.positioner, yAxis.labels.x
+    let timeoutID
+    window.addEventListener('resize', () => {
+      if (0 < timeoutID) {
+        clearTimeout(timeoutID)
+      }
+      timeoutID = setTimeout(() => {
+        charts.forEach(c => {
+          c.update({
+            tooltip: {
+              positioner: () => ({
+                x: 40,
+                y: c.container.offsetHeight,
+              })
+            },
+            yAxis: {
+              labels: {
+                x: c.container.offsetWidth * -1 + offset,
+              },
+            },
+          })
+        })
+      }, 200);
+    })
+    // fullscreen
+    window.addEventListener('keyup', event => {
+      event.preventDefault();
+      // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
+      const codes = {
+        'Digit1': '#container',
+        'Digit2': '#container-wsj',
+        'Digit3': '#container-yahoo',
+      }
+      if (!codes.hasOwnProperty(event.code)) {
+        return
+      }
+      const element = document.querySelector(codes[event.code])
+      const requestFullscreen = element.requestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen || element.msRequestFullscreen
+      if (!requestFullscreen) {
+        return
+      }
+      requestFullscreen.apply(element)
+    })
+  })
+</script>
+<style>
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, 50vw);
+    left: 0;
+    position: absolute;
+  }
+  .column {
+    height: 50vh;
+  }
+  .container1,
+  .container2 {
+    border-bottom: #333333 solid 1px;
+  }
+  .container1,
+  .container3 {
+    border-right: #333333 solid 1px;
+  }
+  .margin {
+    margin-bottom: 105vh;
+  }
+</style>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

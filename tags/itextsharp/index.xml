@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>iTextSharp on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/itextsharp/</link>
+    <description>Recent content in iTextSharp on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 22 Mar 2018 09:05:17 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/itextsharp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>iTextSharp(C#) を使ってみました</title>
+      <link>https://va2577.github.io/post/111/</link>
+      <pubDate>Thu, 22 Mar 2018 09:05:17 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/111/</guid>
+      <description>&lt;p&gt;.NET Framework の C# を使って PDF を作成する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

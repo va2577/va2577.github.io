@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ITEXTSHARP(C#) を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>iTextSharp(C#) を使ってみました</h1>
+    
+      <div><time>March 22, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>.NET Framework の C# を使って PDF を作成する方法を調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Windows 10</li>
+<li>Visual Studio 2017</li>
+<li>.NET Framework 4.6.1(C#, VB.NET)</li>
+<li>iTextSharp 5.5.13</li>
+</ul>
+<h2 id="itext-7-or-itext-5">iText 7 or iText 5</h2>
+<p><a href="https://developers.itextpdf.com/downloads">Download iText 7 and iText 5 | iText Developers</a> を見ると、次の種類があるようです。</p>
+<blockquote>
+<ul>
+<li>iText 7
+<ul>
+<li>Java</li>
+<li>.NET</li>
+</ul>
+</li>
+<li>Text 5
+<ul>
+<li>Java</li>
+<li>.NET / iTextSharp</li>
+</ul>
+</li>
+</ul>
+<p><cite><a href="https://developers.itextpdf.com/downloads">Download iText 7 and iText 5 | iText Developers</a></cite></p>
+</blockquote>
+<p>iTextSharp と言われていたものは 7 になって、 iText 7 .NET という名称になったのかな。</p>
+<p>7 と 5 はどちらが良いのかな？</p>
+<h3 id="itext-7-のメリット">iText 7 のメリット</h3>
+<blockquote>
+<p>iText 7 is a complete re-write of iText 5, allowing you to choose your adventure with add-ons, all based on a simple, modular code structure that is easy to use and well documented.</p>
+<p>…略…</p>
+<p>iText 7 includes pdfDebug, the first debugging tool that gives you a clear overview of your content streams and document structure as well as pdfCalligraph, allowing you to leverage advanced typography.</p>
+<p><cite><a href="https://www.nuget.org/packages/iTextSharp/">NuGet Gallery | iTextSharp 5.5.13</a></cite></p>
+</blockquote>
+<p>アドオンになっていたり、 PDF デバッグができたりするようです。
+今回は、単純に PDF に文字列を出力できればいい感じなので、 iText 7 である必要はなさそうでした。</p>
+<p>後から認識したことですが、 iTextSharp のクラスの構造がいまいちつかみづらい感じがありました。
+iText 7 では改善されているのかな？</p>
+<h3 id="ダウンロード数">ダウンロード数</h3>
+<p>NuGet のパッケージのダウンロード数を見てみました。</p>
+<blockquote>
+<p>last updated 2 months ago</p>
+<p>…略…</p>
+<p>49,658 downloads of latest version</p>
+<p><cite><a href="https://www.nuget.org/packages/iTextSharp/">NuGet Gallery | iTextSharp 5.5.13</a></cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>last updated 2 months ago</p>
+<p>…略…</p>
+<p>4,673 downloads of latest version</p>
+<p><cite><a href="https://www.nuget.org/packages/itext7/">NuGet Gallery | itext7 7.1.1</a></cite></p>
+</blockquote>
+<p>ダウンロード数は、 iText 5 の方が 10 倍くらい多いみたいです。</p>
+<h3 id="トレンド">トレンド</h3>
+<p>Google Trends で検索してみました。</p>
+<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1328_RC04/embed_loader.js"></script>
+<script type="text/javascript">
+  trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"itext 5","geo":"","time":"2004-01-01 2018-03-23"},{"keyword":"itext 7","geo":"","time":"2004-01-01 2018-03-23"},{"keyword":"itextsharp","geo":"","time":"2004-01-01 2018-03-23"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=itext%205,itext%207,itextsharp","guestPath":"https://trends.google.com:443/trends/embed/"});
+</script>
+<p>iTextSharp が多いみたいです。</p>
+<h3 id="検索結果">検索結果</h3>
+<p>Google の検索結果を見てみました。</p>
+<ul>
+<li>&ldquo;itext 5&rdquo;: 約 16,900 件 （0.25 秒）</li>
+<li>&ldquo;itext 7&rdquo;: 約 22,900 件 （0.24 秒）</li>
+<li>&ldquo;itextsharp&rdquo;: 約 427,000 件 （0.34 秒）</li>
+</ul>
+<p>iText 5 .NET / iTextSharp の方が良さそうかな。</p>
+<h2 id="ライセンス">ライセンス</h2>
+<p>使う前に、 iText はライセンスについての記載をよく見かけます。</p>
+<ul>
+<li><a href="https://itextpdf.com/AGPL">iText PDF, open source F/OSS project for easy PDF generation</a></li>
+<li><a href="https://itextpdf.com/commercial">iText PDF Commercial License Options</a></li>
+</ul>
+<p>iText 5 と iText 7 が現行のサポート対象のバージョンのようです。
+両方とも AGPL と商業ライセンスのもとで使うことができるようです。
+（iText 5 は AGPL だけかな？）</p>
+<p>AGPL は、適用範囲とソースコードの公開義務があるようで、条件に合うかどうか確認してから使う必要があるみたいです。</p>
+<h2 id="インストール">インストール</h2>
+<p>NuGet パッケージ マネージャーを使ってインストールします。
+Visual Studio のメニューから [ツール]-[NuGet パッケージ マネージャー]-[パッケージ マネージャー コンソール] を選択します。
+パッケージ マネージャー コンソールに次のように入力しました。</p>
+<pre><code>PM&gt; Install-Package iTextSharp -Version 5.5.13
+</code></pre><p>ログが流れてゆきます。</p>
+<pre><code>
+
+'.NETFramework,Version=v4.6.1' を対象とするプロジェクト 'ConsoleApp1' に関して、パッケージ 'iTextSharp.5.5.13' の依存関係情報の収集を試行しています
+依存関係情報の収集に 1.49 sec かかりました
+DependencyBehavior 'Lowest' でパッケージ 'iTextSharp.5.5.13' の依存関係の解決を試行しています
+依存関係情報の解決に 0 ms かかりました
+パッケージ 'iTextSharp.5.5.13' をインストールするアクションを解決しています
+パッケージ 'iTextSharp.5.5.13' をインストールするアクションが解決されました
+'nuget.org' からパッケージ 'iTextSharp 5.5.13' を取得しています。
+  GET https://api.nuget.org/v3-flatcontainer/itextsharp/5.5.13/itextsharp.5.5.13.nupkg
+  OK https://api.nuget.org/v3-flatcontainer/itextsharp/5.5.13/itextsharp.5.5.13.nupkg 700 ミリ秒
+iTextSharp 5.5.13 をインストールしています。
+パッケージ 'iTextSharp.5.5.13' をフォルダー 'C:\Users\user\Source\Repos\ConsoleApp1\packages' に追加しています
+パッケージ 'iTextSharp.5.5.13' をフォルダー 'C:\Users\user\Source\Repos\ConsoleApp1\packages' に追加しました
+パッケージ 'iTextSharp.5.5.13' を 'packages.config' に追加しました
+'iTextSharp 5.5.13' が ConsoleApp1 に正常にインストールされました
+NuGet の操作の実行に 4.29 sec かかりました
+経過した時間: 00:00:06.4740974
+</code></pre><p>インストールできたみたいです。</p>
+<h2 id="文字列を出力する１">文字列を出力する１</h2>
+<p>存在する PDF に文字列を出力するサンプルです。
+(テンプレートの PDF は上書きしません)
+<a href="https://developers.itextpdf.com/examples/columntext-examples-itext5/adding-page-numbers-existing-pdf">Adding page numbers to an existing PDF | iText Developers</a> の examples を参考にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Class1</span>
+{
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * template
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String template = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\template.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * output
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String output = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\output.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * Adding page numbers to an existing PDF | iText Developers
+</span><span style="color:#75715e">     * https://developers.itextpdf.com/examples/columntext-examples-itext5/adding-page-numbers-existing-pdf
+</span><span style="color:#75715e">     * 
+</span><span style="color:#75715e">     * ColumnText (iText 5.5.13 API)
+</span><span style="color:#75715e">     * http://itextsupport.com/apidocs/itext5/latest/com/itextpdf/text/pdf/ColumnText.html#showTextAligned-com.itextpdf.text.pdf.PdfContentByte-int-com.itextpdf.text.Phrase-float-float-float-int-int-
+</span><span style="color:#75715e">     * showTextAligned
+</span><span style="color:#75715e">     * 
+</span><span style="color:#75715e">     * PdfContentByte (iText 5.5.13 API)
+</span><span style="color:#75715e">     * http://itextsupport.com/apidocs/itext5/latest/com/itextpdf/text/pdf/PdfContentByte.html#showTextAligned-int-java.lang.String-float-float-float-
+</span><span style="color:#75715e">     * showTextAligned
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Method1()
+    {
+        iTextSharp.text.FontFactory.RegisterDirectory(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
+        <span style="color:#66d9ef">var</span> fs = <span style="color:#66d9ef">new</span> System.IO.FileStream(output, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfReader(template))
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> stamper = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfStamper(reader, fs))
+        {
+            <span style="color:#66d9ef">var</span> contentByte = stamper.GetOverContent(<span style="color:#ae81ff">1</span>);
+            <span style="color:#75715e">//iTextSharp.text.pdf.ColumnText.ShowTextAligned(contentByte, iTextSharp.text.Element.ALIGN_RIGHT, new iTextSharp.text.Phrase(&#34;タイトルです&#34;), 170.0f, 420.0f, 0.0f); // NG
+</span><span style="color:#75715e"></span>            <span style="color:#75715e">//iTextSharp.text.pdf.ColumnText.ShowTextAligned(contentByte, iTextSharp.text.Element.ALIGN_RIGHT, new iTextSharp.text.Phrase(&#34;this is title&#34;), 170.0f, 420.0f, 0.0f); // OK
+</span><span style="color:#75715e"></span>            contentByte.BeginText();
+            <span style="color:#66d9ef">var</span> f = iTextSharp.text.FontFactory.GetFont(<span style="color:#e6db74">&#34;游ゴシック&#34;</span>, iTextSharp.text.pdf.BaseFont.IDENTITY_H, iTextSharp.text.pdf.BaseFont.NOT_EMBEDDED);
+            contentByte.SetFontAndSize(f.BaseFont, <span style="color:#ae81ff">6</span><span style="color:#ae81ff">6.0f</span>);
+            contentByte.ShowTextAligned(iTextSharp.text.Element.ALIGN_LEFT, <span style="color:#e6db74">&#34;タイトルです&#34;</span>, <span style="color:#ae81ff">1</span><span style="color:#ae81ff">7</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">3</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">0.0f</span>);
+            contentByte.EndText();
+        }
+    }
+}
+</code></pre></div><p>最初、 examples にあるように <code>ColumnText.ShowTextAligned</code> を使っていたのですが、なかなか出力できませんでした。
+英数字だけを出力したらできました。
+日本語はダメみたいでした。</p>
+<p><code>ColumnText.ShowTextAligned</code> は、この 1 行だけで出力が完了するようです。
+が、 <code>PdfContentByte.ShowTextAligned</code> は <code>PdfContentByte.BeginText();</code> と <code>PdfContentByte.EndText();</code> を記述しなければいけないようなので、少し手間がかかります。</p>
+<p><code>PdfContentByte.ShowTextAligned</code> は Align を基準に用紙の外側までどこまでも文字列を出力するようです。
+折り返しなしで 1 行を出力するときに使いそうです。</p>
+<h2 id="文字列を出力する２">文字列を出力する２</h2>
+<p>存在する PDF に文字列を出力するサンプルの 2 つ目です。
+(テンプレートの PDF は上書きしません)
+<a href="https://developers.itextpdf.com/examples/columntext-examples-itext5/positioning-different-text-snippets-page">Positioning different text snippets on a page | iText Developers</a> の examples を参考にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Class2</span>
+{
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * template
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String template = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\template.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * output
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String output = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\output.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * Positioning different text snippets on a page | iText Developers
+</span><span style="color:#75715e">     * https://developers.itextpdf.com/examples/columntext-examples-itext5/positioning-different-text-snippets-page
+</span><span style="color:#75715e">     * ColumnTextPhrase.java 
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Method1()
+    {
+        iTextSharp.text.FontFactory.RegisterDirectory(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
+        <span style="color:#66d9ef">var</span> fs = <span style="color:#66d9ef">new</span> System.IO.FileStream(output, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfReader(template))
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> stamper = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfStamper(reader, fs))
+        {
+            <span style="color:#66d9ef">var</span> contentByte = stamper.GetOverContent(<span style="color:#ae81ff">1</span>);
+            {
+                <span style="color:#66d9ef">var</span> ct = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.ColumnText(contentByte);
+                ct.SetSimpleColumn(<span style="color:#ae81ff">7</span><span style="color:#ae81ff">7</span><span style="color:#ae81ff">5.0f</span>, <span style="color:#ae81ff">1</span><span style="color:#ae81ff">1</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">1</span><span style="color:#ae81ff">7</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">4</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">0.0f</span>);
+                <span style="color:#66d9ef">var</span> f = iTextSharp.text.FontFactory.GetFont(<span style="color:#e6db74">&#34;游ゴシック&#34;</span>, iTextSharp.text.pdf.BaseFont.IDENTITY_H, iTextSharp.text.pdf.BaseFont.NOT_EMBEDDED, <span style="color:#ae81ff">6</span><span style="color:#ae81ff">6.0f</span>, <span style="color:#ae81ff">0</span>, iTextSharp.text.BaseColor.DARK_GRAY);
+                <span style="color:#66d9ef">var</span> paragraph = <span style="color:#66d9ef">new</span> iTextSharp.text.Paragraph(<span style="color:#e6db74">&#34;タイトルです&#34;</span>, f);
+                ct.AddElement(paragraph);
+                ct.Go();
+            }
+            {
+                <span style="color:#66d9ef">var</span> ct = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.ColumnText(contentByte);
+                ct.SetSimpleColumn(<span style="color:#ae81ff">7</span><span style="color:#ae81ff">7</span><span style="color:#ae81ff">5.0f</span>, <span style="color:#ae81ff">1</span><span style="color:#ae81ff">0</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">1</span><span style="color:#ae81ff">7</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">2</span><span style="color:#ae81ff">9</span><span style="color:#ae81ff">0.0f</span>);
+                <span style="color:#66d9ef">var</span> f = iTextSharp.text.FontFactory.GetFont(<span style="color:#e6db74">&#34;游ゴシック&#34;</span>, iTextSharp.text.pdf.BaseFont.IDENTITY_H, iTextSharp.text.pdf.BaseFont.NOT_EMBEDDED, <span style="color:#ae81ff">1</span><span style="color:#ae81ff">8.0f</span>, <span style="color:#ae81ff">0</span>, iTextSharp.text.BaseColor.DARK_GRAY);
+                <span style="color:#66d9ef">var</span> paragraph = <span style="color:#66d9ef">new</span> iTextSharp.text.Paragraph(<span style="color:#e6db74">&#34;サブタイトルです。サブタイトルです。サブタイトルです。サブタイトルです。サブタイトルです。サブタイトルです。サブタイトルです。サブタイトルです。サブタイトルです。サブタイトルです。&#34;</span>, f);
+                ct.AddElement(paragraph);
+                ct.Go();
+            }
+        }
+    }
+}
+</code></pre></div><p>範囲を決めて、複数行で出力する場合に使いそうです。</p>
+<p>が、 1 行分だけの範囲を指定しても、範囲を超えて 2 行目も出力されてしまいます。
+(なぜか 2 行目までで、 3 行目以降は出力されません)
+1 行より小さい範囲にすると、今度は文字列全体が出力されてしまいます。</p>
+<p>どうしても 1 行にしたい場合は <code>PdfContentByte.ShowTextAligned</code> を使った方がよさそうです。
+その場合、横にはどこまでも伸びていくことを考慮しなければいけません。</p>
+<p><code>iTextSharp.text.FontFactory.GetFont</code> の引数の 5 番目は style のようですが、 0 だとなし、 1 だと太字、 2 だと斜体、 3 だと太字と斜体、 4 だと下線のようになっていました。
+その後は試してません。
+定数とかないのかな？</p>
+<h2 id="複数のテンプレートを組み替える">複数のテンプレートを組み替える</h2>
+<p>テンプレートの PDF を読み込んで、出力の PDF に設定するサンプルです。
+<a href="https://developers.itextpdf.com/examples/merging-pdf-documents/create-booklet-a4-document">Create booklet from A4 document | iText Developers</a> の examples を参考にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Class3</span>
+{
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * template
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String template = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\template21.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * template2
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String template2 = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\template22.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * output
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String output = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\output.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * Create booklet from A4 document | iText Developers
+</span><span style="color:#75715e">     * https://developers.itextpdf.com/examples/merging-pdf-documents/create-booklet-a4-document
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Method1()
+    {
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfReader(template))
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader2 = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfReader(template2))
+        <span style="color:#75715e">// 出力 PDF の 1 ページ目のサイズと印刷の向きについて、テンプレート 1 の内容で設定する
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 出力 PDF の 1 ページ目は Document.open の後に設定しても有効にならない？
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> document = <span style="color:#66d9ef">new</span> iTextSharp.text.Document(reader.GetPageSizeWithRotation(<span style="color:#ae81ff">1</span>)))
+        {
+            <span style="color:#66d9ef">var</span> fs = <span style="color:#66d9ef">new</span> System.IO.FileStream(output, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            <span style="color:#66d9ef">var</span> writer = iTextSharp.text.pdf.PdfWriter.GetInstance(document, fs);
+            document.Open();
+            <span style="color:#66d9ef">var</span> contentByte = writer.DirectContent;
+            {
+                <span style="color:#75715e">// テンプレート 1 の 1 ページ目の内容を取得する
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">var</span> importedPage = writer.GetImportedPage(reader, <span style="color:#ae81ff">1</span>);
+                <span style="color:#75715e">// テンプレート 2 の 1 ページ目の内容を、出力 PDF の 1 ページ目に設定する
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// ビルドエラーのメモ
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// 重大度レベル	コード	説明	プロジェクト	ファイル	行	抑制状態
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// エラー CS0012  型 &#39;Matrix&#39; は、参照されていないアセンブリに定義されています。アセンブリ &#39;System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a&#39; に参照を追加する必要があります。	ConsoleApp1 C:\Users\user\Source\Repos\ConsoleApp1\ConsoleApp1\Class3.cs  42  アクティブ
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// メニューバーから [プロジェクト]-[参照の追加] を選択。[アセンブリ]-[フレームワーク] を選択。[System.Drawing] にチェック。
+</span><span style="color:#75715e"></span>                contentByte.AddTemplate(importedPage, <span style="color:#ae81ff">0d</span>, <span style="color:#ae81ff">0d</span>);
+            }
+            {
+                document.NewPage();
+                <span style="color:#75715e">// 出力 PDF の 2 ページ目のサイズと印刷の向きについて、テンプレート 2 の内容で設定する
+</span><span style="color:#75715e"></span>                document.SetPageSize(reader2.GetPageSizeWithRotation(<span style="color:#ae81ff">1</span>));
+                <span style="color:#75715e">// テンプレート 2 の 1 ページ目の内容を取得する
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">var</span> importedPage = writer.GetImportedPage(reader2, <span style="color:#ae81ff">1</span>);
+                <span style="color:#75715e">// テンプレート 2 の 1 ページ目の内容を、出力 PDF の 2 ページ目に設定する
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// ビルドエラーのメモ
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// 重大度レベル	コード	説明	プロジェクト	ファイル	行	抑制状態
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// エラー CS0012  型 &#39;Matrix&#39; は、参照されていないアセンブリに定義されています。アセンブリ &#39;System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a&#39; に参照を追加する必要があります。	ConsoleApp1 C:\Users\user\Source\Repos\ConsoleApp1\ConsoleApp1\Class3.cs  42  アクティブ
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// メニューバーから [プロジェクト]-[参照の追加] を選択。[アセンブリ]-[フレームワーク] を選択。[System.Drawing] にチェック。
+</span><span style="color:#75715e"></span>                contentByte.AddTemplate(importedPage, <span style="color:#ae81ff">0d</span>, <span style="color:#ae81ff">0d</span>);
+            }
+        }
+    }
+}
+</code></pre></div><p>PdfStamper は、入力と出力が 1:1 に限られてしまいますが、 <code>PdfWriter.GetImportedPage</code> と <code>PdfContentByte.AddTemplate</code> を使うことで、複数のテンプレートを組み替えながら出力することができそうです。</p>
+<p>テンプレートは 1 つの PDF ファイルに複数ページ分を定義しておいても良さそうです。
+<code>PdfWriter.GetImportedPage</code> でページが指定できましたのでね。</p>
+<h2 id="パスワードを設定する">パスワードを設定する</h2>
+<p>PDF 文書にパスワードを設定してみました。
+<a href="http://itextsupport.com/apidocs/itext5/latest/com/itextpdf/text/pdf/PdfWriter.html#setEncryption-byte:A-byte:A-int-int-">PdfWriter (iText 5.5.13 API)</a> の API を参考にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Class4</span>
+{
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * template
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String template = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\template.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">      * output
+</span><span style="color:#75715e">      */</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> String output = <span style="color:#e6db74">@&#34;C:\Users\user\Desktop\app\output.pdf&#34;</span>;
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">      * PdfWriter (iText 5.5.13 API)
+</span><span style="color:#75715e">      * http://itextsupport.com/apidocs/itext5/latest/com/itextpdf/text/pdf/PdfWriter.html#setEncryption-byte:A-byte:A-int-int-
+</span><span style="color:#75715e">      */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Method1()
+    {
+        iTextSharp.text.FontFactory.RegisterDirectory(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
+        <span style="color:#66d9ef">var</span> fs = <span style="color:#66d9ef">new</span> System.IO.FileStream(output, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> reader = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfReader(template))
+        <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> stamper = <span style="color:#66d9ef">new</span> iTextSharp.text.pdf.PdfStamper(reader, fs))
+        {
+            stamper.SetEncryption(Encoding.Default.GetBytes(<span style="color:#e6db74">&#34;user&#34;</span>), Encoding.Default.GetBytes(<span style="color:#e6db74">&#34;owner&#34;</span>), iTextSharp.text.pdf.PdfWriter.ALLOW_ASSEMBLY + iTextSharp.text.pdf.PdfWriter.ALLOW_COPY + iTextSharp.text.pdf.PdfWriter.ALLOW_DEGRADED_PRINTING + iTextSharp.text.pdf.PdfWriter.ALLOW_FILL_IN + iTextSharp.text.pdf.PdfWriter.ALLOW_MODIFY_ANNOTATIONS + iTextSharp.text.pdf.PdfWriter.ALLOW_MODIFY_CONTENTS + iTextSharp.text.pdf.PdfWriter.ALLOW_PRINTING + iTextSharp.text.pdf.PdfWriter.ALLOW_SCREENREADERS, iTextSharp.text.pdf.PdfWriter.ENCRYPTION_AES_256);
+            <span style="color:#66d9ef">var</span> contentByte = stamper.GetOverContent(<span style="color:#ae81ff">1</span>);
+            contentByte.BeginText();
+            <span style="color:#66d9ef">var</span> f = iTextSharp.text.FontFactory.GetFont(<span style="color:#e6db74">&#34;游ゴシック&#34;</span>, iTextSharp.text.pdf.BaseFont.IDENTITY_H, iTextSharp.text.pdf.BaseFont.NOT_EMBEDDED);
+            contentByte.SetFontAndSize(f.BaseFont, <span style="color:#ae81ff">6</span><span style="color:#ae81ff">6.0f</span>);
+            contentByte.ShowTextAligned(iTextSharp.text.Element.ALIGN_LEFT, <span style="color:#e6db74">&#34;タイトルです&#34;</span>, <span style="color:#ae81ff">1</span><span style="color:#ae81ff">7</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">3</span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">0.0f</span>);
+            contentByte.EndText();
+        }
+    }
+}
+</code></pre></div><p>ここでは PdfStamper の <code>PdfStamper.SetEncryption</code> を使いました。
+PdfWriter の <code>PdfWriter.SetEncryption</code> も同様に使えるようです。</p>
+<blockquote>
+<p>A.  パスワードの種類</p>
+<p>Acrobat では、文書を開くパスワード、権限パスワード、添付ファイルを開くパスワードの 3 種類のパスワードを設定できます。</p>
+<p><cite><a href="https://helpx.adobe.com/jp/acrobat/kb/4383.html">PDF 文書にパスワードを設定する方法 （Acrobat XI/DC）</a></cite></p>
+</blockquote>
+<p><code>PdfStamper.SetEncryption</code> の引数の 1 つ目は userPassword 、 2 つ目は ownerPassword です。
+Acrobat XI/DC のページを参考にすると、文書を開くパスワードが userPassword 、 権限パスワードが ownerPassword になりそうかな。</p>
+<p><code>PdfStamper.SetEncryption</code> の引数の 3 つ目は permissions です。
+次のような定数があるようです。
+int 型なので、 <code>+</code> 演算子で加算した値を設定するようです。</p>
+<ul>
+<li>PdfWriter.ALLOW_ASSEMBLY</li>
+<li>PdfWriter.ALLOW_COPY</li>
+<li>PdfWriter.ALLOW_DEGRADED_PRINTING</li>
+<li>PdfWriter.ALLOW_FILL_IN</li>
+<li>PdfWriter.ALLOW_MODIFY_ANNOTATIONS</li>
+<li>PdfWriter.ALLOW_MODIFY_CONTENTS</li>
+<li>PdfWriter.ALLOW_PRINTING</li>
+<li>PdfWriter.ALLOW_SCREENREADERS</li>
+</ul>
+<blockquote>
+<p>互換性のある形式</p>
+<p>暗号化アルゴリズムとキーサイズはバージョンによって異り、このオプションによって、暗号化レベルとキーサイズが設定されます。 PDF ファイルの受信者の Acrobat または Acrobat Reader のバージョンに対応しているものを選択します。</p>
+<p><cite><a href="https://helpx.adobe.com/jp/acrobat/kb/4383.html">PDF 文書にパスワードを設定する方法 （Acrobat XI/DC）</a></cite></p>
+</blockquote>
+<p><code>PdfStamper.SetEncryption</code> の引数の 4 つ目は encryptionType です。
+暗号化アルゴリズムとキーサイズは次のような対応になりそうです。</p>
+<ul>
+<li>PdfWriter.ENCRYPTION_AES_256: Acrobat X およびそれ以降</li>
+<li>PdfWriter.ENCRYPTION_AES_128: Acrobat 7.0 およびそれ以降</li>
+<li>PdfWriter.STANDARD_ENCRYPTION_128: Acrobat 6.0 およびそれ以降</li>
+<li>PdfWriter.STANDARD_ENCRYPTION_40: Acrobat 6.0 より前？</li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>罫線はテンプレートの PDF に定義することにしたいかな、と思いましたので書きませんでした。
+<code>PdfContentByte.MoveTo</code> で開始位置を指定して、 <code>PdfContentByte.LineTo</code> で終了位置を指定することでラインが描画できそうではありました。
+うーん、これを実装するのは面倒な気がします。</p>
+<p>文字列の出力も座標を把握しなければいけないのですが、コードに直接座標を記述して、何度も実行しながら微調整しました。
+素早く座標を把握する方法はあるのかな？</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

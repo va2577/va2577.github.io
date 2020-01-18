@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>NODE.JS の EXPRESS で SESSION を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Node.js の express で session を使ってみました</h1>
+    
+      <div><time>March 19, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Node.js の express で session が使いたかったので調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Node.js v8.9.4</li>
+<li>npm 5.7.1</li>
+<li>express 4.16.2</li>
+<li>express-session 1.15.6</li>
+</ul>
+<h2 id="advanced-topics">Advanced topics</h2>
+<p>公式のサイトを見てみました。
+セキュリティについてのページに次のように記載されていました。</p>
+<blockquote>
+<p>Use cookies securely</p>
+<p>To ensure cookies don’t open your app to exploits, don’t use the default session cookie name and set cookie security options appropriately.
+There are two main middleware cookie session modules:</p>
+<ul>
+<li>express-session that replaces express.session middleware built-in to Express 3.x.</li>
+<li>cookie-session that replaces express.cookieSession middleware built-in to Express 3.x.</li>
+</ul>
+<p>The main difference between these two modules is how they save cookie session data. The express-session middleware stores session data on the server; it only saves the session ID in the cookie itself, not session data. By default, it uses in-memory storage and is not designed for a production environment. In production, you’ll need to set up a scalable session-store; see the list of compatible session stores.</p>
+<p>In contrast, cookie-session middleware implements cookie-backed storage: it serializes the entire session to the cookie, rather than just a session key. Only use it when session data is relatively small and easily encoded as primitive values (rather than objects). Although browsers are supposed to support at least 4096 bytes per cookie, to ensure you don’t exceed the limit, don’t exceed a size of 4093 bytes per domain. Also, be aware that the cookie data will be visible to the client, so if there is any reason to keep it secure or obscure, then express-session may be a better choice.</p>
+<p><cite><a href="https://expressjs.com/en/advanced/best-practice-security.html#use-cookies-securely">Security Best Practices for Express in Production</a></cite></p>
+</blockquote>
+<p>express でセッションを扱うには、 express-session か cookie-session ミドルウェアを使うみたいです。
+これらもビルトインから、 ミドルウェアに置き換えられたもののようです。</p>
+<p>これら 2 つには、次のような違いがあるみたいです。</p>
+<ul>
+<li>express-session: session ID だけクライアントの cookie に保存して、データはサーバーに保存する</li>
+<li>cookie-session: すべてのデータをクライアントの cookie に保存する</li>
+</ul>
+<p>なので、データの容量が多い場合、セキュアなデータを扱う場合は express-session の方が良いみたいです。</p>
+<p>今回は express-session を使うことにしました。</p>
+<h2 id="express-session">express-session</h2>
+<p>npm でパッケージをインストールするため package.json を初期化します。</p>
+<pre><code>$ npm init -y
+</code></pre><p>express と express-session をインストールします。</p>
+<pre><code>$ npm install --save express express-session
+</code></pre><p>次のようなファイルを作成しました。</p>
+<script src="https://gist.github.com/va2577/3ced1d2faa09ab1822a6f28415111aa8.js"></script>
+<p>次のコマンドを入力して実行します。</p>
+<pre><code>$ node app.js
+Example app listening on port 3000!
+</code></pre><p>http://localhost:3000/ にアクセスします。</p>
+<p><img src="/img/108-01.png" alt=""></p>
+<p>tap! のリンクをクリックすると、 counter をインクリメントします。
+10 秒の有効期限を設定してありますので、それを過ぎてから tap! をクリックすると、また新しいセッションが始まります。</p>
+<p>session destroy! のリンクをクリックすると、有効なセッションを破棄します。
+そして、最初のページにリダイレクトして、また新しいセッションが始まります。</p>
+<h2 id="options">Options</h2>
+<blockquote>
+<p>cookie.maxAge</p>
+<p>Specifies the number (in milliseconds) to use when calculating the Expires Set-Cookie attribute. This is done by taking the current server time and adding maxAge milliseconds to the value to calculate an Expires datetime. By default, no maximum age is set.</p>
+<p>Note If both expires and maxAge are set in the options, then the last one defined in the object is what is used.</p>
+<p><cite><a href="https://www.npmjs.com/package/express-session">express-session - npm</a></cite></p>
+</blockquote>
+<p>cookie の有効期限について、標準だと設定されていないようで、 <code>cookie.maxAge</code> にミリ秒単位で指定するようです。</p>
+<blockquote>
+<p>cookie.expires</p>
+<p>Specifies the Date object to be the value for the Expires Set-Cookie attribute. By default, no expiration is set, and most clients will consider this a &ldquo;non-persistent cookie&rdquo; and will delete it on a condition like exiting a web browser application.</p>
+<p>Note If both expires and maxAge are set in the options, then the last one defined in the object is what is used.</p>
+<p>Note The expires option should not be set directly; instead only use the maxAge option.</p>
+<p><cite><a href="https://www.npmjs.com/package/express-session">express-session - npm</a></cite></p>
+</blockquote>
+<p><code>cookie.expires</code> に直接指定するのではなく、 <code>cookie.maxAge</code> に指定することを推奨しているようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>ミドルウェアで npm のパッケージをインストールしなければいけないところ、少しハードルが高くなってしまった感じを受けます。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

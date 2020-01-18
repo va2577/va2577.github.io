@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AES on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/aes/</link>
+    <description>Recent content in AES on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Jan 2017 10:13:51 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/aes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>.NET Framework C# で暗号化する AES(Advanced Encryption Standard)</title>
+      <link>https://va2577.github.io/post/69/</link>
+      <pubDate>Fri, 27 Jan 2017 10:13:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/69/</guid>
+      <description>&lt;p&gt;暗号化をする必要がありましたので、調べたことをまとめてみます。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

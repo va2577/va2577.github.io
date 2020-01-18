@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>JUPYTER NOTEBOOK で処理時間を測りました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Jupyter Notebook で処理時間を測りました</h1>
+    
+      <div><time>May 11, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>前回、<a href="/post/160/">リスト内包表記のパフォーマンスを計測した</a>ときに、 Jupyter Notebook のマジックコマンドを調べましたので書いておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Python 3.5.2</li>
+<li>jupyter-1.0.0</li>
+</ul>
+<h2 id="time">%time</h2>
+<blockquote>
+<p>%time</p>
+<p>Time execution of a Python statement or expression.</p>
+<p>The CPU and wall clock times are printed, and the value of the expression (if any) is returned. Note that under Win32, system time is always reported as 0, since it can not be measured.</p>
+<p>This function can be used both as a line and cell magic:</p>
+<ul>
+<li>
+<p>In line mode you can time a single-line statement (though multiple ones can be chained with using semicolons).</p>
+</li>
+<li>
+<p>In cell mode, you can time the cell body (a directly following statement raises an error).</p>
+<p>This function provides very basic timing functionality. Use the timeit magic for more control over the measurement.</p>
+</li>
+</ul>
+<p><cite><a href="http://ipython.readthedocs.io/en/stable/interactive/magics.html?highlight=%25time#magic-time">%time</a></cite></p>
+</blockquote>
+<p>line mode と cell mode があるようです。
+1 行の時間を計測する場合は line mode の <code>%time</code> を使うようです。
+セルの時間を計測する場合は cell mode の <code>%%time</code> を使うようです。
+cell mode はパーセント記号が二つのようです。</p>
+<h3 id="line-mode">line mode</h3>
+<p>次のような記述をして、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>time i <span style="color:#f92672">=</span> sum([<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1000000</span>)])
+i
+</code></pre></div><p>実行すると、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># CPU times: user 109 ms, sys: 0 ns, total: 109 ms</span>
+<span style="color:#75715e"># Wall time: 114 ms</span>
+<span style="color:#75715e"># 1000000</span>
+</code></pre></div><blockquote>
+<p>Elapsed real time, real time, wall-clock time, or wall time is the actual time taken from the start of a computer program to the end. In other words, it is the difference between the time at which a task finishes and the time at which the task started.</p>
+<p><cite><a href="https://en.wikipedia.org/wiki/Elapsed_real_time">Elapsed real time</a></cite></p>
+</blockquote>
+<p>Wall time は「実世界」の時間のようです。
+この場合は 114 ms のようです。</p>
+<h3 id="cell-mode">cell mode</h3>
+<p>次のような記述をして、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>time
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1000000</span>):
+    i <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+i
+</code></pre></div><p>実行すると、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># CPU times: user 188 ms, sys: 0 ns, total: 188 ms</span>
+<span style="color:#75715e"># Wall time: 190 ms</span>
+</code></pre></div><p>cell mode は最後に記述した変数を Out のセルに出力してくれないようでした。</p>
+<h2 id="timeit">%timeit</h2>
+<blockquote>
+<p>%timeit</p>
+<p>Time execution of a Python statement or expression</p>
+<blockquote>
+<p>Usage, in line mode:</p>
+</blockquote>
+<p>%timeit [-n&lt;N&gt; -r&lt;R&gt; [-t|-c] -q -p&lt;P&gt; -o] statement</p>
+<blockquote>
+<p>or in cell mode:</p>
+</blockquote>
+<p>%%timeit [-n&lt;N&gt; -r&lt;R&gt; [-t|-c] -q -p&lt;P&gt; -o] setup_code code code…</p>
+<p>Time execution of a Python statement or expression using the timeit module. This function can be used both as a line and cell magic:</p>
+<ul>
+<li>In line mode you can time a single-line statement (though multiple ones can be chained with using semicolons).</li>
+<li>In cell mode, the statement in the first line is used as setup code (executed but not timed) and the body of the cell is timed. The cell body has access to any variables created in the setup code.</li>
+</ul>
+<p>Options: -n&lt;N&gt;: execute the given statement &lt;N&gt; times in a loop. If this value is not given, a fitting value is chosen.</p>
+<p>-r&lt;R&gt;: repeat the loop iteration &lt;R&gt; times and take the best result. Default: 3</p>
+<p>-t: use time.time to measure the time, which is the default on Unix. This function measures wall time.</p>
+<p>-c: use time.clock to measure the time, which is the default on Windows and measures wall time. On Unix, resource.getrusage is used instead and returns the CPU user time.</p>
+<p>-p&lt;P&gt;: use a precision of &lt;P&gt; digits to display the timing result. Default: 3</p>
+<p>-q: Quiet, do not print result.</p>
+<blockquote>
+<p>-o: return a TimeitResult that can be stored in a variable to inspect</p>
+</blockquote>
+<p>the result in more details.</p>
+<p><cite><a href="http://ipython.readthedocs.io/en/stable/interactive/magics.html?highlight=%25time#magic-timeit">%timeit</a></cite></p>
+</blockquote>
+<p>%timeit は与えられた処理を繰り返して処理時間を計測してくれるようです。
+オプションで繰り返す数を指定できるようです。</p>
+<p>%timeit も line mode と cell mode があって、 cell mode はパーセント記号が二つのようです。</p>
+<h3 id="line-mode-1">line mode</h3>
+<p>次のような記述をして、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>timeit i <span style="color:#f92672">=</span> sum([<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1000000</span>)])
+i
+</code></pre></div><p>実行すると、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 74.8 ms ± 692 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)</span>
+<span style="color:#75715e"># NameError: name &#39;i&#39; is not defined</span>
+</code></pre></div><p><code>%timeit</code> は変数を中に閉じ込めるようで、 Out のセルに出力することはできないようでした。</p>
+<h3 id="cell-mode-1">cell mode</h3>
+<p>次のような記述をして、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>timeit
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1000000</span>):
+    i <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+i
+</code></pre></div><p>実行すると、</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 98.8 ms ± 2.32 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)</span>
+</code></pre></div><p>cell mode も変数を中に閉じ込めるようで、 Out のセルに出力することはできないようでした。</p>
+<h2 id="終わり">終わり</h2>
+<p>他にもマジックコマンドがあったので、うまく使っていきたいです。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://ipython.readthedocs.io/en/stable/interactive/magics.html">Built-in magic commands — IPython 6.4.0 documentation</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

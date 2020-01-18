@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>FOREX TESTER 2 のインディケーターで HL バンドを使いたい - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Forex Tester 2 のインディケーターで HL バンドを使いたい</h1>
+    
+      <div><time>November 6, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>最近、ようやく &ldquo;検証する&rdquo; というのがどういうことかが理解できてきて、実践することができています。
+Forex Tester 2(FT2) で検証するために、HL バンドを使いたかったのですが、 &ldquo;HL バンド&rdquo; という名前のインディケーターがなかったので、調べてみました。</p>
+<h2 id="hl-バンド">HL バンド？</h2>
+<blockquote>
+<p>HL バンドとは、チャート上に直近 n 日の高値(H バンド)、安値(L バンド)の 2 本のラインを引いてレジスタンスやサポートを確認したり、高値、安値のブレイクを判断するテクニカル指標です。</p>
+<p><cite><a href="https://www.rakuten-sec.co.jp/MarketSpeedFX/onLineHelp/info/chart/hlband.html">HLバンド | チャート | 情報 | MARKET SPEED FX オンラインヘルプ | 楽天 FX | 楽天証券</a></cite></p>
+</blockquote>
+<h2 id="ft2-の-hl-バンド">FT2 の HL バンド</h2>
+<p>&ldquo;HL バンド&rdquo; という名前のインディケーターは FT2 にないみたいでしたので、MT5 のインディケーターと同様に自分で作成してみようと思ったのです。</p>
+<p>が、HL バンドってあまり海外ではメジャーな名前ではないのでしょう。
+調べていると、Donchian Channel という名前の方が知られているようでした。
+Donchian というのは開発者の名前ですね。
+&ldquo;HL バンド&rdquo; を Google で検索すると、あまり信用できないような個人のブログが上位に出てきますし・・</p>
+<p>もっと調べてみると、 &ldquo;Price channel&rdquo; という名前で同じインディケーターがあるようでした。
+ので、自分で作成する手間がなくなりました。</p>
+<p>MT5 にも同様な &ldquo;Price_Channel&rdquo; という名前のインディケーターがありましたね。
+こちらは標準ではなく、カスタムの扱いになっているようです。</p>
+<p>こちらは FT2 の Price channel です。</p>
+<p><img src="/img/56-01.png" alt=""></p>
+<p>こちらは MT5 の Price_Channel です。</p>
+<p><img src="/img/56-02.png" alt=""></p>
+<p>MT5 の Price_Channel は中間線があって、そこは良いと思うのですが、高値と安値の間が塗りつぶしになってしまうところが見づらいですね。</p>
+<p>これに関して、パラメーターだけでは変更できないので、ソースを調べてみました。</p>
+<p><code>#property indicator_type1   DRAW_FILLING</code> の指定がしてあって、これはドキュメントから引用すると次の意味があるようです。</p>
+<blockquote>
+<p>DRAW_FILLING</p>
+<p>DRAW_FILLING スタイルは、2 個の指標バッファの値の間の色の領域をプロットします。
+実際に、このスタイルは 2 つの線を描画しそれらの間の空間を指定された 2 つの色のいずれかで塗りつぶします。
+これは、チャネルを描く指標の作成に使用されます。
+いずれのバッファも空の値のみを含むことはできません。
+この場合プロットがなされません。</p>
+<p>塗りつぶしの色は 2 つ設定することが出来ます。</p>
+<ul>
+<li>最初の色は、1 番目のバッファの値が 2 番目の指標バッファの値よりも大きい領域に使用されます。</li>
+<li>2 番目の色は、2 番目のバッファの値が 1 番目の指標バッファの値よりも大きい領域に使用されます。</li>
+</ul>
+<p><cite><a href="https://www.mql5.com/ja/docs/customind/indicators_examples/draw_filling">カスタム指標 / 指標スタイルの例 / DRAW_FILLING - MetaTrader 5 のためのアルゴリズムの/自動化されたトレーディング言語のリファレンス</a></cite></p>
+</blockquote>
+<p>Price_Channel という名前からもわかるように、チャネルですから、このように描画していて当然な感じもします。
+そうすると、FT2 の方はラインで描画されていて、逆に違和感もあるような・・
+Price_Channel という名前にしてしまったのがよくないのでしょうか・・
+でも、見やすさを優先して、MT5 の Price_Channel もラインで描画されるように修正してみました。</p>
+<p>それから、描画する位置が 1 つ分シフトしてあったようなので、シフトしないようにしました。</p>
+<p>修正した FT5 の Price_Channel です。</p>
+<p><img src="/img/56-03.png" alt=""></p>
+<h2 id="ソース">ソース</h2>
+<p>高値と安値を計算するのに、関数を実装していたのですね。
+配列関数の <code>ArrayMaximum</code> と <code>ArrayMinimum</code> でも良いのではないかと思いつつ、そのままにしています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//|                                               Price_Channell.mq5 |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//|                        Copyright 2009, MetaQuotes Software Corp. |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//|                                              http://www.mql5.com |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property copyright &#34;2009, MetaQuotes Software Corp.&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property link      &#34;http:</span><span style="color:#75715e">//www.mql5.com&#34;
+</span><span style="color:#75715e"></span><span style="color:#75715e">//--- indicator settings
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_chart_window</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_buffers 3</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_plots   3</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_type1   DRAW_LINE</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_type2   DRAW_LINE</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_type3   DRAW_LINE</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_color1  Blue</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_color2  Blue</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_color3  Blue</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_label1  &#34;Channel upper&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_label2  &#34;Channel lower&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">property indicator_label3  &#34;Channel median&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">//--- input parameters
+</span><span style="color:#75715e"></span>input <span style="color:#66d9ef">int</span> InpChannelPeriod<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span>; <span style="color:#75715e">// Period
+</span><span style="color:#75715e"></span><span style="color:#75715e">//--- indicator buffers
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">double</span>    ExtHighBuffer[];
+<span style="color:#66d9ef">double</span>    ExtLowBuffer[];
+<span style="color:#66d9ef">double</span>    ExtMiddBuffer[];
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//| Custom indicator initialization function                         |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">OnInit</span>()
+  {
+<span style="color:#75715e">//--- indicator buffers mapping
+</span><span style="color:#75715e"></span>   SetIndexBuffer(<span style="color:#ae81ff">0</span>,ExtHighBuffer,INDICATOR_DATA);
+   SetIndexBuffer(<span style="color:#ae81ff">1</span>,ExtLowBuffer,INDICATOR_DATA);
+   SetIndexBuffer(<span style="color:#ae81ff">2</span>,ExtMiddBuffer,INDICATOR_DATA);
+<span style="color:#75715e">//--- set accuracy
+</span><span style="color:#75715e"></span>   IndicatorSetInteger(INDICATOR_DIGITS,_Digits);
+<span style="color:#75715e">//--- set first bar from what index will be drawn
+</span><span style="color:#75715e"></span>   PlotIndexSetInteger(<span style="color:#ae81ff">0</span>,PLOT_DRAW_BEGIN,InpChannelPeriod);
+<span style="color:#75715e">//---- line shifts when drawing
+</span><span style="color:#75715e"></span><span style="color:#75715e">//   PlotIndexSetInteger(0,PLOT_SHIFT,1);
+</span><span style="color:#75715e"></span><span style="color:#75715e">//   PlotIndexSetInteger(1,PLOT_SHIFT,1);
+</span><span style="color:#75715e"></span><span style="color:#75715e">//   PlotIndexSetInteger(2,PLOT_SHIFT,1);
+</span><span style="color:#75715e"></span><span style="color:#75715e">//--- name for DataWindow and indicator label
+</span><span style="color:#75715e"></span>   IndicatorSetString(INDICATOR_SHORTNAME,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Price Channel(</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">+</span>string(InpChannelPeriod)<span style="color:#f92672">+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>);
+   PlotIndexSetString(<span style="color:#ae81ff">0</span>,PLOT_LABEL,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Channel(</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">+</span>string(InpChannelPeriod)<span style="color:#f92672">+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">) upper</span><span style="color:#e6db74">&#34;</span>);
+   PlotIndexSetString(<span style="color:#ae81ff">1</span>,PLOT_LABEL,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Channel(</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">+</span>string(InpChannelPeriod)<span style="color:#f92672">+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">) lower</span><span style="color:#e6db74">&#34;</span>);
+   PlotIndexSetString(<span style="color:#ae81ff">2</span>,PLOT_LABEL,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Median(</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">+</span>string(InpChannelPeriod)<span style="color:#f92672">+</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>);
+<span style="color:#75715e">//--- set drawing line empty value
+</span><span style="color:#75715e"></span>   PlotIndexSetDouble(<span style="color:#ae81ff">0</span>,PLOT_EMPTY_VALUE,<span style="color:#ae81ff">0.0</span>);
+   PlotIndexSetDouble(<span style="color:#ae81ff">1</span>,PLOT_EMPTY_VALUE,<span style="color:#ae81ff">0.0</span>);
+   PlotIndexSetDouble(<span style="color:#ae81ff">2</span>,PLOT_EMPTY_VALUE,<span style="color:#ae81ff">0.0</span>);
+<span style="color:#75715e">//--- initialization done
+</span><span style="color:#75715e"></span>  }
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//| get highest value for range                                      |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">double</span> <span style="color:#a6e22e">Highest</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>array[],<span style="color:#66d9ef">int</span> range,<span style="color:#66d9ef">int</span> fromIndex)
+  {
+   <span style="color:#66d9ef">double</span> res;
+   <span style="color:#66d9ef">int</span> i;
+<span style="color:#75715e">//---
+</span><span style="color:#75715e"></span>   res<span style="color:#f92672">=</span>array[fromIndex];
+   <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span>fromIndex;i<span style="color:#f92672">&gt;</span>fromIndex<span style="color:#f92672">-</span>range <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> i<span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">-</span><span style="color:#f92672">-</span>)
+     {
+      <span style="color:#66d9ef">if</span>(res<span style="color:#f92672">&lt;</span>array[i]) res<span style="color:#f92672">=</span>array[i];
+     }
+<span style="color:#75715e">//---
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">return</span>(res);
+  }
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//| get lowest value for range                                       |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">double</span> <span style="color:#a6e22e">Lowest</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>array[],<span style="color:#66d9ef">int</span> range,<span style="color:#66d9ef">int</span> fromIndex)
+  {
+   <span style="color:#66d9ef">double</span> res;
+   <span style="color:#66d9ef">int</span> i;
+<span style="color:#75715e">//---
+</span><span style="color:#75715e"></span>   res<span style="color:#f92672">=</span>array[fromIndex];
+   <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span>fromIndex;i<span style="color:#f92672">&gt;</span>fromIndex<span style="color:#f92672">-</span>range <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> i<span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">-</span><span style="color:#f92672">-</span>)
+     {
+      <span style="color:#66d9ef">if</span>(res<span style="color:#f92672">&gt;</span>array[i]) res<span style="color:#f92672">=</span>array[i];
+     }
+<span style="color:#75715e">//---
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">return</span>(res);
+  }
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#75715e">//| Price Channell                                                   |
+</span><span style="color:#75715e"></span><span style="color:#75715e">//+------------------------------------------------------------------+
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">OnCalculate</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> rates_total,
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> prev_calculated,
+                <span style="color:#66d9ef">const</span> datetime <span style="color:#f92672">&amp;</span>time[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>open[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>high[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>low[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&amp;</span>close[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">long</span> <span style="color:#f92672">&amp;</span>tick_volume[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">long</span> <span style="color:#f92672">&amp;</span>volume[],
+                <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>spread[])
+  {
+   <span style="color:#66d9ef">int</span> i,limit;
+<span style="color:#75715e">//--- check for rates
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">if</span>(rates_total<span style="color:#f92672">&lt;</span>InpChannelPeriod)
+      <span style="color:#66d9ef">return</span>(<span style="color:#ae81ff">0</span>);
+<span style="color:#75715e">//--- preliminary calculations
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">if</span>(prev_calculated<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+      limit<span style="color:#f92672">=</span>InpChannelPeriod;
+   <span style="color:#66d9ef">else</span> limit<span style="color:#f92672">=</span>prev_calculated<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+<span style="color:#75715e">//--- the main loop of calculations
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span>limit;i<span style="color:#f92672">&lt;</span>rates_total <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> <span style="color:#f92672">!</span>IsStopped();i<span style="color:#f92672">+</span><span style="color:#f92672">+</span>)
+     {
+      ExtHighBuffer[i]<span style="color:#f92672">=</span>Highest(high,InpChannelPeriod,i);
+      ExtLowBuffer[i]<span style="color:#f92672">=</span>Lowest(low,InpChannelPeriod,i);
+      ExtMiddBuffer[i]<span style="color:#f92672">=</span>(ExtHighBuffer[i]<span style="color:#f92672">+</span>ExtLowBuffer[i])<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>;
+     }
+<span style="color:#75715e">//--- OnCalculate done. Return new prev_calculated.
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">return</span>(rates_total);
+  }
+<span style="color:#75715e">//+------------------------------------------------------------------+
+</span></code></pre></div><h2 id="終わり">終わり</h2>
+<p>FT2 のインディケーターの作成についても少し調べてみたのですが、MT5 と比較して面倒ですね。
+まず、開発環境が一つの心理障壁になりますね。</p>
+<p>C++ か、Delphi で開発ができるみたいなんですけど、ソースのサンプルが Delphi の方にしかなくて、C++ のサンプルのソースは一目均衡表の一つしかありませんでした。</p>
+<p>Delphi って・・
+2016年現在のメインストリームの開発言語じゃないですよね・・
+学生時代に授業で Delphi を使ってアプリケーションを作ったことがありますけど、GUI のクライアントアプリケーションをお手軽に作るなら Visual Studio でも良いかなって思ってしまいます。</p>
+<p>これに関して調べてみたら、Yahoo!知恵袋にこんな書き込みがありました。</p>
+<blockquote>
+<p>Delphiがメジャーでない理由を考えるに、当時の対VisualBasicという側面で、 &ldquo;Pascal言語であること&rdquo; がDelphiのシェア拡大の足を引っ張ったという要素は否めないのですが、実はあまり言語仕様とか性能といったことは問題ではなくて現代の開発者のハートを掴めるキラーアプリ不在が問題なのではないですか。</p>
+<p>要するにその言語・環境を使えば「自分は何ができる様になるのか」が問題なのであって例えば最近はPHP,Rubyのようなスクリプト言語が人気ですがそれは &ldquo;Webアプリが簡単に作れる&rdquo; といった分かりやすいネタがあったり周りに使っている人が多い（＝情報も集めやすい）から、とりあえずそこから入門している訳で、
+言語仕様や性能に惚れ込んで入門するような人はむしろ少ないのでは。</p>
+<p>Delphiは、一昔前の2層C/SなDBアプリを作るのが当たり前だった時代ならまさにそのあたりが得意分野ですからVisualBasicやPowerBuilder、あるいはSQLWindows(Centura)といった当時の競合達と比べても大枚はたいて買う価値があり、実際その頃はシェアとしても悪くなかったようですがその後、流行はインターネット(web)ベースのシステム開発に移り、Delphiのそちらへの適応はイマイチで、競合ははるか先に行ってしまいました。</p>
+<p>そう思うと、RubyからみたRuby on Railsのようなキラーアプリの存在は大きいと思います。
+対して、Delphiは有償ツールなのに、そんなフリーの言語で簡単にできることができないのならそりゃ開発者も寄ってこないのではないですか。</p>
+<p>そんなこんなで、流行を掴み損ねて開発者人口が減る<br>
+→マイナーなので仕事で採用しにくくなる<br>
+→さらに開発者人口が減るという悪循環にはまってしまい、とりわけ日本ではそれが顕著に表れていると思います。</p>
+<p><cite><a href="http://m.chiebukuro.yahoo.co.jp/detail/q1129082271">Ｄｅｌｐｈｉはなぜ廃れた？超メジャー言語からは、一歩後ろの&hellip; - Yahoo!知恵袋</a></cite></p>
+</blockquote>
+<p>この書き込みはすごくわかるなー、と思うところがあります。</p>
+<p>Power Builder とか懐かしいなー、と思いますし。
+今も使っている現場はあるのでしょうけど。
+そういえば、2012 年に関わっていたプロジェクトでは、まだ Power Builder を使っていたみたいで、経験したことのある自分が加わったこともありました。</p>
+<p>見せ方って大切ですよね。
+あまり良くないものでも良さそうに見せたら多くの人が集まりますし。
+良いものでも見せ方が悪かったら人は集まらないですし。でも、真実とは程遠い。</p>
+<p>FT2 のこんな一面も見て、MT5 はそれ自体に開発環境が含まれていて、心理障壁が一つ少なかったのだと実感することができました。</p>
+<p>FT3 がもう販売されているのですが、仮想マシンではまだ動かすことができないみたいです・・
+自分は仮想マシンで MT5 も、FT2 も使っているのです・・</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON BAYESIAN OPTIMIZATION でバックテストのパラメーターを最適化してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python Bayesian Optimization でバックテストのパラメーターを最適化してみました</h1>
+    
+      <div><time>November 10, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Bayesian Optimization を使ってみたかったので、これを使ってバックテストのパラメーターを最適化してみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Python 3.6.5</li>
+<li>Bayesian Optimization 1.0.0</li>
+</ul>
+<h2 id="bayesian-optimization">Bayesian Optimization</h2>
+<p>「Bayesian Optimization」で検索して、ベイズ最適化についてざっくり理解しました。</p>
+<ul>
+<li><a href="https://tkng.org/b/2015/07/31/bayesian-optimization/">Bayesian Optimizationに関するメモ | 射撃しつつ前転</a></li>
+<li><a href="https://www.slideshare.net/issei_sato/bayesian-optimization">ベイズ的最適化(Bayesian Optimization)の入門とその応用</a></li>
+<li><a href="https://datachemeng.com/bayesianoptimization/">ベイズ最適化(Bayesian Optimization, BO)～実験計画法で使ったり、ハイパーパラメータを最適化したり～</a></li>
+<li><a href="https://qiita.com/masasora/items/cc2f10cb79f8c0a6bbaa">ベイズ最適化入門 - Qiita</a></li>
+</ul>
+<p>後で知ることになりますが、自分の理解がざっくりすぎて問題に対して意味のある解決になっていないようでした…。</p>
+<p>具体的なパッケージは Python の次のものを使いました。</p>
+<ul>
+<li><a href="https://github.com/fmfn/BayesianOptimization">GitHub - fmfn/BayesianOptimization: A Python implementation of global optimization with gaussian processes.</a></li>
+</ul>
+<h2 id="バックテストの関数">バックテストの関数</h2>
+<p>次のようなバックテストの関数を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>(df, periods1<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, periods2<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, pip<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>, spread<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>, unit<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>):
+    sp <span style="color:#f92672">=</span> pip <span style="color:#f92672">*</span> spread <span style="color:#f92672">*</span> unit
+    bs <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>full(df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size, np<span style="color:#f92672">.</span>nan), index<span style="color:#f92672">=</span>df<span style="color:#f92672">.</span>index)
+    pl <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>full(df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size, np<span style="color:#f92672">.</span>nan), index<span style="color:#f92672">=</span>df<span style="color:#f92672">.</span>index)
+    entry <span style="color:#f92672">=</span> ls <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+    ma1 <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(periods1)<span style="color:#f92672">.</span>mean()
+    ma2 <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(periods2)<span style="color:#f92672">.</span>mean()
+    df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([df, ma1<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>), ma2<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>)], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>itertuples():
+        time, open_, high, low, close, ma1, ma2 <span style="color:#f92672">=</span> row
+        <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>isnan([ma1, ma2])<span style="color:#f92672">.</span>any():
+            <span style="color:#66d9ef">continue</span>
+        <span style="color:#66d9ef">if</span> ma2 <span style="color:#f92672">&lt;</span> ma1:
+            <span style="color:#66d9ef">if</span> ls <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+                <span style="color:#75715e"># exit (short position)</span>
+                pl[time] <span style="color:#f92672">=</span> (open_ <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> unit <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> ls:
+                <span style="color:#75715e"># entry (long position)</span>
+                bs[time] <span style="color:#f92672">=</span> ls <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+                entry <span style="color:#f92672">=</span> open_
+        <span style="color:#66d9ef">if</span> ma1 <span style="color:#f92672">&lt;</span> ma2:
+            <span style="color:#66d9ef">if</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> ls:
+                <span style="color:#75715e"># exit (long position)</span>
+                pl[time] <span style="color:#f92672">=</span> (open_ <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> unit <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ls <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+                <span style="color:#75715e"># entry (short position)</span>
+                bs[time] <span style="color:#f92672">=</span> ls <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+                entry <span style="color:#f92672">=</span> open_
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> np<span style="color:#f92672">.</span>isnan(ls):
+        pl[time] <span style="color:#f92672">=</span> (close <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> unit <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+    <span style="color:#66d9ef">return</span> bs, pl
+</code></pre></div><p>移動平均クロスオーバートレーディング戦略です。</p>
+<p>パラメーターの初期値は 5 (periods1) と 20 (periods2) にしてみました。
+これを米ドル／円の日足の 2003/5/5~2018/1/2 までの期間で実行してみました。
+（ヒストリカルデータは<a href="/post/162/">この記事</a>のものです）</p>
+<p>損益のグラフです。</p>
+<p><img src="/img/207-01.png" alt=""></p>
+<p>適当に設定した移動平均線のパラメーター（5 と 20）で、最終的に 10 万円くらいの利益にはなっているようです。</p>
+<h2 id="最適化">最適化</h2>
+<p>最初に、総損益が最大化することを目的とした関数を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(x, y):
+    x2 <span style="color:#f92672">=</span> int(x)
+    y2 <span style="color:#f92672">=</span> int(y)
+    <span style="color:#66d9ef">if</span> y2 <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> x2:
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    bs, pl <span style="color:#f92672">=</span> test(df, periods1<span style="color:#f92672">=</span>x2, periods2<span style="color:#f92672">=</span>y2)
+    <span style="color:#66d9ef">return</span> pl<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>sum()
+</code></pre></div><p>パラメーターを受け取って、バックテストして、そのときの総損益を返しているだけです。</p>
+<p>次に、 BayesianOptimization のパッケージを使うための設定をしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> bayes_opt <span style="color:#f92672">import</span> BayesianOptimization
+
+<span style="color:#75715e"># Bounded region of parameter space</span>
+pbounds <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>: (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">200</span>), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#39;</span>: (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">200</span>) }
+
+optimizer <span style="color:#f92672">=</span> BayesianOptimization(
+    f<span style="color:#f92672">=</span>f, <span style="color:#75715e"># 最大化したい関数</span>
+    pbounds<span style="color:#f92672">=</span>pbounds, <span style="color:#75715e"># パラメーターの範囲</span>
+)
+</code></pre></div><p>パラメーターの範囲は短期の移動平均線（<code>x</code>）も長期の移動平均線（<code>y</code>）も 1~200 にしてみました。</p>
+<p>最適化をしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>time
+optimizer<span style="color:#f92672">.</span>maximize(
+    init_points<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, <span style="color:#75715e"># 初期観測点の数</span>
+    n_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span>, <span style="color:#75715e"># 何点評価するか</span>
+)
+</code></pre></div><p>Jupyter Notebook で実行していると経過を表示してくれます。
+次のような経過になっていました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">|   iter    |  target   |     x     |     y     |
+-------------------------------------------------
+|  <span style="color:#ae81ff">1</span>        | -1.86e+05 |  151.4    |  168.6    |
+|  <span style="color:#ae81ff">2</span>        |  6.431e+0 |  41.85    |  125.1    |
+|  <span style="color:#ae81ff">3</span>        |  0.0      |  98.6     |  54.17    |
+|  <span style="color:#ae81ff">4</span>        |  0.0      |  165.9    |  38.08    |
+|  <span style="color:#ae81ff">5</span>        |  5.541e+0 |  5.764    |  133.4    |
+|  <span style="color:#ae81ff">6</span>        |  6.431e+0 |  41.85    |  125.1    |
+|  <span style="color:#ae81ff">7</span>        |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">8</span>        |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">9</span>        |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">10</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">11</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">12</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">13</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">14</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">15</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">16</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">17</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">18</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">19</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">20</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">21</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">22</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">23</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">24</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">25</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">26</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">27</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">28</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">29</span>       |  6.431e+0 |  41.84    |  125.1    |
+|  <span style="color:#ae81ff">30</span>       |  6.431e+0 |  41.84    |  125.1    |
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+</code></pre></div><p>総損益は指数の表現になっていて見づらいですけれども。</p>
+<p>次のプロパティに最大値の結果が入っています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">optimizer<span style="color:#f92672">.</span>max
+</code></pre></div><p>結果です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">{</span><span style="color:#e6db74">&#39;target&#39;</span>: 643099.9999999998,
+ <span style="color:#e6db74">&#39;params&#39;</span>: <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;x&#39;</span>: 41.845420068232286, <span style="color:#e6db74">&#39;y&#39;</span>: 125.07039719675709<span style="color:#f92672">}</span><span style="color:#f92672">}</span>
+</code></pre></div><p>このパラメーターでバックテストしたときの損益のグラフです。</p>
+<p><img src="/img/207-02.png" alt=""></p>
+<p>これはドローダウンが小さくてかなり良いところの結果が得られたようでした。
+何度か最適化をしてみましたけれども、結果に大きな差があるように感じました。
+総損益が 60 万円を超えることもあれば、 5 万円程度のときもありました。</p>
+<p>上にあるような BayesianOptimization が出力してくれる経過を見ていると、初期観測点の数である 5 つの観測点をもとに 6 点目を評価したときに、もう結果が決まってきてしまう感じでした。
+だから 7 点目の評価以降はほとんどパラメーターが変わっていません（小数点以下だけが変わっているようでした）。
+毎回こんな感じでした。
+初期観測点の数が少なすぎるのかな？
+ベイズ最適化に関するカーネルとか獲得関数とか、最初に挙げたリンクの記事の内容を深く理解していないのですけれども、それを調整したら改善されるものなのかな？</p>
+<p>参考程度に、 <code>x</code> が 1~200 、 <code>y</code> が 1~200 の組み合わせをすべて実行してみました。
+バックテストを 4 万回しました（半分は短期の移動平均線≧長期の移動平均線になってしまうので実際には実行していませんけれども）。
+30 分くらいかかりました（電源につないでいなくてバッテリーだったので通常より遅かったかもしれません）。</p>
+<p>Matplotlib の<a href="https://matplotlib.org/gallery/images_contours_and_fields/pcolormesh_levels.html">サンプル</a>を参考に、その結果をグラフにしてみました。</p>
+<p><img src="/img/207-03.png" alt=""></p>
+<p>濃い緑が総損益が高くなるところです。
+これによると、短期の移動平均線（<code>x</code>）が 25~75 の範囲、長期の移動平均線（<code>y</code>）が 50~125 の範囲あたりが良さそうなパラメーターになりそうです。</p>
+<p>Matplotlib に 3D の<a href="https://matplotlib.org/gallery/mplot3d/surface3d.html">サンプル</a>もあったので 3D にしてみました。</p>
+<p><img src="/img/207-04.png" alt=""></p>
+<p>ちょっと 3D は見づらかったかもしれません。</p>
+<p>でも、この 3D の山とか谷がガウス過程に従う前提があるからベイズ最適化を使うことができるんですよね（合ってるかな？）。</p>
+<blockquote>
+<p>ガウス過程に従う関数fのn点はn次元ガウス分布に従う</p>
+<p><cite><a href="https://www.slideshare.net/issei_sato/bayesian-optimization">ベイズ的最適化(Bayesian Optimization)の入門とその応用</a></cite></p>
+</blockquote>
+<p>そうだとすると、ガウス過程に従う保証がないならベイズ最適化は使っちゃいけないのかな？
+機械学習のハイパーパラメーターサーチってそういう保証があるものなのかな？</p>
+<p>理解が浅くて意味のあることをした気がしません…。</p>
+<h2 id="応用数学">応用数学</h2>
+<p>ここからは調べている途中で知ったことを書いておきます。</p>
+<p>BayesianOptimization のパッケージから受け取るパラメーターを int にしたかったので調べていました。
+そして次の内容を見つけました。</p>
+<blockquote>
+<p>2. Dealing with discrete parameters</p>
+<p>There is no principled way of dealing with discrete parameters using this package.</p>
+<p>Ok, now that we got that out of the way, how do you do it? You're bound to be in a situation where some of your function's parameters may only take on discrete values. Unfortunately, the nature of bayesian optimization with gaussian processes doesn't allow for an easy/intuitive way of dealing with discrete parameters - but that doesn't mean it is impossible. The example below showcases a simple, yet reasonably adequate, way to dealing with discrete parameters.</p>
+<pre><code>def func_with_discrete_params(x, y, d):
+    # Simulate necessity of having d being discrete.
+    assert type(d) == int
+    
+    return ((x + y + d) // (1 + d)) / (1 + (x + y) ** 2)
+
+def function_to_be_optimized(x, y, w):
+    d = int(w)
+    return func_with_discrete_params(x, y, d)
+
+optimizer = BayesianOptimization(
+    f=function_to_be_optimized,
+    pbounds={'x': (-10, 10), 'y': (-10, 10), 'w': (0, 5)},
+    verbose=2,
+    random_state=1,
+)
+</code></pre>
+<p><cite><a href="https://render.githubusercontent.com/view/ipynb?commit=eb37c85d4612e5c244ede01bbf468c6e2928243b&amp;enc_url=68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f666d666e2f426179657369616e4f7074696d697a6174696f6e2f656233376338356434363132653563323434656465303162626634363863366532393238323433622f6578616d706c65732f616476616e6365642d746f75722e6970796e62&amp;nwo=fmfn%2FBayesianOptimization&amp;path=examples%2Fadvanced-tour.ipynb&amp;repository_id=20556335&amp;repository_type=Repository#2.-Dealing-with-discrete-parameters">BayesianOptimization/advanced-tour.ipynb at master · fmfn/BayesianOptimization · GitHub</a></cite></p>
+</blockquote>
+<p>最初は安易に BayesianOptimization のパッケージから int を渡す方法はないから、 int に変換する処理を実装する必要があるんだ、程度に認識しました。</p>
+<p>そして最適化のことも調べてみたら、最適化は二つに分類できることを知りました。</p>
+<blockquote>
+<ul>
+<li>最適化問題
+<ul>
+<li>数理最適化 - 最適化問題のうち、解が連続的なもの。数学において、ある条件に関して最もよい元を利用可能な集合から選択すること。</li>
+<li>組合せ最適化 - 最適化問題のうち、解が離散的なもの。</li>
+</ul>
+</li>
+</ul>
+<p><cite><a href="https://ja.wikipedia.org/wiki/%E6%9C%80%E9%81%A9%E5%8C%96">最適化 - Wikipedia</a></cite></p>
+</blockquote>
+<p>BayesianOptimization はどちらかというと「数理最適化」に適用できるもののようでした（だからあえて離散的なパラメーターについての説明があるんだと解釈しました）。
+そして、今回やろうとしているバックテストのパラメーターの最適化は「組合せ最適化」に該当するようでした。
+これらを踏まえるとバックテストのパラメーターの最適化に BayesianOptimization はあまり適さないように感じましたけれども？</p>
+<p>でも、ベイズ最適化を使って機械学習のハイパーパラメーターサーチをしているような記事をいくつか見かけました。</p>
+<blockquote>
+<p>最も基本的な例である機械学習のハイパーパラメーターサーチにおいてはマニュアルであったり、自動的にやるとしたらgrid searchやrandomでやるということが多いかと思います。しかしベイズ最適化を使えばもっと上手く行うことができます。</p>
+<p><cite><a href="https://qiita.com/masasora/items/cc2f10cb79f8c0a6bbaa">ベイズ最適化入門 - Qiita</a></cite></p>
+</blockquote>
+<p>でも、そういう記事の中でのベイズ最適化の説明は数理最適化について言っているように見えました。</p>
+<blockquote>
+<p>ベイズ最適化の具体的な説明</p>
+<p><img src="https://camo.qiitausercontent.com/cc34af00c2d24c3f96d2eb6326c4e5792cbbe435/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e616d617a6f6e6177732e636f6d2f302f3131383133392f37393739326639622d373663632d386135362d663934652d3062386332306433663966332e676966" alt=""></p>
+<p>上のgifが大体のベイズ最適化の説明になっています。</p>
+<p><cite><a href="https://qiita.com/masasora/items/cc2f10cb79f8c0a6bbaa">ベイズ最適化入門 - Qiita</a></cite></p>
+</blockquote>
+<p>機械学習のハイパーパラメーターサーチって、組合せ最適化のような印象を持ったのですが（あるいは最適化問題には該当しないから数理最適化でも組合せ最適化でもないとか？）、機械学習をしたことがないのでわかりません…。
+バックテストのパラメーターの最適化にベイズ最適化を使うのは一般的なのかな？
+あまりに知識がなさ過ぎて、こういう疑問を持っていることがおかしいのかどうかもわかりません…。</p>
+<p>もう少し調べていると、こういうのは「応用数学」という言葉にまとめられるようでした。</p>
+<blockquote>
+<p>応用数学の研究対象は非常に幅が広く様々な分野に跨るため、関わる分野全てを挙げることは困難である。ここでは応用数学と関わり合いが特に深い代表的な分野を挙げる</p>
+<ul>
+<li>数値解析</li>
+<li>…略…</li>
+<li>組合せ論</li>
+<li>最適化問題・オペレーションズ・リサーチ</li>
+<li>…略…</li>
+<li>機械学習</li>
+<li>統計学</li>
+<li>…略…</li>
+</ul>
+<p><cite><a href="https://ja.wikipedia.org/wiki/%E5%BF%9C%E7%94%A8%E6%95%B0%E5%AD%A6#%E9%96%A2%E9%80%A3%E3%81%99%E3%82%8B%E5%88%86%E9%87%8E">応用数学 - Wikipedia</a></cite></p>
+</blockquote>
+<p>数学の知識が必要そうでした。
+小学校の算数も十分に理解していないから、先は長そうです…。</p>
+<h2 id="終わり">終わり</h2>
+<p>BayesianOptimization をただ使うだけなら簡単だったけれども、堅牢なシステムを作る目的を達成するために一番良い方法が本当にそれだったのか？という観点から見ると、そうではなかったように感じます。</p>
+<p>目的を達成する（問題を解決する）ために一番良い方法を選択するためには、選択可能なものについて深い理解が必要だと痛感しました。
+その前にまず何が選択可能なのか知る必要もありますし。</p>
+<p>Jupyter Notebook のファイルを <a href="https://gist.github.com/va2577/3c31ac58789f76dcf7d50dac9855e65d">Gist</a> にアップロードしておきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/windows/</link>
+    <description>Recent content in Windows on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 26 May 2018 10:46:46 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>新しい Surface Pro(2017) を 6 ヶ月使ってみた感想です</title>
+      <link>https://va2577.github.io/post/176/</link>
+      <pubDate>Sat, 26 May 2018 10:46:46 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/176/</guid>
+      <description>&lt;p&gt;3 ヶ月あたりにも感想を書いておこうと思っていたのですが、忘れていたので 6 ヶ月の感想を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Surface Windows の Visual Studio Code のスクロールがスムーズじゃなかったので調べてみました</title>
+      <link>https://va2577.github.io/post/165/</link>
+      <pubDate>Tue, 15 May 2018 08:07:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/165/</guid>
+      <description>&lt;p&gt;Windows で Visual Studio Code を使っています。
+以前から気になっていたのですが、スクロールがスムーズじゃないので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu で tree コマンドを使ってみました</title>
+      <link>https://va2577.github.io/post/142/</link>
+      <pubDate>Sun, 22 Apr 2018 13:27:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/142/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/23/&#34;&gt;Macでtreeコマンドを使う&lt;/a&gt;の記事を書いたことがありました。
+今回は、 WSL の Ubuntu で tree コマンドを使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Inno Setup で .NET Framework をインストールさせる方法を調べました</title>
+      <link>https://va2577.github.io/post/113/</link>
+      <pubDate>Sat, 24 Mar 2018 22:55:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/113/</guid>
+      <description>&lt;p&gt;Windows のインストーラーで、 .NET Framework をインストールさせたかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Inno Setup でインストーラーを作成してみました</title>
+      <link>https://va2577.github.io/post/112/</link>
+      <pubDate>Fri, 23 Mar 2018 14:37:25 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/112/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/112-01.bmp&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Windows のインストーラーを作成する必要がありましたので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iTextSharp(C#) を使ってみました</title>
+      <link>https://va2577.github.io/post/111/</link>
+      <pubDate>Thu, 22 Mar 2018 09:05:17 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/111/</guid>
+      <description>&lt;p&gt;.NET Framework の C# を使って PDF を作成する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Windows 10 で IIS を設定したい</title>
+      <link>https://va2577.github.io/post/95/</link>
+      <pubDate>Sun, 18 Feb 2018 10:02:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/95/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/95-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;ASP.NET で C# のページを動かす必要があったので設定したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VMware Workstation Player で VMware Fusion の仮想マシンを使用する</title>
+      <link>https://va2577.github.io/post/93/</link>
+      <pubDate>Tue, 13 Feb 2018 13:50:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/93/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/93-01.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;MacBook Pro から Surface Pro に変えて、 macOS の VMware Fusion も使わなくなりましたので、 Windows の VMware Workstation Player で使えないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Code に WSL の Ubuntu の Git を設定する</title>
+      <link>https://va2577.github.io/post/83/</link>
+      <pubDate>Wed, 17 Jan 2018 16:49:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/83/</guid>
+      <description>&lt;p&gt;いつからだったか、Visual Studio Code を起動すると、勝手に「Git を探しています」みたいになって、「[警告] Git が見つかりません。Git をインストールするか &amp;lsquo;git.path&amp;rsquo; 設定で…」のようなメッセージが表示されるようになりました。&lt;/p&gt;
+&lt;p&gt;そのまま使っていたのですが、気になるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Hugo をインストールする</title>
+      <link>https://va2577.github.io/post/81/</link>
+      <pubDate>Sat, 13 Jan 2018 18:33:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/81/</guid>
+      <description>&lt;p&gt;このブログは &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo | A Fast and Flexible Website Generator&lt;/a&gt; で作成していますので、Ubuntu にインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Node.js をインストールする</title>
+      <link>https://va2577.github.io/post/80/</link>
+      <pubDate>Fri, 12 Jan 2018 11:11:36 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/80/</guid>
+      <description>&lt;p&gt;このブログの CSS や JavaScript を作成するのに Node.js を使っていたので、WSL の Ubuntu にインストールすることにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu の Python に pip がない</title>
+      <link>https://va2577.github.io/post/79/</link>
+      <pubDate>Fri, 05 Jan 2018 16:49:48 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/79/</guid>
+      <description>&lt;p&gt;WSL の Ubuntu には Python が標準でインストールされていましたので、Python を主に使っていこうと思っています。
+が、Python で仮想環境を作成しようとしたらエラーになったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL(Windows Subsystem for Linux) の Ubuntu に FFmpeg をインストールする</title>
+      <link>https://va2577.github.io/post/78/</link>
+      <pubDate>Thu, 04 Jan 2018 15:48:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/78/</guid>
+      <description>&lt;p&gt;Windows に変えてから、使ってみたかったのが、WSL(Windows Subsystem for Linux) です。
+コマンドプロンプトよりできることが増えるかなと思っています。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>新しい Surface Pro (2017) に接続した外付け HDD が断続的に切れる</title>
+      <link>https://va2577.github.io/post/77/</link>
+      <pubDate>Sun, 31 Dec 2017 15:35:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/77/</guid>
+      <description>&lt;p&gt;Surface に接続した外付け HDD が度々切断されるので、気になりつつもそのままにしていたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>新しい Surface Pro (2017) をしばらく使ってみた感想</title>
+      <link>https://va2577.github.io/post/76/</link>
+      <pubDate>Sat, 30 Dec 2017 16:15:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/76/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/74/&#34;&gt;新しい Surface Pro (2017) を購入しました&lt;/a&gt; からしばらく使ってみたので感想を書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>新しい Surface Pro (2017) を購入しました</title>
+      <link>https://va2577.github.io/post/74/</link>
+      <pubDate>Sun, 26 Nov 2017 15:18:21 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/74/</guid>
+      <description>&lt;p&gt;新しい Surface Pro (2017) を購入したことを書いてみます。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Surface Pro、Surface Studio を 6 月 15 日（木）、Surface Laptop を 7 月 20 日（木）より発売&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://ncmedia.azureedge.net/ncmedia/2017/05/170526_NR-featured-779x389.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a href=&#34;https://news.microsoft.com/ja-jp/2017/05/26/surface/&#34;&gt;日本マイクロソフト Surface ファミリーを拡充 - News Center Japan&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>.NET Framework C# で暗号化する AES(Advanced Encryption Standard)</title>
+      <link>https://va2577.github.io/post/69/</link>
+      <pubDate>Fri, 27 Jan 2017 10:13:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/69/</guid>
+      <description>&lt;p&gt;暗号化をする必要がありましたので、調べたことをまとめてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>検索した文字列の行から後ろの内容を抽出したい(PowerShell)</title>
+      <link>https://va2577.github.io/post/67/</link>
+      <pubDate>Sat, 14 Jan 2017 11:30:43 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/67/</guid>
+      <description>&lt;p&gt;テキストファイルを文字列で検索して、その行から後ろの 10 行分抽出する、みたいなことができないか、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>テキストファイルの内容を 1 行ずつ置換、変更したい(PowerShell)</title>
+      <link>https://va2577.github.io/post/66/</link>
+      <pubDate>Wed, 28 Dec 2016 11:11:25 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/66/</guid>
+      <description>&lt;p&gt;Bash の sed みたいなことが Windows で簡単にできないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQLite データベースをバッチファイルで作成する</title>
+      <link>https://va2577.github.io/post/63/</link>
+      <pubDate>Fri, 23 Dec 2016 18:22:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/63/</guid>
+      <description>&lt;p&gt;データベースを作成するためにバッチファイルでまとめて DDL を実行する方法を調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.NET Framework(C#, VB.NET) Excelのプロセスが残る</title>
+      <link>https://va2577.github.io/post/49/</link>
+      <pubDate>Tue, 11 Oct 2016 10:37:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/49/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/45/&#34;&gt;Office 2016 の PIA がない&lt;/a&gt;の記事で環境を設定していたところです。
+Excelの帳票を出力するアプリケーションを作っていて、よくあるExcelのプロセスが残る問題が発生してしまったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Excelのマクロで範囲を参照する</title>
+      <link>https://va2577.github.io/post/47/</link>
+      <pubDate>Mon, 03 Oct 2016 21:00:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/47/</guid>
+      <description>&lt;p&gt;Excelのマクロで範囲を参照する際の指定をいつも調べてしまうので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Microsoft Office 2016 の PIA がない</title>
+      <link>https://va2577.github.io/post/45/</link>
+      <pubDate>Sat, 10 Sep 2016 11:25:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/45/</guid>
+      <description>&lt;p&gt;Windows Forms で Excel を使ってアプリケーションを作っています。
+Office 2016 をインストールしたのですが、参照設定に Excel が表示されなくて、設定できませんでしたので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ファイルの更新日時を一括で変更するコマンド(PowerShell)</title>
+      <link>https://va2577.github.io/post/26/</link>
+      <pubDate>Mon, 08 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/26/</guid>
+      <description>&lt;p&gt;今回はWindowsにおいてファイルの更新日時を一括で変更するコマンド(PowerShell)について調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VMware FusionにWindows 10をクリーンインストールする</title>
+      <link>https://va2577.github.io/post/17/</link>
+      <pubDate>Sat, 30 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/17/</guid>
+      <description>&lt;p&gt;今回はすでにVMware FusionにWindows 10がインストールされていて(Windows 8.1からのアップグレード)、そこからWindows 10をクリーンインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

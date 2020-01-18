@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HEXOを使ってみる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hexoを使ってみる</h1>
+    
+      <div><time>February 12, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Jekyllで記事を書いていますが、生成するのに2秒を超え始めてきました。
+Jekyllは遅いみたいなので、早くなるかわからないですけどHexoを使ってみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>git バージョン 2.5.4 (Apple Git-61)</li>
+<li>Node.js バージョン 5.5.0</li>
+<li>Hexo バージョン 3.1.1</li>
+</ul>
+<h2 id="hexo">Hexo？</h2>
+<blockquote>
+<p>A fast, simple &amp; powerful blog framework</p>
+<p><cite><a href="https://hexo.io">Hexo</a></cite></p>
+</blockquote>
+<h2 id="インストール">インストール</h2>
+<p>Node.jsのパッケージマネージャーであるnpmとgitが必要なので、先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/1/">gitのインストール</a></li>
+<li><a href="/post/3/">npmのインストール</a></li>
+</ul>
+<p>Hexoはnpmでインストールするだけです。</p>
+<pre><code>$ npm install hexo-cli -g
+</code></pre><h2 id="セットアップ">セットアップ</h2>
+<p>Hexoのセットアップをします。
+ここでは<code>blog</code>という名前のディレクトリーとしてセットアップしています。</p>
+<pre><code>$ hexo init blog
+</code></pre><p>セットアップしたら次のようなディレクトリー構造ができていました。
+<a href="https://hexo.io">Hexo</a>のGet startedを見ると、この後に<code>npm install</code>でパッケージをインストールする必要があるように見えますが、<code>node_modules</code>ディレクトリーができていて、すでに必要なパッケージがインストールされているようでした。</p>
+<pre><code>$ cd blog
+$ tree -I node_modules -L 2
+.
+├── _config.yml
+├── db.json
+├── package.json
+├── scaffolds
+│   ├── draft.md
+│   ├── page.md
+│   └── post.md
+├── source
+│   └── _posts
+└── themes
+    └── landscape
+
+5 directories, 6 files
+</code></pre><p><code>themes</code>ディレクトリーが独立していて、Jekyllと違ってテーマの切り替えが簡単そうに見えます。
+Jekyllの場合はテーマを切り替えるのに、テーマのディレクトリー構造をコピーしてきて、そこに記事を突っ込むしかないように見えたので、ここはHexoの方が良さそうです。</p>
+<h2 id="サーバー">サーバー</h2>
+<p>Jekyllと同じようにローカルでサーバーを起動してサイトを確認できます。</p>
+<pre><code>$ hexo server
+INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
+</code></pre><p>http://0.0.0.0:4000/ にアクセスすると標準のテーマのサイトが確認できました。</p>
+<p><img src="/img/29-01.jpg" alt=""></p>
+<h2 id="記事を書く">記事を書く</h2>
+<h3 id="ファイルの作成">ファイルの作成</h3>
+<p>新しい記事を書くには次のコマンドを入力します。</p>
+<pre><code>$ hexo new [layout] &lt;title&gt;
+</code></pre><p><code>[layout]</code>は省略すると<code>_config.yml</code>の<code>default_layout</code>に指定されているものになるようです。
+セットアップした時は<code>post</code>になっていました。</p>
+<p>新しい記事のファイルは<code>source/_posts/&lt;title&gt;.md</code>に作成されています。
+ここでは<code>first-post</code>というタイトルで作成してみました。</p>
+<pre><code>$ tree source
+source
+└── _posts
+    ├── first-post.md
+    └── hello-world.md
+
+1 directory, 2 files
+</code></pre><p>内容は次のようになっていました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: first-post
+date: 2016-02-12 10:49:08
+tags:
+---
+</code></pre></div><h3 id="ファイルの修正">ファイルの修正</h3>
+<p>適当に記事を書いてみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: first-post
+date: 2016-02-12 10:49:08
+tags:
+---
+# First Post
+
+{% codeblock Initialize lang:javascript https://hexo.io/api/#Initialize API | Hexo %}
+var Hexo = require(&#39;hexo&#39;);
+var hexo = new Hexo(process.cwd(), {});
+
+hexo.init().then(function(){
+  // ...
+});
+{% endcodeblock %}
+</code></pre></div><h3 id="記事の内容の確認">記事の内容の確認</h3>
+<p>サーバーを起動して確認してみます。</p>
+<pre><code>$ hexo server
+INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
+</code></pre><p><img src="/img/29-02.jpg" alt=""></p>
+<h2 id="テーマを適用してみる">テーマを適用してみる</h2>
+<p><a href="https://hexo.io/themes/">Themes | Hexo</a>から<a href="https://github.com/ppoffice/hexo-theme-hueman">Hueman</a>を選んで適用してみます。</p>
+<p><a href="https://github.com/ppoffice/hexo-theme-hueman/wiki/Installation">Installation · ppoffice/hexo-theme-hueman Wiki · GitHub</a>に書いてある通りに進めてみました。</p>
+<h3 id="clone">clone</h3>
+<p>Hexoで作ったサイトのディレクトリーに移動します。</p>
+<pre><code>$ cd [direcotry]
+</code></pre><p>GitHubからテーマをcloneします。</p>
+<pre><code>$ git clone https://github.com/ppoffice/hexo-theme-hueman.git themes/hueman
+Cloning into 'themes/hueman'...
+remote: Counting objects: 1066, done.
+remote: Compressing objects: 100% (79/79), done.
+remote: Total 1066 (delta 35), reused 0 (delta 0), pack-reused 956
+Receiving objects: 100% (1066/1066), 3.21 MiB | 1.37 MiB/s, done.
+Resolving deltas: 100% (566/566), done.
+Checking connectivity... done.
+</code></pre><h3 id="サイトの設定ファイルの修正">サイトの設定ファイルの修正</h3>
+<p>Hexoで作ったサイトの直下にある<code>_config.yml</code>の<code>theme</code>を<code>hueman</code>に変えます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">theme: hueman
+</code></pre></div><h3 id="テーマの設定ファイルの修正">テーマの設定ファイルの修正</h3>
+<p><code>themes/hueman</code>の<code>_config.yml.example</code>の名前を<code>_config.yml</code>に変えます。</p>
+<pre><code>$ mv themes/hueman/_config.yml.example themes/hueman/_config.yml
+</code></pre><h3 id="テーマの更新">テーマの更新</h3>
+<p>テーマに変更があった場合は次のようにして変更を反映するようです。</p>
+<pre><code>$ cd themes/hueman
+$ git pull
+</code></pre><h3 id="テーマの確認">テーマの確認</h3>
+<p>サーバーを起動して確認してみます。</p>
+<pre><code>$ hexo server
+INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
+</code></pre><p>よくわからない言語で表示されているところもありますが、テーマが適用されました。</p>
+<p><img src="/img/29-03.png" alt=""></p>
+<h2 id="終わり">終わり</h2>
+<p>簡単に記事を投稿するところまでできましたので、Jekyllで作った記事を移行していこうと思ってます。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://hexo.io">Hexo</a></li>
+</ul>
+<h2 id="28-march-2016-追記">28 March 2016 追記</h2>
+<p>GitHub Pagesにデプロイするところを書いてなかったので追記しておきます。</p>
+<p><code>hexo-deployer-git</code>をインストールします。</p>
+<pre><code>$ npm install hexo-deployer-git --save
+</code></pre><p><code>_config.yml</code>に次の内容を追加します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">deploy:
+  type: git
+  repo: &lt;repository url&gt; # リポジトリーのURL
+  branch: [branch] # ブランチにpushする場合
+  message: [message] # Commit message.(デフォルト：Site updated: {{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }})
+</code></pre></div><p>GitHub Pagesにデプロイするコマンドです。</p>
+<pre><code>$ hexo deploy
+</code></pre><p><code>.deploy_git</code>ディレクトリーに一時的にビルドした結果ができて、そこからGitHubにpushしているようです。</p>
+<p>もともとJekyllで作っていたリポジトリーがGitHubにあっても綺麗に上書きしてくれました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

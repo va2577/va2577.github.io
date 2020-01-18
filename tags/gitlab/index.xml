@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitLab on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/gitlab/</link>
+    <description>Recent content in GitLab on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Aug 2019 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>GatsbyJS を使った</title>
+      <link>https://va2577.github.io/post/2019-08-13-01/</link>
+      <pubDate>Tue, 13 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-08-13-01/</guid>
+      <description>&lt;p&gt;GatsbyJS を使ってスタティックサイトを作った。
+それを GitLab にアップして、そこから Netlify が自動的にデプロイしてくれるようにした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitLab のメールアドレスをプライベートにする</title>
+      <link>https://va2577.github.io/post/2019-08-10-01/</link>
+      <pubDate>Sat, 10 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-08-10-01/</guid>
+      <description>&lt;p&gt;GitHub でメールアドレスを公開しないようにプライベートに設定していたのですが、 GibLab でも同じことができないか、調べました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

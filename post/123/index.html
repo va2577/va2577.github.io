@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ブラウザーで ECMASCRIPT MODULES を使うことを調べました 3(SYSTEMJS) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ブラウザーで ECMAScript Modules を使うことを調べました 3(SystemJS)</h1>
+    
+      <div><time>April 3, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/122/">前回の記事</a>では、 CommonJS を使ってみました。
+今回は、 SystemJS を使ってみます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>babel-cli 6.26.0</li>
+<li>babel-preset-env 1.6.1</li>
+<li>babel-plugin-transform-es2015-modules-systemjs 6.24.1</li>
+<li>SystemJS 0.21.1</li>
+<li>Microsoft Edge 16.16299</li>
+<li>Firefox 59.0.2</li>
+</ul>
+<h2 id="es2015-modules-systemjs">es2015-modules-systemjs</h2>
+<blockquote>
+<p>This plugin transforms ES2015 modules to SystemJS.</p>
+<p><a href="https://github.com/systemjs/systemjs">SystemJS</a></p>
+<p><cite><a href="https://babeljs.io/docs/plugins/transform-es2015-modules-systemjs/">ES2015 modules to SystemJS transform · Babel</a></cite></p>
+</blockquote>
+<p>これは、 SystemJS という仕様に合わせてトランスパイルするための、 Babel のプラグインのようです。</p>
+<h2 id="systemjs">SystemJS</h2>
+<blockquote>
+<p>Dynamic ES module loader</p>
+<p>SystemJS</p>
+<p>Configurable module loader enabling dynamic ES module workflows in browsers and NodeJS.</p>
+<p><cite><a href="https://github.com/systemjs/systemjs">GitHub - systemjs/systemjs: Dynamic ES module loader</a></cite></p>
+</blockquote>
+<p>module loader と記載されています。
+モジュールのローダーのようです。
+モジュールを定義するための仕様、という意味合いは弱い印象を持ちました。</p>
+<p>じゃあ、どんな定義のモジュールを読み込めるのか？
+module formats のページを見てみました。</p>
+<blockquote>
+<p>Module Formats</p>
+<p>The following module formats are supported:</p>
+<ul>
+<li>esm: ECMAScript Module</li>
+<li>cjs: CommonJS</li>
+<li>amd: Asynchronous Module Definition</li>
+<li>global: Global shim module format</li>
+<li>system: System.register or System.registerDynamic compatibility module format
+*(Need more? Check the plugins.)</li>
+</ul>
+<p><cite><a href="https://github.com/systemjs/systemjs/blob/master/docs/module-formats.md">systemjs/module-formats.md at master · systemjs/systemjs · GitHub</a></cite></p>
+</blockquote>
+<p>読み込むモジュールの定義は ECMAScript Module でも CommonJS でも Asynchronous Module Definition でもいいみたいです。</p>
+<blockquote>
+<p>To load ES6 code with in-browser transpilation, one of the following transpiler plugins must be configured:</p>
+<ul>
+<li>Babel</li>
+<li>TypeScript</li>
+<li>Traceur</li>
+</ul>
+<p><cite><a href="https://github.com/systemjs/systemjs">GitHub - systemjs/systemjs: Dynamic ES module loader</a></cite></p>
+</blockquote>
+<p>ES6 のコードはトランスパイルする必要があるみたいです。
+ひとつ前の引用で、 ECMAScript Module でも読み込めるように記載がありましたが、そのままの ECMAScript Module では読み込めなくて、トランスパイルする必要があるみたいでした。</p>
+<p>この記事を書き終えた後で、 ECMAScript Module をそのまま読み込んでみたら、 Firefox のコンソールに次のエラーが出力されました。</p>
+<pre><code>XML パースエラー: 整形式になっていません。
+URL: file:///path/src/main.js
+行番号: 1, 列番号: 1:
+Error: Unable to dynamically transpile ES module
+   A loader plugin needs to be configured via `SystemJS.config({ transpiler: 'transpiler-module' })`.
+  Instantiating file:///path/src/main.js
+  Loading ./main.js
+</code></pre><p>Microsoft Edge では何も起きませんでした。
+正しい結果はコンソールに出力されないし、エラーもコンソールに出力されませんでした。</p>
+<h2 id="examples">Examples</h2>
+<p><a href="http://localhost:1313/post/122/">前回の記事</a>と同様に、 MDN Web Docs の export のページの <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Examples">Examples</a> を使って進めてみます。</p>
+<h3 id="babel-のインストール">Babel のインストール</h3>
+<p>パッケージをインストールしました。</p>
+<pre><code>$ npm init -y
+$ npm install --save-dev babel-cli babel-preset-env babel-plugin-transform-es2015-modules-systemjs
+</code></pre><h3 id="babel-の設定ファイル">Babel の設定ファイル</h3>
+<blockquote>
+<p>Usage</p>
+<p>Via .babelrc (Recommended)</p>
+<p>.babelrc</p>
+<p>Without options:</p>
+<pre><code>{
+  &quot;plugins&quot;: [&quot;transform-es2015-modules-systemjs&quot;]
+}
+</code></pre>
+<p><cite><a href="https://babeljs.io/docs/plugins/transform-es2015-modules-systemjs/">ES2015 modules to SystemJS transform · Babel</a></cite></p>
+</blockquote>
+<p>Babel の設定ファイル (.babelrc) を次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;presets&#34;</span>: [<span style="color:#e6db74">&#34;env&#34;</span>],
+  <span style="color:#f92672">&#34;plugins&#34;</span>: [<span style="color:#e6db74">&#34;transform-es2015-modules-systemjs&#34;</span>]
+}
+</code></pre></div><h3 id="トランスパイル">トランスパイル</h3>
+<p>トランスパイルします。
+ECMAScript Modules のコードを src/ ディレクトリーに保存しておいて、 SystemJS のコードを lib/ ディレクトリーに出力します。</p>
+<pre><code>$ ./node_modules/.bin/babel src/ -d lib/
+src/main.js -&gt; lib/main.js
+src/my-module.js -&gt; lib/my-module.js
+</code></pre><h3 id="my-modulejs">my-module.js</h3>
+<p>トランスパイルされたファイルです。
+最初に、 my-module.js です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#e6db74">&#39;use strict&#39;</span>;
+
+<span style="color:#a6e22e">System</span>.<span style="color:#a6e22e">register</span>([], <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">_export</span>, <span style="color:#a6e22e">_context</span>) {
+  <span style="color:#e6db74">&#34;use strict&#34;</span>;
+
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">foo</span>, <span style="color:#a6e22e">graph</span>;
+  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">cube</span>(<span style="color:#a6e22e">x</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">x</span>;
+  }
+  <span style="color:#66d9ef">return</span> {
+    <span style="color:#a6e22e">setters</span><span style="color:#f92672">:</span> [],
+    <span style="color:#a6e22e">execute</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> () {
+      <span style="color:#a6e22e">_export</span>(<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">PI</span> <span style="color:#f92672">+</span> Math.<span style="color:#a6e22e">SQRT2</span>);
+
+      <span style="color:#a6e22e">_export</span>(<span style="color:#e6db74">&#39;graph&#39;</span>, <span style="color:#a6e22e">graph</span> <span style="color:#f92672">=</span> {
+        <span style="color:#a6e22e">options</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;white&#39;</span>,
+          <span style="color:#a6e22e">thickness</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;2px&#39;</span>
+        },
+        <span style="color:#a6e22e">draw</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">draw</span>() {
+          <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;From graph draw function&#39;</span>);
+        }
+      });
+
+      <span style="color:#a6e22e">_export</span>(<span style="color:#e6db74">&#39;cube&#39;</span>, <span style="color:#a6e22e">cube</span>);
+
+      <span style="color:#a6e22e">_export</span>(<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#a6e22e">foo</span>);
+
+      <span style="color:#a6e22e">_export</span>(<span style="color:#e6db74">&#39;graph&#39;</span>, <span style="color:#a6e22e">graph</span>);
+    }
+  };
+});
+</code></pre></div><p><code>System.register</code> 関数を使うようです。
+<code>_export</code> 関数で export しているようで、独特な印象を受けました。</p>
+<p>SystemJS って、モジュールのローダーだけかと思っていましたが、モジュールの定義の仕様もあったようでした。</p>
+<h3 id="mainjs">main.js</h3>
+<p>次に、 main.js です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#e6db74">&#39;use strict&#39;</span>;
+
+<span style="color:#a6e22e">System</span>.<span style="color:#a6e22e">register</span>([<span style="color:#e6db74">&#39;./my-module.js&#39;</span>], <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">_export</span>, <span style="color:#a6e22e">_context</span>) {
+  <span style="color:#e6db74">&#34;use strict&#34;</span>;
+
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">cube</span>, <span style="color:#a6e22e">foo</span>, <span style="color:#a6e22e">graph</span>;
+  <span style="color:#66d9ef">return</span> {
+    <span style="color:#a6e22e">setters</span><span style="color:#f92672">:</span> [<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">_myModuleJs</span>) {
+      <span style="color:#a6e22e">cube</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_myModuleJs</span>.<span style="color:#a6e22e">cube</span>;
+      <span style="color:#a6e22e">foo</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_myModuleJs</span>.<span style="color:#a6e22e">foo</span>;
+      <span style="color:#a6e22e">graph</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_myModuleJs</span>.<span style="color:#a6e22e">graph</span>;
+    }],
+    <span style="color:#a6e22e">execute</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> () {
+      <span style="color:#a6e22e">graph</span>.<span style="color:#a6e22e">options</span> <span style="color:#f92672">=</span> {
+        <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;blue&#39;</span>,
+        <span style="color:#a6e22e">thickness</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;3px&#39;</span>
+      };
+
+      <span style="color:#a6e22e">graph</span>.<span style="color:#a6e22e">draw</span>();
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">cube</span>(<span style="color:#ae81ff">3</span>)); <span style="color:#75715e">// 27
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">foo</span>); <span style="color:#75715e">// 4.555806215962888
+</span><span style="color:#75715e"></span>    }
+  };
+});
+</code></pre></div><p>こちらでも <code>System.register</code> 関数が使われています。</p>
+<p><code>System.register</code> 関数の中の <code>return</code> しているオブジェクトの中に、メインの処理を記述するのが SystemJS の特徴なのかな。
+そのオブジェクトの <code>execute</code> のプロパティがメインっぽい印象を受けました。
+<code>setters</code> プロパティはモジュールの依存関係かな。</p>
+<h3 id="systemjshtml">systemjs.html</h3>
+<p>トランスパイルしたコードを呼び出すためにはどうすればよいのか？
+getting started のページを見てみました。</p>
+<blockquote>
+<p>Loading Modules</p>
+<p>Any URL can be loaded as a module with standard URL syntax:</p>
+<pre><code>&lt;script src=&quot;system.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  // loads relative to the current page URL
+  SystemJS.import('./local-module.js');
+
+  // load from an absolute URL directly
+  SystemJS.import('https://code.jquery.com/jquery.js');
+&lt;/script&gt;
+</code></pre>
+<p><cite><a href="https://github.com/systemjs/systemjs/blob/master/docs/getting-started.md#loading-modules">systemjs/getting-started.md at master · systemjs/systemjs · GitHub</a></cite></p>
+</blockquote>
+<p>system.js のファイルを先に読み込んでおいて、 <code>SystemJS.import</code> 関数にエントリーポイントのファイルのパスを渡してあげればよさそうです。</p>
+<p>これを参考に、次のような HTML ファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> systemjs.html </span><span style="color:#75715e">--&gt;</span>
+<span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;SystemJS&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;SystemJS&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.21.0/system.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      <span style="color:#75715e">// loads relative to the current page URL
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">SystemJS</span>.<span style="color:#66d9ef">import</span>(<span style="color:#e6db74">&#39;./main.js&#39;</span>);
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>system.js のファイルは CDN から読み込むようにしてみました。</p>
+<p>このファイルをトランスパイルしたディレクトリー (lib/) に保存しました。</p>
+<h3 id="実行">実行</h3>
+<p>ブラウザーから systemjs.html を開きます。</p>
+<p>すると、コンソールに次のように出力されました。</p>
+<pre><code>From graph draw function
+27
+4.555806215962888
+</code></pre><p>モジュールが読み込めているようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>SystemJS は、 Dynamic ES module loader と記載されていたように、ブラウザー上で動的にモジュールの依存関係を解決するもののようでした。
+これは AMD(RequireJS) と同様の特徴のように感じました。
+SystemJS は AMD の仕様のモジュールも読み込めるようなので、 <a href="/post/120/">3 つ前の記事</a>でも RequireJS を使うこともなかったのかもしれません。</p>
+<p><a href="/post/122/">前回の記事</a>では、 CommonJS Modules の仕様のコードを Browserify を使って事前にバンドルしましたが、SystemJS を使えばバンドルしなくてもブラウザーで使えるようでした。</p>
+<p>SystemJS は比較的最近出てきたのかな。
+読み込むモジュールの定義は CommonJS でも AMD でもよいところが便利そうでした。</p>
+<p>たくさんモジュールがある場合は、ブラウザーから何度もリクエストを送ることになるのかな。
+そうなると、パフォーマンス的には事前にバンドルする仕組みの方ががいいのかな。</p>
+<h2 id="4-april-2018-追記">4 April 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/124/">ブラウザーで ECMAScript Modules を使うことを調べてみました 4(Universal Module Definition)</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

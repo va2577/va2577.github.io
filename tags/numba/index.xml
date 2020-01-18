@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Numba on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/numba/</link>
+    <description>Recent content in Numba on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 07 Apr 2017 17:46:35 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/numba/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>pip で Numba をインストールする時にエラーになる</title>
+      <link>https://va2577.github.io/post/70/</link>
+      <pubDate>Fri, 07 Apr 2017 17:46:35 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/70/</guid>
+      <description>&lt;p&gt;GitHub にある誰かが作った Python のソースを動かしたくて、実行してみたのですが、Numba を使っているようで、Numba をインストールしようとしました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

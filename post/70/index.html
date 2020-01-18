@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PIP で NUMBA をインストールする時にエラーになる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>pip で Numba をインストールする時にエラーになる</h1>
+    
+      <div><time>April 7, 2017</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>GitHub にある誰かが作った Python のソースを動かしたくて、実行してみたのですが、Numba を使っているようで、Numba をインストールしようとしました。</p>
+<h2 id="numba">Numba?</h2>
+<blockquote>
+<p>Numba gives you the power to speed up your applications with high performance functions written directly in Python.
+Numba works by generating optimized machine code using the LLVM compiler infrastructure at import time, runtime, or statically (using the included pycc tool).</p>
+<p><cite><a href="http://numba.pydata.org">Numba — Numba</a></cite></p>
+</blockquote>
+<p>Numba はスピードアップのために使うものだと解釈しました。</p>
+<h2 id="numba-のインストール方法">Numba のインストール方法</h2>
+<blockquote>
+<p>Installing
+The easiest way to install numba and get updates is by using the Anaconda Distribution: <a href="http://continuum.io/downloads.html">http://continuum.io/downloads.html</a></p>
+<p>If you have Anaconda installed already:</p>
+<pre><code>$ conda install numba
+</code></pre>
+<p>or</p>
+<pre><code>$ conda update numba
+</code></pre>
+<p>For custom python environments see the <a href="https://github.com/numba/numba#custom-python-environments">README on Github.</a></p>
+<p><cite><a href="http://numba.pydata.org">Numba — Numba</a></cite></p>
+</blockquote>
+<p>Numba の公式のサイトのインストール方法を見ると、Anaconda Distribution を使うことを推奨しているようです。</p>
+<blockquote>
+<p>Anaconda is the leading open data science platform powered by Python. The open source version of Anaconda is a high performance distribution of Python and R and includes over 100 of the most popular Python, R and Scala packages for data science.</p>
+<p><cite><a href="https://www.continuum.io/Downloads">Download Anaconda Now! | Continuum</a></cite></p>
+</blockquote>
+<p>Anaconda はデータサイエンスのためのパッケージを 100 以上含めた環境のようです。</p>
+<blockquote>
+<p>Custom Python Environments</p>
+<p>or simply</p>
+<pre><code>$ pip install numba
+</code></pre>
+<p><cite><a href="https://github.com/numba/numba#custom-python-environments">GitHub - numba/numba: NumPy aware dynamic Python compiler using LLVM</a></cite></p>
+</blockquote>
+<p>Anaconda 以外で Numba を使うには pip を使うようです。
+今回は pip を使う方法で進めました。</p>
+<h2 id="numba-のインストール">Numba のインストール</h2>
+<pre><code>$ pip install numba
+Collecting numba
+  Downloading numba-0.31.0.tar.gz (1.2MB)
+    100% |████████████████████████████████| 1.2MB 398kB/s
+Collecting llvmlite (from numba)
+  Downloading llvmlite-0.16.0.tar.gz (95kB)
+    100% |████████████████████████████████| 102kB 527kB/s
+Requirement already satisfied: numpy in ./lib/python3.6/site-packages (from numba)
+Building wheels for collected packages: numba, llvmlite
+  Running setup.py bdist_wheel for numba ... done
+  Stored in directory: /Users/user/Library/Caches/pip/wheels/1a/93/9e/25e3fef05380f6db4273de73ea0fd6645bcdba14659f1e4e2d
+  Running setup.py bdist_wheel for llvmlite ... error
+  Complete output from command /Users/user/ENV/bin/python3.6 -u -c &quot;import setuptools, tokenize;__file__='/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))&quot; bdist_wheel -d /var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/tmpg1o_xzcopip-wheel- --python-tag cp36:
+  running bdist_wheel
+  running build
+  got version from file /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/llvmlite/_version.py {'version': '0.16.0', 'full': '964cf1d6d725b000c769379a5efe11932fcfc551'}
+  running build_ext
+  /Users/user/ENV/bin/python3.6 /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py
+  LLVM version... Traceback (most recent call last):
+    File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 105, in main_posix
+      out = subprocess.check_output([llvm_config, '--version'])
+    File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 336, in check_output
+      **kwargs).stdout
+    File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 403, in run
+      with Popen(*popenargs, **kwargs) as process:
+    File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 707, in __init__
+      restore_signals, start_new_session)
+    File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 1326, in _execute_child
+      raise child_exception_type(errno_num, err_msg)
+  FileNotFoundError: [Errno 2] No such file or directory: 'llvm-config'
+
+  During handling of the above exception, another exception occurred:
+
+  Traceback (most recent call last):
+    File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 152, in &lt;module&gt;
+      main()
+    File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 146, in main
+      main_posix('osx', '.dylib')
+    File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 108, in main_posix
+      &quot;to the path for llvm-config&quot; % (llvm_config,))
+  RuntimeError: llvm-config failed executing, please point LLVM_CONFIG to the path for llvm-config
+  error: command '/Users/user/ENV/bin/python3.6' failed with exit status 1
+
+  ----------------------------------------
+  Failed building wheel for llvmlite
+  Running setup.py clean for llvmlite
+Successfully built numba
+Failed to build llvmlite
+Installing collected packages: llvmlite, numba
+  Running setup.py install for llvmlite ... error
+    Complete output from command /Users/user/ENV/bin/python3.6 -u -c &quot;import setuptools, tokenize;__file__='/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))&quot; install --record /var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-4lv7jqpk-record/install-record.txt --single-version-externally-managed --compile --install-headers /Users/user/ENV/bin/../include/site/python3.6/llvmlite:
+    running install
+    running build
+    got version from file /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/llvmlite/_version.py {'version': '0.16.0', 'full': '964cf1d6d725b000c769379a5efe11932fcfc551'}
+    running build_ext
+    /Users/user/ENV/bin/python3.6 /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py
+    LLVM version... Traceback (most recent call last):
+      File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 105, in main_posix
+        out = subprocess.check_output([llvm_config, '--version'])
+      File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 336, in check_output
+        **kwargs).stdout
+      File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 403, in run
+        with Popen(*popenargs, **kwargs) as process:
+      File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 707, in __init__
+        restore_signals, start_new_session)
+      File &quot;/usr/local/Cellar/python3/3.6.0_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/subprocess.py&quot;, line 1326, in _execute_child
+        raise child_exception_type(errno_num, err_msg)
+    FileNotFoundError: [Errno 2] No such file or directory: 'llvm-config'
+
+    During handling of the above exception, another exception occurred:
+
+    Traceback (most recent call last):
+      File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 152, in &lt;module&gt;
+        main()
+      File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 146, in main
+        main_posix('osx', '.dylib')
+      File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/ffi/build.py&quot;, line 108, in main_posix
+        &quot;to the path for llvm-config&quot; % (llvm_config,))
+    RuntimeError: llvm-config failed executing, please point LLVM_CONFIG to the path for llvm-config
+    error: command '/Users/user/ENV/bin/python3.6' failed with exit status 1
+
+    ----------------------------------------
+Command &quot;/Users/user/ENV/bin/python3.6 -u -c &quot;import setuptools, tokenize;__file__='/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))&quot; install --record /var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-4lv7jqpk-record/install-record.txt --single-version-externally-managed --compile --install-headers /Users/user/ENV/bin/../include/site/python3.6/llvmlite&quot; failed with error code 1 in /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-o1x6nnt4/llvmlite/
+</code></pre><p>次のようなエラーになっているようです。</p>
+<ul>
+<li><code>FileNotFoundError: [Errno 2] No such file or directory: 'llvm-config'</code></li>
+<li><code>RuntimeError: llvm-config failed executing, please point LLVM_CONFIG to the path for llvm-config</code></li>
+</ul>
+<p>llvm-config コマンドが必要のようですが、ないのでエラーになっているようです。</p>
+<p>LLVM 自体は Xcode コマンドラインツールをインストールした時のものがあるようですが、llvm-config は確かにないみたいです。</p>
+<h2 id="llvm-config">llvm-config?</h2>
+<blockquote>
+<p>DESCRIPTION</p>
+<p>llvm-config makes it easier to build applications that use LLVM. It can print the compiler flags, linker flags and object libraries needed to link against LLVM.</p>
+<p><cite><a href="http://llvm.org/docs/CommandGuide/llvm-config.html">llvm-config - Print LLVM compilation options — LLVM 5 documentation</a></cite></p>
+</blockquote>
+<p>LLVM のコンパイルオプションを出力するものだと解釈しました。</p>
+<h2 id="llvm-のインストール方法">LLVM のインストール方法</h2>
+<p>llvm-config を含む LLVM をインストールする必要がありそうでしたので、インストール方法を調べました。</p>
+<blockquote>
+<p>Getting Started Quickly (A Summary)</p>
+<p>The LLVM Getting Started documentation may be out of date. So, the <a href="http://clang.llvm.org/get_started.html">Clang Getting Started</a> page might also be a good place to start.</p>
+<p>Here’s the short story for getting up and running quickly with LLVM:</p>
+<p><cite><a href="http://llvm.org/docs/GettingStarted.html">Getting Started with the LLVM System — LLVM 5 documentation</a></cite></p>
+</blockquote>
+<p>LLVM の公式のホームページにはソースからビルドするような記載がありました。
+面倒なので、今回は Homebrew からインストールすることにしました。</p>
+<h2 id="llvm-のインストール">LLVM のインストール</h2>
+<pre><code>$ brew install llvm
+==&gt; Installing dependencies for llvm: libffi
+==&gt; Installing llvm dependency: libffi
+==&gt; Downloading https://homebrew.bintray.com/bottles/libffi-3.2.1.sierra.bottle.
+######################################################################## 100.0%
+==&gt; Pouring libffi-3.2.1.sierra.bottle.tar.gz
+==&gt; Caveats
+This formula is keg-only, which means it was not symlinked into /usr/local.
+
+Some formulae require a newer version of libffi.
+
+For compilers to find this software you may need to set:
+    LDFLAGS:  -L/usr/local/opt/libffi/lib
+
+==&gt; Summary
+🍺  /usr/local/Cellar/libffi/3.2.1: 16 files, 297.0KB
+==&gt; Installing llvm
+==&gt; Downloading https://homebrew.bintray.com/bottles/llvm-4.0.0.sierra.bottle.ta
+######################################################################## 100.0%
+==&gt; Pouring llvm-4.0.0.sierra.bottle.tar.gz
+==&gt; Caveats
+LLVM executables are installed in /usr/local/opt/llvm/bin.
+Extra tools are installed in /usr/local/opt/llvm/share/llvm.
+To use the bundled libc++ please add the following LDFLAGS:
+  LDFLAGS=&quot;-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib&quot;
+
+This formula is keg-only, which means it was not symlinked into /usr/local.
+
+macOS already provides this software and installing another version in
+parallel can cause all kinds of trouble.
+
+If you need to have this software first in your PATH run:
+  echo 'export PATH=&quot;/usr/local/opt/llvm/bin:$PATH&quot;' &gt;&gt; ~/.bash_profile
+
+For compilers to find this software you may need to set:
+    LDFLAGS:  -L/usr/local/opt/llvm/lib
+    CPPFLAGS: -I/usr/local/opt/llvm/include
+
+
+If you need Python to find bindings for this keg-only formula, run:
+  echo /usr/local/opt/llvm/lib/python2.7/site-packages &gt;&gt; /usr/local/lib/python2.7/site-packages/llvm.pth
+  mkdir -p /Users/user/Library/Python/2.7/lib/python/site-packages
+  echo 'import site; site.addsitedir(&quot;/usr/local/lib/python2.7/site-packages&quot;)' &gt;&gt; /Users/user/Library/Python/2.7/lib/python/site-packages/homebrew.pth
+==&gt; Summary
+🍺  /usr/local/Cellar/llvm/4.0.0: 2,245 files, 1GB
+</code></pre><p>1GB もありました。</p>
+<p>必要であれば環境変数の <code>PATH</code> を設定するように書いてあります。</p>
+<pre><code>$ echo 'export PATH=&quot;/usr/local/opt/llvm/bin:$PATH&quot;' &gt;&gt; ~/.bash_profile
+</code></pre><p>Python to find bindings が必要であれば次のように設定するようです。</p>
+<pre><code>$ echo /usr/local/opt/llvm/lib/python2.7/site-packages &gt;&gt; /usr/local/lib/python2.7/site-packages/llvm.pth
+$ mkdir -p /Users/user/Library/Python/2.7/lib/python/site-packages
+$ echo 'import site; site.addsitedir(&quot;/usr/local/lib/python2.7/site-packages&quot;)' &gt;&gt; /Users/user/Library/Python/2.7/lib/python/site-packages/homebrew.pth
+</code></pre><p>Python to find bindings って何かな？と思って調べてみたところ、</p>
+<blockquote>
+<p>clang ASTの情報が欲しかったので，python bindingsを使おうとしたらまたつまりました． 教えてもらったのをメモ！</p>
+<p>&hellip;略&hellip;</p>
+<p>動かしたサンプルはこれ．</p>
+<p>[main.py]</p>
+<pre><code>import sys
+
+import clang.cindex
+from clang.cindex import Index
+from clang.cindex import Config
+
+def print_node_tree(node):
+    print &quot;%s : %s&quot; % (node.kind.name, node.displayname)
+    for child in node.get_children():
+        print_node_tree(child)
+
+index = Index.create()
+tu = index.parse(&quot;test.cpp&quot;)
+print_node_tree(tu.cursor)
+</code></pre>
+<p><cite><a href="http://asdm.hatenablog.com/entry/2015/01/08/170707">Clangのpython bindingsを使う - 脱初心者を目指す</a></cite></p>
+</blockquote>
+<p>Python のソースコードの中から C++ 等のソースを呼び出すようなものらしいと解釈しました。
+今回は Python bindings は必要なさそうでしたので設定しませんでした。</p>
+<h2 id="numba-のインストール2回目">Numba のインストール(2回目)</h2>
+<pre><code>$ pip install numba
+Collecting numba
+Requirement already satisfied: numpy in ./lib/python3.6/site-packages (from numba)
+Collecting llvmlite (from numba)
+  Using cached llvmlite-0.16.0.tar.gz
+Building wheels for collected packages: llvmlite
+  Running setup.py bdist_wheel for llvmlite ... error
+  Complete output from command /Users/user/ENV/bin/python3.6 -u -c &quot;import setuptools, tokenize;__file__='/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))&quot; bdist_wheel -d /var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/tmpoogsp4e5pip-wheel- --python-tag cp36:
+  running bdist_wheel
+  running build
+  got version from file /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/llvmlite/_version.py {'version': '0.16.0', 'full': '964cf1d6d725b000c769379a5efe11932fcfc551'}
+  running build_ext
+  /Users/user/ENV/bin/python3.6 /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py
+  LLVM version... 4.0.0
+
+  Traceback (most recent call last):
+    File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py&quot;, line 152, in &lt;module&gt;
+      main()
+    File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py&quot;, line 146, in main
+      main_posix('osx', '.dylib')
+    File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py&quot;, line 119, in main_posix
+      raise RuntimeError(msg)
+  RuntimeError: Building llvmlite requires LLVM 3.9.x. Be sure to set LLVM_CONFIG to the right executable path.
+  Read the documentation at http://llvmlite.pydata.org/ for more information about building llvmlite.
+
+  error: command '/Users/user/ENV/bin/python3.6' failed with exit status 1
+
+  ----------------------------------------
+  Failed building wheel for llvmlite
+  Running setup.py clean for llvmlite
+Failed to build llvmlite
+Installing collected packages: llvmlite, numba
+  Running setup.py install for llvmlite ... error
+    Complete output from command /Users/user/ENV/bin/python3.6 -u -c &quot;import setuptools, tokenize;__file__='/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))&quot; install --record /var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-o46hy98_-record/install-record.txt --single-version-externally-managed --compile --install-headers /Users/user/ENV/bin/../include/site/python3.6/llvmlite:
+    running install
+    running build
+    got version from file /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/llvmlite/_version.py {'version': '0.16.0', 'full': '964cf1d6d725b000c769379a5efe11932fcfc551'}
+    running build_ext
+    /Users/user/ENV/bin/python3.6 /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py
+    LLVM version... 4.0.0
+
+    Traceback (most recent call last):
+      File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py&quot;, line 152, in &lt;module&gt;
+        main()
+      File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py&quot;, line 146, in main
+        main_posix('osx', '.dylib')
+      File &quot;/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/ffi/build.py&quot;, line 119, in main_posix
+        raise RuntimeError(msg)
+    RuntimeError: Building llvmlite requires LLVM 3.9.x. Be sure to set LLVM_CONFIG to the right executable path.
+    Read the documentation at http://llvmlite.pydata.org/ for more information about building llvmlite.
+
+    error: command '/Users/user/ENV/bin/python3.6' failed with exit status 1
+
+    ----------------------------------------
+Command &quot;/Users/user/ENV/bin/python3.6 -u -c &quot;import setuptools, tokenize;__file__='/private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))&quot; install --record /var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-o46hy98_-record/install-record.txt --single-version-externally-managed --compile --install-headers /Users/user/ENV/bin/../include/site/python3.6/llvmlite&quot; failed with error code 1 in /private/var/folders/3m/p627w85d35b_tt0lrxzndm4c0000gn/T/pip-build-d41q9kgl/llvmlite/
+</code></pre><p>次のようなエラーになっているようです。</p>
+<ul>
+<li><code>RuntimeError: Building llvmlite requires LLVM 3.9.x. Be sure to set LLVM_CONFIG to the right executable path.</code></li>
+</ul>
+<p>Numba が依存している Python のパッケージである llvmlite が必要としているのが <code>LLVM 3.9.x</code> で、Homebrew でインストールした LLVM が <code>LLVM version... 4.0.0</code> だからのようです。</p>
+<h2 id="対処">対処</h2>
+<blockquote>
+<p>インストールしたLLVMのヴァージョンは3.9.1で、llvmliteが必要とするLLVMのヴァージョンは3.8.xらしいので、ヴァージョンを落としてLLVMをインストールする必要があるみたいです。</p>
+<p>上手くいった手順</p>
+<p>s-1. llvmのインストール <code>brew install homebrew/versions/llvm38</code><br>
+s-2. <code>export LLVM_CONFIG=/usr/local/Cellar/llvm38/3.8.1/bin/llvm-config-3.8</code><br>
+s-3. llvmlite のインストール <code>pip3 install llvmlite</code><br>
+s-4. numbaのインストール <code>pip3 install numba</code></p>
+<p><cite><a href="http://inarizuuuushi.hatenablog.com/entry/2016/12/25/014111">Python Numba のインストール - サブロウ丸</a></cite></p>
+</blockquote>
+<p>LLVM のバージョンを落としてインストールすれば良さそうです。</p>
+<h2 id="続く">続く</h2>
+<p>Python の環境設定についての記事で言われていることが少し理解できてきました。</p>
+<p>初めてで知らないことが多いため調べながら進めることになるわけですが、本来の目的と違うことに時間がかかりすぎてしまって、意味があるのか考えてしまいました。</p>
+<p>対処にあるようにバージョンを合わせてインストールするのは面倒なので、もう素直に Anaconda をインストールしようと思います。</p>
+<p>最初から Anaconda を使えばよかった。</p>
+<h2 id="8-april-2017-追記">8 April 2017 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/71/">Docker のインストールから Docker の Anaconda(Jupyter, Numba) を使うまで</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>市場はランダムではないという証明を自分でも確認してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>市場はランダムではないという証明を自分でも確認してみました</h1>
+    
+      <div><time>June 16, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>『ラリー・ウィリアムズの短期売買法【改定第２版】』を読み直しています。
+“市場はランダムではない”という証明を自分でもやってみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6</li>
+<li>Jupyter Notebook 5.2.0</li>
+<li>NumPy 1.14.4</li>
+<li>pandas 0.23.0</li>
+<li>matplotlib 2.2.2</li>
+</ul>
+<h2 id="市場はランダムではない">市場はランダムではない</h2>
+<blockquote>
+<p>価格の動きは高いランダム性を含んではいるが、完全にランダムというわけではない。
+これを証明できなければ、本書の残りはダーツの投げ方の学習に当てたほうがよいかもしれない。
+ランダムなゲームでは、専門家の予想よりもダーツで投げて決めたほうが高いパフォーマンスを上げることができるのだから。</p>
+<p>それでは証明を始めよう。
+コインを１００回投げたら、５０回は表が出て、５０回は裏が出るものと仮定する。
+表が出ても裏が出ても、次にコインを投げたときに表と裏が出る確率はそれぞれ５０％で変わらない。
+ご存知かもしれないが、コイン、サイコロ、ルーレットは記憶を持たない。
+これはランダムなゲームなので確率は一定なのである。</p>
+<p>これが市場にも当てはまり、上げて引ける確率が常に５０％であるとするならば、上げて引けた場合、次に上げて引ける確率は５０％で、次に上げて引けた場合、次に下げて引ける確率は５０％になる。
+２回続けて下げて引けた場合も、次に下げて引ける確率は５０％だ。
+しかし、実際のトレーディングではこうはならない。
+これは、価格の動きが完全にランダムではない証拠にほかならない。</p>
+<p>表 1.1 はさまざまな市場において価格が上げて引ける確率を示したものだ。</p>
+<p>表 1.1 各銘柄－－始値より上げて引ける確率</p>
+<table>
+<thead>
+<tr>
+<th align="left">銘柄</th>
+<th align="right">確率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ポークベリー</td>
+<td align="right">51</td>
+</tr>
+<tr>
+<td align="left">綿花</td>
+<td align="right">53</td>
+</tr>
+<tr>
+<td align="left">大豆</td>
+<td align="right">51</td>
+</tr>
+<tr>
+<td align="left">小麦</td>
+<td align="right">52</td>
+</tr>
+<tr>
+<td align="left">英ポンド</td>
+<td align="right">56</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">52</td>
+</tr>
+<tr>
+<td align="left">日経</td>
+<td align="right">55</td>
+</tr>
+<tr>
+<td align="left">ユーロドル</td>
+<td align="right">57</td>
+</tr>
+<tr>
+<td align="left">T ボンド</td>
+<td align="right">52</td>
+</tr>
+<tr>
+<td align="left">S&amp;P500</td>
+<td align="right">53</td>
+</tr>
+<tr>
+<td align="left">平均</td>
+<td align="right">53.2</td>
+</tr>
+</tbody>
+</table>
+<p>何の基準も設けずに、コンピューターには寄り付きで買わせ、引けで手仕舞いさせた。
+寄り付きよりも上げて引けた確率は 50% ではなく、 53.2% と若干のひずみがある。
+価格の動きがランダムならこうはならないはずだ。</p>
+<p>「こうはならないはず」というのなら、下げて引けた翌日に寄り付きで買ってみてはどうか。
+理論的には、表 1.1 の上げて引ける確率はすべて同じく 50% になるはずである。
+理論には強いが、市場の知識にはうとい大学教授や学術研究者たちにとって、問題は実際にはこうならないことである。
+表 1.2 はそれぞれの銘柄が 1 日か、 2 日連続して下げて引けたあと、上げて引けた回数と確率を示したものだ。</p>
+<p>表 1.2 各銘柄－－1 日か 2 日下げて引けたあと、上げて引けた確率</p>
+<table>
+<thead>
+<tr>
+<th align="left">銘柄</th>
+<th align="right">確率 1</th>
+<th align="right">確率 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ポークベリー</td>
+<td align="right">55</td>
+<td align="right">55</td>
+</tr>
+<tr>
+<td align="left">綿花</td>
+<td align="right">53</td>
+<td align="right">55</td>
+</tr>
+<tr>
+<td align="left">大豆</td>
+<td align="right">56</td>
+<td align="right">56</td>
+</tr>
+<tr>
+<td align="left">小麦</td>
+<td align="right">53</td>
+<td align="right">55</td>
+</tr>
+<tr>
+<td align="left">英ポンド</td>
+<td align="right">57</td>
+<td align="right">56</td>
+</tr>
+<tr>
+<td align="left">金</td>
+<td align="right">58</td>
+<td align="right">55</td>
+</tr>
+<tr>
+<td align="left">日経</td>
+<td align="right">56</td>
+<td align="right">60</td>
+</tr>
+<tr>
+<td align="left">ユーロドル</td>
+<td align="right">59</td>
+<td align="right">56</td>
+</tr>
+<tr>
+<td align="left">T ボンド</td>
+<td align="right">54</td>
+<td align="right">52</td>
+</tr>
+<tr>
+<td align="left">S&amp;P500</td>
+<td align="right">55</td>
+<td align="right">53</td>
+</tr>
+<tr>
+<td align="left">平均</td>
+<td align="right">55.8</td>
+<td align="right">55.2</td>
+</tr>
+</tbody>
+</table>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第２版】 第 1 章 短期のカオスのなかに秩序を見いだす</cite></p>
+</blockquote>
+<p>ランダムなデータは 50% になって、市場のデータは 50% にならないことを確認してみます。</p>
+<h2 id="ヒストリカルデータ">ヒストリカルデータ</h2>
+<p><a href="/post/162/">以前の記事</a>で作った日足のデータを使います。</p>
+<h2 id="米ドル円">米ドル／円</h2>
+<p>ここから Jupyter Notebook のセルに入力しながら進めます。</p>
+<p>最初に必要なモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>ヒストリカルデータを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dtype <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+names <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/data/d/USDJPY_D.csv</span><span style="color:#e6db74">&#39;</span>, dtype<span style="color:#f92672">=</span>dtype, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, names<span style="color:#f92672">=</span>names, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><p>上がるか下がるかだけ分かればいいので、 1 日の値幅を計算しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">-</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]
+s<span style="color:#f92672">.</span>head()
+</code></pre></div><p>最初に、上げて引けた確率です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s[s <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.4988241442383068
+</code></pre><p>50% よりわずかに少ないみたいです。</p>
+<p>次に、 1 日下げて引けたあと、上げて引けた確率です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s1 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>)
+s[(s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s[(s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.5237341772151899
+</code></pre><p>52.3% になりました。
+2% だけ偏るっていうのはすごいことなのかな？</p>
+<p>最後に、 2 日連続して下げて引けたあと、上げて引けた確率です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s2 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>)
+s[(s2 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s[(s2 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.5335570469798657
+</code></pre><p>53.3% になりました。
+また少し上がりました。</p>
+<p>21 通貨ペアの平均も確認してみました。
+次のようになりました。</p>
+<ul>
+<li>上げて引けた確率: 50.2%</li>
+<li>1 日下げて引けたあと、上げて引けた確率: 51.5%</li>
+<li>2 日連続して下げて引けたあと、上げて引けた確率: 52.0%</li>
+</ul>
+<p>ラリー・ウィリアムズが確認したみたいに 55% まで高くありませんでした。
+ユーロ／豪ドル、米ドル／香港ドルがともに 45% 程度になっていました。
+これが足を引っ張っていたのかもしれません。
+けれども 60% になるものもなかったので、やっぱりそれほど高くはないのかもしれません。</p>
+<h2 id="ランダムなデータ">ランダムなデータ</h2>
+<p>ランダムなデータを作りました。
+サイズは 5000 にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], size<span style="color:#f92672">=</span><span style="color:#ae81ff">5000</span>))
+s<span style="color:#f92672">.</span>head()
+</code></pre></div><p>最初に、上げて引けた確率です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s[s <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.493
+</code></pre><p>50% にはなりませんでした。</p>
+<p>次に、 1 日下げて引けたあと、上げて引けた確率です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s1 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>)
+s[(s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s[(s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.4905288082083662
+</code></pre><p>49.0% になりました。
+下がりました。</p>
+<p>最後に、 2 日連続して下げて引けたあと、上げて引けた確率です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s2 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>)
+s[(s2 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count() <span style="color:#f92672">/</span> s[(s2 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (s1 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)]<span style="color:#f92672">.</span>count()
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">0.5011618900077459
+</code></pre><p>50.1% になりました。
+今度は上がりました。
+ランダムな結果になっていい感じです。</p>
+<p>これを 20 回やって平均してみました。
+結果はそれぞれ次のようになっていました。</p>
+<ul>
+<li>上げて引けた確率: 50.1%</li>
+<li>1 日下げて引けたあと、上げて引けた確率: 50.3%</li>
+<li>2 日連続して下げて引けたあと、上げて引けた確率: 50.4%</li>
+</ul>
+<p>20 回の平均はわずかに上がっていっていました。
+けれどもランダムなデータはどこまで続けて下げたとしても次に上がる確率は 50% になりそうです。</p>
+<h2 id="終わり">終わり</h2>
+<blockquote>
+<p>これはトレーダーにとっては驚くほどのことではない。
+私たちは市場は下がれば上がることを知っているからだ。
+これまで正確な確率は分からなかったが、たとえ分かっていたとしても、私はポジションを建てたり保持したりするのにこうした表を使うことはないだろう。
+重要なのは、 1 日下げて引けたあと、そして 2 日連続して下げて引けたあと、次に上げて引ける確率は 53.2% になるはずなのにそうはならなかったという事実である。
+これは市場がランダムではないことを物語っている。
+つまり、価格の動きにはパターンがあり、そのパターンから動きを「予測」できるわけである。
+これでダーツの投げ方を学習する必要はなくなった。</p>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第２版】 第 1 章 短期のカオスのなかに秩序を見いだす</cite></p>
+</blockquote>
+<p>2% でも下がるより上がる確率が高ければそれを活用することができるのかな？
+ちょっとまだ 2% 程度で口座残高にどう影響が出るのかイメージできないです。
+上がるか下がるかの確率だけじゃなくて、値幅も影響すると思いますし、そう簡単に言えることじゃないのかもしれません。</p>
+<p><a href="https://gist.github.com/va2577/62da31507ade5f4ff5111501def75cff">Gist</a> に Jupyter Notebook をアップロードしました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

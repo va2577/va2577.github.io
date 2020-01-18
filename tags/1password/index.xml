@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1Password on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/1password/</link>
+    <description>Recent content in 1Password on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 May 2018 22:20:10 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/1password/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Windows の 1Password がアップデートされました</title>
+      <link>https://va2577.github.io/post/180/</link>
+      <pubDate>Wed, 30 May 2018 22:20:10 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/180/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/180-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Windows の 1Password がアップデートされて便利になっていました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

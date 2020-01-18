@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>経済指標カレンダーと各種レートと取引数量計算とREACT - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>経済指標カレンダーと各種レートと取引数量計算とReact</h1>
+    
+      <div><time>March 9, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>外国為替証拠金取引(FX, Forex, Foreign eXchange)で毎日使うもののページにしました。
+経済指標カレンダーとFX、指数、商品先物、金利と債券のレートはブログパーツがあったので、導入してみました。
+資金管理の取引数量計算は <a href="https://facebook.github.io/react/">React</a> を使って実装してみました。
+コンポーネントとかは全く意識してません。the transformation in the browser.</p>
+<h2 id="経済指標カレンダー">経済指標カレンダー</h2>
+<iframe src="http://ec.jp.forexprostools.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone,timeselector,filters&countries=5,4,10,14,48,25,6,36,12,26,41,17,43,22,32,42,72,37,110,46,35,11,39&calType=week&timeZone=29&lang=11" width="650" height="467" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe><div class="poweredBy" style="font-family: Arial, Helvetica, sans-serif;"><span style="font-size: 11px;color: #333333;text-decoration: none;">金融ポータルサイト、<a href="http://jp.investing.com/" rel="nofollow" target="_blank" style="font-size: 11px;color: #06529D; font-weight: bold;" class="underline_link">Investing.com 日本</a>によって提供されている経済カレンダー</span></div>
+<h2 id="市場相場表">市場相場表</h2>
+<iframe frameborder="0" scrolling="no" height="350" width="300" allowtransparency="true" marginwidth="0" marginheight="0" src="http://tools.jp.forexprostools.com/market_quotes.php?tabs=1,2,3,4&tab_1=1,2,3,5,9,11,49&tab_2=27,166,167,172,174,179,40830&tab_3=8830,8831,8833,8836,8849,8862,8988&tab_4=8880,8907,8900,8899,8886,8895,8986&select_color=000000&default_color=0059b0"></iframe><br /><div style="width:300"><span style="font-size: 11px;color: #333333;text-decoration: none;">市場相場は<a href="http://jp.investing.com/" rel="nofollow" target="_blank" style="font-size: 11px;color: #06529D; font-weight: bold;" class="underline_link">Investing.com 日本</a> によって機能されている</span></div>
+<h2 id="取引数量計算">取引数量計算</h2>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+<div id="calculation"></div>
+<script type="text/babel">
+  const style = {
+    number: {
+      color: "#555",
+      fontFamily: 'Avenir, "Open Sans", "Helvetica Neue", Helvetica',
+      fontSize: "14px",
+      textAlign: "right"
+    }
+  };
+  class Calculation extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        value: '1,000,000',
+        b: '1',
+        c: '20',
+        d: '100.00',
+        e: '0'
+      };
+    }
+    componentDidMount() {
+      this.calculate();
+    }
+    render() {
+      return (
+        <div>
+          <form>
+            <table>
+              <tbody>
+                <tr>
+                  <td width="30%">
+                    資金(¥)
+                  </td>
+                  <td width="70%">
+                    <input type="text"
+                      value={ this.state.value }
+                      onChange={ this.handleChange.bind(this) }
+                      onFocus={ this.handleFocus.bind(this) }
+                      onBlur={ this.handleBlur.bind(this) }
+                      pattern="\d*"
+                      placeholder="資金"
+                      style={ style.number } />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    リスク(%)
+                  </td>
+                  <td>
+                    <input type="text"
+                      value={ this.state.b }
+                      onChange={ this.handleChangeB.bind(this) }
+                      pattern="\d*"
+                      placeholder="リスク"
+                      style={ style.number } />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    ストップ(pips)
+                  </td>
+                  <td>
+                    <input type="text"
+                      value={ this.state.c }
+                      onChange={ this.handleChangeC.bind(this) }
+                      pattern="\d*"
+                      placeholder="ストップ"
+                      style={ style.number } />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    ドル円(¥)
+                  </td>
+                  <td>
+                    <input type="text"
+                      value={ this.state.d }
+                      onChange={ this.handleChangeD.bind(this) }
+                      pattern="\d*"
+                      placeholder="ドル円"
+                      style={ style.number } />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    取引数量(万通貨)
+                  </td>
+                  <td>
+                    <span>{ this.state.e }</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      );
+    }
+    addComma(v) {
+      return v.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    }
+    removeComma(v) {
+      return v.replace(/,/g, '');
+    }
+    calculate() {
+      const v = this.state.value ? this.removeComma(this.state.value) : '';
+      if (!v || isNaN(v)) return;
+      if (!this.state.b || isNaN(this.state.b)) return;
+      if (!this.state.c || isNaN(this.state.c)) return;
+      if (!this.state.d || isNaN(this.state.d)) return;
+      this.setState({ e: (Number(v) * Number(this.state.b) / 100 / Number(this.state.c) / Number(this.state.d)).toFixed(2) });
+    }
+    handleChange(event) {
+      this.setState({ value: event.target.value }, this.calculate.bind(this));
+    }
+    handleFocus(event) {
+      this.setState({ value: this.removeComma(event.target.value) }, this.calculate.bind(this));
+    }
+    handleBlur(event) {
+      this.setState({ value: this.addComma(event.target.value) }, this.calculate.bind(this));
+    }
+    handleChangeB(event) {
+      this.setState({ b: event.target.value }, this.calculate.bind(this));
+    }
+    handleChangeC(event) {
+      this.setState({ c: event.target.value }, this.calculate.bind(this));
+    }
+    handleChangeD(event) {
+      this.setState({ d: event.target.value }, this.calculate.bind(this));
+    }
+  };
+  ReactDOM.render(
+    <Calculation />,
+    document.getElementById('calculation')
+  );
+</script>
+<h3 id="各項目について">各項目について</h3>
+<ul>
+<li>資金
+<ul>
+<li>口座残高</li>
+<li>円</li>
+</ul>
+</li>
+<li>リスク
+<ul>
+<li>1トレード当たりで許容する損失</li>
+<li>資金に対する比率</li>
+<li>%</li>
+<li>1~2%程度を破産しない目安とする</li>
+</ul>
+</li>
+<li>ストップ
+<ul>
+<li>1トレードで許容する損失</li>
+<li>pips数</li>
+</ul>
+</li>
+<li>ドル円
+<ul>
+<li>クロス円の通貨ペアのトレードは100円とする</li>
+<li>クロス円以外は1トレードの損失を円換算で計算するためにドル円のレートを入力する</li>
+</ul>
+</li>
+<li>取引数量
+<ul>
+<li>(リスク × 資金) ÷ (ストップ × ドル円) = (定率 × 口座残高) ÷ 個々のトレードリスク = 取引枚数</li>
+<li>定率による資金管理</li>
+<li>「システムトレード 基本と原則：トレーディングで勝者と敗者を分けるもの」(ブレント・ペンフォールド)</li>
+<li>逆マーチンゲール(パーレー)</li>
+<li>口座残高が増えるとリスクをとれる資金も多くなるので、取引枚数も増やすことができる</li>
+<li>同様に、口座残高が減るとリスクをとれる資金も少なくなるので、取引枚数を減らすしかない</li>
+</ul>
+</li>
+</ul>
+<h3 id="ソース">ソース</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;取引数量計算&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;calculation&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/babel&#34;</span>&gt;
+      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">style</span> <span style="color:#f92672">=</span> {
+        <span style="color:#a6e22e">number</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#555&#34;</span>,
+          <span style="color:#a6e22e">fontFamily</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Avenir, &#34;Open Sans&#34;, &#34;Helvetica Neue&#34;, Helvetica&#39;</span>,
+          <span style="color:#a6e22e">fontSize</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;14px&#34;</span>,
+          <span style="color:#a6e22e">textAlign</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;right&#34;</span>
+        }
+      };
+      <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Calculation</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">React</span>.<span style="color:#a6e22e">Component</span> {
+        <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">props</span>) {
+          <span style="color:#66d9ef">super</span>(<span style="color:#a6e22e">props</span>);
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span> <span style="color:#f92672">=</span> {
+            <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;1,000,000&#39;</span>,
+            <span style="color:#a6e22e">b</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;1&#39;</span>,
+            <span style="color:#a6e22e">c</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;20&#39;</span>,
+            <span style="color:#a6e22e">d</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;100.00&#39;</span>,
+            <span style="color:#a6e22e">e</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;0&#39;</span>
+          };
+        }
+        <span style="color:#a6e22e">componentDidMount</span>() {
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">calculate</span>();
+        }
+        <span style="color:#a6e22e">render</span>() {
+          <span style="color:#66d9ef">return</span> (
+            <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">div</span><span style="color:#f92672">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">form</span><span style="color:#f92672">&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">table</span><span style="color:#f92672">&gt;</span>
+                  <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tbody</span><span style="color:#f92672">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tr</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;30%&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#a6e22e">資金</span>(<span style="color:#960050;background-color:#1e0010">¥</span>)
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;70%&#34;</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>
+                          <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">value</span> }
+                          <span style="color:#a6e22e">onChange</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChange</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>) }
+                          <span style="color:#a6e22e">onFocus</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleFocus</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>) }
+                          <span style="color:#a6e22e">onBlur</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleBlur</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>) }
+                          <span style="color:#a6e22e">pattern</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;\d*&#34;</span>
+                          <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;資金&#34;</span>
+                          <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">number</span> } <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tr</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#a6e22e">リスク</span>(<span style="color:#f92672">%</span>)
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>
+                          <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">b</span> }
+                          <span style="color:#a6e22e">onChange</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChangeB</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>) }
+                          <span style="color:#a6e22e">pattern</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;\d*&#34;</span>
+                          <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;リスク&#34;</span>
+                          <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">number</span> } <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tr</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#a6e22e">ストップ</span>(<span style="color:#a6e22e">pips</span>)
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>
+                          <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">c</span> }
+                          <span style="color:#a6e22e">onChange</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChangeC</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>) }
+                          <span style="color:#a6e22e">pattern</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;\d*&#34;</span>
+                          <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ストップ&#34;</span>
+                          <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">number</span> } <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tr</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#a6e22e">ドル円</span>(<span style="color:#960050;background-color:#1e0010">¥</span>)
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>
+                          <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">d</span> }
+                          <span style="color:#a6e22e">onChange</span><span style="color:#f92672">=</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">handleChangeD</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>) }
+                          <span style="color:#a6e22e">pattern</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;\d*&#34;</span>
+                          <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ドル円&#34;</span>
+                          <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span>{ <span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">number</span> } <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">tr</span><span style="color:#f92672">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#a6e22e">取引数量</span>(<span style="color:#a6e22e">万通貨</span>)
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">td</span><span style="color:#f92672">&gt;</span>
+                        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">span</span><span style="color:#f92672">&gt;</span>{ <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">e</span> }<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">s</span><span style="color:#960050;background-color:#1e0010">p</span><span style="color:#960050;background-color:#1e0010">a</span><span style="color:#960050;background-color:#1e0010">n</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                      <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                  <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">b</span><span style="color:#960050;background-color:#1e0010">o</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">y</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+                <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">a</span><span style="color:#960050;background-color:#1e0010">b</span><span style="color:#960050;background-color:#1e0010">l</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+              <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">f</span><span style="color:#960050;background-color:#1e0010">o</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">m</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+            <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">i</span><span style="color:#960050;background-color:#1e0010">v</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+          );
+        }
+        <span style="color:#a6e22e">addComma</span>(<span style="color:#a6e22e">v</span>) {
+          <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/(\d)(?=(\d\d\d)+(?!\d))/g</span>, <span style="color:#e6db74">&#39;$1,&#39;</span>);
+        }
+        <span style="color:#a6e22e">removeComma</span>(<span style="color:#a6e22e">v</span>) {
+          <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/,/g</span>, <span style="color:#e6db74">&#39;&#39;</span>);
+        }
+        <span style="color:#a6e22e">calculate</span>() {
+          <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">v</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">?</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">removeComma</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">value</span>) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>;
+          <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">v</span> <span style="color:#f92672">||</span> isNaN(<span style="color:#a6e22e">v</span>)) <span style="color:#66d9ef">return</span>;
+          <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">b</span> <span style="color:#f92672">||</span> isNaN(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">b</span>)) <span style="color:#66d9ef">return</span>;
+          <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">c</span> <span style="color:#f92672">||</span> isNaN(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">c</span>)) <span style="color:#66d9ef">return</span>;
+          <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">d</span> <span style="color:#f92672">||</span> isNaN(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">d</span>)) <span style="color:#66d9ef">return</span>;
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({ <span style="color:#a6e22e">e</span><span style="color:#f92672">:</span> (Number(<span style="color:#a6e22e">v</span>) <span style="color:#f92672">*</span> Number(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">b</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">/</span> Number(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">c</span>) <span style="color:#f92672">/</span> Number(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">d</span>)).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">2</span>) });
+        }
+        <span style="color:#a6e22e">handleChange</span>(<span style="color:#a6e22e">event</span>) {
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({ <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span> }, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">calculate</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>));
+        }
+        <span style="color:#a6e22e">handleFocus</span>(<span style="color:#a6e22e">event</span>) {
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({ <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">removeComma</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span>) }, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">calculate</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>));
+        }
+        <span style="color:#a6e22e">handleBlur</span>(<span style="color:#a6e22e">event</span>) {
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({ <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">addComma</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span>) }, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">calculate</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>));
+        }
+        <span style="color:#a6e22e">handleChangeB</span>(<span style="color:#a6e22e">event</span>) {
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({ <span style="color:#a6e22e">b</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span> }, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">calculate</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>));
+        }
+        <span style="color:#a6e22e">handleChangeC</span>(<span style="color:#a6e22e">event</span>) {
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({ <span style="color:#a6e22e">c</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span> }, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">calculate</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>));
+        }
+        <span style="color:#a6e22e">handleChangeD</span>(<span style="color:#a6e22e">event</span>) {
+          <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">setState</span>({ <span style="color:#a6e22e">d</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span> }, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">calculate</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>));
+        }
+      };
+      <span style="color:#a6e22e">ReactDOM</span>.<span style="color:#a6e22e">render</span>(
+        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">Calculation</span> <span style="color:#f92672">/</span><span style="color:#f92672">&gt;</span>,
+        document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;calculation&#39;</span>)
+      );
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>ECMAScript® 2015で書いてみました。
+最初<code>this</code>を使っているところでエラーになりました。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://facebook.github.io/react/docs/reusable-components.html#es6-classes">Reusable Components | React</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

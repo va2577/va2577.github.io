@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON(NUMPY, PANDAS) で最大ドローダウンを計算してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python(NumPy, pandas) で最大ドローダウンを計算してみました</h1>
+    
+      <div><time>May 21, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>バックテストをしていて最大ドローダウンを計算したかったので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Python 3.5.2</li>
+<li>pandas 0.22.0</li>
+<li>NumPy 1.14.3</li>
+</ul>
+<h2 id="最大ドローダウン">最大ドローダウン</h2>
+<blockquote>
+<p>最大資産（累積利益）からの下落率のこと。システムトレードなどでは、最大ドローダウン(下落率)をどれだけに設定するかがリスク管理の観点から重要な要素の一つとなる。</p>
+<p><cite><a href="https://www.nomura.co.jp/terms/japan/to/A01914.html">野村證券 | ドローダウン（証券用語解説集）</a></cite></p>
+</blockquote>
+<h2 id="stack-overflow">Stack Overflow</h2>
+<p>検索したら Stack Overflow に同じ質問をしていた人がいました。</p>
+<blockquote>
+<p>Just find out where running maximum minus current value is largest:</p>
+<pre><code>n = 1000
+xs = np.random.randn(n).cumsum()
+i = np.argmax(np.maximum.accumulate(xs) - xs) # end of the period
+j = np.argmax(xs[:i]) # start of period
+
+plt.plot(xs)
+plt.plot([i, j], [xs[i], xs[j]], 'o', color='Red', markersize=10)
+</code></pre>
+<p><cite><a href="https://stackoverflow.com/questions/22607324/start-end-and-duration-of-maximum-drawdown-in-python">numpy - Start, End and Duration of Maximum Drawdown in Python - Stack Overflow</a></cite></p>
+</blockquote>
+<p>計算しているのは 3 行だけみたいです。
+これだけで計算できてしまうのですね。</p>
+<h2 id="関数">関数</h2>
+<p>NumPy はあまり使ったことがないのでそれぞれが何をしているのかよくわかりませんでした。
+なので、それぞれの関数を調べてみました。</p>
+<h3 id="randn">randn</h3>
+<blockquote>
+<p>Return a sample (or samples) from the “standard normal” distribution.</p>
+<p><cite><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.randn.html">numpy.random.randn</a></cite></p>
+</blockquote>
+<p>名前からしてもランダムな値を返してくれそうです。
+引数に指定した数だけ配列を作ってランダムな値を返してくれるようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random(<span style="color:#ae81ff">3</span>)
+</code></pre></div><p>結果です。</p>
+<pre><code>array([0.23766355, 0.23769627, 0.38886935])
+</code></pre><p>randn はテストデータを作るために使っているようなので、最大ドローダウンの計算とはあまり関係ないみたいでした。</p>
+<h3 id="cumsum">cumsum</h3>
+<blockquote>
+<p>Return the cumulative sum of the elements along a given axis.</p>
+<p><cite><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.cumsum.html">numpy.cumsum</a></cite></p>
+</blockquote>
+<p>合計しながら累積してくれる関数のようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">l <span style="color:#f92672">=</span> [<span style="color:#f92672">-</span><span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">7675</span>, <span style="color:#ae81ff">965</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8790</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3463</span>, <span style="color:#ae81ff">18715</span>, <span style="color:#ae81ff">2526</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5699</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6384</span>, <span style="color:#ae81ff">4865</span>]
+ndarray1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l)<span style="color:#f92672">.</span>cumsum()
+ndarray1
+</code></pre></div><p>結果です。</p>
+<pre><code>array([  -20,  7655,  8620,  -170, -3633, 15082, 17608, 11909,  5525, 10390])
+</code></pre><p>こういう関数は JavaScript にはない気がします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cumsum</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">a</span>) =&gt; (
+  <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">reduce</span>((<span style="color:#a6e22e">pv</span>, <span style="color:#a6e22e">cv</span>) =&gt; {
+    <span style="color:#a6e22e">pv</span>.<span style="color:#a6e22e">push</span>((<span style="color:#a6e22e">pv</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">pv</span>[<span style="color:#a6e22e">pv</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">+</span> <span style="color:#a6e22e">cv</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">pv</span>
+  }, [])
+)
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">cumsum</span>([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]))
+<span style="color:#75715e">// [ 1, 3, 6, 10, 15 ]
+</span></code></pre></div><p>関係ないですけれども、 JavaScript で cumsum を実装してみました。
+アキュムレーターの <code>pv</code> に <code>push</code> しているのがなんか気持ち悪いです。</p>
+<p>話を戻して。
+cumsum した結果のグラフを載せておきます。</p>
+<p><img src="/img/171-01.png" alt=""></p>
+<h3 id="accumulate">accumulate</h3>
+<blockquote>
+<p>Accumulate the result of applying the operator to all elements.</p>
+<p><cite><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ufunc.accumulate.html">numpy.ufunc.accumulate</a></cite></p>
+</blockquote>
+<p>numpy.ufunc.accumulate は、すべての要素に ufunc を適用しながら累積してくれるようです。</p>
+<p>ちょっと、 <code>numpy.cumsum</code> の &ldquo;cumulative&rdquo; と、 <code>numpy.ufunc.accumulate</code> の &ldquo;Accumulate&rdquo; の違いが気になったので調べてみました。</p>
+<p>なんで &ldquo;accumulate&rdquo; の方は &ldquo;ac-&rdquo; がついているのかな？</p>
+<blockquote>
+<p>ac‐</p>
+<p>音節ac‐ 発音記号・読み方/æk/</p>
+<p>【接頭辞】</p>
+<p>(c，q，k の前にくるときの) ad‐ の異形.</p>
+<p><cite><a href="https://ejje.weblio.jp/content/ac">acの意味・使い方 - 英和辞典 Weblio辞書</a></cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>ad‐</p>
+<p>音節ad‐ 発音記号・読み方/æd, əd/</p>
+<p>【接頭辞】</p>
+<p>「…へ」「…に」 《★「移動」「方向」「変化」「完成」「近似」「固着」「付加」「増加」「開始」の意，また単なる強意》.</p>
+<p><cite><a href="https://ejje.weblio.jp/content/ad">adの意味・使い方 - 英和辞典 Weblio辞書</a></cite></p>
+</blockquote>
+<p>&ldquo;ac-&rdquo; は &ldquo;ad-&rdquo; の異形のようです。
+「変化」とか「増加」とかの意味がありそうかな。</p>
+<p>次は、なんで &ldquo;cumulative&rdquo; の方は &ldquo;-tive&rdquo; で、 &ldquo;Accumulate&rdquo; の方は &ldquo;-late&rdquo; なのかな？</p>
+<blockquote>
+<p>cumulate と accumulate はどう違いますか？</p>
+<p>In both of those sentences &ldquo;accumulate&rdquo; is correct.
+&ldquo;Cumulate&rdquo; might also be correct but it's not really a commonly-used word. I don't think a native English speaker would ever use cumulate in those contexts
+Related words like cumulative are more common but I never hear people use the word cumulate in everyday speech.</p>
+<p><cite><a href="https://hinative.com/ja/questions/230147">cumulate と accumulate はどう違いますか？ | HiNative</a></cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>What is the difference between “accumulative” and “cumulative”?</p>
+<p>I'm having a hard time understanding the real distinction between accumulative and cumulative.</p>
+<p><cite><a href="https://english.stackexchange.com/questions/47169/what-is-the-difference-between-accumulative-and-cumulative#47171">meaning - What is the difference between &ldquo;accumulative&rdquo; and &ldquo;cumulative&rdquo;? - English Language &amp; Usage Stack Exchange</a></cite></p>
+</blockquote>
+<p>英語を母国語とする人でも単語の意味を質問するんだ？と思いましたが、日本人も日本語の単語を質問しているので、当然と言えば当然か、と思いました。</p>
+<p>cumulative と Accumulate ってどちらも &ldquo;累積&rdquo; のような意味があるみたいです。
+細かい違いはわからないですけれども。
+形容詞的に使う場合は cumulative を使うことが多いのかな。
+動詞的に使う場合は Accumulate を使うことが多いのかな。
+上の引用の回答から察するとそう感じました。</p>
+<p>話を戻して。</p>
+<blockquote>
+<p>A universal function (or ufunc for short) is a function that operates on ndarrays in an element-by-element fashion, supporting array broadcasting, type casting, and several other standard features. That is, a ufunc is a “vectorized” wrapper for a function</p>
+<p><cite><a href="https://docs.scipy.org/doc/numpy/reference/ufuncs.html">Universal functions (ufunc)</a></cite></p>
+</blockquote>
+<p>ufunc 自体の説明は読んでもあまりよくわかりませんでした。
+<code>numpy.ufunc.accumulate</code> で言うと、 accumulate (累積)しながら Universal (汎用)な関数 (ufunc) を適用してくれるものだと認識しました。</p>
+<blockquote>
+<p>Examples</p>
+<p>1-D array examples:</p>
+<pre><code>&gt;&gt;&gt; np.add.accumulate([2, 3, 5])
+array([ 2,  5, 10])
+&gt;&gt;&gt; np.multiply.accumulate([2, 3, 5])
+array([ 2,  6, 30])
+</code></pre>
+<p><cite><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ufunc.accumulate.html">numpy.ufunc.accumulate — NumPy v1.14 Manual</a></cite></p>
+</blockquote>
+<p>accumulate の Examples を見ると、 add という ufunc で加算しながら累積できて、 multiply という ufunc で乗算しながら累積できることがわかりました。
+<code>np.add.accumulate</code> は <code>numpy.cumsum</code> と同じ意味ですね。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ndarray2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>maximum<span style="color:#f92672">.</span>accumulate(ndarray1)
+ndarray2
+</code></pre></div><p>結果です。</p>
+<pre><code>array([  -20,  7655,  8620,  8620,  8620, 15082, 17608, 17608, 17608, 17608])
+</code></pre><p>グラフを載せておきます。</p>
+<p><img src="/img/171-02.png" alt=""></p>
+<p>このグラフの 2 つのラインの差が一番大きいところが最大ドローダウンになるみたいです。
+パッと見た感じではインデックスが 4 のところぽいですけれども、どうかな。</p>
+<h3 id="basic-operations">Basic Operations</h3>
+<blockquote>
+<p>Arithmetic operators on arrays apply elementwise. A new array is created and filled with the result.</p>
+<p><cite><a href="https://docs.scipy.org/doc/numpy/user/quickstart.html#basic-operations">Basic Operations</a></cite></p>
+</blockquote>
+<p>NumPy の ndarray 同士を算術演算子で計算することができるみたいです。
+要素ごとの計算を繰り返しの処理なしに 1 行で記述できてしまうみたいです。
+NumPy 便利です。</p>
+<p>np.maximum.accumulate した結果から cumsum した結果を減算します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ndarray3 <span style="color:#f92672">=</span> ndarray2 <span style="color:#f92672">-</span> ndarray1
+ndarray3
+</code></pre></div><p>結果です。</p>
+<pre><code>array([    0,     0,     0,  8790, 12253,     0,     0,  5699, 12083,  7218])
+</code></pre><p>やっぱりインデックス 4 のところが一番大きいみたいでした。</p>
+<h3 id="max">max</h3>
+<p>Stack Overflow の質問では最大ドローダウンの値を求めてはいないみたいでしたが、今回は値を求めたかったので、 <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html">numpy.amax</a> 関数を使ってみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">np<span style="color:#f92672">.</span>amax(ndarray3)
+</code></pre></div><p>結果です。</p>
+<pre><code>12253
+</code></pre><p>インデックス 4 のところの 12253 の値を求めることができました。</p>
+<p>なので、最大ドローダウンは 12,253 ということになります。
+最大ドローダウンは口座残高の 20% 程度におさまるといいなと思っているのですけれども、そんな売買ルールができるかな。</p>
+<h2 id="numpy-の-ndarray-を使って最大ドローダウンを計算する関数">NumPy の ndarray を使って最大ドローダウンを計算する関数</h2>
+<p>最大ドローダウンを計算する関数にしてみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mdd</span>(a):
+    a1 <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>cumsum()
+    a2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>maximum<span style="color:#f92672">.</span>accumulate(a1)
+    a3 <span style="color:#f92672">=</span> a2 <span style="color:#f92672">-</span> a1
+    <span style="color:#66d9ef">return</span> a3<span style="color:#f92672">.</span>max()
+
+mdd(np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span><span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">7675</span>, <span style="color:#ae81ff">965</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8790</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3463</span>, <span style="color:#ae81ff">18715</span>, <span style="color:#ae81ff">2526</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5699</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6384</span>, <span style="color:#ae81ff">4865</span>]))
+</code></pre></div><p>結果です。</p>
+<pre><code>12253
+</code></pre><h2 id="pandas-の-series-を使って最大ドローダウンを計算する関数">pandas の Series を使って最大ドローダウンを計算する関数</h2>
+<p>pandas でもできそうでしたので、同じように最大ドローダウンを計算する関数にしてみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mdd</span>(s):
+    s1 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>cumsum()
+    s2 <span style="color:#f92672">=</span> s1<span style="color:#f92672">.</span>cummax()
+    s3 <span style="color:#f92672">=</span> s2 <span style="color:#f92672">-</span> s1
+    <span style="color:#66d9ef">return</span> s3<span style="color:#f92672">.</span>max()
+
+mdd(pd<span style="color:#f92672">.</span>Series([<span style="color:#f92672">-</span><span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">7675</span>, <span style="color:#ae81ff">965</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8790</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3463</span>, <span style="color:#ae81ff">18715</span>, <span style="color:#ae81ff">2526</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5699</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6384</span>, <span style="color:#ae81ff">4865</span>]))
+</code></pre></div><p><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.cumsum.html">cumsum</a> と
+<a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.cummax.html">cummax</a> と
+<a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.max.html">max</a> の関数を使ってみました。</p>
+<p>結果です。</p>
+<pre><code>12253
+</code></pre><h2 id="gist-のソース">Gist のソース</h2>
+<p>調べたことを Jupyter Notebook にして <a href="https://gist.github.com/va2577/9d59dc85a0f2e91943f7ad45a91ec56a">Gist</a> にアップしました。</p>
+<h2 id="終わり">終わり</h2>
+<p>こういうのを調べてみて NumPy や pandas の便利なところが少しずつ分かってきた気がします。</p>
+<h2 id="27-sep-2018-追記">27 Sep 2018 追記</h2>
+<p>最大ドローダウン率も計算してみました。</p>
+<p>NumPy</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mddr</span>(a):
+    a1 <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>cumsum()
+    a2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>maximum<span style="color:#f92672">.</span>accumulate(a1)
+    a3 <span style="color:#f92672">=</span> a2 <span style="color:#f92672">-</span> a1
+    i <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax(a3)
+    r <span style="color:#f92672">=</span> (a2[i] <span style="color:#f92672">-</span> a1[i]) <span style="color:#f92672">/</span> a2[i]
+    <span style="color:#66d9ef">return</span> r
+
+mddr(np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span><span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">7675</span>, <span style="color:#ae81ff">965</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8790</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3463</span>, <span style="color:#ae81ff">18715</span>, <span style="color:#ae81ff">2526</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5699</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6384</span>, <span style="color:#ae81ff">4865</span>]))
+</code></pre></div><p><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.argmax.html">numpy.argmax</a> を使いました。</p>
+<p>結果です。</p>
+<pre><code class="language-console" data-lang="console">1.421461716937355
+</code></pre><p>pandas</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mddr</span>(s):
+    s1 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>cumsum()
+    s2 <span style="color:#f92672">=</span> s1<span style="color:#f92672">.</span>cummax()
+    s3 <span style="color:#f92672">=</span> s2 <span style="color:#f92672">-</span> s1
+    i <span style="color:#f92672">=</span> s3<span style="color:#f92672">.</span>idxmax()
+    r <span style="color:#f92672">=</span> (s2[i] <span style="color:#f92672">-</span> s1[i]) <span style="color:#f92672">/</span> s2[i]
+    <span style="color:#66d9ef">return</span> r
+
+mddr(pd<span style="color:#f92672">.</span>Series([<span style="color:#f92672">-</span><span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">7675</span>, <span style="color:#ae81ff">965</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8790</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3463</span>, <span style="color:#ae81ff">18715</span>, <span style="color:#ae81ff">2526</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5699</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6384</span>, <span style="color:#ae81ff">4865</span>]))
+</code></pre></div><p><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.idxmax.html">pandas.Series.idxmax</a> を使いました。</p>
+<p>結果です。</p>
+<pre><code class="language-console" data-lang="console">1.421461716937355
+</code></pre>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

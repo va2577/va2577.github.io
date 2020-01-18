@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gulp on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/gulp/</link>
+    <description>Recent content in gulp on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Jan 2016 20:51:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/gulp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ECMAScript® 2015とBabelを使う</title>
+      <link>https://va2577.github.io/post/15/</link>
+      <pubDate>Sat, 23 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/15/</guid>
+      <description>&lt;p&gt;2015年6月にECMAScript® 2015の仕様が策定されました。
+しかしブラウザーで使う場合は、まだ実装されていないものもあるようです。
+そのためBabelでECMAScript 5に変換してから使うのが主流のようですが、変換する方法がいくつもあって、結局どれが良いのかわからなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

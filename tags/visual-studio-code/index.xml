@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Visual Studio Code on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/visual-studio-code/</link>
+    <description>Recent content in Visual Studio Code on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 May 2018 08:07:27 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/visual-studio-code/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Surface Windows の Visual Studio Code のスクロールがスムーズじゃなかったので調べてみました</title>
+      <link>https://va2577.github.io/post/165/</link>
+      <pubDate>Tue, 15 May 2018 08:07:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/165/</guid>
+      <description>&lt;p&gt;Windows で Visual Studio Code を使っています。
+以前から気になっていたのですが、スクロールがスムーズじゃないので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Code に WSL の Ubuntu の Git を設定する</title>
+      <link>https://va2577.github.io/post/83/</link>
+      <pubDate>Wed, 17 Jan 2018 16:49:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/83/</guid>
+      <description>&lt;p&gt;いつからだったか、Visual Studio Code を起動すると、勝手に「Git を探しています」みたいになって、「[警告] Git が見つかりません。Git をインストールするか &amp;lsquo;git.path&amp;rsquo; 設定で…」のようなメッセージが表示されるようになりました。&lt;/p&gt;
+&lt;p&gt;そのまま使っていたのですが、気になるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

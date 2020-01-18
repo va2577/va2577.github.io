@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Visual Studio on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/visual-studio/</link>
+    <description>Recent content in Visual Studio on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Sep 2016 11:25:14 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/visual-studio/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Microsoft Office 2016 の PIA がない</title>
+      <link>https://va2577.github.io/post/45/</link>
+      <pubDate>Sat, 10 Sep 2016 11:25:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/45/</guid>
+      <description>&lt;p&gt;Windows Forms で Excel を使ってアプリケーションを作っています。
+Office 2016 をインストールしたのですが、参照設定に Excel が表示されなくて、設定できませんでしたので調べました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON の PIPENV を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python の Pipenv を使ってみました</h1>
+    
+      <div><time>May 29, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Pipenv というものがあることを知りました。
+ので、使ってみたいと思います。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6.5</li>
+<li>Pipenv 2018.5.18</li>
+</ul>
+<h2 id="pipenv">Pipenv?</h2>
+<blockquote>
+<p>Pipenv は、全てのパッケージングの世界 (bundler、composer、npm、cargo、yarnなどなど。) における最高のものをPythonの世界にもたらすことを目的としたツールです。 我々の世界ではWindowsは第一級市民です。</p>
+<p><cite><a href="https://pipenv-ja.readthedocs.io/ja/translate-ja/index.html">Pipenv: 人間のためのPython開発ワークフロー — pipenv 2018.05.18 ドキュメント</a></cite></p>
+</blockquote>
+<p>Pipenv は Ruby の bundler や Node.js の npm のようなものみたいです。</p>
+<blockquote>
+<p>Pipenv is a project that aims to bring the best of all packaging worlds to the Python world. It harnesses Pipfile, pip, and virtualenv into one single toolchain. It features very pretty terminal colors.</p>
+<p><cite><a href="https://packaging.python.org/key_projects/#pipenv">Pipenv — Project Summaries — Python Packaging User Guide</a></cite></p>
+</blockquote>
+<p>Python の公式サイトにも Pipenv の記載がありました。
+Pipfile と pip と virtualenv を一つのツールチェーンに統合したもののようです。</p>
+<blockquote>
+<p>ソフトウェア分野におけるツールチェーン（英: toolchain）は、製品（典型的には他のコンピュータ用のプログラム、またはシステムプログラム）を製作するのに使われるプログラム（ツール）の集合体である。一つのツールの出力が他のツールの入力となり、連鎖的に使われることからツールチェーンと呼ばれる。</p>
+<p><cite><a href="https://ja.wikipedia.org/wiki/%E3%83%84%E3%83%BC%E3%83%AB%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3">ツールチェーン</a></cite></p>
+</blockquote>
+<p>toolchain という単語をあまり使ったことがありませんでしたが、プログラム（ツール）の集合体のことみたいです。</p>
+<!-- > Optionally, create a virtual environment
+>
+> See section below for details, but here’s the basic venv [3] command to use on a typical Linux system:
+>
+>     python3 -m venv tutorial_env
+>     source tutorial_env/bin/activate
+>
+> <cite></cite> -->
+<blockquote>
+<p>Currently, there are two common tools for creating Python virtual environments:</p>
+<ul>
+<li><a href="https://docs.python.org/3/library/venv.html">venv</a> is available by default in Python 3.3 and later, and installs <a href="https://packaging.python.org/key_projects/#pip">pip</a> and <a href="https://packaging.python.org/key_projects/#setuptools">setuptools</a> into created virtual environments in Python 3.4 and later.</li>
+<li><a href="https://packaging.python.org/key_projects/#virtualenv">virtualenv</a> needs to be installed separately, but supports Python 2.6+ and Python 3.3+, and <a href="https://packaging.python.org/key_projects/#pip">pip</a>, <a href="https://packaging.python.org/key_projects/#setuptools">setuptools</a> and <a href="https://packaging.python.org/key_projects/#wheel">wheel</a> are always installed into created virtual environments by default (regardless of Python version).</li>
+</ul>
+<p>The basic usage is like so:</p>
+<p>Using <a href="https://packaging.python.org/key_projects/#virtualenv">virtualenv</a>:</p>
+<pre><code>virtualenv &lt;DIR&gt;
+source &lt;DIR&gt;/bin/activate
+</code></pre>
+<p>Using <a href="https://docs.python.org/3/library/venv.html">venv</a>:</p>
+<pre><code>python3 -m venv &lt;DIR&gt;
+source &lt;DIR&gt;/bin/activate
+</code></pre>
+<p>For more information, see the [virtualenv](For more information, see the virtualenv docs or the venv docs.) docs or the <a href="https://docs.python.org/3/library/venv.html">venv</a> docs.</p>
+<p><cite><a href="https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments">Creating Virtual Environments</a></cite></p>
+</blockquote>
+<p>今までは <code>python3 -m venv &lt;DIR&gt;</code> を使って仮想環境を作って、仮想環境の中で <code>pip</code> を使ってパッケージをインストールしていました。
+それぞれコマンドが異なるので面倒と言えば面倒でした。
+仮想環境を作る方法も virtualenv と venv の 2 種類あったみたいで煩わしいですし。
+それらが統合されたら嬉しいかもしれません。</p>
+<p>それから、 virtualenv は、仮想環境を有効にするのに <code>source &lt;DIR&gt;/bin/activate</code> をして、無効にするのに <code>deactivate</code> をしなきゃいけません。
+これはけっこう面倒でした。</p>
+<p>もっと気になっているのは、仮想環境のディレクトリーを移動すると、また仮想環境を作り直さなきゃいけない (<code>python3 -m venv &lt;DIR&gt;</code>) ところです。
+(コマンド 1 回だけ実行すれば済む話ですけれども)
+(<code>--without-pip</code> で仮想環境を作っている場合は <code>python get-pip.py</code> も実行する必要がありますけれども)
+これは、 &lt;DIR&gt;/bin/activate の中に記述されている仮想環境のディレクトリーへの絶対パスが、移動した先のディレクトリーのパスと相違してしまうためです。
+すると <code>source &lt;DIR&gt;/bin/activate</code> をしても、正しい状態で仮想環境を有効にすることができません。
+これは改善されているかな？</p>
+<h2 id="pip-のインストール">pip のインストール</h2>
+<blockquote>
+<p>pipを使いましょう:</p>
+<pre><code>$ pip install pipenv
+</code></pre>
+<p>あるいは、Ubuntu 17.10を使っている場合には次のようにします:</p>
+<pre><code>$ sudo apt install software-properties-common python-software-properties
+$ sudo add-apt-repository ppa:pypa/ppa
+$ sudo apt update
+$ sudo apt install pipenv
+</code></pre>
+<p>そうでなくMacOSを使っている場合は、Homebrewで簡単にPipenvがインストールできます:</p>
+<pre><code>$ brew install pipenv
+</code></pre>
+<p><cite><a href="https://pipenv-ja.readthedocs.io/ja/translate-ja/index.html#install-pipenv-today">さぁ今すぐこれからPipenvをインストール!</a></cite></p>
+</blockquote>
+<p>Pipenv のインストールにはいくつか方法があるようです。
+Ubuntu を使っているので <code>apt</code> を使うのがいいのかもしれません。
+が、リポジトリーの追加とかあまりしたくないので pip を使おうと思います。</p>
+<p>以前、 Ubuntu 16.04 LTS のときに<a href="/post/79/">記事</a>にしましたが、 WSL の Ubuntu 18.04 にも pip がないので pip からインストールしてみます。
+今まで pip なしで仮想環境を作って、その中に pip をインストールしていたのですが、 Pipenv でも仮想環境を作りたいです。
+すると、 Pipenv のための仮想環境の中に、アプリケーションのための仮想環境を作れなきゃいけないことになるので、よくわからないことになりそうです。
+Pipenv のための仮想環境を作るのに、毎回 <code>python3 -m venv &lt;DIR&gt;</code> を使うのも無意味な気がします。
+せっかく Pipenv を使うなら Pipenv だけで済ませたいです。</p>
+<p>シンプルにしたいので、素直に仮想環境の外に pip と Pipenv をインストールすることにしました。</p>
+<blockquote>
+<p>To install pip, securely download get-pip.py. [1]:</p>
+<pre><code>curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+</code></pre>
+<p><cite><a href="https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py">Installing with get-pip.py</a></cite></p>
+</blockquote>
+<p>pip をインストールするために get-pip.py をダウンロードします。</p>
+<pre><code>$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1603k  100 1603k    0     0  2953k      0 --:--:-- --:--:-- --:--:-- 2953k
+</code></pre><p>ダウンロードできました。</p>
+<blockquote>
+<p>Inspect get-pip.py for any malevolence. Then run the following:</p>
+<pre><code>python get-pip.py
+</code></pre>
+<p><cite><a href="https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py">Installing with get-pip.py</a></cite></p>
+</blockquote>
+<p>ダウンロードした get-pip.py ファイルを <code>python</code> コマンドで実行してあげればいいみたいです。
+ただ、このままだと /usr/ や /usr/local/ あたりのディレクトリーにインストールするようで、 <code>sudo</code> をつけてあげる必要があるみたいです。</p>
+<blockquote>
+<p>Install to the user site [3]:</p>
+<pre><code>python get-pip.py --user
+</code></pre>
+<p><cite><a href="https://pip.pypa.io/en/stable/installing/#get-pip-py-options">get-pip.py options</a></cite></p>
+</blockquote>
+<p><code>--user</code> オプションをつけてあげるとユーザーのホームディレクトリーの中にインストールしてくれるみたいです。
+こうすると、このユーザーしか使えなくなりますが、 <code>sudo</code> をつける必要がありません。
+OS に近い領域を汚すことがないので、こっちの方がいいかな、と思っています。</p>
+<p>Ubuntu 18.04 LTS の python は 3 なので <code>python3</code> コマンドで実行しました。</p>
+<pre><code>$ python3 get-pip.py --user
+Traceback (most recent call last):
+  File &quot;get-pip.py&quot;, line 20649, in &lt;module&gt;
+    main()
+  File &quot;get-pip.py&quot;, line 197, in main
+    bootstrap(tmpdir=tmpdir)
+  File &quot;get-pip.py&quot;, line 82, in bootstrap
+    import pip._internal
+  File &quot;/tmp/tmpetizv62h/pip.zip/pip/_internal/__init__.py&quot;, line 42, in &lt;module&gt;
+  File &quot;/tmp/tmpetizv62h/pip.zip/pip/_internal/cmdoptions.py&quot;, line 16, in &lt;module&gt;
+  File &quot;/tmp/tmpetizv62h/pip.zip/pip/_internal/index.py&quot;, line 25, in &lt;module&gt;
+  File &quot;/tmp/tmpetizv62h/pip.zip/pip/_internal/download.py&quot;, line 35, in &lt;module&gt;
+  File &quot;/tmp/tmpetizv62h/pip.zip/pip/_internal/locations.py&quot;, line 10, in &lt;module&gt;
+ImportError: cannot import name 'sysconfig'
+</code></pre><p>エラーになりました。</p>
+<blockquote>
+<p>It seems that python3-distutils is not installed.</p>
+<pre><code>sudo apt install python3-distutils
+</code></pre>
+<p>fix this issue.</p>
+<p><cite><a href="https://github.com/pypa/pip/issues/5356">ImportError: cannot import name &lsquo;sysconfig&rsquo; · Issue #5356 · pypa/pip · GitHub</a></cite></p>
+</blockquote>
+<p>これと同じ状況みたいでした。</p>
+<p>なので、最初に distutils をインストールすることにしました。</p>
+<pre><code>$ apt search python3-distutils
+Sorting... Done
+Full Text Search... Done
+python3-distutils/bionic 3.6.5-3 all
+  distutils package for Python 3.x
+</code></pre><p>探してみたら標準のリポジトリーの中にありました。</p>
+<p>インストールします。</p>
+<pre><code>$ sudo apt install python3-distutils
+[sudo] password for user:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfreetype6
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  python3-lib2to3
+The following NEW packages will be installed:
+  python3-distutils python3-lib2to3
+0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Need to get 217 kB of archives.
+After this operation, 2118 kB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://archive.ubuntu.com/ubuntu bionic/main amd64 python3-lib2to3 all 3.6.5-3 [76.6 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic/main amd64 python3-distutils all 3.6.5-3 [141 kB]
+Fetched 217 kB in 4s (61.1 kB/s)
+Selecting previously unselected package python3-lib2to3.
+(Reading database ... 28482 files and directories currently installed.)
+Preparing to unpack .../python3-lib2to3_3.6.5-3_all.deb ...
+Unpacking python3-lib2to3 (3.6.5-3) ...
+Selecting previously unselected package python3-distutils.
+Preparing to unpack .../python3-distutils_3.6.5-3_all.deb ...
+Unpacking python3-distutils (3.6.5-3) ...
+Setting up python3-lib2to3 (3.6.5-3) ...
+Setting up python3-distutils (3.6.5-3) ...
+</code></pre><p>python3-distutils がインストールできました。</p>
+<p>改めて pip をインストールします。</p>
+<pre><code>$ python3 get-pip.py --user
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/0f/74/ecd13431bcc456ed390b44c8a6e917c1820365cbebcb6a8974d1cd045ab4/pip-10.0.1-py2.py3-none-any.whl (1.3MB)
+    100% |████████████████████████████████| 1.3MB 1.7MB/s
+Collecting setuptools
+  Downloading https://files.pythonhosted.org/packages/7f/e1/820d941153923aac1d49d7fc37e17b6e73bfbd2904959fffbad77900cf92/setuptools-39.2.0-py2.py3-none-any.whl (567kB)
+    100% |████████████████████████████████| 573kB 3.6MB/s
+Collecting wheel
+  Downloading https://files.pythonhosted.org/packages/81/30/e935244ca6165187ae8be876b6316ae201b71485538ffac1d718843025a9/wheel-0.31.1-py2.py3-none-any.whl (41kB)
+    100% |████████████████████████████████| 51kB 5.6MB/s
+Installing collected packages: pip, setuptools, wheel
+  The script wheel is installed in '/home/user/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed pip-10.0.1 setuptools-39.2.0 wheel-0.31.1
+</code></pre><p>インストールできました。</p>
+<pre><code>$ which pip
+$
+</code></pre><p>pip がありません。</p>
+<pre><code>$ which pip3
+$
+</code></pre><p>pip3 もありません。</p>
+<p>と思ったら、インストールしたときに警告が出ていたことに気づきました。</p>
+<blockquote>
+<p>The script wheel is installed in &lsquo;/home/user/.local/bin&rsquo; which is not on PATH.<br>
+Consider adding this directory to PATH or, if you prefer to suppress this warning, use &ndash;no-warn-script-location.</p>
+</blockquote>
+<p>環境変数の PATH に ~/.local/bin を設定してあげなければいけないようでした。</p>
+<pre><code>$ ls ~/.local/bin/pip
+/home/user/.local/bin/pip
+$ ls ~/.local/bin/pip3
+/home/user/.local/bin/pip3
+</code></pre><p>~/.local/bin の中には pip がちゃんとあるみたいでした。
+なので、この ~/.local/bin ディレクトリーを環境変数の PATH に設定してあげれば使えるようになるみたいです。</p>
+<p>設定しようと思って ~/.bashrc や ~/.profile を見ていたところ、 ~/.profile に次の記述がありました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># set PATH so it includes user&#39;s private bin if it exists</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -d <span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/bin</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> ; <span style="color:#66d9ef">then</span>
+    PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/bin:</span>$PATH<span style="color:#e6db74">&#34;</span>
+<span style="color:#66d9ef">fi</span>
+
+<span style="color:#75715e"># set PATH so it includes user&#39;s private bin if it exists</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -d <span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.local/bin</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> ; <span style="color:#66d9ef">then</span>
+    PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.local/bin:</span>$PATH<span style="color:#e6db74">&#34;</span>
+<span style="color:#66d9ef">fi</span>
+</code></pre></div><p>~/bin ディレクトリーや ~/.local/bin ディレクトリーが作られていると勝手に PATH に追加してくれるようでした。
+なので、ここで Ubuntu を起動し直してみました。</p>
+<pre><code>$ echo $PATH
+/home/user/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/System32:/mnt/c/Windows:/mnt/c/Windows/System32/wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/Windows/System32/OpenSSH:/mnt/c/Users/q399/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/Microsoft VS Code/bin:/snap/bin
+</code></pre><p>PATH に ~/.local/bin が追加されていました。</p>
+<pre><code>$ which pip
+/home/user/.local/bin/pip
+$ which pip3
+/home/user/.local/bin/pip3
+</code></pre><p>pip も pip3 も使える状態になりました。</p>
+<pre><code>$ pip -V
+pip 10.0.1 from /home/user/.local/lib/python3.6/site-packages/pip (python 3.6)
+$ pip3 -V
+pip 10.0.1 from /home/user/.local/lib/python3.6/site-packages/pip (python 3.6)
+$ pip3.6 -V
+pip 10.0.1 from /home/user/.local/lib/python3.6/site-packages/pip (python 3.6)
+</code></pre><p>Python3 しかないから、どの pip も同じバージョンみたいです。</p>
+<h2 id="pipenv-のインストール">Pipenv のインストール</h2>
+<p>pip が使える状態になったので Pipenv をインストールしてみます。</p>
+<blockquote>
+<p>次の通り <code>pip</code> でPipenvをインストールしてください:</p>
+<pre><code>$ pip install --user pipenv
+</code></pre>
+<p>注釈</p>
+<p>このコマンドは <a href="https://pip.pypa.io/en/stable/user_guide/#user-installs">user installation</a> を行い、システム全体に関わるパッケージを壊さないようにします。 インストールを行った後に pipenv が使えるようにならない場合は、 <a href="https://docs.python.org/3/library/site.html#site.USER_BASE">user base</a> のバイナリディレクトリを PATH に追加する必要があります。</p>
+<p><cite><a href="https://pipenv-ja.readthedocs.io/ja/translate-ja/install.html#installing-pipenv">Pipenvのインストール</a></cite></p>
+</blockquote>
+<p>Pipenv も user installation できるみたいです。</p>
+<p>user installation で Pipenv をインストールしてみます。</p>
+<pre><code>$ pip install --user pipenv
+Collecting pipenv
+  Downloading https://files.pythonhosted.org/packages/8d/fe/4faa519acfb984015dde4e2973d89e47baf6a9cd81e9d58e2f2d3c47fb6f/pipenv-2018.5.18-py3-none-any.whl (6.4MB)
+    100% |████████████████████████████████| 6.4MB 2.3MB/s
+Requirement already satisfied: setuptools&gt;=36.2.1 in ./.local/lib/python3.6/site-packages (from pipenv) (39.2.0)
+Requirement already satisfied: pip&gt;=9.0.1 in ./.local/lib/python3.6/site-packages (from pipenv) (10.0.1)
+Collecting virtualenv (from pipenv)
+  Downloading https://files.pythonhosted.org/packages/b6/30/96a02b2287098b23b875bc8c2f58071c35d2efe84f747b64d523721dc2b5/virtualenv-16.0.0-py2.py3-none-any.whl (1.9MB)
+    100% |████████████████████████████████| 1.9MB 1.7MB/s
+Collecting virtualenv-clone&gt;=0.2.5 (from pipenv)
+  Downloading https://files.pythonhosted.org/packages/6d/c2/dccb5ccf599e0c5d1eea6acbd058af7a71384f9740179db67a9182a24798/virtualenv_clone-0.3.0-py2.py3-none-any.whl
+Requirement already satisfied: certifi in /usr/lib/python3/dist-packages (from pipenv) (2018.1.18)
+Installing collected packages: virtualenv, virtualenv-clone, pipenv
+Successfully installed pipenv-2018.5.18 virtualenv-16.0.0 virtualenv-clone-0.3.0
+</code></pre><p>インストールできました。</p>
+<h2 id="仮想環境を作る">仮想環境を作る</h2>
+<blockquote>
+<p>Pipenv manages dependencies on a per-project basis. To install packages, change into your project’s directory (or just an empty directory for this tutorial) and run:</p>
+<pre><code>cd myproject
+pipenv install requests
+</code></pre>
+<p><cite><a href="https://packaging.python.org/tutorials/managing-dependencies/#installing-packages-for-your-project">Installing packages for your project</a></cite></p>
+</blockquote>
+<p>virtualenv みたいに仮想環境を作るという儀式は必要ないみたいです。</p>
+<p><code>pipenv</code> コマンドを使ってパッケージをインストールすると、必要な管理ファイルを作ってくれるみたいです。</p>
+<p><a href="https://pypi.org/project/cowsay/">cowsay · PyPI</a> をインストールしてみようと思います。</p>
+<pre><code>$ pipenv install cowsay
+Creating a virtualenv for this project…
+Using /usr/bin/python3 (3.6.5) to create virtualenv…
+⠋Already using interpreter /usr/bin/python3
+Using base prefix '/usr'
+New python executable in /home/user/.local/share/virtualenvs/myproject-O_i4omMD/bin/python3
+Also creating executable in /home/user/.local/share/virtualenvs/myproject-O_i4omMD/bin/python
+Installing setuptools, pip, wheel...done.
+
+Virtualenv location: /home/user/.local/share/virtualenvs/myproject-O_i4omMD
+Creating a Pipfile for this project…                                                                                  Installing cowsay…
+                                           Collecting cowsay
+  Downloading https://files.pythonhosted.org/packages/8f/1f/37fbc878a11a2f2cdf680b74f4f8cd8cfbdf464779c6838a0914f2bcea3c/cowsay-1.0.tar.gz
+Building wheels for collected packages: cowsay
+  Running setup.py bdist_wheel for cowsay: started
+  Running setup.py bdist_wheel for cowsay: finished with status 'done'
+  Stored in directory: /home/user/.cache/pip/wheels/80/0f/31/20a2777be324396f835d0e0d38205214f4e2826e8bc09b643e
+Successfully built cowsay
+Installing collected packages: cowsay
+Successfully installed cowsay-1.0
+
+Adding cowsay to Pipfile's [packages]…
+Pipfile.lock not found, creating…
+Locking [dev-packages] dependencies…
+Locking [packages] dependencies…
+Updated Pipfile.lock (6800d4)!
+Installing dependencies from Pipfile.lock (6800d4)…
+  🐍   ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 1/1 — 00:00:00
+To activate this project's virtualenv, run the following:
+ $ pipenv shell
+</code></pre><p>インストールできました。
+インストールにはけっこう時間がかかった感じがします。
+30 秒くらい待ったような。</p>
+<pre><code>$ ls
+Pipfile  Pipfile.lock
+</code></pre><p>2 つのファイルができました。</p>
+<pre><code>$ ls /home/user/.local/share/virtualenvs/myproject-O_i4omMD
+bin  lib  pip-selfcheck.json
+</code></pre><p>それから ~/.local/share/virtualenvs の下に仮想環境のディレクトリーが作られました。
+この中に pip でインストールするパッケージとかが保存されるぽいです。</p>
+<p>myproject-O_i4omMD を - で区切って、 myproject の部分は実際のディレクトリーの名前に対応しているみたいです。
+後ろの O_i4omMD の部分は実際のディレクトリーの絶対パスに対するハッシュなのかな？
+同じ名前のディレクトリーを別のパスのところに作ったら、この後ろの 8 桁のところだけ変わったものになりました。
+/home/user/myproject の仮想環境を作って、削除して、もう一度作り直したら、また同じ myproject-O_i4omMD の名前で作られました。
+なので、絶対パスで一意に識別できるようになっているぽいです。</p>
+<blockquote>
+<p>Pipenvで作成された仮想環境は、予想したものと異なっているかもしれません。 危険な文字 (つまり、空白、ラインフィード、キャリッジリターン、タブだけでなく $`!*@&rdquo; も) はアンダースコアに変換されます。 さらに、現在のフォルダのフルパスは 「スラッグ値」 にエンコードされ、仮想環境名が一意になるように末尾に追加されます。</p>
+<p><cite><a href="https://pipenv-ja.readthedocs.io/ja/translate-ja/basics.html#environment-management-with-pipenv">Pipenvによる環境管理</a></cite></p>
+</blockquote>
+<p>それらしいことが書いてありました。
+後ろの 8 桁は「スラッグ値」と呼ぶそうです。</p>
+<h2 id="パッケージを使う">パッケージを使う</h2>
+<blockquote>
+<p>Now that Requests is installed you can create a simple <code>main.py</code> file to use it:</p>
+<pre><code>import requests
+
+response = requests.get('https://httpbin.org/ip')
+
+print('Your IP is {0}'.format(response.json()['origin']))
+</code></pre>
+<p>Then you can run this script using <code>pipenv run</code>:</p>
+<pre><code>pipenv run python main.py
+</code></pre>
+<p>You should get output similar to this:</p>
+<pre><code>Your IP is 8.8.8.8
+</code></pre>
+<p>Using <code>pipenv run</code> ensures that your installed packages are available to your script. It’s also possible to spawn a new shell that ensures all commands have access to your installed packages with <code>pipenv shell</code>.</p>
+<p><cite> <a href="https://packaging.python.org/tutorials/managing-dependencies/#using-installed-packages">Using installed packages</a></cite></p>
+</blockquote>
+<p>Pipenv でインストールしたパッケージを使って動かすには <code>pipenv run</code> コマンドを使うみたいです。
+<code>source &lt;DIR&gt;/bin/activate</code> をする代わりに、毎回 <code>pipenv run</code> で動かすことになります。
+どうかな？
+逆に面倒だと感じる人もいるかもしれないです。
+けれども、わたしは <code>pipenv run</code> で動かす方がいいと感じます。</p>
+<p>インストールした cowsay を使ってみます。</p>
+<pre><code>$ pipenv run python
+Python 3.6.5 (default, Apr  1 2018, 05:46:30)
+[GCC 7.3.0] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import cowsay
+&gt;&gt;&gt; cowsay.tux(&quot;Python is fun&quot;)
+  _____________
+&lt; Python is fun &gt;
+  =============
+                  \
+                   \
+                    \
+                     .--.
+                    |o_o |
+                    |:_/ |
+                   //   \ \
+                  (|     | )
+                 /'\_   _/`\
+                 \___)=(___/
+
+
+&gt;&gt;&gt; exit()
+</code></pre><p>インタプリターでも動かせました。</p>
+<p>virtualenv みたいに終わった後に <code>deactivate</code> する必要がないところがいいです。</p>
+<h2 id="プロジェクトのディレクトリーの移動">プロジェクトのディレクトリーの移動</h2>
+<p>virtualenv はプロジェクトのディレクトリーを移動すると <code>python3 -m venv &lt;DIR&gt;</code> し直す必要があったので、 Pipenv ではどうなのか確認してみました。</p>
+<pre><code>$ cd ..
+$ mv myproject myproject2
+$ cd myproject2
+$ pipenv run python
+Creating a virtualenv for this project…
+Using /usr/bin/python3.6m (3.6.5) to create virtualenv…
+⠋Running virtualenv with interpreter /usr/bin/python3.6m
+Using base prefix '/usr'
+New python executable in /home/user/.local/share/virtualenvs/myproject2-v0_H80Xk/bin/python3.6m
+Also creating executable in /home/user/.local/share/virtualenvs/myproject2-v0_H80Xk/bin/python
+Installing setuptools, pip, wheel...done.
+
+Virtualenv location: /home/user/.local/share/virtualenvs/myproject2-v0_H80Xk
+Python 3.6.5 (default, Apr  1 2018, 05:46:30)
+[GCC 7.3.0] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; exit()
+</code></pre><p>ダメみたいでした。
+別の名前の ~/.local/share/virtualenvs/myproject2-v0_H80Xk が作られてしまいました。</p>
+<h2 id="仮想環境の削除">仮想環境の削除</h2>
+<blockquote>
+<p>&ndash;rm             Remove the virtualenv.</p>
+<p><cite><a href="https://github.com/pypa/pipenv#-usage">Usage</a></cite></p>
+</blockquote>
+<p>myproject2 の ~/.local/share/virtualenvs にある仮想環境を削除しておきます。
+<code>--rm</code> のオプションで削除できるみたいです。</p>
+<pre><code>$ pipenv --rm
+Removing virtualenv (/home/user/.local/share/virtualenvs/myproject2-v0_H80Xk)…
+</code></pre><p>削除できたみたいです。</p>
+<p>なんか、不用意に仮想環境に対する実際のディレクトリーを移動してしまうと、 ~/.local/share/virtualenvs の下にある仮想環境のディレクトリーがどこにも関連していない状態になりそうで気持ち悪い感じがします。
+なんで実際のディレクトリーの下に pip のファイルとか保存しないのだろう？</p>
+<p>myproject2 のディレクトリーの名前を myproject に戻しておきます。</p>
+<pre><code>$ cd ..
+$ mv myproject2 myproject
+$ cd myproject
+</code></pre><h2 id="パッケージのアンインストール">パッケージのアンインストール</h2>
+<blockquote>
+<p><code>$ pipenv uninstall</code> は <a href="https://pipenv-ja.readthedocs.io/ja/translate-ja/basics.html#pipenv-install">pipenv install</a> の全てのパラメータに加えて、 <code>--all</code> と <code>--all-dev</code> もサポートしています。</p>
+<ul>
+<li><code>--all</code> — このパラメータを付けると、仮想環境から全てのファイルを除去しますが、Pipfileだけは触らずに残します。</li>
+<li><code>--all-dev</code> — このパラメータを付けると、開発環境の全てのパッケージを仮想環境から除去し、Pipfileからも削除します。</li>
+</ul>
+<p><cite><a href="https://pipenv-ja.readthedocs.io/ja/translate-ja/basics.html#pipenv-uninstall">$ pipenv uninstall</a></cite></p>
+</blockquote>
+<p>全てのパッケージをまとめて削除できるようです。</p>
+<p>最初に Pipfile の中身を確認しておきます。</p>
+<pre><code>[[source]]
+url = &quot;https://pypi.org/simple&quot;
+verify_ssl = true
+name = &quot;pypi&quot;
+
+[packages]
+cowsay = &quot;*&quot;
+
+[dev-packages]
+
+[requires]
+python_version = &quot;3.6&quot;
+</code></pre><p><code>[packages]</code> のところに cowsay があります。</p>
+<p>仮想環境の中の site-packages も確認しておきます。</p>
+<pre><code>$ ls ~/.local/share/virtualenvs/myproject-O_i4omMD/lib/python3.6/site-packages/
+__pycache__           easy_install.py       pkg_resources                wheel
+cowsay                pip                   setuptools                   wheel-0.31.1.dist-info
+cowsay-1.0.dist-info  pip-10.0.1.dist-info  setuptools-39.2.0.dist-info
+</code></pre><p>cowsay があります。</p>
+<pre><code>$ pipenv uninstall --all-dev
+Un-installing [dev-packages]…
+Locking [dev-packages] dependencies…
+Locking [packages] dependencies…
+Updated Pipfile.lock (6800d4)!
+</code></pre><p>アンインストールできました。</p>
+<p>Pipfile の中身です。</p>
+<pre><code>[[source]]
+url = &quot;https://pypi.org/simple&quot;
+verify_ssl = true
+name = &quot;pypi&quot;
+
+[packages]
+cowsay = &quot;*&quot;
+
+[dev-packages]
+
+[requires]
+python_version = &quot;3.6&quot;
+</code></pre><p>うーん、まだ cowsay がありますね。</p>
+<p>仮想環境の中の site-packages です。</p>
+<pre><code>$ ls ~/.local/share/virtualenvs/myproject-O_i4omMD/lib/python3.6/site-packages/
+__pycache__           easy_install.py       pkg_resources                wheel
+cowsay                pip                   setuptools                   wheel-0.31.1.dist-info
+cowsay-1.0.dist-info  pip-10.0.1.dist-info  setuptools-39.2.0.dist-info
+</code></pre><p>うーん、こちらもまだ cowsay がありますね。</p>
+<p>個別にアンインストールしてみます。</p>
+<pre><code>$ pipenv uninstall cowsay
+Un-installing cowsay…
+Uninstalling cowsay-1.0:
+  Successfully uninstalled cowsay-1.0
+
+Removing cowsay from Pipfile…
+Locking [dev-packages] dependencies…
+Locking [packages] dependencies…
+Updated Pipfile.lock (ca72e7)!
+</code></pre><p>アンインストールできました。</p>
+<p>Pipfile の中身です。</p>
+<pre><code>$ cat Pipfile
+[[source]]
+url = &quot;https://pypi.org/simple&quot;
+verify_ssl = true
+name = &quot;pypi&quot;
+
+[packages]
+
+[dev-packages]
+
+[requires]
+python_version = &quot;3.6&quot;
+</code></pre><p>ちゃんと cowsay がなくなってました。</p>
+<p>仮想環境の中の site-packages です。</p>
+<pre><code>$ ls ~/.local/share/virtualenvs/myproject-O_i4omMD/lib/python3.6/site-packages/
+__pycache__      pip                   pkg_resources  setuptools-39.2.0.dist-info  wheel-0.31.1.dist-info
+easy_install.py  pip-10.0.1.dist-info  setuptools     wheel
+</code></pre><p>こちらもちゃんと cowsay がなくなってました。</p>
+<p><code>--all</code> と <code>--all-dev</code> のオプションがうまく動いていないのかな？
+それともわたしの認識が誤っているのかな？</p>
+<h2 id="プロジェクトのホームのディレクトリー">プロジェクトのホームのディレクトリー</h2>
+<blockquote>
+<p>&ndash;where          Output project home information.</p>
+<p><cite><a href="https://github.com/pypa/pipenv#-usage">Usage</a></cite></p>
+</blockquote>
+<p><code>--where</code> オプションでプロジェクトのパスが確認できるみたいです。</p>
+<pre><code>$ pipenv --where
+/home/user/myproject
+</code></pre><p>うーん、これはプロジェクトのホームで <code>pipenv</code> のコマンドを実行する必要があるわけだから <code>pwd</code> と変わらないわけですね？
+もっと違う使い方があるのかな？</p>
+<h2 id="仮想環境のディレクトリー">仮想環境のディレクトリー</h2>
+<blockquote>
+<p>&ndash;venv           Output virtualenv information.</p>
+<p><cite><a href="https://github.com/pypa/pipenv#-usage">Usage</a></cite></p>
+</blockquote>
+<p><code>--venv</code> オプションで仮想環境のパスが確認できるみたいです。</p>
+<pre><code>$ pipenv --venv
+/home/user/.local/share/virtualenvs/myproject-O_i4omMD
+</code></pre><p>仮想環境のパスが出力されました。</p>
+<h2 id="終わり">終わり</h2>
+<p>Pipenv を使ってみて、 virtualenv よりもいい印象を受けました。
+でも、ディレクトリーの名前を変えたり移動したときに、そのまま使い続けることができないのはやっぱり面倒だと思ってしまいます。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

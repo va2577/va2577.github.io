@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>CTRADER WEB を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>cTrader Web を使ってみました</h1>
+    
+      <div><time>March 25, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><img src="/img/114-01.png" alt=""></p>
+<p>普段、トレーディング・プラットフォームは cTrader の Windows デスクトップ版を使っています。
+今回は、 cTrader Web を使ってみました。</p>
+<p>各取引業者のものがそれぞれあるようですが、開発業者である Spotware のものもあるようです。</p>
+<p><a href="https://ct.spotware.com/">Spotware cTrader (Public Beta) - New Standard in FX &amp; CFD Trading</a></p>
+<p>これは Public Beta のようですので、デモでも取引業者の cTrader Web を使った方がいいかもしれません。</p>
+<h2 id="チャート">チャート</h2>
+<p>チャートです。</p>
+<p><img src="/img/114-02.png" alt=""></p>
+<p>インディケーターは主要なものは使えそうです。</p>
+<ul>
+<li>Trend: 12 個</li>
+<li>Oscillators: 18 個</li>
+<li>Volatility: 13 個</li>
+<li>Volume: 15 個</li>
+<li>Other: 12 個</li>
+</ul>
+<p>画像では Trend から Simple Moving Average と Volatility から Bollinger Bands を追加してみました。</p>
+<p>水平線も引けました。
+ドラッグしながら高値や安値にくっついてくれました。
+Web 版なのにWindows デスクトップ版とあまり変わりなく操作できました。
+HTML5 の Web の技術すごい。</p>
+<h2 id="price-alerts">Price Alerts</h2>
+<p>為替レートの通知機能です。</p>
+<p><img src="/img/114-03.png" alt=""></p>
+<p>クラウドで管理されるので、 Windows デスクトップ版と共通した情報を扱うことができました。
+iOS 版とも共通しているようです。</p>
+<p>ただ、この Alerts List からは Price を変更することができませんでした。
+それは Windows デスクトップ版も iOS 版も同じでした。
+ただ、 Windows デスクトップ版は、チャートの画面に黄色いラインが表示されて、このラインをドラッグすることでも(少し Price の精度は落ちますが)変更できていました。</p>
+<p><img src="/img/114-04.png" alt=""></p>
+<p>チャート上から変更できなくてもいいので、 Alerts List 画面から修正できるようになってくれるといいな。</p>
+<p><a href="http://vote.spotware.com">Vote</a> かな。</p>
+<h2 id="workspace">Workspace</h2>
+<p>ただ、困るのは、 Windows デスクトップ版と Workspace が異なることです。</p>
+<p><img src="/img/114-05.png" alt=""></p>
+<p>Windows デスクトップ版にはいくつか Workspace を登録していたのですが、 Web 版には登録した Workspace はありませんでした。</p>
+<p>Workspace のデータをクラウドに保存しているのだから、 Windows デスクトップ版も Web 版も共通化してほしいところです。</p>
+<p>これも <a href="http://vote.spotware.com">Vote</a> かな。</p>
+<h2 id="終わり">終わり</h2>
+<p>OS に依存しない環境にしたいです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

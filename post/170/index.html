@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON の RANGE と NDARRAY と SERIES と DATAFRAME のイテレーターのパフォーマンスを比較してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python の range と ndarray と Series と DataFrame のイテレーターのパフォーマンスを比較してみました</h1>
+    
+      <div><time>May 20, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>以前、作った<a href="/post/162/">日足のヒストリカルデータ</a>でバックテストをするのに、 Python の実行速度としてのパフォーマンスが気になったので比較してみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Python 3.5.2</li>
+<li>pandas 0.22.0</li>
+<li>NumPy 1.14.3</li>
+</ul>
+<p>pandas を <code>pip install pandas</code> でインストールしておきました。
+一緒に NumPy もインストールされました。</p>
+<p>Jupyter Notebook で動かすので、 <code>pip install jupyter</code> でインストールしておきました。</p>
+<h2 id="準備">準備</h2>
+<p>これ以降、 Jupyter Notebook に入力しながら進めてみます。</p>
+<p>NumPy と pandas のモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><h2 id="データを作るパフォーマンス">データを作るパフォーマンス</h2>
+<p>100 万件のデータで比較しようと思いましたので、 range, ndarray, Series, DataFrame のそれぞれを作りました。</p>
+<h3 id="range">range</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>timeit <span style="color:#f92672">-</span>n <span style="color:#ae81ff">100</span> r <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">1000000</span>)
+</code></pre></div><p>結果です。</p>
+<pre><code>509 ns ± 13.6 ns per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre><h3 id="ndarray">ndarray</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>timeit <span style="color:#f92672">-</span>n <span style="color:#ae81ff">100</span> a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1000000</span>)
+</code></pre></div><p>結果です。</p>
+<pre><code>2.21 ms ± 292 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre><h3 id="series">Series</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>timeit <span style="color:#f92672">-</span>n <span style="color:#ae81ff">100</span> s <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1000000</span>))
+</code></pre></div><p>結果です。</p>
+<pre><code>2.35 ms ± 171 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre><h3 id="dataframe">DataFrame</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>timeit <span style="color:#f92672">-</span>n <span style="color:#ae81ff">100</span> df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1000000</span>), columns<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>])
+</code></pre></div><p>結果です。</p>
+<pre><code>2.56 ms ± 182 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre><h3 id="データを作るパフォーマンスのまとめ">データを作るパフォーマンスのまとめ</h3>
+<p>range は 500ns 程度なので一番速かったです。</p>
+<p>Series と DataFrame は ndarray でデータを作ってからオブジェクトを作ったので、 ndarray よりも少しだけ遅くなりました。
+でも、どれも 3ms 程度なので思っていたより違わないと感じました。</p>
+<h2 id="イテレーターのパフォーマンス">イテレーターのパフォーマンス</h2>
+<p>最初にデータを作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">r <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">1000000</span>)
+a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1000000</span>)
+s <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1000000</span>))
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1000000</span>), columns<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>])
+df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">2000000</span>)<span style="color:#f92672">.</span>reshape((<span style="color:#ae81ff">1000000</span>, <span style="color:#ae81ff">2</span>)), columns<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col2</span><span style="color:#e6db74">&#39;</span>])
+</code></pre></div><h3 id="range-1">range</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>timeit
+<span style="color:#75715e"># https://wiki.python.org/moin/ForLoop</span>
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> r:
+    i <span style="color:#f92672">=</span> x
+i
+</code></pre></div><p>結果です。</p>
+<pre><code>54.3 ms ± 839 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</code></pre><h3 id="ndarray-1">ndarray</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>timeit
+<span style="color:#75715e"># https://docs.scipy.org/doc/numpy/reference/generated/numpy.nditer.html</span>
+<span style="color:#75715e"># https://docs.scipy.org/doc/numpy/reference/arrays.nditer.html</span>
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> np<span style="color:#f92672">.</span>nditer(a):
+    i <span style="color:#f92672">=</span> x
+i
+</code></pre></div><p>結果です。</p>
+<pre><code>276 ms ± 18.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</code></pre><h3 id="series-1">Series</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>timeit
+<span style="color:#75715e"># https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.iteritems.html</span>
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> index, value <span style="color:#f92672">in</span> s<span style="color:#f92672">.</span>iteritems():
+    i <span style="color:#f92672">=</span> value
+i
+</code></pre></div><p>結果です。</p>
+<pre><code>326 ms ± 22.7 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</code></pre><h3 id="dataframe-1">DataFrame</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>time
+<span style="color:#75715e"># https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.iterrows.html</span>
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>iterrows():
+    i <span style="color:#f92672">=</span> row[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>]
+i
+</code></pre></div><p>結果です。</p>
+<pre><code>CPU times: user 1min 46s, sys: 438 ms, total: 1min 46s
+Wall time: 1min 49s
+</code></pre><p>DataFrame.iterrows は試していたら遅かったので <code>%%timeit</code> による繰り返しの計測はせずに、 <code>%%time</code> による計測を 1 回だけしました。
+2 分近くかかってしまっているため待っていられませんでした。</p>
+<h3 id="イテレーターのパフォーマンスのまとめ">イテレーターのパフォーマンスのまとめ</h3>
+<p>DataFrame が極端に遅いです。
+ndarray, Series はあまり違いはないのかもしれません。
+range は一番速かったです。</p>
+<h2 id="参照のパフォーマンス">参照のパフォーマンス</h2>
+<p>i への代入 (<code>i =</code>) は同じ時間がかかっていると思うので、イテレーターの値を参照している箇所だけのパフォーマンスを比較してみました。</p>
+<h3 id="range-2">range</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    <span style="color:#f92672">%</span>time x
+</code></pre></div><p>結果です。</p>
+<pre><code>CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 22.2 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 31 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 21.7 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 29.8 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 28.4 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 28.6 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 27.2 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 20.3 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 20 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 26 µs
+</code></pre><p>20~31µs の範囲になりました。</p>
+<h3 id="ndarray-2">ndarray</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> np<span style="color:#f92672">.</span>nditer(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">10</span>)):
+    <span style="color:#f92672">%</span>time x
+</code></pre></div><p>結果です。</p>
+<pre><code>CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 14.8 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 21.7 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 13.4 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 12.4 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 12.2 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 12.2 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 12.2 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 20.5 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 18.1 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 22.6 µs
+</code></pre><p>12.2~22.6µs の範囲になりました。</p>
+<p>数が少ないですけれども range よりも速いところがあって意外でした。
+一番遅い 22.6µs でも range の一番遅い 31µs よりは速いです。</p>
+<h3 id="series-2">Series</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> index, item <span style="color:#f92672">in</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">10</span>))<span style="color:#f92672">.</span>iteritems():
+    <span style="color:#f92672">%</span>time item
+</code></pre></div><p>結果です。</p>
+<pre><code>CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 14.8 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 18.6 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 33.6 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 20.7 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 28.8 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 42.4 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 143 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 29.8 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 33.6 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 20.7 µs
+</code></pre><p>14.8~143µs の範囲になりました。</p>
+<p>一つだけ突出して遅いのがありました。</p>
+<h3 id="dataframe-2">DataFrame</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">10</span>), columns<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>])<span style="color:#f92672">.</span>iterrows():
+    <span style="color:#f92672">%</span>time row[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>]
+</code></pre></div><p>結果です。</p>
+<pre><code>CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 233 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 340 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 90.6 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 85.6 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 143 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 143 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 116 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 186 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 253 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 177 µs
+</code></pre><p>85.6~340µs の範囲になりました。</p>
+<h3 id="参照のパフォーマンスのまとめ">参照のパフォーマンスのまとめ</h3>
+<p>DataFrame が遅いです。
+列の名前で参照するのは遅いみたいです。</p>
+<p>range, ndarray, Series はあまり違いはないのかもしれません。</p>
+<h2 id="dataframeitertuples-のパフォーマンス">DataFrame.itertuples のパフォーマンス</h2>
+<ul>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.itertuples.html">pandas.DataFrame.itertuples</a></li>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.iteritems.html">pandas.DataFrame.iteritems</a></li>
+</ul>
+<p>DataFrame のイテレーターは DataFrame.iterrows だけじゃなくて DataFrame.itertuples もあるみたいでした。
+せっかくなので DataFrame.itertuples も試してみました。</p>
+<p>DataFrame.iteritems は列に対するイテレーターみたいなので試しませんでした。</p>
+<h3 id="dataframeitertuples-1-列のイテレーターのパフォーマンス">DataFrame.itertuples 1 列のイテレーターのパフォーマンス</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>timeit
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>itertuples():
+    i <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">1</span>]
+i
+</code></pre></div><p>DataFrame.itertuples は<a href="https://docs.python.jp/3/library/stdtypes.html#tuple">タプル</a>が返ってくるで、列の名前で参照することができず、インデックスで参照することになるので、少し見づらいです。
+<code>row[1]</code> の <code>1</code> が何を参照しているのか認識しづらいですが、 <code>df['col1']</code> の列を参照しています。
+<code>row[0]</code> は <code>df.index</code> の列を参照するみたいです。</p>
+<p>結果です。</p>
+<pre><code>1.13 s ± 46.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</code></pre><h3 id="dataframeitertuples-2-列のイテレーターのパフォーマンス">DataFrame.itertuples 2 列のイテレーターのパフォーマンス</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span><span style="color:#f92672">%</span>timeit
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>itertuples():
+    i <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">1</span>]
+i
+</code></pre></div><p>結果です。</p>
+<pre><code>1.22 s ± 44.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</code></pre><p>100ms くらい増えました。
+比例するように増えてはいかないだろうけれども、 range の 100 万件のイテレーターが 50ms くらいだったので、それと比べると遅さが目立ちます。</p>
+<h3 id="dataframeitertuples-参照のパフォーマンス">DataFrame.itertuples 参照のパフォーマンス</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">10</span>), columns<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>])<span style="color:#f92672">.</span>itertuples():
+    <span style="color:#f92672">%</span>time row[<span style="color:#ae81ff">1</span>]
+</code></pre></div><p>結果です。</p>
+<pre><code>CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 11.7 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 24.1 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 11 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 10.3 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 9.54 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 18.8 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 10.5 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 9.78 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 14.3 µs
+CPU times: user 0 ns, sys: 0 ns, total: 0 ns
+Wall time: 14.3 µs
+</code></pre><p>9.78~24.1µs の範囲になりました。</p>
+<p>range, ndarray, Series と同じくらいになりました。
+一番速い値が 9.78µs なので、 ndarray の一番速い値 (12.2µs) よりも、 range の一番速い値 (20µs) よりも、速かったです。</p>
+<p>繰り返しが多い場合は DataFrame.iterrows よりも DataFrame.itertuples を使った方がよさそうです。</p>
+<h2 id="comprehensions-内包表記">Comprehensions (内包表記)</h2>
+<p>for より内包表記の方が速い認識でいたので、気になって確認してみました。</p>
+<p>DataFrame.iterrows も内包表記を使ったら速くなるのかどうか。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>time l1 <span style="color:#f92672">=</span> [row[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">col1</span><span style="color:#e6db74">&#39;</span>] <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>iterrows()]
+<span style="color:#f92672">%</span>time l2 <span style="color:#f92672">=</span> [row[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>itertuples()]
+l1[<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>:] <span style="color:#f92672">+</span> l2[<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>:]
+</code></pre></div><p>結果です。</p>
+<pre><code>CPU times: user 1min 43s, sys: 688 ms, total: 1min 43s
+Wall time: 1min 46s
+CPU times: user 953 ms, sys: 219 ms, total: 1.17 s
+Wall time: 1.23 s
+
+[1999990,
+ 1999992,
+ 1999994,
+ 1999996,
+ 1999998,
+ 1999990,
+ 1999992,
+ 1999994,
+ 1999996,
+ 1999998]
+</code></pre><p>DataFrame.iterrows を使った内包表記だと 100 万件が 1 分 46 秒。
+DataFrame.itertuples を使った内包表記だと 100 万件が 1.23 秒。
+大きな違いになりました。</p>
+<p>DataFrame.iterrows の内包表記を使うくらいだったら、 DataFrame.itertuples の for を使った方がよっぽどいいです。
+ざっくりした認識で内包表記は速いと思って、よく調べもせずに使っていてはいけないと感じました。</p>
+<h2 id="gist-のソース">Gist のソース</h2>
+<p><a href="https://gist.github.com/va2577/277d4643b26bbfae29f2cabe952bbad7">Gist</a> にソースをアップしました。</p>
+<h2 id="終わり">終わり</h2>
+<p>次の順番で下に行くにつれて遅くなっていくと思っていたのですが、イテレーターだけだとあまり違いはないように感じました。</p>
+<ol>
+<li>Python の標準のオブジェクト</li>
+<li>Numpy</li>
+<li>pandas</li>
+</ol>
+<p>繰り返しの多いところでは DataFrame.iterrows は使わないようにしようと思いました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>FLVファイルからAACファイルを抽出する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>FLVファイルからAACファイルを抽出する</h1>
+    
+      <div><time>February 9, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/24/">らじる★らじる</a>、<a href="/post/25/">radiko.jp</a>で録音したファイルは<a href="https://ja.wikipedia.org/wiki/Flash_Video">Flash Video</a>という<a href="https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">コンテナ型のファイルフォーマット</a>なのでそのままだとMacで再生しづらいです。
+今回はFLVファイルからAACファイルを抽出することについて調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Homebrew バージョン 0.9.5</li>
+<li>FFmpeg バージョン 2.8.6</li>
+</ul>
+<h2 id="ffmpeg">FFmpeg？</h2>
+<blockquote>
+<p>FFmpeg is the leading multimedia framework, able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created.</p>
+<p><cite><a href="https://www.ffmpeg.org">FFmpeg</a></cite></p>
+</blockquote>
+<h2 id="インストール">インストール</h2>
+<p>Homebrewを先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/2/">Homebrewのインストール</a></li>
+</ul>
+<p>FFmpegを使って抽出しますのでFFmpegをインストールします。</p>
+<pre><code>$ brew install ffmpeg
+==&gt; Downloading https://homebrew.bintray.com/bottles/ffmpeg-2.8.6.el_capitan.bot
+######################################################################## 100.0%
+==&gt; Pouring ffmpeg-2.8.6.el_capitan.bottle.tar.gz
+==&gt; Caveats
+FFmpeg has been built without libfaac for licensing reasons;
+libvo-aacenc is used by default.
+To install with libfaac, you can:
+  brew reinstall ffmpeg --with-faac
+
+You can also use the experimental FFmpeg encoder, libfdk-aac, or
+libvo_aacenc to encode AAC audio:
+  ffmpeg -i input.wav -c:a aac -strict experimental output.m4a
+Or:
+  brew reinstall ffmpeg --with-fdk-aac
+  ffmpeg -i input.wav -c:a libfdk_aac output.m4a
+==&gt; Summary
+🍺  /usr/local/Cellar/ffmpeg/2.8.6: 210 files, 44.4M
+</code></pre><h2 id="確認">確認</h2>
+<p>次のように入力するとFLVファイルの内容が確認できます。
+<code>filename.flv</code>は実際のファイル名に変更します。
+ここではらじる★らじるから保存したファイルを使っています。</p>
+<pre><code>$ ffmpeg -i filename.flv
+ffmpeg version 2.8.6 Copyright (c) 2000-2016 the FFmpeg developers
+  built with Apple LLVM version 7.0.2 (clang-700.1.81)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/2.8.6 --enable-shared --enable-pthreads --enable-gpl --enable-version3 --enable-hardcoded-tables --enable-avresample --cc=clang --host-cflags= --host-ldflags= --enable-opencl --enable-libx264 --enable-libmp3lame --enable-libvo-aacenc --enable-libxvid --enable-vda
+  libavutil      54. 31.100 / 54. 31.100
+  libavcodec     56. 60.100 / 56. 60.100
+  libavformat    56. 40.101 / 56. 40.101
+  libavdevice    56.  4.100 / 56.  4.100
+  libavfilter     5. 40.101 /  5. 40.101
+  libavresample   2.  1.  0 /  2.  1.  0
+  libswscale      3.  1.101 /  3.  1.101
+  libswresample   1.  2.101 /  1.  2.101
+  libpostproc    53.  3.100 / 53.  3.100
+Input #0, flv, from 'filename.flv':
+  Duration: 01:01:57.97, start: 0.000000, bitrate: 51 kb/s
+    Stream #0:0: Audio: aac (HE-AAC), 48000 Hz, stereo, fltp, 49 kb/s
+At least one output file must be specified
+</code></pre><p>これを見ると<code>Audio: aac (HE-AAC)</code>ってあります。
+FLVファイルは<a href="https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">コンテナフォーマット</a>というもので、多くの種類の音声や動画を含むことができるそうです。
+このファイルは音声だけが<code>aac (HE-AAC)</code>のフォーマットで含まれています。</p>
+<h2 id="抽出">抽出</h2>
+<p>このファイルからAACファイルを抽出するのは次の通りです。</p>
+<pre><code>$ ffmpeg -i filename.flv -c:a copy out.aac
+ffmpeg version 2.8.6 Copyright (c) 2000-2016 the FFmpeg developers
+  built with Apple LLVM version 7.0.2 (clang-700.1.81)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/2.8.6 --enable-shared --enable-pthreads --enable-gpl --enable-version3 --enable-hardcoded-tables --enable-avresample --cc=clang --host-cflags= --host-ldflags= --enable-opencl --enable-libx264 --enable-libmp3lame --enable-libvo-aacenc --enable-libxvid --enable-vda
+  libavutil      54. 31.100 / 54. 31.100
+  libavcodec     56. 60.100 / 56. 60.100
+  libavformat    56. 40.101 / 56. 40.101
+  libavdevice    56.  4.100 / 56.  4.100
+  libavfilter     5. 40.101 /  5. 40.101
+  libavresample   2.  1.  0 /  2.  1.  0
+  libswscale      3.  1.101 /  3.  1.101
+  libswresample   1.  2.101 /  1.  2.101
+  libpostproc    53.  3.100 / 53.  3.100
+Input #0, flv, from 'filename.flv':
+  Duration: 01:01:57.97, start: 0.000000, bitrate: 51 kb/s
+    Stream #0:0: Audio: aac (HE-AAC), 48000 Hz, stereo, fltp, 49 kb/s
+Output #0, adts, to 'out.aac':
+  Metadata:
+    encoder         : Lavf56.40.101
+    Stream #0:0: Audio: aac, 48000 Hz, stereo, 49 kb/s
+Stream mapping:
+  Stream #0:0 -&gt; #0:0 (copy)
+Press [q] to stop, [?] for help
+size=   22381kB time=01:01:58.01 bitrate=  49.3kbits/s    
+video:0kB audio:21785kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 2.734391%
+</code></pre><p>オプションについては次のところを参考にしました。</p>
+<ul>
+<li><a href="https://www.ffmpeg.org/ffmpeg.html#Main-options">5.4 Main options</a></li>
+<li><a href="https://www.ffmpeg.org/ffmpeg-bitstream-filters.html#dump_005fextra">2.3 dump_extra</a></li>
+</ul>
+<p><code>filename.flv</code>は最初に確認したファイルです。
+<code>out.m4a</code>は抽出した後にできるファイルです。
+<code>-c:a copy</code>は音声をそのまま(エンコード、デコードを省略して)出力します。</p>
+<p>拡張子の<code>.flv</code>や<code>.aac</code>は、これを元にファイルのフォーマットを判断しているようなので、この通りに指定しておいた方が良さそうです。
+そうじゃない場合は、<code>-f fmt (input/output)</code>のオプションを指定する必要があります。
+最初、ここで抽出した後にできるファイルの拡張子を<code>.m4a</code>にしていたんですけど、無理矢理<a href="https://ja.wikipedia.org/wiki/MP4">MP4</a>のコンテナフォーマットにしているようで、<code>Codec for stream 0 does not use global headers but container format requires global headers</code>っていう警告が出ていたりしたので素直に<code>.aac</code>にしました。</p>
+<p>抽出しているだけなので一瞬で終わりました。</p>
+<h2 id="ファイルサイズ">ファイルサイズ</h2>
+<p>抽出しているだけなので、音質は変わっていないと思います。
+1時間程度録音したファイルのサイズは抽出前が23.7MB程度で、抽出後が22.9MB程度でした。</p>
+<pre><code>$ ls -l
+-rw-r--r--  1 user  staff  23789474  2  7 18:00 filename.flv
+-rw-r--r--  1 user  staff  22917952  2  9 22:12 out.aac
+</code></pre><h2 id="終わり">終わり</h2>
+<p>AACファイルを抽出したのでFinderのクイックルックや再生機能で再生できました。
+でもiTunesでは再生できませんでした。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://ffmpeg.org">FFmpeg</a></li>
+<li><a href="https://trac.ffmpeg.org/wiki/CompilationGuide/MacOSX">CompilationGuide/MacOSX – FFmpeg</a></li>
+<li><a href="https://trac.ffmpeg.org/wiki/Encode/AAC#ShouldIuseAAC-LCorHE-AAC">Encode/AAC – FFmpeg</a></li>
+</ul>
+<h2 id="10-february-2016-追記">10 February 2016 追記</h2>
+<p>iTunesで再生できるようになるまでを書いてみました。</p>
+<ul>
+<li><a href="/post/28/">FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Apr 2018 13:27:40 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL の Ubuntu で tree コマンドを使ってみました</title>
+      <link>https://va2577.github.io/post/142/</link>
+      <pubDate>Sun, 22 Apr 2018 13:27:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/142/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/23/&#34;&gt;Macでtreeコマンドを使う&lt;/a&gt;の記事を書いたことがありました。
+今回は、 WSL の Ubuntu で tree コマンドを使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Code に WSL の Ubuntu の Git を設定する</title>
+      <link>https://va2577.github.io/post/83/</link>
+      <pubDate>Wed, 17 Jan 2018 16:49:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/83/</guid>
+      <description>&lt;p&gt;いつからだったか、Visual Studio Code を起動すると、勝手に「Git を探しています」みたいになって、「[警告] Git が見つかりません。Git をインストールするか &amp;lsquo;git.path&amp;rsquo; 設定で…」のようなメッセージが表示されるようになりました。&lt;/p&gt;
+&lt;p&gt;そのまま使っていたのですが、気になるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Hugo をインストールする</title>
+      <link>https://va2577.github.io/post/81/</link>
+      <pubDate>Sat, 13 Jan 2018 18:33:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/81/</guid>
+      <description>&lt;p&gt;このブログは &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo | A Fast and Flexible Website Generator&lt;/a&gt; で作成していますので、Ubuntu にインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Node.js をインストールする</title>
+      <link>https://va2577.github.io/post/80/</link>
+      <pubDate>Fri, 12 Jan 2018 11:11:36 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/80/</guid>
+      <description>&lt;p&gt;このブログの CSS や JavaScript を作成するのに Node.js を使っていたので、WSL の Ubuntu にインストールすることにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu の Python に pip がない</title>
+      <link>https://va2577.github.io/post/79/</link>
+      <pubDate>Fri, 05 Jan 2018 16:49:48 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/79/</guid>
+      <description>&lt;p&gt;WSL の Ubuntu には Python が標準でインストールされていましたので、Python を主に使っていこうと思っています。
+が、Python で仮想環境を作成しようとしたらエラーになったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL(Windows Subsystem for Linux) の Ubuntu に FFmpeg をインストールする</title>
+      <link>https://va2577.github.io/post/78/</link>
+      <pubDate>Thu, 04 Jan 2018 15:48:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/78/</guid>
+      <description>&lt;p&gt;Windows に変えてから、使ってみたかったのが、WSL(Windows Subsystem for Linux) です。
+コマンドプロンプトよりできることが増えるかなと思っています。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

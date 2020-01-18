@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Asynchronous Module Definition on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/asynchronous-module-definition/</link>
+    <description>Recent content in Asynchronous Module Definition on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 31 Mar 2018 10:18:19 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/asynchronous-module-definition/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 1(Asynchronous Module Definition)</title>
+      <link>https://va2577.github.io/post/120/</link>
+      <pubDate>Sat, 31 Mar 2018 10:18:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/120/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/119/&#34;&gt;前回の記事&lt;/a&gt;では、 Node.js で ECMAScript Modules を使ってみました。
+今回は、ブラウザーでも ECMAScript Modules を使ってみようと思いました。&lt;/p&gt;
+&lt;p&gt;結果的には、 ECMAScript Modules のままでは動かせていなくて、 Babel を使ってトランスパイルしてからブラウザーで動かしています。&lt;/p&gt;
+&lt;p&gt;調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

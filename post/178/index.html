@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>WSL の UBUNTU 18.04 に UTUNTU 16.04 で使っていたアプリケーションをインストールし直しました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>WSL の Ubuntu 18.04 に Utuntu 16.04 で使っていたアプリケーションをインストールし直しました</h1>
+    
+      <div><time>May 28, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/177/">前回</a> WSL の Ubuntu 18.04 をインストールしたので、改めてアプリケーションをインストールし直しました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Windows 10 Pro 1803</li>
+<li>Ubuntu 18.04 LTS</li>
+<li>FFmpeg 4.0</li>
+<li>Hugo 0.41</li>
+<li>Node.js v8.11.2</li>
+</ul>
+<h2 id="ffmpeg">FFmpeg</h2>
+<p>以前 <a href="/post/78/">FFmpeg をインストールしたとき</a>もそうだったのですが、今回も、 <a href="http://ffmpeg.org/download.html">Download FFmpeg</a> の <a href="https://johnvansickle.com/ffmpeg/">Linux Static Builds</a> をインストールすることにしました。</p>
+<p><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a> に従ってインストールしました。</p>
+<blockquote>
+<p>Download the latest git build.</p>
+<pre><code>$ cd /home/john
+
+$ wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz
+
+$ wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz.md5
+</code></pre>
+<p><cite><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a></cite></p>
+</blockquote>
+<p>ビルドされた .tar.xz ファイル と .md5 ファイルをダウンロードしました。</p>
+<pre><code>$ curl -O https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 19.0M  100 19.0M    0     0  1096k      0  0:00:17  0:00:17 --:--:-- 1785k
+$ curl -O https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz.md5
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    69  100    69    0     0     33      0  0:00:02  0:00:02 --:--:--    33
+</code></pre><p>ダウンロードできました。</p>
+<blockquote>
+<p>With the build and the build's md5 hash downloaded you can check its integrity.</p>
+<pre><code>$ md5sum -c ffmpeg-git-64bit-static.tar.xz.md5
+ffmpeg-git-64bit-static.tar.xz: OK
+</code></pre>
+<p><cite><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a></cite></p>
+</blockquote>
+<p>ファイルをチェックしました。</p>
+<pre><code>$ md5sum -c ffmpeg-release-64bit-static.tar.xz.md5
+ffmpeg-release-64bit-static.tar.xz: OK
+</code></pre><p>OK でした。</p>
+<blockquote>
+<p>Unpack the build.</p>
+<pre><code>$ tar xvf ffmpeg-git-64bit-static.tar.xz
+</code></pre>
+<p><cite><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a></cite></p>
+</blockquote>
+<p>.tar.xz ファイルを展開しました。</p>
+<pre><code>$ tar xvf ffmpeg-release-64bit-static.tar.xz
+ffmpeg-4.0-64bit-static/
+ffmpeg-4.0-64bit-static/manpages/
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-protocols.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-scaler.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-formats.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-resampler.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-devices.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-protocols.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-all.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-utils.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-all.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-formats.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-devices.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-filters.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-codecs.pdf
+ffmpeg-4.0-64bit-static/manpages/ffprobe.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-resampler.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-filters.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-bitstream-filters.txt
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-scaler.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-utils.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-bitstream-filters.pdf
+ffmpeg-4.0-64bit-static/manpages/ffprobe.pdf
+ffmpeg-4.0-64bit-static/manpages/ffmpeg-codecs.txt
+ffmpeg-4.0-64bit-static/readme.txt
+ffmpeg-4.0-64bit-static/ffprobe
+ffmpeg-4.0-64bit-static/ffmpeg-10bit
+ffmpeg-4.0-64bit-static/qt-faststart
+ffmpeg-4.0-64bit-static/ffmpeg
+ffmpeg-4.0-64bit-static/GPLv3.txt
+</code></pre><p>展開できました。</p>
+<blockquote>
+<p>Now I have the directory &ldquo;ffmpeg-git-20180203-64bit-static&rdquo;.</p>
+<pre><code>$ ls ffmpeg-git-20180203-64bit-static
+ffmpeg  ffmpeg-10bit  ffprobe  GPLv3.txt  manpages  model  qt-faststart  readme.txt
+</code></pre>
+<p><cite><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a></cite></p>
+</blockquote>
+<p>展開したディレクトリーの中にこれらがあるみたいです。</p>
+<pre><code>$ ls ffmpeg-4.0-64bit-static/
+GPLv3.txt  ffmpeg  ffmpeg-10bit  ffprobe  manpages  qt-faststart  readme.txt
+</code></pre><p>ffmpeg-git-20180203-64bit-static と ffmpeg-release-64bit-static.tar.xz(20180526) を比較すると model がなくなっているようです。
+model ってなんだろう？</p>
+<blockquote>
+<p>Move the static binaries ffmpeg and ffprobe into the shell's path.</p>
+<pre><code>$ sudo mv ffmpeg-git-20180203-64bit-static/ffmpeg ffmpeg-git-20180203-64bit-static/ffprobe /usr/local/bin/
+
+$ whereis ffmpeg
+ffmpeg: /usr/local/bin/ffmpeg
+
+$ whereis ffprobe
+ffprobe: /usr/local/bin/ffprobe
+</code></pre>
+<p><cite><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a></cite></p>
+</blockquote>
+<p>パスの通っているディレクトリーにファイルを移動します。
+FAQ を見ると ffmpeg, ffprobe の 2 つのファイルだけ移動すればいいみたいです。
+ffmpeg しか使ったことないですけれども。</p>
+<p>環境変数の $PATH を確認してみました。</p>
+<pre><code>$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/System32:/mnt/c/Windows:/mnt/c/Windows/System32/wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/Windows/System32/OpenSSH:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/Microsoft VS Code/bin:/snap/bin
+</code></pre><p>うーん、 Ubuntu 16.04 LTS は ~/bin や ~/.local/bin にもパスが通っていたようでしたが、 Ubuntu 18.04 LTS は通っていないみたいでした。</p>
+<p>なので /usr/local/bin にファイルを移動することにします。</p>
+<pre><code>$ sudo mv ffmpeg-4.0-64bit-static/ffmpeg ffmpeg-4.0-64bit-static/ffprobe /usr/local/bin/
+[sudo] password for user:
+$ ls /usr/local/bin/
+ffmpeg  ffprobe
+$ whereis ffmpeg
+ffmpeg: /usr/local/bin/ffmpeg
+$ whereis ffprobe
+ffprobe: /usr/local/bin/ffprobe
+</code></pre><p>移動できたみたいです。</p>
+<blockquote>
+<p>Now ffmpeg is globally installed and you're done!</p>
+<pre><code>$ ffmpeg
+ffmpeg version N-89948-ge3d946b3f4-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2018 the FFmpeg developers
+  built with gcc 6.4.0 (Debian 6.4.0-11) 20171206
+  (snipped output to save space)
+</code></pre>
+<p><cite><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a></cite></p>
+</blockquote>
+<p>これで ffmpeg コマンドが使えます。</p>
+<pre><code>$ ffmpeg
+ffmpeg version 4.0-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2018 the FFmpeg developers
+  built with gcc 6.3.0 (Debian 6.3.0-18+deb9u1) 20170516
+</code></pre><p>ffmpeg コマンドが使えました。</p>
+<blockquote>
+<p>Uninstall.</p>
+<pre><code>$ sudo rm /usr/local/bin/ffmpeg /usr/local/bin/ffprobe
+</code></pre>
+<p><cite><a href="https://www.johnvansickle.com/ffmpeg/faq/">FAQ</a></cite></p>
+</blockquote>
+<p>アンインストールする場合は <code>sudo rm</code> でファイルを削除してあげればいいみたいです。</p>
+<h2 id="hugo">Hugo</h2>
+<p>Quick Install を参考にインストールしてみます。</p>
+<blockquote>
+<p>Quick Install</p>
+<p>Binary (Cross-platform)</p>
+<p>Download the appropriate version for your platform from Hugo Releases. Once downloaded, the binary can be run from anywhere. You don’t need to install it into a global location. This works well for shared hosts and other systems where you don’t have a privileged account.</p>
+<p>Ideally, you should install it somewhere in your PATH for easy use. /usr/local/bin is the most probable location.</p>
+<p><cite><a href="https://gohugo.io/getting-started/installing/#quick-install">Quick Install</a></cite></p>
+</blockquote>
+<p><a href="/post/81/">以前</a>と同じように Binary (Cross-platform) をインストールしようと思います。</p>
+<p><a href="https://github.com/gohugoio/hugo/releases">Releases · gohugoio/hugo · GitHub</a> から、最新のビルドされたバイナリーファイルをダウンロードすることができるみたいです。</p>
+<p>ファイルをダウンロードしました。</p>
+<pre><code>$ curl -LO https://github.com/gohugoio/hugo/releases/download/v0.41/hugo_0.41_Linux-64bit.deb
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   615    0   615    0     0    362      0 --:--:--  0:00:01 --:--:--   362
+100 5933k  100 5933k    0     0   442k      0  0:00:13  0:00:13 --:--:--  941k
+$ curl -LO https://github.com/gohugoio/hugo/releases/download/v0.41/hugo_0.41_checksums.txt
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   613    0   613    0     0    421      0 --:--:--  0:00:01 --:--:--   421
+100  1993  100  1993    0     0    832      0  0:00:02  0:00:02 --:--:--  243k
+</code></pre><p>GitHub ではリダイレクトされるので <code>-L</code> オプションをつけてリダイレクト先のファイルをダウンロードしています。
+ダウンロードできました。</p>
+<p>ファイルをチェックしました。</p>
+<pre><code>$ shasum -c hugo_0.41_checksums.txt
+…略…
+hugo_0.41_Linux-64bit.deb: OK
+…略…
+</code></pre><p>OK みたいです。</p>
+<blockquote>
+<p>-i|&ndash;install       &lt;.deb file name&gt; &hellip; | -R|&ndash;recursive <directory> &hellip;</p>
+<p><cite><code>dpkg --help</code></cite></p>
+</blockquote>
+<p>パッケージをインストールしました。</p>
+<pre><code>$ sudo dpkg -i hugo_0.41_Linux-64bit.deb
+[sudo] password for user:
+Selecting previously unselected package hugo.
+(Reading database ... 28477 files and directories currently installed.)
+Preparing to unpack hugo_0.41_Linux-64bit.deb ...
+Unpacking hugo (0.41) ...
+Setting up hugo (0.41) ...
+</code></pre><p>インストールできました。</p>
+<blockquote>
+<p>-L|&ndash;listfiles <package> &hellip;     List files &lsquo;owned&rsquo; by package(s).</p>
+<p><cite><code>dpkg --help</code></cite></p>
+</blockquote>
+<p>次のファイルがインストールされたみたいです。</p>
+<pre><code>$ dpkg -L hugo
+/.
+/usr
+/usr/local
+/usr/local/bin
+/usr/local/bin/hugo
+/usr/share
+/usr/share/doc
+/usr/share/doc/hugo
+/usr/share/doc/hugo/changelog.gz
+</code></pre><p>bin は /usr/local/bin なのに、 doc は /usr/share/doc なのですね。
+/usr/local/share/doc じゃないんだ。</p>
+<p>ちゃんとコマンドも実行できました。</p>
+<pre><code>$ hugo version
+Hugo Static Site Generator v0.41 linux/amd64 BuildDate: 2018-05-25T16:57:20Z
+</code></pre><blockquote>
+<p>-r|&ndash;remove        <package> &hellip; | -a|&ndash;pending</p>
+<p><cite><code>dpkg --help</code></cite></p>
+</blockquote>
+<p>アンインストールする場合は次のコマンドを入力すればいいみたいです。</p>
+<pre><code>$ sudo dpkg -r hugo
+</code></pre><p><code>dpkg -L hugo</code> で表示されたファイルが消えていればいいのかな。</p>
+<h2 id="nodejs">Node.js</h2>
+<p><a href="/post/80/">以前</a>と同じように <a href="https://nodejs.org/en/download/">Download | Node.js</a> の Linux Binaries (x86/x64) の 64-bit をダウンロードしました。</p>
+<pre><code>$ curl -O https://nodejs.org/dist/v8.11.2/node-v8.11.2-linux-x64.tar.xz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 10.8M  100 10.8M    0     0  2361k      0  0:00:04  0:00:04 --:--:-- 2361k
+</code></pre><p>ダウンロードできました。</p>
+<p>下の方に &ldquo;Signed SHASUMS for release files&rdquo; もあったのでダウンロードしました。</p>
+<pre><code>$ curl -O https://nodejs.org/dist/v8.11.2/SHASUMS256.txt.asc
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  4240    0  4240    0     0   2815      0 --:--:--  0:00:01 --:--:--  2815
+</code></pre><p>ダウンロードできました。</p>
+<blockquote>
+<p>Current, LTS, and Nightly download directories all contain a SHASUMS256.txt file that lists the SHA checksums for each file available for download.</p>
+<p>The SHASUMS256.txt can be downloaded using <code>curl</code>.</p>
+<pre><code>$ curl -O https://nodejs.org/dist/vx.y.z/SHASUMS256.txt
+</code></pre>
+<p>To check that a downloaded file matches the checksum, run it through <code>sha256sum</code> with a command such as:</p>
+<pre><code>$ grep node-vx.y.z.tar.gz SHASUMS256.txt | sha256sum -c -
+</code></pre>
+<p><cite><a href="https://github.com/nodejs/node#verifying-binaries">Verifying Binaries</a></cite></p>
+</blockquote>
+<p>ファイルをチェックしました。</p>
+<pre><code>$ grep 'node-v8.11.2-linux-x64.tar.xz' SHASUMS256.txt.asc | sha256sum -c -
+node-v8.11.2-linux-x64.tar.xz: OK
+</code></pre><p>grep することでチェックしたいファイルだけチェックすることができるようでした。
+OK みたいです。</p>
+<blockquote>
+<ul>
+<li>FUNCTION LETTERS<br>
+Main operation mode:
+<ul>
+<li>-x, &ndash;extract, &ndash;get<br>
+extract files from an archive</li>
+</ul>
+</li>
+<li>OTHER OPTIONS<br>
+Operation modifiers:
+<ul>
+<li>-f, &ndash;file ARCHIVE<br>
+use archive file or device ARCHIVE</li>
+<li>-J, &ndash;xz</li>
+<li>-v, &ndash;verbose<br>
+verbosely list files processed</li>
+</ul>
+</li>
+</ul>
+<p><cite><code>man tar</code></cite></p>
+</blockquote>
+<p>ファイルを展開しました。</p>
+<pre><code>$ tar -xJvf node-v8.11.2-linux-x64.tar.xz
+…略…
+node-v8.11.2-linux-x64/include/node/zlib.h
+node-v8.11.2-linux-x64/include/node/uv-unix.h
+node-v8.11.2-linux-x64/include/node/zconf.h
+</code></pre><p>コンソールにたくさん出力されました。</p>
+<p>最初、オプションを <code>man tar</code> の順番に <code>-xfJv</code> のように指定したら &ldquo;tar: Jv: Cannot open: No such file or directory&rdquo;, &ldquo;tar: Error is not recoverable: exiting now&rdquo; のようなエラーになりました。
+<code>-f</code> のオプションは引数をとるので後ろに連続してオプションをつなげてはいけないようでした。
+初めて知りました。</p>
+<p>展開されたファイルです。</p>
+<pre><code>$ ls -l node-v8.11.2-linux-x64
+total 192
+-rw-rw-r-- 1 user user 53894 May 16 04:14 CHANGELOG.md
+-rw-rw-r-- 1 user user 59059 May 16 04:14 LICENSE
+-rw-rw-r-- 1 user user 27429 May 16 04:14 README.md
+drwxrwxr-x 1 user user  4096 May 16 04:14 bin
+drwxrwxr-x 1 user user  4096 May 16 04:14 include
+drwxrwxr-x 1 user user  4096 May 16 04:14 lib
+drwxrwxr-x 1 user user  4096 May 16 04:14 share
+</code></pre><p>bin, include, lib, share を /usr/local/ の中に移動してあげればいいみたいです。</p>
+<p>最初に /usr/local/ の中を確認しておきました。</p>
+<pre><code>$ ls -l /usr/local/
+total 0
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 bin
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 etc
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 games
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 include
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 lib
+lrwxrwxrwx 1 root root    9 Apr 26 14:10 man -&gt; share/man
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 sbin
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 share
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 src
+$ ls -l /usr/local/bin/
+total 175040
+-rwxr-xr-x 1 user user 63012968 Apr 23 04:33 ffmpeg
+-rwxr-xr-x 1 user user 62914664 Apr 23 04:33 ffprobe
+-rwxr-xr-x 1 root root 17781952 May 26 01:57 hugo
+$ ls -l /usr/local/include/
+total 0
+$ ls -l /usr/local/lib/
+total 0
+drwxrwsr-x 1 root staff 4096 Apr 26 14:10 python3.6
+$ ls -l /usr/local/share/
+total 0
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 ca-certificates
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 man
+$ ls -l /usr/local/share/man/
+total 0
+</code></pre><p>コピーしました。</p>
+<pre><code>$ sudo cp -r node-v8.11.2-linux-x64/bin/ node-v8.11.2-linux-x64/include/ node-v8.11.2-linux-x64/lib/ node-v8.11.2-linux-x64/share/ /usr/local/
+$
+</code></pre><p>コピーできたみたいです。</p>
+<p>/usr/local/ の中を確認しました。</p>
+<pre><code>$ ls -l /usr/local/
+total 0
+drwxr-xr-x 1 root root 4096 May 30 19:14 bin
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 etc
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 games
+drwxr-xr-x 1 root root 4096 May 30 19:02 include
+drwxr-xr-x 1 root root 4096 May 30 19:11 lib
+lrwxrwxrwx 1 root root    9 Apr 26 14:10 man -&gt; share/man
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 sbin
+drwxr-xr-x 1 root root 4096 May 30 19:13 share
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 src
+$ ls -l /usr/local/bin/
+total 174340
+-rwxr-xr-x 1 user user 63012968 Apr 23 04:33 ffmpeg
+-rwxr-xr-x 1 user user 62914664 Apr 23 04:33 ffprobe
+-rwxr-xr-x 1 root root 17781952 May 26 01:57 hugo
+-rwxr-xr-x 1 root root 34799826 May 30 19:14 node
+lrwxrwxrwx 1 root root       38 May 30 19:14 npm -&gt; ../lib/node_modules/npm/bin/npm-cli.js
+lrwxrwxrwx 1 root root       38 May 30 19:14 npx -&gt; ../lib/node_modules/npm/bin/npx-cli.js
+$ ls -l /usr/local/include/
+total 0
+drwxr-xr-x 1 root root 4096 May 30 19:02 node
+$ ls -l /usr/local/lib/
+total 0
+drwxr-xr-x 1 root root  4096 May 30 19:11 node_modules
+drwxrwsr-x 1 root staff 4096 Apr 26 14:10 python3.6
+$ ls -l /usr/local/share/
+total 0
+drwxr-xr-x 1 root root 4096 Apr 26 14:10 ca-certificates
+drwxr-xr-x 1 root root 4096 May 30 19:13 doc
+drwxr-xr-x 1 root root 4096 May 30 19:13 man
+drwxr-xr-x 1 root root 4096 May 30 19:13 systemtap
+$ ls -l /usr/local/share/man/
+total 0
+drwxr-xr-x 1 root root 4096 May 30 19:13 man1
+</code></pre><p>node コマンドを使ってみました。</p>
+<pre><code>$ node -p &quot;'hello'.toUpperCase()&quot;
+HELLO
+</code></pre><p>ちゃんと動かせました。</p>
+<h2 id="終わり">終わり</h2>
+<p>今回の FFmpeg や Node.js みたいに自分でファイルを配置するような場合、 <code>mv</code> コマンドを使うのか、 <code>cp</code> コマンドを使うのか、よくわからないです。</p>
+<p><code>mv</code> コマンドはもとのファイルのオーナー、グループをそのままに移動してしまうので、 /usr/local のオーナーが root であっても、その下のファイルのオーナーが user になってしまうのが気になりました。</p>
+<p><code>cp</code> コマンドはコピー先のディレクトリーのオーナー、グループを引き継ぐみたいで、ファイルのオーナーが root になっていたので個人的にはスッキリしています。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

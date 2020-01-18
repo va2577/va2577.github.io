@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Disqus on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/disqus/</link>
+    <description>Recent content in Disqus on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 24 Jan 2016 20:51:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/disqus/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Disqusに登録してJekyllのブログにコメント欄をつける</title>
+      <link>https://va2577.github.io/post/16/</link>
+      <pubDate>Sun, 24 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/16/</guid>
+      <description>&lt;p&gt;DisqusはFacebook、Twitter、Google+のアカウントで使えるコメント欄です。
+そう思って登録を始めましたが、もっと広い意味でウェブ上のコミュニティーの場を提供しているサービスのようでした。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

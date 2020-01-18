@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>BABEL を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Babel を使ってみました</h1>
+    
+      <div><time>March 15, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="https://babeljs.io/docs/setup/">Using Babel</a> を参考に進めてみます。
+軽く使えればよかったので、 Gulp とかのツールは使わずに、 Babel built-ins CLI を使うことにしました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>npm 5.6.0</li>
+<li>Babel 6.26.0</li>
+</ul>
+<h2 id="babel-のインストール">Babel のインストール</h2>
+<p>次のコマンドでインストールしました。</p>
+<pre><code>$ npm install --save-dev babel-cli
+npm WARN ajv-keywords@3.1.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN dir@1.0.0 No description
+npm WARN dir@1.0.0 No repository field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.1.3 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;} (current: {&quot;os&quot;:&quot;linux&quot;,&quot;arch&quot;:&quot;x64&quot;})
+
++ babel-cli@6.26.0
+added 84 packages in 28.671s
+</code></pre><p>インストールすると package.json ファイルに <code>babel-cli</code> が含まれるようです。</p>
+<pre><code>$ cat package.json
+{
+  &quot;name&quot;: &quot;dir&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;main.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;babel-cli&quot;: &quot;^6.26.0&quot;,
+    &quot;eslint&quot;: &quot;^4.18.1&quot;,
+    &quot;eslint-config-standard&quot;: &quot;^11.0.0&quot;,
+    &quot;eslint-plugin-import&quot;: &quot;^2.9.0&quot;,
+    &quot;eslint-plugin-node&quot;: &quot;^6.0.1&quot;,
+    &quot;eslint-plugin-promise&quot;: &quot;^3.6.0&quot;,
+    &quot;eslint-plugin-standard&quot;: &quot;^3.0.1&quot;
+  }
+}
+</code></pre><h2 id="使い方">使い方</h2>
+<p>npm scripts で使うといいよ、とのことです。
+ので、 package.json の scripts を次のようにしました。</p>
+<pre><code>$ cat package.json
+{
+  &quot;name&quot;: &quot;dir&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;eslint&quot;,
+  &quot;main&quot;: &quot;main.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
+    &quot;build&quot;: &quot;babel src -d lib&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;babel-cli&quot;: &quot;^6.26.0&quot;,
+    &quot;eslint&quot;: &quot;^4.18.1&quot;,
+    &quot;eslint-config-standard&quot;: &quot;^11.0.0&quot;,
+    &quot;eslint-plugin-import&quot;: &quot;^2.9.0&quot;,
+    &quot;eslint-plugin-node&quot;: &quot;^6.0.1&quot;,
+    &quot;eslint-plugin-promise&quot;: &quot;^3.6.0&quot;,
+    &quot;eslint-plugin-standard&quot;: &quot;^3.0.1&quot;
+  }
+}
+</code></pre><p>scripts に記述しておくと、 <code>npm run build</code> のように実行することができるようです。</p>
+<p>そして、 Babel のコマンドに渡す引数は次のように記載されています。</p>
+<blockquote>
+<p><a href="https://babeljs.io/docs/usage/cli/#compile-directories">Compile Directories</a></p>
+<p>Compile the entire src directory and output it to the lib directory. You may use &ndash;out-dir or -d. This doesn’t overwrite any other files or directories in lib.</p>
+<pre><code>npx babel src --out-dir lib
+</code></pre>
+<p>Compile the entire src directory and output it to the one concatenated file.</p>
+<pre><code>npx babel src --out-file script-compiled.js
+</code></pre>
+<p><cite><a href="https://babeljs.io/docs/usage/cli/">CLI · Babel</a></cite></p>
+</blockquote>
+<p><code>src</code> はソースディレクトリー、 <code>lib</code> は出力ディレクトリーのようです。
+出力ファイル名を指定すると、 1 つにまとめたファイルを作成してくれるようです。</p>
+<h2 id="実行">実行</h2>
+<p>実行してみます。</p>
+<pre><code>$ npm run build
+
+&gt; dir@1.0.0 build /home/user/dir
+&gt; babel src -d lib
+
+src doesn't exist
+npm ERR! code ELIFECYCLE
+npm ERR! errno 2
+npm ERR! dir@1.0.0 build: `babel src -d lib`
+npm ERR! Exit status 2
+npm ERR!
+npm ERR! Failed at the dir@1.0.0 build script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/user/.npm/_logs/2018-02-28T13_11_19_575Z-debug.log
+</code></pre><p>エラーになりました。
+src ディレクトリーがなかったみたいでした。</p>
+<p>src ディレクトリーと、次のファイルを作成しました。</p>
+<pre><code>$ ls src
+yourfile.js
+$ cat src/yourfile.js
+(() =&gt; {
+  console.log('message.')
+})()
+</code></pre><p>実行してみます。</p>
+<pre><code>$ npm run build
+
+&gt; dir@1.0.0 build /home/user/dir
+&gt; babel src -d lib
+
+src/yourfile.js -&gt; lib/yourfile.js
+</code></pre><p>トランスパイルできたみたいです。</p>
+<p>ファイルの中を見てみます。</p>
+<pre><code>$ ls lib
+yourfile.js
+$ cat lib/yourfile.js
+(() =&gt; {
+  console.log('message.');
+})();
+</code></pre><p>あれ、セミコロンがついただけでした。
+アローファンクションもトランスパイルできるかと思ってました。
+が、設定によるものかもしれません。</p>
+<h2 id="環境設定ファイルの作成">環境設定ファイルの作成</h2>
+<p>まず、プリセットというものをインストールするようです。</p>
+<p>環境に合わせて必要な Babel プラグインを自動的に決定してくれる Env プリセットというものを使ってみます。</p>
+<blockquote>
+<p>Babel preset that automatically determines the Babel plugins you need based on your supported environments. Uses compat-table</p>
+<p><cite><a href="https://babeljs.io/docs/plugins/preset-env/">Env preset · Babel</a></cite></p>
+</blockquote>
+<p>この引用によると、環境設定ファイルに稼働環境を記述することで、 Env プリセットが良しなにトランスパイルしてくれるようです。</p>
+<p>次のコマンドでインストールしました。</p>
+<pre><code>$ npm install babel-preset-env --save-dev
+npm WARN ajv-keywords@3.1.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN dir@1.0.0 No description
+npm WARN dir@1.0.0 No repository field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.1.3 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;} (current: {&quot;os&quot;:&quot;linux&quot;,&quot;arch&quot;:&quot;x64&quot;})
+
++ babel-preset-env@1.6.1
+added 51 packages in 14.553s
+</code></pre><p>インストールできたようです。</p>
+<p>次に、 Babel の設定ファイルを次のように作成しました。</p>
+<pre><code>$ cat .babelrc
+{
+  &quot;presets&quot;: [&quot;env&quot;]
+}
+</code></pre><h2 id="改めて実行">改めて実行</h2>
+<p>改めて実行してみます。</p>
+<pre><code>$ npm run build
+
+&gt; dir@1.0.0 build /home/user/dir
+&gt; babel src -d lib
+
+src/yourfile.js -&gt; lib/yourfile.js
+</code></pre><p>作成されたファイルを確認してみます。</p>
+<pre><code>$ cat lib/yourfile.js
+'use strict';
+
+(function () {
+  console.log('message.');
+})();
+</code></pre><p>アローファンクションが普通のファンクションにトランスパイルされています。
+そして、 <code>'use strict';</code> が勝手につくんですね。</p>
+<h2 id="終わり">終わり</h2>
+<p>プリセットのあたり、もう少し勉強しないといけないかもしれません。
+今回はテストの環境で使えれば良かったのですが、厳密に対応しようと思うと面倒そうです。
+Babel に依存したくない、みたいな記事も目にしましたので、その気持ちがなんとなくわかったような気もします。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://babeljs.io/docs/setup/">Using Babel · Babel</a></li>
+<li><a href="https://babeljs.io/docs/usage/cli/">CLI · Babel</a></li>
+<li><a href="https://www.npmjs.com/package/babel-cli">babel-cli</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

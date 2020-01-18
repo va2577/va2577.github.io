@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>DOM 要素の変更を監視する方法を調べました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>DOM 要素の変更を監視する方法を調べました</h1>
+    
+      <div><time>March 29, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>span の中の文字列が変わったというイベントをトリガーにして処理したかったので調べました。
+jQuery を使う前提で調べたのですが、調べた結果、 jQuery を使わない方法 (MutationObserver) になりました。
+調べたことを書いておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>jQuery 3.3.1</li>
+<li>Microsoft Edge 16.16299</li>
+<li>Firefox 59.0.2</li>
+</ul>
+<h2 id="mutationevent">MutationEvent</h2>
+<p>最初、次のイベントが検索で見つかりましたので、実装してみました。</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationEvent">MutationEvent - Web APIs | MDN</a></p>
+<p>次のようなファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;MutationEvent&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;MutationEvent&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">form</span>&gt;
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text1&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;value1&#34;</span>&gt;
+      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;span1&#34;</span>&gt;span1&lt;/<span style="color:#f92672">span</span>&gt;
+    &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;//code.jquery.com/jquery-3.3.1.slim.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      <span style="color:#a6e22e">$</span>(<span style="color:#66d9ef">function</span> () {
+        <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#39;#text1&#39;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;change&#39;</span>, <span style="color:#66d9ef">function</span> () {
+          <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#a6e22e">$</span>(<span style="color:#66d9ef">this</span>).<span style="color:#a6e22e">val</span>());
+        });
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">callback</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+          <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;DOMSubtreeModified&#39;</span>)
+        };
+        <span style="color:#75715e">// Firefox の警告
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// Mutation Event の使用は推奨されません。代わりに MutationObserver を使用してください。
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;DOMSubtreeModified&#39;</span>, <span style="color:#a6e22e">callback</span>);
+        <span style="color:#75715e">// document.querySelector(&#39;#span1&#39;).addEventListener(&#39;DOMSubtreeModified&#39;, callback); // jQuery を使わない場合
+</span><span style="color:#75715e"></span>      })
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>text の値を変えて、フォーカスを移動すると、 text の値が span に表示されて、コンソールに &ldquo;DOMSubtreeModified&rdquo; と出力されます。</p>
+<p>なぜか 2 回も出力されます。</p>
+<p>そして、 code blocks のコメントにも書きましたが、 Firefox で実行すると、次の警告がコンソールに出力されます。
+&ldquo;Mutation Event の使用は推奨されません。代わりに MutationObserver を使用してください。&rdquo;
+これは、 jQuery から出力されているようです。</p>
+<blockquote>
+<p>Deprecated</p>
+<p>This feature has been removed from the Web standards. Though some browsers may still support it, it is in the process of being dropped. Avoid using it and update existing code if possible; see the compatibility table at the bottom of this page to guide your decision. Be aware that this feature may cease to work at any time.</p>
+<p><cite><a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationEvent">MutationEvent - Web APIs | MDN</a></cite></p>
+</blockquote>
+<p>ここにも非推奨であることが記載されていました。</p>
+<h2 id="mutationobserver">MutationObserver</h2>
+<p>なので、 MutationObserver について調べました。</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver">MutationObserver - Web APIs | MDN</a></p>
+<p>次のファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;MutationObserver&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;MutationObserver&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">form</span>&gt;
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text1&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;value1&#34;</span>&gt;
+      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;span1&#34;</span>&gt;span1&lt;/<span style="color:#f92672">span</span>&gt;
+    &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;DOMContentLoaded&#34;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#text1&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;change&#39;</span>, <span style="color:#66d9ef">function</span> () {
+          document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>).<span style="color:#a6e22e">textContent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">value</span>;
+        });
+        <span style="color:#75715e">// Select the node that will be observed for mutations
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">targetNode</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>);
+
+        <span style="color:#75715e">// Options for the observer (which mutations to observe)
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">config</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">attributes</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">childList</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>, <span style="color:#a6e22e">characterData</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> };
+
+        <span style="color:#75715e">// Callback function to execute when mutations are observed
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">callback</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">mutationsList</span>) {
+          <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">mutation</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">mutationsList</span>) {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;childList&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;A child node has been added or removed.&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;attributes&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;The &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">attributeName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; attribute was modified.&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;characterData&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;characterData was modified.&#39;</span>);
+            }
+          }
+        };
+
+        <span style="color:#75715e">// Create an observer instance linked to the callback function
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">observer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">MutationObserver</span>(<span style="color:#a6e22e">callback</span>);
+
+        <span style="color:#75715e">// Start observing the target node for configured mutations
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">observer</span>.<span style="color:#a6e22e">observe</span>(<span style="color:#a6e22e">targetNode</span>, <span style="color:#a6e22e">config</span>);
+      });
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>text の値を変えて、フォーカスを移動すると、 text の値が span に表示されて、コンソールに &ldquo;A child node has been added or removed.&rdquo; と出力されます。
+2 回も出力されますけれども。</p>
+<p><code>var config = { attributes: true, childList: true, characterData: true };</code> について、監視対象を選択できるようで、次のような意味になるようです。</p>
+<ul>
+<li>attributes: 対象ノードの属性に対する変更を監視する場合は true にします。</li>
+<li>childList: 対象ノードの子ノード（テキストノードも含む）に対する追加・削除を監視する場合は true にします。</li>
+<li>characterData: 対象ノードのデータに対する変更を監視する場合は true にします。</li>
+<li>subtree: 対象ノードとその子孫ノードに対する変更を監視する場合は true にします。</li>
+<li>attributeOldValue: 対象ノードの変更前の属性値を記録する場合は true にします（attributes が true の時に有効）。</li>
+<li>characterDataOldValue: 対象ノードの変更前のデータを記録する場合は true にします（characterData が true の時に有効）。</li>
+<li>attributeFilter: すべての属性の変更を監視する必要がない場合は、（名前空間を除いた）属性ローカル名の配列を指定します。</li>
+</ul>
+<p>コンソールに出力された内容を見ると、 span の中の文字列を変更すると、 childList が変更されたことになるようです。</p>
+<h2 id="mutationobserver-の-characterdata">MutationObserver の characterData</h2>
+<p>最初、 span の中の文字列が変わった場合に処理をしたかったので、 <code>characterData</code> を使えば良いと思って、 <code>characterData</code> だけ <code>true</code> にしました。
+が、イベントが発生しませんでした。
+<code>childList</code> を <code>true</code> にしたところ、イベントが発生したので、そういうものなのかな？と思いました。</p>
+<blockquote>
+<p>childList</p>
+<p>対象ノードの子ノード（テキストノードも含む）に対する追加・削除を監視する場合は true にします。</p>
+<p><cite><a href="https://developer.mozilla.org/ja/docs/Web/API/MutationObserver">MutationObserver - Web API インターフェイス | MDN</a></cite></p>
+</blockquote>
+<p>テキストノードの追加・削除の監視も含まれるようです。
+だから <code>childList</code> のイベントが発生しているようではあります。</p>
+<h3 id="stack-overflow">Stack Overflow</h3>
+<p>じゃあ、 <code>characterData</code> っていうのは、どういうときに発生するのか？
+もう少し調べてみると、次のような場合に発生するようです。</p>
+<blockquote>
+<p>You can observe a text node directly. In that case you don't need to observe childList. There are many cases where it could be useful, in a contenteditable element for example. Like this:</p>
+<pre><code>// select the target node
+var target = document.querySelector('#some-id').childNodes[0];
+
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation.type);
+  });    
+});
+ 
+// configuration of the observer:
+var config = { attributes: true, childList: false, characterData: true };
+ 
+// pass in the target node, as well as the observer options
+observer.observe(target, config);
+
+&lt;div id='some-id' contenteditable='true'&gt;Modify content&lt;/div&gt;
+</code></pre>
+<p><cite><a href="https://stackoverflow.com/questions/33521966/mutationobserver-characterdata-usage-without-childlist">javascript - MutationObserver characterData usage without childList - Stack Overflow</a></cite></p>
+</blockquote>
+<p><code>document.querySelector('#some-id')</code> ではダメで、 <code>document.querySelector('#some-id').childNodes[0]</code> というテキストノードを <code>MutationObserver.observe</code> の 1 つ目の引数に渡す必要があるようでした。</p>
+<h3 id="修正-1">修正 1</h3>
+<p>Stack Overflow を参考に、次のファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;MutationObserver&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;MutationObserver&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form1&#34;</span>&gt;
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text1&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;value1&#34;</span>&gt;
+      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;span1&#34;</span> <span style="color:#a6e22e">contenteditable</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;true&#34;</span>&gt;span1&lt;/<span style="color:#f92672">span</span>&gt;<span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> ← contenteditable=&#34;true&#34; を追加する </span><span style="color:#75715e">--&gt;</span>
+    &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;DOMContentLoaded&#34;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#text1&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;change&#39;</span>, <span style="color:#66d9ef">function</span> () {
+          document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>).<span style="color:#a6e22e">textContent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">value</span>;
+        });
+        <span style="color:#75715e">// Select the node that will be observed for mutations
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">targetNode</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>).<span style="color:#a6e22e">childNodes</span>[<span style="color:#ae81ff">0</span>]; <span style="color:#75715e">// ← テキストノード
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">// Options for the observer (which mutations to observe)
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">config</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">attributes</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">childList</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">characterData</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> }; <span style="color:#75715e">// ← characterData だけ true にする
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">// Callback function to execute when mutations are observed
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">callback</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">mutationsList</span>) {
+          <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">mutation</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">mutationsList</span>) {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;childList&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;A child node has been added or removed.&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;attributes&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;The &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">attributeName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; attribute was modified.&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;characterData&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;characterData was modified.&#39;</span>);
+            }
+          }
+        };
+
+        <span style="color:#75715e">// Create an observer instance linked to the callback function
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">observer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">MutationObserver</span>(<span style="color:#a6e22e">callback</span>);
+
+        <span style="color:#75715e">// Start observing the target node for configured mutations
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">observer</span>.<span style="color:#a6e22e">observe</span>(<span style="color:#a6e22e">targetNode</span>, <span style="color:#a6e22e">config</span>);
+      });
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>初めて知ったのですが、 span って、 <code>contenteditable=&quot;true&quot;</code> の属性をつけることで、ユーザーが直接 span の中の文字列を変えることができるのですね。
+ユーザーが span の中の文字列を変えると、コンソールに &ldquo;characterData was modified.&rdquo; と出力されます。
+<code>characterData</code> のイベントが発生しているようです。</p>
+<p>しかし、 text の値を変えてフォーカスを移動すると、 span の中の文字列は変わるのに、コンソールに &ldquo;characterData was modified.&rdquo; とは出力されません。
+(何も出力されません)
+イベントが発生していないようです。</p>
+<p><code>document.querySelector('#span1').childNodes[0]</code> (テキストノード)に対してイベントリスナーを設定しているので、 <code>document.querySelector('#span1').textContent = this.value</code> とすることで、イベントリスナーを設定したテキストノード自体が別のテキストノードと入れ替わってしまっているように見えました。
+入れ替わったテキストノードにはイベントリスナーは設定されていないから、その後、 span の中の文字列を直接変えてもイベントは発生しませんでした。</p>
+<h3 id="修正-2">修正 2</h3>
+<p>なので、次のように修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;MutationObserver&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;MutationObserver&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form1&#34;</span>&gt;
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text1&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;value1&#34;</span>&gt;
+      &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;span1&#34;</span>&gt;span1&lt;/<span style="color:#f92672">span</span>&gt;<span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> ← contenteditable=&#34;true&#34; を削除する </span><span style="color:#75715e">--&gt;</span>
+    &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;<span style="color:#f92672">hr</span>&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;DOMContentLoaded&#34;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#text1&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;change&#39;</span>, <span style="color:#66d9ef">function</span> () {
+          document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>).<span style="color:#a6e22e">childNodes</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">textContent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">value</span>; <span style="color:#75715e">// ← テキストノードに値を設定する
+</span><span style="color:#75715e"></span>        });
+        <span style="color:#75715e">// Select the node that will be observed for mutations
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">targetNode</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#span1&#39;</span>).<span style="color:#a6e22e">childNodes</span>[<span style="color:#ae81ff">0</span>];
+
+        <span style="color:#75715e">// Options for the observer (which mutations to observe)
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">config</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">attributes</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">childList</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">characterData</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> };
+
+        <span style="color:#75715e">// Callback function to execute when mutations are observed
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">callback</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">mutationsList</span>) {
+          <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">mutation</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">mutationsList</span>) {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;childList&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;A child node has been added or removed.&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;attributes&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;The &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">attributeName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; attribute was modified.&#39;</span>);
+            } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mutation</span>.<span style="color:#a6e22e">type</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;characterData&#39;</span>) {
+              <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;characterData was modified.&#39;</span>);
+            }
+          }
+        };
+
+        <span style="color:#75715e">// Create an observer instance linked to the callback function
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">observer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">MutationObserver</span>(<span style="color:#a6e22e">callback</span>);
+
+        <span style="color:#75715e">// Start observing the target node for configured mutations
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">observer</span>.<span style="color:#a6e22e">observe</span>(<span style="color:#a6e22e">targetNode</span>, <span style="color:#a6e22e">config</span>);
+      });
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>document.querySelector('#span1').childNodes[0].textContent = this.value</code> と、テキストノードに値を設定してみました。</p>
+<p>text の値を変えて、フォーカスを移動すると、 text の値が span に表示されて、コンソールに &ldquo;characterData was modified.&rdquo; と出力されます。</p>
+<p>思ったことは実現できました。
+でも、 span の中の文字列を変えるのに <code>.childNodes</code> とか、あまり記述したくない感じがします。</p>
+<h2 id="終わり">終わり</h2>
+<p><code>MutationObserver</code> を使って、 <code>childList: true</code> の設定にするのが妥当なところかな。</p>
+<p>それから、 <code>MutationObserver</code> は IE11 から実装されたそうです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

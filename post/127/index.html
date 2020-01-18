@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>YARN を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Yarn を使ってみました</h1>
+    
+      <div><time>April 7, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>たまたま <a href="https://www.webprofessional.jp/yarn-vs-npm/">Yarn の記事</a>を読みまして、気になったので使ってみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>npm 5.8.0</li>
+<li>Yarn v1.5.1</li>
+</ul>
+<h2 id="yarn">Yarn?</h2>
+<blockquote>
+<p>Yarnはコードのためのパッケージマネージャーです。 これにより、世界中の開発者とコードの使用と共有を可能にしてくれます。 Yarnはこれを迅速且つ安全に、そして確実に行ってくれるため、心配することは何もありません。</p>
+<p><cite><a href="https://yarnpkg.com/ja/docs/getting-started">概要 | Yarn</a></cite></p>
+</blockquote>
+<p>パッケージマネージャーだそうです。</p>
+<blockquote>
+<p>YarnはFacebook、Google、Exponent、Tildeによって開発された新しいJavaScriptパッケージマネージャーです。公式発表に記載されているように、Yarn開発者が直面したnpmの問題解決を目的としています。</p>
+<ul>
+<li>インストールパッケージの速度および一貫性が不十分である</li>
+<li>npmではパッケージがインストール時にコードを実行することを許可しているため、セキュリティー上の問題がある</li>
+</ul>
+<p><cite><a href="https://www.webprofessional.jp/yarn-vs-npm/">Yarnとnpmの違い：JavaScriptパッケージマネジャーを比較する - WPJ</a></cite></p>
+</blockquote>
+<p>npm の問題を解決することを目的としているようです。</p>
+<h2 id="インストール">インストール</h2>
+<p>WSL の Ubuntu にインストールしたかったので、 Linux の記載を探しました。</p>
+<p>macOS の場合は Homebrew 、 Windows の場合は Windows Installer か Windows 用のパッケージマネージャである Chocolatey でインストールできるようです。</p>
+<blockquote>
+<p>Debian/Ubuntu Linux</p>
+<p>Debian もしくは Ubuntu Linux の場合は、私たちが用意した Debian パッケージリポジトリ経由で Yarn をインストールできます。まず最初にリポジトリの設定をする必要があります。</p>
+<pre><code>curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; | sudo tee /etc/apt/sources.list.d/yarn.list
+</code></pre>
+<p>Ubuntu 16.04 以下や Debian の安定版では、 Node.js の十分な新しいバージョンを取得するために NodeSource のリポジトリを構成する必要があります。</p>
+<p>…略…</p>
+<p>その後はシンプルに以下を実行するだけです。</p>
+<pre><code>sudo apt-get update &amp;&amp; sudo apt-get install yarn
+</code></pre>
+<p><cite><a href="https://yarnpkg.com/ja/docs/install">インストール | Yarn</a></cite></p>
+</blockquote>
+<p>リポジトリの設定をする必要があるようです。
+こういうの、ちょっと面倒だと思ってしまいます。</p>
+<blockquote>
+<p>install</p>
+<pre><code>npm i yarn
+</code></pre>
+<p><cite><a href="https://www.npmjs.com/package/yarn">yarn - npm</a></cite></p>
+</blockquote>
+<p>npm からでもインストールできるようです。
+npm も npm のパッケージとしてグローバルにインストールしてあるし、 Yarn も npm のパッケージとしてグローバルにインストールしてみようと思います。</p>
+<p>次のコマンドでインストールしました。</p>
+<pre><code>$ sudo npm i yarn -g
+[sudo] password for user:
+/usr/local/bin/yarnpkg -&gt; /usr/local/lib/node_modules/yarn/bin/yarn.js
+/usr/local/bin/yarn -&gt; /usr/local/lib/node_modules/yarn/bin/yarn.js
++ yarn@1.5.1
+added 1 package in 1.269s
+</code></pre><p>インストールできたみたいです。</p>
+<pre><code>$ npm ls yarn -g
+/usr/local/lib
+└── yarn@1.5.1
+</code></pre><p>グローバルに Yarn がありました。</p>
+<h2 id="使い方">使い方</h2>
+<h3 id="プロジェクトの新規作成">プロジェクトの新規作成</h3>
+<blockquote>
+<p>プロジェクトの新規作成</p>
+<pre><code>yarn init
+</code></pre>
+<p><cite><a href="https://yarnpkg.com/ja/docs/usage">使い方 | Yarn</a></cite></p>
+</blockquote>
+<p>npm と同じで、 <code>init</code> コマンドでプロジェクトの新規作成ができるみたいです。</p>
+<pre><code>$ yarn init
+yarn init v1.5.1
+question name (project):
+question version (1.0.0):
+question description:
+question entry point (index.js):
+question repository url:
+question author:
+question license (MIT):
+question private:
+success Saved package.json
+Done in 11.94s.
+</code></pre><p>package.json ファイルができました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;project&#34;</span>,
+  <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>,
+  <span style="color:#f92672">&#34;main&#34;</span>: <span style="color:#e6db74">&#34;index.js&#34;</span>,
+  <span style="color:#f92672">&#34;license&#34;</span>: <span style="color:#e6db74">&#34;MIT&#34;</span>
+}
+</code></pre></div><p>デフォルトの値は省略されてしまうのでしょうか。
+npm で作成したものよりシンプルでした。</p>
+<h3 id="依存関係の追加">依存関係の追加</h3>
+<blockquote>
+<p>依存関係の追加</p>
+<pre><code>yarn add [package]
+yarn add [package]@[version]
+yarn add [package]@[tag]
+</code></pre>
+<p><cite><a href="https://yarnpkg.com/ja/docs/usage">使い方 | Yarn</a></cite></p>
+</blockquote>
+<p><code>add</code> コマンドで追加できるようです。
+<a href="https://www.npmjs.com/package/cowsay">cowsay - npm</a> を追加してみます。</p>
+<pre><code>$ yarn add cowsay
+yarn add v1.5.1
+info No lockfile found.
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+[3/4] Linking dependencies...
+[4/4] Building fresh packages...
+success Saved lockfile.
+success Saved 9 new dependencies.
+info Direct dependencies
+└─ cowsay@1.3.0
+info All dependencies
+├─ ansi-regex@3.0.0
+├─ cowsay@1.3.0
+├─ get-stdin@5.0.1
+├─ is-fullwidth-code-point@2.0.0
+├─ optimist@0.6.1
+├─ string-width@2.1.1
+├─ strip-ansi@4.0.0
+├─ strip-eof@1.0.0
+└─ wordwrap@0.0.3
+Done in 7.26s.
+</code></pre><p>追加できたようです。
+小さいパッケージだからかもしれませんが、速いような気がします。</p>
+<h2 id="ローカルにインストールされた-cli">ローカルにインストールされた CLI</h2>
+<blockquote>
+<p>ローカルにインストールされた CLI</p>
+<p>yarn &lt;command&gt; [&lt;args&gt;] を実行すると、ローカルにインストールされた CLI と一致するコマンドが実行されます。そのため、簡単なユースケースではユーザー定義スクリプトを自分でセットアップする必要はありません。</p>
+<p><cite><a href="https://yarnpkg.com/ja/docs/cli/#toc-user-defined-scripts">CLI の紹介 | Yarn</a></cite></p>
+</blockquote>
+<p>Yarn でもこれが使いたかったです。</p>
+<p>cowsay を <code>yarn &lt;command&gt; [&lt;args&gt;]</code> で実行してみます。</p>
+<pre><code>$ yarn cowsay JavaScript FTW!
+yarn run v1.5.1
+$ /path/to/project/node_modules/.bin/cowsay JavaScript FTW!
+ _________________
+&lt; JavaScript FTW! &gt;
+ -----------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+Done in 1.04s.
+</code></pre><p>node_modules/.bin の cowsay が実行されているようです。</p>
+<h2 id="依存関係の削除">依存関係の削除</h2>
+<p>一応、削除も引用しておきます。</p>
+<blockquote>
+<p>依存関係の削除</p>
+<pre><code>yarn remove [package]
+</code></pre>
+<p><cite><a href="https://yarnpkg.com/ja/docs/usage">使い方 | Yarn</a></cite></p>
+</blockquote>
+<p><code>remove</code> コマンドでパッケージを削除できるようです。</p>
+<h2 id="終わり">終わり</h2>
+<blockquote>
+<p>今後の展開</p>
+<p>もしかすると、読者のみなさんはNode.jsとio.jsにまつわる経緯を知っているかもしれません。かいつまんで説明すると、ガバナンスに関する意見の不一致からNode.jsから分岐したio.jsは、一部の献身的な人たちによって開発されました。io.jsはオープンガバナンスを採用しました。しかし、1年もたたないうちに、Node.jsとio.jsのチームは合意に達し、io.jsは再びNode.jsに合併され廃止されました。それが正しいかどうかは別として、多くのすぐれた機能がio.jsからNode.jsに導入されました。</p>
+<p><cite><a href="https://www.webprofessional.jp/yarn-vs-npm/">Yarnとnpmの違い：JavaScriptパッケージマネジャーを比較する - WPJ</a></cite></p>
+</blockquote>
+<p>積極的に Yarn を使うこともないかな、と思いました。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://www.webprofessional.jp/yarn-vs-npm/">Yarnとnpmの違い：JavaScriptパッケージマネジャーを比較する - WPJ</a></li>
+<li><a href="https://qiita.com/tonkotsuboy_com/items/0242928ab32794d11f76">npmから乗り換えてわかったYarnの4つのメリット - Qiita</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

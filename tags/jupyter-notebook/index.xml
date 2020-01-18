@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jupyter Notebook on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/jupyter-notebook/</link>
+    <description>Recent content in Jupyter Notebook on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 19 May 2018 18:01:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/jupyter-notebook/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python と Jupyter Notebook と pandas と Highcharts を使って Price Channel を計算・表示してみました</title>
+      <link>https://va2577.github.io/post/169/</link>
+      <pubDate>Sat, 19 May 2018 18:01:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/169/</guid>
+      <description>&lt;p&gt;Price Channel を計算してみました。
+せっかくなので、 python-highcharts を使ってローソク足と一緒に表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>python-highcharts と pandas-highcharts を使って Jupyter Notebook にローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/168/</link>
+      <pubDate>Fri, 18 May 2018 08:56:03 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/168/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/167/&#34;&gt;前回&lt;/a&gt;、 &lt;code&gt;%%html&lt;/code&gt; と &lt;code&gt;%%javascript&lt;/code&gt; マジックコマンドを使って Highcharts のローソク足を表示してみました。
+今回は、 python-highcharts と pandas-highcharts を使ってローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook で Highcharts を使ってローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/167/</link>
+      <pubDate>Thu, 17 May 2018 23:21:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/167/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/149/&#34;&gt;Python で為替レートの折れ線グラフを表示してみました&lt;/a&gt;の記事を書いたときは、ローソク足を表示できなかったのですが、 Jupyter Notebook から JavaScript のライブラリーの Highcharts を読み込んで、ローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で 1 分足のヒストリカルデータから日足のデータを作りました</title>
+      <link>https://va2577.github.io/post/162/</link>
+      <pubDate>Sat, 12 May 2018 15:38:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/162/</guid>
+      <description>&lt;p&gt;売買ルールを検証するのに Python を使ってみようと思いました。
+かなりメカニカル、機械的にトレードをするようになったので、検証もメカニカルにプログラムを使ってできないかと思い始めています。
+でも、 MT4 の EA のような、システムトレードをしたいわけではないです。&lt;/p&gt;
+&lt;p&gt;今回は、データを用意するところを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook で処理時間を測りました</title>
+      <link>https://va2577.github.io/post/161/</link>
+      <pubDate>Fri, 11 May 2018 16:28:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/161/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/160/&#34;&gt;リスト内包表記のパフォーマンスを計測した&lt;/a&gt;ときに、 Jupyter Notebook のマジックコマンドを調べましたので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で為替レートの折れ線グラフを表示してみました</title>
+      <link>https://va2577.github.io/post/149/</link>
+      <pubDate>Sun, 29 Apr 2018 17:33:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/149/</guid>
+      <description>&lt;p&gt;Python で、 &lt;a href=&#34;https://matplotlib.org/&#34;&gt;Matplotlib&lt;/a&gt; を使って、為替レートの折れ線グラフを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Jupyter Notebook をインストールしました</title>
+      <link>https://va2577.github.io/post/148/</link>
+      <pubDate>Sat, 28 Apr 2018 17:50:46 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/148/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt; については、以前、&lt;a href=&#34;https://va2577.github.io/post/64/&#34;&gt;記事を書いた&lt;/a&gt;ことがあって、そのときに使いました。
+今回は、 WSL の Ubuntu でも使えるようにインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook を使ってみました</title>
+      <link>https://va2577.github.io/post/64/</link>
+      <pubDate>Fri, 23 Dec 2016 20:35:45 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/64/</guid>
+      <description>&lt;p&gt;Jupyter Notebook を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

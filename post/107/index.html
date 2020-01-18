@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のデプロイのシェルの ECHO が気になったので調べました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のデプロイのシェルの echo が気になったので調べました</h1>
+    
+      <div><time>March 18, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Bash で気になって調べたことを書いておきます。</p>
+<h2 id="気になるところ">気になるところ</h2>
+<p>このブログは <a href="https://gohugo.io/">Hugo</a> で作成していて、 <a href="https://pages.github.com/">GitHub Pages</a> にデプロイしています。
+デプロイについては、次の記載を参考にしています。</p>
+<blockquote>
+<p>Put it Into a Script</p>
+<p>You’re almost done. You can also add a deploy.sh script to automate the preceding steps for you. You can also make it executable with chmod +x deploy.sh.
+The following are the contents of the deploy.sh script:</p>
+<pre><code>#!/bin/bash
+
+echo -e &quot;\033[0;32mDeploying updates to GitHub...\033[0m&quot;
+# …略…
+</code></pre>
+<p><cite><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">Host on GitHub | Hugo</a></cite></p>
+</blockquote>
+<p>気なったのは、このシェルの次の箇所です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">echo -e <span style="color:#e6db74">&#34;\033[0;32mDeploying updates to GitHub...\033[0m&#34;</span>
+</code></pre></div><p>結果としてはコンソールに緑の文字で表示されるので、そのための対処かなと思っています。</p>
+<h2 id="ansi-escape-code">ANSI escape code</h2>
+<p>調べたところ、 ANSI escape code のようでした。</p>
+<blockquote>
+<p>Colors</p>
+<p>3/4 bit</p>
+<p>The original specification only had 8 colors, and just gave them names. The SGR parameters 30-37 selected the foreground color, while 40-47 selected the background. Quite a few terminals implemented &ldquo;bold&rdquo; (SGR code 1) as a brighter color rather than a different font, thus providing 8 additional foreground colors. Usually you could not get these as background colors, though sometimes inverse video (SGR code 7) would allow that. Examples: to get black letters on white background use ESC[30;47m, to get red use ESC[31m, to get bright red use ESC[1;31m. To reset colors to their defaults, use ESC[39;49m (not supported on some terminals), or reset all attributes with ESC[0m. Later terminals added the ability to directly specify the &ldquo;bright&rdquo; colors with 90-97 and 100-107.</p>
+<p><a href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI escape code - Wikipedia</a></p>
+</blockquote>
+<p>いくつかカラーを記載してみます。</p>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">FG code</th>
+<th align="left">BG code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Black</td>
+<td align="left">30</td>
+<td align="left">40</td>
+</tr>
+<tr>
+<td align="left">Red</td>
+<td align="left">31</td>
+<td align="left">41</td>
+</tr>
+<tr>
+<td align="left">Green</td>
+<td align="left">32</td>
+<td align="left">42</td>
+</tr>
+<tr>
+<td align="left">Yellow</td>
+<td align="left">33</td>
+<td align="left">43</td>
+</tr>
+<tr>
+<td align="left">Blue</td>
+<td align="left">34</td>
+<td align="left">44</td>
+</tr>
+<tr>
+<td align="left">Magenta</td>
+<td align="left">35</td>
+<td align="left">45</td>
+</tr>
+<tr>
+<td align="left">Cyan</td>
+<td align="left">36</td>
+<td align="left">46</td>
+</tr>
+<tr>
+<td align="left">White</td>
+<td align="left">37</td>
+<td align="left">47</td>
+</tr>
+</tbody>
+</table>
+<p>このカラーの指定について、いくつかあるようです。</p>
+<h3 id="例１">例１</h3>
+<p>前景色(文字)を黒、背景色を白にする場合は、 <code>ESC[30;47m</code> のように指定するようです。
+なので、 <code>;</code> で区切った左側の数字が前景色、右側の数字が背景色になるようです。</p>
+<h3 id="例２">例２</h3>
+<p>前景色を赤にする場合は、 <code>ESC[31m</code> のように指定するようです。</p>
+<h3 id="例３">例３</h3>
+<p>前景色を明るい赤にする場合は、 <code>ESC[1;31m</code> のように指定するようです。
+これは、カラーの表を見ると <code>ESC[91m</code> と指定しても同じようです。
+なので、 <code>;</code> で区切った左側の数字が <code>0</code> だと明るくない色、 <code>1</code> だと明るい色になるようです。</p>
+<p>Hugo のシェルは、この例３の形式で、明るくない緑 (<code>ESC[0;32m</code>) と指定しているようです。</p>
+<h2 id="ascii-escape-character">ASCII escape character</h2>
+<p>それから、 Hugo のシェルの内容と比較してみると <code>ESC</code> が <code>\033</code> に対応していることが想像できます。</p>
+<blockquote>
+<p>ASCII escape character</p>
+<p>The ASCII &ldquo;escape&rdquo; character (octal: \033, hexadecimal: \x1B, or ^[, or, in decimal, 27) is used in many output devices to start a series of characters called a control sequence or escape sequence.</p>
+<p><cite><a href="https://en.wikipedia.org/wiki/Escape_character#ASCII_escape_character">Escape character - Wikipedia</a></cite></p>
+</blockquote>
+<p><code>ESC</code> は、 8 進数だと <code>\033</code> 、 16 進数だと <code>\x1B</code> 、 10 進数だと <code>27</code> になるようです。
+なので、 8 進数で指定していることがわかりました。</p>
+<h2 id="リセット">リセット</h2>
+<p>Hugo のシェルでは、すべての属性をリセットするために文字列の最後に <code>ESC[0m</code> と記述しているようです。</p>
+<h2 id="echo-コマンドのオプション">echo コマンドのオプション</h2>
+<blockquote>
+<p>-e     enable interpretation of backslash escapes</p>
+<p><cite>man echo</cite></p>
+</blockquote>
+<p>それから、 <code>echo</code> の制御文字を有効にするために、オプションの <code>-e</code> を指定しているようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>bash は独特な記述があったりして知らないことが多かったりします。
+記号とかだと検索しづらいところもありますし。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

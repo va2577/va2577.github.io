@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C Sharp on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/c-sharp/</link>
+    <description>Recent content in C Sharp on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 May 2018 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/c-sharp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Visual Studio なしで C# のプログラムをコンパイルする</title>
+      <link>https://va2577.github.io/post/158/</link>
+      <pubDate>Tue, 08 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/158/</guid>
+      <description>&lt;p&gt;ちょっとだけ C# を使いたくて。
+そのために Visual Studio をインストールするのは時間もかかるし容量も必要になるので。
+調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iTextSharp(C#) を使ってみました</title>
+      <link>https://va2577.github.io/post/111/</link>
+      <pubDate>Thu, 22 Mar 2018 09:05:17 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/111/</guid>
+      <description>&lt;p&gt;.NET Framework の C# を使って PDF を作成する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.NET Framework C# で暗号化する AES(Advanced Encryption Standard)</title>
+      <link>https://va2577.github.io/post/69/</link>
+      <pubDate>Fri, 27 Jan 2017 10:13:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/69/</guid>
+      <description>&lt;p&gt;暗号化をする必要がありましたので、調べたことをまとめてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.NET Framework(C#, VB.NET) Excelのプロセスが残る</title>
+      <link>https://va2577.github.io/post/49/</link>
+      <pubDate>Tue, 11 Oct 2016 10:37:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/49/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/45/&#34;&gt;Office 2016 の PIA がない&lt;/a&gt;の記事で環境を設定していたところです。
+Excelの帳票を出力するアプリケーションを作っていて、よくあるExcelのプロセスが残る問題が発生してしまったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

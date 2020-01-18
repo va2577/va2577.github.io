@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>INNO SETUP で .NET FRAMEWORK をインストールさせる方法を調べました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Inno Setup で .NET Framework をインストールさせる方法を調べました</h1>
+    
+      <div><time>March 24, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Windows のインストーラーで、 .NET Framework をインストールさせたかったので調べました。</p>
+<p>InstallShield はウィザードから選択するだけで、 .NET Framework がなければインストールさせることができたのですが、 Inno Setup は実装する必要があるようです。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Windows 10 Pro</li>
+<li>Inno Setup 5.5.9</li>
+</ul>
+<h2 id="net-framework-がインストールされていることをチェックする">.NET Framework がインストールされていることをチェックする</h2>
+<p>簡単にコマンドで結果が得られるかな？と思っていましたが、レジストリーをチェックする必要があるみたいでした。</p>
+<h3 id="net-framework-140-の場合">.NET Framework 1~4.0 の場合</h3>
+<p>.NET Framework 1~4.0 までは、次のレジストリーを調べれば良いみたいです。</p>
+<blockquote>
+<p>To find .NET Framework versions by viewing the registry (.NET Framework 1-4)</p>
+<p>…略…</p>
+<p>In the Registry Editor, open the following subkey:</p>
+<pre><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP 
+</code></pre>
+<p>The installed versions are listed under the NDP subkey. The version number is stored in the Version entry. For the .NET Framework 4 the Version entry is under the Client or Full subkey (under NDP), or under both subkeys.</p>
+<blockquote>
+<p>Note</p>
+<p>The &ldquo;NET Framework Setup&rdquo; folder in the registry does not begin with a period.</p>
+</blockquote>
+<p><cite><a href="https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed">How to: Determine which .NET Framework versions are installed | Microsoft Docs</a></cite></p>
+</blockquote>
+<p><code>NDP</code> の下の <code>Version</code> エントリーを確認すれば良いみたいです。</p>
+<p>.NET Framework 4.0 については、 <code>NDP</code> の下に次のサブキーが登録されているようです。</p>
+<ul>
+<li>Clinet Profile: <code>NDP\Client</code></li>
+<li>完全な .NET Framework: <code>NDP\Full</code></li>
+</ul>
+<h4 id="client-profile">Client Profile?</h4>
+<p>Client Profile は次のようなもののようです。</p>
+<blockquote>
+<p>.NET Framework 4 Client Profile は、クライアント アプリケーション用に最適化された .NET Framework 4 のサブセットです。 WPF (Windows Presentation Foundation)、Windows フォーム、WCF (Windows Communication Foundation)、および ClickOnce の機能を含むほとんどのクライアント アプリケーション向けの機能が用意されています。 これにより、.NET Framework 4 Client Profile を対象とするアプリケーションの配置が速くなり、インストール パッケージが小さくなります。</p>
+<p>…略…</p>
+<p>.NET Framework 4 Client Profile に含まれていない機能</p>
+<p>.NET Framework 4 Client Profile には、次の機能は含まれていません。 アプリケーションでこれらの機能を使用するには、.NET Framework 4 をインストールする必要があります。</p>
+<ul>
+<li>ASP.NET</li>
+<li>Windows Communication Foundation (WCF) の高度な機能</li>
+<li>.NET Framework Oracle 用データ プロバイダー</li>
+<li>コンパイルに使用する MSBuild</li>
+</ul>
+<p><cite><a href="https://msdn.microsoft.com/library/cc656912(v=vs.100).aspx">.NET Framework Client Profile</a></cite></p>
+</blockquote>
+<p>これを .NET Framework がインストールされていると判断するか、しないか、あると思いまして。
+インストーラーを作成するような、クライアント向けに作成したアプリケーションであれば、 .NET Framework がインストールされていると判断しても良さそうです。</p>
+<p>そのアプリケーションが、なぜか、クライアント向けであるにもかかわらず、 ASP.NET で実装されたウェブアプリケーションだったりすると、話はまた別だと思いますけど。
+このあたりは、 &ldquo;含まれていない機能&rdquo; を参考に判断すれば良さそうです。</p>
+<h3 id="net-framework-45-and-later-の場合">.NET Framework 4.5 and later の場合</h3>
+<p>.NET Framework 4.5 以降は、次のレジストリーを調べれば良いみたいです。</p>
+<blockquote>
+<p>To find .NET Framework versions by viewing the registry (.NET Framework 4.5 and later)</p>
+<p>In the Registry Editor, open the following subkey:</p>
+<pre><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full
+</code></pre>
+<blockquote>
+<p>Note</p>
+<p>that the path to the Full subkey includes the subkey Net Framework rather than .NET Framework.</p>
+</blockquote>
+<p>Check for a DWORD value named Release. The existence of the Release DWORD indicates that the .NET Framework 4.5 or newer has been installed on that computer.</p>
+<p><cite><a href="https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed">How to: Determine which .NET Framework versions are installed | Microsoft Docs</a></cite></p>
+</blockquote>
+<p><code>NDP\v4\Full</code> の <code>Release</code> をチェックすれば良いみたいです。
+リンク先に <code>Release</code> の値とバージョンの対応の表があるので、それに従って制御する必要がありそうです。</p>
+<h3 id="inno-setup-での実装">Inno Setup での実装</h3>
+<p>このチェックを Inno Setup のスクリプトで実装してくれている方がいるようでした。</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/4104011/inno-setup-verify-that-net-4-0-is-installed">Inno Setup: Verify that .NET 4.0 is installed - Stack Overflow</a></li>
+<li><a href="http://www.kynosarges.de/DotNetVersion.html">www.kynosarges.de/DotNetVersion.html</a></li>
+</ul>
+<p><code>InitializeSetup</code> 関数の中に記述されているバージョンとサービスパックの指定を要件に合うように変えてあげれば良さそうです。
+必要であればメッセージボックスの制御も変えます。</p>
+<p>チェックのタイミングは、 <code>[Files]</code> セクションの <code>Source</code> の行に <code>Check: function</code> とつけて、ファイルをコピーする前のタイミングでチェックしているようです。
+チェックが False であれば、ファイルをコピーしないし、 .NET Framework もインストールしないイメージかな。</p>
+<h2 id="net-framework-をインストールさせる">.NET Framework をインストールさせる</h2>
+<p>まず、 .NET Framework のインストーラーを探しました。</p>
+<h3 id="net-framework-471-offline-installer">.NET Framework 4.7.1 (Offline Installer)</h3>
+<p>次のリンクからオフラインインストーラーをダウンロードしました。</p>
+<p><a href="https://www.microsoft.com/en-US/download/confirmation.aspx?id=56116">Download Microsoft .NET Framework 4.7.1 (Offline Installer) for Windows 7 SP1, Windows 8.1, Windows 10 Anniversary Update, Wind</a></p>
+<p>Web Installer でも良いと思いますが、 setup.exe のインストーラーで完結する形にしたかったので、オフラインインストーラーをダウンロードしました。</p>
+<p>.NET Framework の配置ガイドです。</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/framework/deployment/deployment-guide-for-developers">.NET Framework deployment guide for developers | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/framework/deployment/guide-for-administrators">.NET Framework Deployment Guide for Administrators | Microsoft Docs</a></li>
+</ul>
+<blockquote>
+<p>Chaining by using the default .NET Framework UI</p>
+<p>To silently chain the .NET Framework installation process and let the .NET Framework installer provide the UI, add the following command to your setup program:</p>
+<pre><code>&lt;.NET Framework redistributable&gt; /q /norestart /ChainingPackage &lt;PackageName&gt;
+</code></pre>
+<p>…略…</p>
+<p>/norestart</p>
+<p>Prevents the setup program from rebooting automatically. If you use this option, the chaining app has to capture the return code and handle rebooting (see Getting Progress Information from an Installation Package in the MSDN Library).</p>
+<p>/q</p>
+<p>Sets quiet mode.</p>
+<p><cite><a href="https://docs.microsoft.com/en-us/dotnet/framework/deployment/deployment-guide-for-developers">.NET Framework deployment guide for developers | Microsoft Docs</a></cite></p>
+</blockquote>
+<p>インストーラーに含めて、その中で実行する場合は、 /norestart と /q オプションをつけるようです。</p>
+<p>/norestart は、自動的に再起動させないためのオプションのようです。
+これをつける場合は、呼び出す側でリターンコードを受け取って、後で再起動をさせる(自動でも手動でも)ようにする必要があるようです。</p>
+<p>/q は、 .NET Framework 自体のインストーラーのプログレスウィンドウを表示しないためのオプションのようです。</p>
+<h3 id="inno-setup-での実装-1">Inno Setup での実装</h3>
+<p>次のリンクに同様の QA がありました。</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/20752882/how-can-i-install-net-framework-as-a-prerequisite-using-innosetup#20753218">inno setup - How can I install .NET framework as a prerequisite using InnoSetup? - Stack Overflow</a></li>
+</ul>
+<p>.NET Framework のインストーラーを起動するには、 <code>Exec</code> を使えば良さそうです。
+リターンコードは <code>Exec</code> の 6 つ目の引数で受け取れるようです。</p>
+<p>それから、 <code>[File]</code> セクションの <code>Source</code> の行に、 <code>AfterInstall: procedure</code> をつけることで、コピーした後にスクリプトを実行することができるようです。</p>
+<h2 id="inno-setup-のコード">Inno Setup のコード</h2>
+<p>調べたことをまとめて、次のようなコードになりました。</p>
+<pre><code>[Files]
+Source: &quot;testsetup\NDP471-KB4033342-x86-x64-AllOS-ENU.exe&quot;; DestDir: {tmp}; Flags: deleteafterinstall; AfterInstall: InstallFramework; Check: not InitializeSetup
+
+[Code]
+// [Inno Setup: Verify that .NET 4.0 is installed - Stack Overflow](https://stackoverflow.com/questions/4104011/inno-setup-verify-that-net-4-0-is-installed)
+// [www.kynosarges.de/DotNetVersion.html](www.kynosarges.de/DotNetVersion.html)
+function IsDotNetDetected(version: string; service: cardinal): boolean;
+// Indicates whether the specified version and service pack of the .NET Framework is installed.
+//
+// version -- Specify one of these strings for the required .NET Framework version:
+//    'v1.1'          .NET Framework 1.1
+//    'v2.0'          .NET Framework 2.0
+//    'v3.0'          .NET Framework 3.0
+//    'v3.5'          .NET Framework 3.5
+//    'v4\Client'     .NET Framework 4.0 Client Profile
+//    'v4\Full'       .NET Framework 4.0 Full Installation
+//    'v4.5'          .NET Framework 4.5
+//    'v4.5.1'        .NET Framework 4.5.1
+//    'v4.5.2'        .NET Framework 4.5.2
+//    'v4.6'          .NET Framework 4.6
+//    'v4.6.1'        .NET Framework 4.6.1
+//    'v4.6.2'        .NET Framework 4.6.2
+//    'v4.7'          .NET Framework 4.7
+//    'v4.7.1'        .NET Framework 4.7.1
+//
+// service -- Specify any non-negative integer for the required service pack level:
+//    0               No service packs required
+//    1, 2, etc.      Service pack 1, 2, etc. required
+var
+  key, versionKey: string;
+  install, release, serviceCount, versionRelease: cardinal;
+  success: boolean;
+begin
+  versionKey := version;
+  versionRelease := 0;
+
+  // .NET 1.1 and 2.0 embed release number in version key
+  if version = 'v1.1' then begin
+    versionKey := 'v1.1.4322';
+  end else if version = 'v2.0' then begin
+    versionKey := 'v2.0.50727';
+  end
+
+  // .NET 4.5 and newer install as update to .NET 4.0 Full
+  else if Pos('v4.', version) = 1 then begin
+    versionKey := 'v4\Full';
+    case version of
+      'v4.5':   versionRelease := 378389;
+      'v4.5.1': versionRelease := 378675; // 378758 on Windows 8 and older
+      'v4.5.2': versionRelease := 379893;
+      'v4.6':   versionRelease := 393295; // 393297 on Windows 8.1 and older
+      'v4.6.1': versionRelease := 394254; // 394271 before Win10 November Update
+      'v4.6.2': versionRelease := 394802; // 394806 before Win10 Anniversary Update
+      'v4.7':   versionRelease := 460798; // 460805 before Win10 Creators Update
+      'v4.7.1': versionRelease := 461308; // 461310 before Win10 Fall Creators Update
+    end;
+  end;
+
+  // installation key group for all .NET versions
+  key := 'SOFTWARE\Microsoft\NET Framework Setup\NDP\' + versionKey;
+
+  // .NET 3.0 uses value InstallSuccess in subkey Setup
+  if Pos('v3.0', version) = 1 then begin
+    success := RegQueryDWordValue(HKLM, key + '\Setup', 'InstallSuccess', install);
+  end else begin
+    success := RegQueryDWordValue(HKLM, key, 'Install', install);
+  end;
+
+  // .NET 4.0 and newer use value Servicing instead of SP
+  if Pos('v4', version) = 1 then begin
+    success := success and RegQueryDWordValue(HKLM, key, 'Servicing', serviceCount);
+  end else begin
+    success := success and RegQueryDWordValue(HKLM, key, 'SP', serviceCount);
+  end;
+
+  // .NET 4.5 and newer use additional value Release
+  if versionRelease &gt; 0 then begin
+    success := success and RegQueryDWordValue(HKLM, key, 'Release', release);
+    success := success and (release &gt;= versionRelease);
+  end;
+
+  result := success and (install = 1) and (serviceCount &gt;= service);
+end;
+
+function InitializeSetup(): Boolean;
+begin
+  if not IsDotNetDetected('v4.7.1', 0) then begin
+    // comment out
+    //MsgBox('MyApp requires Microsoft .NET Framework 4.7.1.'#13#13
+    //  'Please use Windows Update to install this version,'#13
+    //  'and then re-run the MyApp setup program.', mbInformation, MB_OK);
+    result := false;
+  end else
+    result := true;
+end;
+
+// [inno setup - How can I install .NET framework as a prerequisite using InnoSetup? - Stack Overflow](https://stackoverflow.com/questions/20752882/how-can-i-install-net-framework-as-a-prerequisite-using-innosetup#20753218)
+procedure InstallFramework;
+var
+  ResultCode: Integer;
+begin
+  if not Exec(ExpandConstant('{tmp}\NDP471-KB4033342-x86-x64-AllOS-ENU.exe'), '/q /norestart', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
+  begin
+    // { you can interact with the user that the installation failed }
+    MsgBox('.NET installation failed with code: ' + IntToStr(ResultCode) + '.', mbError, MB_OK);
+  end;
+end;
+</code></pre><h2 id="終わり">終わり</h2>
+<p>インストーラーはテストでインストール、アンインストールを繰り返すのが面倒でした。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

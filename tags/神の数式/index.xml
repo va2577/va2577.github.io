@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>神の数式 on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/%E7%A5%9E%E3%81%AE%E6%95%B0%E5%BC%8F/</link>
+    <description>Recent content in 神の数式 on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Feb 2016 11:09:33 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/%E7%A5%9E%E3%81%AE%E6%95%B0%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>神の数式 第2回 宇宙はなぜ生まれたのか 〜最後の難問に挑む天才たち〜</title>
+      <link>https://va2577.github.io/post/36/</link>
+      <pubDate>Sat, 27 Feb 2016 11:09:33 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/36/</guid>
+      <description>&lt;p&gt;超弦理論についての書き起こしをしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>神の数式 第1回 この世は何からできているのか 〜天才たちの100年の苦闘〜</title>
+      <link>https://va2577.github.io/post/35/</link>
+      <pubDate>Fri, 26 Feb 2016 20:59:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/35/</guid>
+      <description>&lt;p&gt;素粒子の標準理論についての書き起こしをしてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>DISQUSに登録してJEKYLLのブログにコメント欄をつける - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Disqusに登録してJekyllのブログにコメント欄をつける</h1>
+    
+      <div><time>January 24, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>DisqusはFacebook、Twitter、Google+のアカウントで使えるコメント欄です。
+そう思って登録を始めましたが、もっと広い意味でウェブ上のコミュニティーの場を提供しているサービスのようでした。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Jekyll バージョン 2.4.0</li>
+</ul>
+<h2 id="disqus">Disqus？</h2>
+<blockquote>
+<p>The Web’s Community of Communities</p>
+<p>Disqus is a free service that enables great online communities. As the web’s most popular discussion system, Disqus is used by millions of websites that cover pretty much any topic imaginable. Our magic is in connecting people to stuff worth talking about.</p>
+<p><cite><a href="https://disqus.com/about/">Disqus – About Disqus</a></cite></p>
+</blockquote>
+<h2 id="サインイン">サインイン</h2>
+<p><a href="https://disqus.com/profile/login/">Disqus Profile | Sign-in</a>にアクセスしてDisqusにサインインします。
+Disqusのアカウントを独立して作る場合は<code>Need an account?</code>ボタンからDisqusのアカウントを作成します。
+サインインのページは省略します。</p>
+<p><img src="/img/16-01.jpg" alt=""></p>
+<h2 id="get-started">get started</h2>
+<p>作ったばかりのアカウントなのでget startedが表示されています。
+メールの確認も来ていたのですませておきます。</p>
+<p><img src="/img/16-02.jpg" alt=""></p>
+<h2 id="add-disqus-to-site">Add Disqus To Site</h2>
+<p><code>Settings</code>の<code>Add Disqus To Site</code>リンクをクリックします。</p>
+<p><img src="/img/16-03.jpg" alt=""></p>
+<h2 id="start-using-engage">Start Using Engage</h2>
+<p><code>Start Using Engage</code>ボタンをクリックします。</p>
+<p><img src="/img/16-04.jpg" alt=""></p>
+<h2 id="site-profile">Site profile</h2>
+<p><code>Site Profile</code>を入力して<code>Finish registration</code>ボタンをクリックします。
+<code>Site name</code>はこのサイトの名前にしました。
+<code>Choose your unique Disqus URL</code>がDisqus上のコミュニティーを識別するURLになるはずなので
+任意のURLをつけました。
+<code>Category</code>はこのサイトに該当するカテゴリーを選択しました。</p>
+<p><img src="/img/16-05.jpg" alt=""></p>
+<h2 id="choose-your-platform">Choose your platform</h2>
+<p><code>Choose your platform</code>に<code>Wordpress</code>とか色々ありますが、Jekyllのようなものはなかったので、<code>Unisersal Code</code>をクリックします。</p>
+<p><img src="/img/16-06.jpg" alt=""></p>
+<h2 id="place-the-following-code-where-youd-like-disqus-to-load">Place the following code where you’d like Disqus to load</h2>
+<blockquote>
+<p>1 Place the following code where you'd like Disqus to load:</p>
+</blockquote>
+<p>の欄にあるコードをコピーします。</p>
+<p><img src="/img/16-07.jpg" alt=""></p>
+<p><code>_includes/disqus.html</code>としてコピーした以下の内容を保存しました。</p>
+<pre><code>$ ls _includes/disqus.html
+_includes/disqus.html
+</code></pre><h2 id="recommended-edit-the-recommended-configuration-variables">(Recommended) Edit the RECOMMENDED CONFIGURATION VARIABLES</h2>
+<blockquote>
+<p>2 (Recommended)&hellip;</p>
+</blockquote>
+<p>に記載されているように<code>this.page.url</code>と<code>this.page.identifier</code>のところはこの各記事のURLと各記事を識別できる内容に変更しておきました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;disqus_thread&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">script</span>&gt;
+<span style="color:#75715e">/**
+</span><span style="color:#75715e">* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+</span><span style="color:#75715e">* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">disqus_config</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{{ site.url }}{{ site.baseurl }}{{ page.url }}&#39;</span>; <span style="color:#75715e">// Replace PAGE_URL with your page&#39;s canonical URL variable
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">identifier</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{{ page.id }}&#39;</span>; <span style="color:#75715e">// Replace PAGE_IDENTIFIER with your page&#39;s unique identifier variable
+</span><span style="color:#75715e"></span>};
+(<span style="color:#66d9ef">function</span>() { <span style="color:#75715e">// DON&#39;T EDIT BELOW THIS LINE
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">d</span> <span style="color:#f92672">=</span> document, <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;script&#39;</span>);
+
+<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;//xxx.disqus.com/embed.js&#39;</span>;
+
+<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">setAttribute</span>(<span style="color:#e6db74">&#39;data-timestamp&#39;</span>, <span style="color:#f92672">+</span><span style="color:#66d9ef">new</span> Date());
+(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">head</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">body</span>).<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">s</span>);
+})();
+&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">noscript</span>&gt;Please enable JavaScript to view the &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://disqus.com/?ref_noscript&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nofollow&#34;</span>&gt;comments powered by Disqus.&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">noscript</span>&gt;
+</code></pre></div><p>全ての記事のページの下にコメント欄を表示したかったので、このサイトの場合は<code>_layouts/post.html</code>の適当な位置に以下の内容を追加しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">&lt;article class=&#34;post-content&#34;&gt;
+  {{ content }}
+  {% include disqus.html %}
+&lt;/article&gt;
+</code></pre></div><h2 id="how-to-display-comment-count">How to display comment count</h2>
+<blockquote>
+<p>How to display comment count</p>
+</blockquote>
+<p>はコメントの数を表示するつもりは今のところなかったので何もしていません。</p>
+<h2 id="終わり">終わり</h2>
+<p>この記事の下にもコメント欄が表示されていると思います。</p>
+<p><a href="/post/5/">これ</a>がブログっぽくなってきたと思いますがいかがでしょうか。
+コツコツ記事を投稿していこうと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://help.disqus.com/customer/en/portal/articles/466182-publisher-quick-start-guide">Publisher Quick Start Guide | DISQUS</a></li>
+<li><a href="https://help.disqus.com/customer/en/portal/articles/931017-registering-a-new-forum">Registering a new forum | DISQUS</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

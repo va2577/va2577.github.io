@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON MATPLOTLIB を使って 2 軸のグラフ（株価のラインと出来高のバー）を作ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python Matplotlib を使って 2 軸のグラフ（株価のラインと出来高のバー）を作ってみました</h1>
+    
+      <div><time>October 27, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>2 軸のグラフを作りたかったので、試しに株価のラインと出来高のバーのグラフを作りました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>python 3.6.5</li>
+<li>matplotlib 3.0.2</li>
+</ul>
+<h2 id="matplotlib-について">Matplotlib について</h2>
+<p>2 軸のグラフは次のリンクが参考になりそうでした。</p>
+<ul>
+<li><a href="https://matplotlib.org/gallery/subplots_axes_and_figures/two_scales.html">Plots with different scales — Matplotlib 3.0.2 documentation</a></li>
+<li><a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.twinx.html">matplotlib.axes.Axes.twinx — Matplotlib 3.0.2 documentation</a></li>
+</ul>
+<p>その前に大切なことを知りました。</p>
+<blockquote>
+<p>matplotlibにはグラフを作る際の二つの流儀がある</p>
+<p>Artistの話の前に、新しいユーザーが絶対に知っておくべきplt.plotとax.plotの違いについて述べます。公式チュートリアルでも A note on the Object-Oriented API vs Pyplot や Coding Styles で言及されていますが、matplotlibでグラフを作るには二つの流儀（インターフェース）があります。公式ドキュメントを含めてネット上に大量にあるmatplotlibのコードにはこの二つが混在していますが、これらの違いについて明記してる例はあまり多くないように思えます。また、意味もなく二つを混ぜて使っている例も多く、これが多くの初心者のつまづきの原因になっていると思います。</p>
+<p><cite><a href="https://qiita.com/skotaro/items/08dc0b8c5704c94eafb9">早く知っておきたかったmatplotlibの基礎知識、あるいは見た目の調整が捗るArtistの話 - Qiita</a></cite></p>
+</blockquote>
+<p>違いを理解した上で Pyplot を使うのは良いとして、 the Object-Oriented API を使った方が柔軟にグラフを作っていけそうなので、こちらの方法を使って進めることにしました。</p>
+<h2 id="2-軸のグラフ">2 軸のグラフ</h2>
+<p>ここから Jupyter Notebook のセルに入力しながらグラフを作っていきたいと思います。
+この中で使っているヒストリカルデータは <a href="https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC">Yahoo Finance の S&amp;P500</a> のものです。</p>
+<p>最初に、モジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>次に、ヒストリカルデータを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/1/historical-prices/^GSPC.csv</span><span style="color:#e6db74">&#39;</span>, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, parse_dates<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>])
+df<span style="color:#f92672">.</span>head()
+df<span style="color:#f92672">.</span>tail()
+</code></pre></div><p>1950 年からのヒストリカルデータだったので 2017 年だけ使うことにしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df2017 <span style="color:#f92672">=</span> df[df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>year <span style="color:#f92672">==</span> <span style="color:#ae81ff">2017</span>]
+</code></pre></div><p>まず、株価のラインです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax1<span style="color:#f92672">.</span>plot(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>])
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/205-01.png" alt=""></p>
+<p>次に、出来高のバーです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax1<span style="color:#f92672">.</span>bar(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>])
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/205-02.png" alt=""></p>
+<p>最後に、株価のラインと出来高のバーを一緒に表示しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax2 <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>twinx()
+c <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>bar(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>])
+l <span style="color:#f92672">=</span> ax2<span style="color:#f92672">.</span>plot(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>])
+le <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>legend((c, <span style="color:#f92672">*</span>l), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>), loc<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">upper left</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p><code>Axes.twinx()</code> 関数は x 軸を共有した Axes を作ってくれるようです（こうすると y 軸が 2 つになります）。
+legend は ax1 の方にまとめて表示するようにしました。</p>
+<p>結果です。</p>
+<p><img src="/img/205-03.png" alt=""></p>
+<h2 id="style-sheets">style sheets</h2>
+<p>見た目の設定をしていて、次のリンクを見つけました。</p>
+<ul>
+<li><a href="https://matplotlib.org/tutorials/introductory/customizing.html">Customizing Matplotlib with style sheets and rcParams — Matplotlib 3.0.2 documentation</a></li>
+</ul>
+<p>style sheets と rcParams でカスタマイズできるみたいです。</p>
+<p>最初に style sheets を試してみました。</p>
+<p>モジュールを読み込んで、ヒストリカルデータを読み込んで、 2017 年のデータだけ用意しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/1/historical-prices/^GSPC.csv</span><span style="color:#e6db74">&#39;</span>, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, parse_dates<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>])
+df<span style="color:#f92672">.</span>head()
+df<span style="color:#f92672">.</span>tail()
+df2017 <span style="color:#f92672">=</span> df[df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>year <span style="color:#f92672">==</span> <span style="color:#ae81ff">2017</span>]
+</code></pre></div><p>利用可能な style を表示してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(plt<span style="color:#f92672">.</span>style<span style="color:#f92672">.</span>available)
+</code></pre></div><p>結果です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;Solarize_Light2&#39;</span>, <span style="color:#e6db74">&#39;_classic_test&#39;</span>, <span style="color:#e6db74">&#39;bmh&#39;</span>, <span style="color:#e6db74">&#39;classic&#39;</span>, <span style="color:#e6db74">&#39;dark_background&#39;</span>, <span style="color:#e6db74">&#39;fast&#39;</span>, <span style="color:#e6db74">&#39;fivethirtyeight&#39;</span>, <span style="color:#e6db74">&#39;ggplot&#39;</span>, <span style="color:#e6db74">&#39;grayscale&#39;</span>, <span style="color:#e6db74">&#39;seaborn-bright&#39;</span>, <span style="color:#e6db74">&#39;seaborn-colorblind&#39;</span>, <span style="color:#e6db74">&#39;seaborn-dark-palette&#39;</span>, <span style="color:#e6db74">&#39;seaborn-dark&#39;</span>, <span style="color:#e6db74">&#39;seaborn-darkgrid&#39;</span>, <span style="color:#e6db74">&#39;seaborn-deep&#39;</span>, <span style="color:#e6db74">&#39;seaborn-muted&#39;</span>, <span style="color:#e6db74">&#39;seaborn-notebook&#39;</span>, <span style="color:#e6db74">&#39;seaborn-paper&#39;</span>, <span style="color:#e6db74">&#39;seaborn-pastel&#39;</span>, <span style="color:#e6db74">&#39;seaborn-poster&#39;</span>, <span style="color:#e6db74">&#39;seaborn-talk&#39;</span>, <span style="color:#e6db74">&#39;seaborn-ticks&#39;</span>, <span style="color:#e6db74">&#39;seaborn-white&#39;</span>, <span style="color:#e6db74">&#39;seaborn-whitegrid&#39;</span>, <span style="color:#e6db74">&#39;seaborn&#39;</span>, <span style="color:#e6db74">&#39;tableau-colorblind10&#39;</span><span style="color:#f92672">]</span>
+</code></pre></div><p>次のようにするとスタイルを使うことができるようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>style<span style="color:#f92672">.</span>use(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ggplot</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>グラフを作ってみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax2 <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>twinx()
+c <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>bar(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>])
+l <span style="color:#f92672">=</span> ax2<span style="color:#f92672">.</span>plot(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>])
+le <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>legend((c, <span style="color:#f92672">*</span>l), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>), loc<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">upper left</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/205-04.png" alt=""></p>
+<p>style sheets の方は予め決められたテンプレートのようなものがいくつかあって、そこから選択することでお手軽に見た目を変えられるようでした。
+このテンプレートのようなものは自分で用意することもできるようでした。</p>
+<h2 id="rcparams">rcParams</h2>
+<p>今度は rcParams を試してみました。</p>
+<p>最初に、モジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib <span style="color:#f92672">as</span> mpl
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>mpl を読み込みました。
+<code>plt.rcParams</code> でもできるみたいですけれども、チュートリアルは <code>mpl.rcParams</code> だったのでそれに従いました。</p>
+<p>次に、ヒストリカルデータを読み込んで、 2017 年のデータだけ用意しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/1/historical-prices/^GSPC.csv</span><span style="color:#e6db74">&#39;</span>, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, parse_dates<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>])
+df<span style="color:#f92672">.</span>head()
+df<span style="color:#f92672">.</span>tail()
+df2017 <span style="color:#f92672">=</span> df[df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>year <span style="color:#f92672">==</span> <span style="color:#ae81ff">2017</span>]
+</code></pre></div><p>設定可能な rcParams を表示してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mpl<span style="color:#f92672">.</span>rcParams
+</code></pre></div><p>結果です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">RcParams<span style="color:#f92672">(</span><span style="color:#f92672">{</span><span style="color:#e6db74">&#39;_internal.classic_mode&#39;</span>: False,
+          <span style="color:#e6db74">&#39;agg.path.chunksize&#39;</span>: 0,
+          <span style="color:#e6db74">&#39;animation.avconv_args&#39;</span>: <span style="color:#f92672">[</span><span style="color:#f92672">]</span>,
+          <span style="color:#75715e"># …略…</span>
+          <span style="color:#e6db74">&#39;ytick.minor.visible&#39;</span>: False,
+          <span style="color:#e6db74">&#39;ytick.minor.width&#39;</span>: 0.6,
+          <span style="color:#e6db74">&#39;ytick.right&#39;</span>: False<span style="color:#f92672">}</span><span style="color:#f92672">)</span>
+</code></pre></div><p>たくさんありましたので省略しました。</p>
+<p>次のような設定にしてみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">axes.spines.bottom</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> False
+mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">axes.spines.left</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> False
+mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">axes.spines.right</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> False
+mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">axes.spines.top</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> False
+mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">legend.frameon</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> False
+mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text.color</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#666666</span><span style="color:#e6db74">&#39;</span>
+mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">xtick.color</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#666666</span><span style="color:#e6db74">&#39;</span>
+mpl<span style="color:#f92672">.</span>rcParams[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ytick.color</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#666666</span><span style="color:#e6db74">&#39;</span>
+</code></pre></div><p>グラフの枠を表示しないようにしました。
+legend の枠を表示しないようにしました。
+それからテキストの色を薄くしました。</p>
+<p>グラフを作ってみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax2 <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>twinx()
+c <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>bar(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>])
+l <span style="color:#f92672">=</span> ax2<span style="color:#f92672">.</span>plot(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>])
+le <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>legend((c, <span style="color:#f92672">*</span>l), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>), loc<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">upper left</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/205-05.png" alt=""></p>
+<p>バーとラインの色も指定しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+ax2 <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>twinx()
+c <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>bar(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#ff6384</span><span style="color:#e6db74">&#39;</span>)
+l <span style="color:#f92672">=</span> ax2<span style="color:#f92672">.</span>plot(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#36a2eb</span><span style="color:#e6db74">&#39;</span>)
+le <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>legend((c, <span style="color:#f92672">*</span>l), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>), loc<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">upper left</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/205-06.png" alt=""></p>
+<p>この style sheets や rcParams を知る前は color なんかを毎回設定していたのですが、これは一度設定すると次も同じようなグラフが作れるので良さそうでした。</p>
+<h2 id="figsize-transparent">figsize, transparent</h2>
+<p>グラフのサイズを大きくしたいことがありました。</p>
+<blockquote>
+<p>**fig_kw : All additional keyword arguments are passed to the pyplot.figure call.</p>
+<p><cite><a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html">matplotlib.pyplot.subplots — Matplotlib 3.0.2 documentation</a></cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>figsize : tuple of integers, optional, default: None width, height in inches. If not provided, defaults to rcParams[&ldquo;figure.figsize&rdquo;] = [6.4, 4.8].</p>
+<p><cite><a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html">matplotlib.pyplot.figure — Matplotlib 3.0.2 documentation</a></cite></p>
+</blockquote>
+<p><code>plt.subplots()</code> 関数の <code>figsize</code> を指定することで変えられるようでした。
+これは <code>rcParams</code> でも指定できるようでした。</p>
+<p>それからグラフを透明にしたいことがありました。</p>
+<blockquote>
+<p>transparent : bool</p>
+<p>If True, the axes patches will all be transparent; the figure patch will also be transparent unless facecolor and/or edgecolor are specified via kwargs. This is useful, for example, for displaying a plot on top of a colored background on a web page. The transparency of these patches will be restored to their original values upon exit of this function.</p>
+<p><cite><a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.savefig">matplotlib.figure.Figure — Matplotlib 3.0.2 documentation</a></cite></p>
+</blockquote>
+<p><code>Figure.savefig()</code> 関数の説明です。
+ファイルを保存するときに <code>transparent</code> に True を渡してあげればできるようでした。</p>
+<p>グラフを作ってみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fig, ax1 <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>), dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>)
+ax2 <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>twinx()
+c <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>bar(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#ff6384</span><span style="color:#e6db74">&#39;</span>)
+l <span style="color:#f92672">=</span> ax2<span style="color:#f92672">.</span>plot(df2017<span style="color:#f92672">.</span>index, df2017[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>], alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#36a2eb</span><span style="color:#e6db74">&#39;</span>)
+le <span style="color:#f92672">=</span> ax1<span style="color:#f92672">.</span>legend((c, <span style="color:#f92672">*</span>l), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Close</span><span style="color:#e6db74">&#39;</span>), loc<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">upper left</span><span style="color:#e6db74">&#39;</span>)
+fig<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">png.png</span><span style="color:#e6db74">&#39;</span>, dpi<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>, transparent<span style="color:#f92672">=</span>True)
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/205-07.png" alt=""></p>
+<h2 id="終わり">終わり</h2>
+<p>Matplotlib について少し理解しました。</p>
+<p>作った Jupyter Notebook のファイルを <a href="https://gist.github.com/va2577/4b2e10c73091e34339a30fb9dbe7f8b5">Gist</a> にアップロードしておきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

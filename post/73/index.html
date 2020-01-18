@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>らじる★らじる NHKネットラジオを録音する 2017年9月 - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>らじる★らじる NHKネットラジオを録音する 2017年9月</h1>
+    
+      <div><time>September 10, 2017</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>9 月の 2 週目あたりになってらじる★らじるが録音できなくなっていたので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Mac バージョン 10.12.6（16G29）</li>
+<li>ffmpeg version 3.3.3</li>
+</ul>
+<h2 id="地域別の-url">地域別の URL</h2>
+<p>次のコマンドで地域別の URL が調べられるようです。
+<code>v170809</code> となっているので、8 月 9 日あたりには変わっていたのでしょうか。</p>
+<pre><code>curl 'http://www.nhk.or.jp/radio/config/config_web.xml?v170809' \
+-XGET \
+-H 'Referer: http://www.nhk.or.jp/radio/player/?ch=fm' \
+-H 'If-None-Match: &quot;c67605-10d2-5584bf97c07f2&quot;' \
+-H 'Accept: application/xml, text/xml, */*; q=0.01' \
+-H 'Cache-Control: max-age=0' \
+-H 'If-Modified-Since: Sun, 03 Sep 2017 17:03:35 GMT' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8' \
+-H 'X-Requested-With: XMLHttpRequest'
+</code></pre><p>結果は次のようになっています。
+東京の地域以外は省略しています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;data</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;areajp</span><span style="color:#f92672">&gt;</span>東京<span style="color:#f92672">&lt;/areajp&gt;</span>
+  <span style="color:#f92672">&lt;area</span><span style="color:#f92672">&gt;</span>tokyo<span style="color:#f92672">&lt;/area&gt;</span>
+  <span style="color:#f92672">&lt;apikey</span><span style="color:#f92672">&gt;</span>001<span style="color:#f92672">&lt;/apikey&gt;</span>
+  <span style="color:#f92672">&lt;areakey</span><span style="color:#f92672">&gt;</span>130<span style="color:#f92672">&lt;/areakey&gt;</span>
+
+  <span style="color:#f92672">&lt;r1hls</span><span style="color:#f92672">&gt;</span><span style="color:#75715e">&lt;![CDATA[https://nhkradioakr1-i.akamaihd.net/hls/live/511633/1-r1/1-r1-01.m3u8]]&gt;</span><span style="color:#f92672">&lt;/r1hls&gt;</span>
+  <span style="color:#f92672">&lt;r2hls</span><span style="color:#f92672">&gt;</span><span style="color:#75715e">&lt;![CDATA[https://nhkradioakr2-i.akamaihd.net/hls/live/511929/1-r2/1-r2-01.m3u8]]&gt;</span><span style="color:#f92672">&lt;/r2hls&gt;</span>
+  <span style="color:#f92672">&lt;fmhls</span><span style="color:#f92672">&gt;</span><span style="color:#75715e">&lt;![CDATA[https://nhkradioakfm-i.akamaihd.net/hls/live/512290/1-fm/1-fm-01.m3u8]]&gt;</span><span style="color:#f92672">&lt;/fmhls&gt;</span>
+
+<span style="color:#f92672">&lt;/data&gt;</span>
+</code></pre></div><p>ラジオ第1、ラジオ第2、NHK-FM（東京）の URL があって、以前と変わっているようです。
+拡張子が <code>m3u8</code> になっていますので、<a href="https://developer.apple.com/streaming/">HTTP Live Streaming (HLS)</a> に対応したようです。</p>
+<h2 id="m3u8">m3u8</h2>
+<p>NHK-FM（東京）にアクセスしてみます。</p>
+<pre><code>curl 'https://nhkradioakfm-i.akamaihd.net/hls/live/512290/1-fm/1-fm-01.m3u8'
+</code></pre><p>結果は次のようになっています。</p>
+<pre><code>#EXTM3U
+#EXT-X-VERSION:2
+#EXT-X-TARGETDURATION:11
+#EXT-X-MEDIA-SEQUENCE:57110
+#EXTINF:10,
+1-fm-20170831T143716-01-28/1110.ts
+#EXTINF:10,
+1-fm-20170831T143716-01-28/1111.ts
+#EXTINF:10,
+1-fm-20170831T143716-01-28/1112.ts
+
+# ...略...
+
+#EXTINF:10,
+1-fm-20170831T143716-01-28/1127.ts
+</code></pre><p>何度かアクセスしてみましたが、含まれている <code>.ts</code> ファイルの URL の数は 16 の固定になっていて、動的に変わっていくように見えました。</p>
+<h2 id="録音">録音</h2>
+<p>録音するのに <code>ffmpeg</code> を使いました。
+ffmpeg のインストールは <a href="/post/27/">FLVファイルからAACファイルを抽出する</a> の記事を参考にしてください。</p>
+<pre><code>ffmpeg -i 'https://nhkradioakfm-i.akamaihd.net/hls/live/512290/1-fm/1-fm-01.m3u8' -t 60 -c copy 1-fm-01.ts
+</code></pre><p><code>-t</code> で録音する時間(秒)を指定します。
+ここでは 60 秒録音してみました。
+<code>1-fm-01.ts</code> の名前でファイルが作成されます。
+拡張子を <code>.ts</code> にするより <code>.m4a</code> にした方が iTunes でも聞くことができるので良いかもしれません。</p>
+<p>自分の環境では 35~45 秒程度遅延して録音されました。
+少し前後に余裕を持って録音した方が良いかもしれません。</p>
+<h2 id="gist-のソース">Gist のソース</h2>
+<p><a href="https://gist.github.com">Gist</a> にソースをアップしてみました。</p>
+<script src="https://gist.github.com/va2577/aaa3fc57af7054ed308216449efa0fc3.js"></script>
+<h2 id="終わり">終わり</h2>
+<p><a href="https://developer.apple.com/streaming/">HTTP Live Streaming (HLS)</a> の形式になって、Radiko.jp と同じようにタイムフリーになりつつある印象を受けました。
+まだ 1 週間は無理かもしれないですけれども、数時間くらいならタイムフリー的に後から録音することができそうでした。</p>
+<p>開始する付近の ts ファイルの名前が把握できたらその付近のファイルを連番でダウンロードすればいいのかな。</p>
+<pre><code>curl -O 'https://nhkradioakfm-i.akamaihd.net/hls/live/512290/1-fm/1-fm-20170831T143716-01-28/[0-100].ts'
+</code></pre><p><code>T143716-01-30</code> の部分が日付を表しているのかどうかわからないですけど、何度か試していたところでは次のように 2000 のサイクルになっているように見えました。</p>
+<pre><code>#EXTINF:10,
+1-fm-20170831T143716-01-30/1999.ts
+#EXTINF:10,
+1-fm-20170831T143716-01-31/0.ts
+</code></pre><p>次のように <code>T143715-01-40</code> と、40 までなっているため、99 まできたら次は <code>02-01</code> になりそうかな。</p>
+<pre><code>#EXTINF:10,
+1-r2-20170831T143715-01-40/1501.ts
+</code></pre><h2 id="18-september-2017-追記">18 September 2017 追記</h2>
+<p>終わりのところに書いていた連番のダウンロードは、何か判断しているように見えました。
+Safari のキャッシュをクリアした状態でダウンロードすると、次のようになってしまいました。</p>
+<blockquote>
+<p>File not found.&rdquo;</p>
+</blockquote>
+<p>Safari から &ldquo;らじる★らじる NHKネットラジオ&rdquo; にアクセスして一度リアルタイムの音を聞いてからダウンロードするとファイルがダウンロードできました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

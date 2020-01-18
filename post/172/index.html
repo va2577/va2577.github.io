@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON と NUMPY と PANDAS の間のデータのやり取りを調べました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python と NumPy と pandas の間のデータのやり取りを調べました</h1>
+    
+      <div><time>May 22, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>pandas を使うことが多かったのですが、少しだけ NumPy も使ってみたので、データのやり取りについて書いておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Python 3.5.2</li>
+<li>pandas 0.22.0</li>
+<li>NumPy 1.14.3</li>
+</ul>
+<p>Jupyter Notebook を <code>pip install jupyter</code> でインストールしておきました。</p>
+<p>pandas を <code>pip install pandas</code> でインストールしておきました。
+NumPy も一緒にインストールされました。</p>
+<h2 id="list--ndarray--series--ndarray--list">list → ndarray → Series → ndarray → list</h2>
+<p>これ以降、一つのコードブロックを Jupyter Notebook の一つのセルに入力しながら進めます。</p>
+<p>最初にモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> random
+</code></pre></div><p>次に Python の標準の list を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">l <span style="color:#f92672">=</span> [random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>)]
+<span style="color:#66d9ef">print</span>(type(l))
+l
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'list'&gt;
+
+[4, 3, 2, 8, 2, 3, 8, 2, 5, 4]
+</code></pre><p>意味はないですけれども、ランダムな値のリストにしました。
+要素の数は 10 です。</p>
+<h3 id="list--ndarray">list → ndarray</h3>
+<p>NumPy の ndaray にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l)
+<span style="color:#66d9ef">print</span>(type(a))
+a
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'numpy.ndarray'&gt;
+
+array([4, 3, 2, 8, 2, 3, 8, 2, 5, 4])
+</code></pre><p>ndarray にできました。</p>
+<h3 id="ndarray--series">ndarray → Series</h3>
+<p>pandas の Series にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(a)
+<span style="color:#66d9ef">print</span>(type(s))
+s
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'pandas.core.series.Series'&gt;
+
+0    4
+1    3
+2    2
+3    8
+4    2
+5    3
+6    8
+7    2
+8    5
+9    4
+dtype: int64
+</code></pre><p>Series にできました。</p>
+<h3 id="series--ndarray">Series → ndarray</h3>
+<p>ndarray に戻しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a2 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>values
+<span style="color:#66d9ef">print</span>(type(a2))
+a2
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'numpy.ndarray'&gt;
+
+array([4, 3, 2, 8, 2, 3, 8, 2, 5, 4])
+</code></pre><p>ndarray にできました。</p>
+<h3 id="ndarray--series-1">ndarray → Series</h3>
+<p>list に戻しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">l2 <span style="color:#f92672">=</span> a2<span style="color:#f92672">.</span>tolist()
+<span style="color:#66d9ef">print</span>(type(l2))
+l2
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'list'&gt;
+
+[4, 3, 2, 8, 2, 3, 8, 2, 5, 4]
+</code></pre><p>list にできました。</p>
+<h2 id="list--ndarray--dataframe--ndarray--list">list → ndarray → DataFrame → ndarray → list</h2>
+<p>pandas の Series にしたのとあまり変わらないですけれども、今度は、 2 次元の list から pandas の DataFrame を作ってみます。</p>
+<p>最初に Python の標準の list を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">l3 <span style="color:#f92672">=</span> [[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>), random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>)] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>)]
+<span style="color:#66d9ef">print</span>(type(l3))
+l3
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'list'&gt;
+
+[[4, 2],
+ [7, 1],
+ [9, 3],
+ [0, 7],
+ [0, 7],
+ [1, 9],
+ [4, 4],
+ [1, 3],
+ [4, 5],
+ [8, 5]]
+</code></pre><p>10 行、 2 列の 2 次元のリストにしました。</p>
+<h3 id="list--ndarray-1">list → ndarray</h3>
+<p>NumPy の ndarray にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l3)
+<span style="color:#66d9ef">print</span>(type(a3))
+a3
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'numpy.ndarray'&gt;
+
+array([[4, 2],
+       [7, 1],
+       [9, 3],
+       [0, 7],
+       [0, 7],
+       [1, 9],
+       [4, 4],
+       [1, 3],
+       [4, 5],
+       [8, 5]])
+</code></pre><p>ndarray にできました。</p>
+<h3 id="ndarray--dataframe">ndarray → DataFrame</h3>
+<p>pandas の DataFrame にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df3 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(a3)
+<span style="color:#66d9ef">print</span>(type(df3))
+df3
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+
+	0 	1
+0 	4 	2
+1 	7 	1
+2 	9 	3
+3 	0 	7
+4 	0 	7
+5 	1 	9
+6 	4 	4
+7 	1 	3
+8 	4 	5
+9 	8 	5
+</code></pre><p>DataFrame にできました。</p>
+<h3 id="dataframe--ndarray">DataFrame → ndarray</h3>
+<p>NumPy の ndarray に戻しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a4 <span style="color:#f92672">=</span> df3<span style="color:#f92672">.</span>values
+<span style="color:#66d9ef">print</span>(type(a4))
+a4
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'numpy.ndarray'&gt;
+
+array([[4, 2],
+       [7, 1],
+       [9, 3],
+       [0, 7],
+       [0, 7],
+       [1, 9],
+       [4, 4],
+       [1, 3],
+       [4, 5],
+       [8, 5]])
+</code></pre><p>ndarray にできました。</p>
+<h3 id="ndarray--list">ndarray → list</h3>
+<p>list に戻しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">l4 <span style="color:#f92672">=</span> a4<span style="color:#f92672">.</span>tolist()
+<span style="color:#66d9ef">print</span>(type(l4))
+l4
+</code></pre></div><p>結果です。</p>
+<pre><code>&lt;class 'list'&gt;
+
+[[4, 2],
+ [7, 1],
+ [9, 3],
+ [0, 7],
+ [0, 7],
+ [1, 9],
+ [4, 4],
+ [1, 3],
+ [4, 5],
+ [8, 5]]
+</code></pre><p>list にできました。</p>
+<h2 id="numpy-と-pandas">Numpy と pandas</h2>
+<p>NumPy の ndarray を使っていて、次のような面倒さを感じました。</p>
+<h3 id="dropna">dropna</h3>
+<p>nan を取り除こうとしました。</p>
+<h4 id="numpy">NumPy</h4>
+<p>NumPy の ndarray で nan を取り除こうとすると次のようになるみたいです。</p>
+<ul>
+<li><a href="http://localhost:8888/notebooks/python%20-%20Removing%20nan%20values%20from%20an%20array%20-%20Stack%20Overflow">python - Removing nan values from an array - Stack Overflow</a></li>
+</ul>
+<p>最初に ndarray を作りました。</p>
+<pre><code>a11 = np.array([1, 2, np.nan, 4, 5, np.nan, 7, 8, np.nan])
+a11
+</code></pre><p>結果です。</p>
+<pre><code>array([ 1.,  2., nan,  4.,  5., nan,  7.,  8., nan])
+</code></pre><p>ndarray から nan を取り除きます。</p>
+<pre><code>a11[~np.isnan(a11)]
+</code></pre><p>結果です。</p>
+<pre><code>array([1., 2., 4., 5., 7., 8.])
+</code></pre><h4 id="pandas">pandas</h4>
+<p>pandas の Series で nan を取り除こうとすると次のようになるみたいです。</p>
+<ul>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.dropna.html">pandas.Series.dropna — pandas 0.23.0 documentation</a></li>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.dropna.html">pandas.DataFrame.dropna — pandas 0.23.0 documentation</a></li>
+</ul>
+<p>最初に Series を作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s11 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(a11)
+s11
+</code></pre></div><p>結果です。</p>
+<pre><code>0    1.0
+1    2.0
+2    NaN
+3    4.0
+4    5.0
+5    NaN
+6    7.0
+7    8.0
+8    NaN
+dtype: float64
+</code></pre><p>Series から nan を取り除きます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s11<span style="color:#f92672">.</span>dropna()
+</code></pre></div><p>結果です。</p>
+<pre><code>0    1.0
+1    2.0
+3    4.0
+4    5.0
+6    7.0
+7    8.0
+dtype: float64
+</code></pre><h3 id="shift">shift</h3>
+<p>要素をシフトしようとしました。</p>
+<h4 id="numpy-1">NumPy</h4>
+<p>NumPy の ndarray で shift しようとすると次のようになるみたいです。</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/30399534/shift-elements-in-a-numpy-array">python - Shift elements in a numpy array - Stack Overflow</a></li>
+</ul>
+<p><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.roll.html">numpy.roll</a> もあるようでしたが、今回は空いたところに nan を入れたかったので使いませんでした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">shift <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+np<span style="color:#f92672">.</span>concatenate((np<span style="color:#f92672">.</span>full(shift, np<span style="color:#f92672">.</span>nan), a11[:<span style="color:#f92672">-</span>shift])) <span style="color:#66d9ef">if</span> shift <span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> np<span style="color:#f92672">.</span>concatenate((a11[<span style="color:#f92672">-</span>shift:], np<span style="color:#f92672">.</span>full(<span style="color:#f92672">-</span>shift, np<span style="color:#f92672">.</span>nan)))
+</code></pre></div><p>結果です。</p>
+<pre><code>array([nan, nan,  1.,  2., nan,  4.,  5., nan,  7.])
+</code></pre><h4 id="pandas-1">pandas</h4>
+<p>pandas の Series で shift しようとすると次のようになるみたいです。</p>
+<ul>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.shift.html">pandas.Series.shift — pandas 0.23.0 documentation</a></li>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.shift.html">pandas.DataFrame.shift — pandas 0.23.0 documentation</a></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>Series(a11)<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>)
+</code></pre></div><p>結果です。</p>
+<pre><code>0    NaN
+1    NaN
+2    1.0
+3    2.0
+4    NaN
+5    4.0
+6    5.0
+7    NaN
+8    7.0
+dtype: float64
+</code></pre><h2 id="gist-のソース">Gist のソース</h2>
+<p><a href="https://gist.github.com/va2577/bc42ec5c8b4c0af92ad1594947712559">Gist</a> にソースをアップしました。</p>
+<h2 id="終わり">終わり</h2>
+<p>最初、たまたまその時に扱っていたデータの型が ndarray だったから、 Series.dropna や Series.shift を使えずに面倒なことをしようとしてしまっていました。
+簡単に実現できる方法で実装したいです。</p>
+<p>まだ覚えることが多いので少しずつやっていきます。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

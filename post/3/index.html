@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>NODEBREW, NODE.JSのインストール - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>nodebrew, Node.jsのインストール</h1>
+    
+      <div><time>December 30, 2015</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Node.jsは頻繁にアップデートをしているのでバージョンを管理するためにnodebrewを使ってNode.jsをインストールしました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.2</li>
+<li>Homebrew バージョン 0.9.5</li>
+<li>nodebrew バージョン 0.8.1</li>
+<li>Node.js バージョン 5.2.0</li>
+</ul>
+<h2 id="nodebrew">nodebrew？</h2>
+<blockquote>
+<p>Node.js version manager.</p>
+<p><cite><a href="https://github.com/hokaccha/nodebrew">hokaccha/nodebrew - GitHub</a></cite></p>
+</blockquote>
+<h2 id="nodejs">Node.js？</h2>
+<blockquote>
+<p>Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.</p>
+<p><cite><a href="https://nodejs.org">Node.js</a></cite></p>
+</blockquote>
+<h2 id="nodebrewのインストール">nodebrewのインストール</h2>
+<p>Homebrewを先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/2/">Homebrewのインストール</a></li>
+</ul>
+<p>ターミナルからコマンドを入力します。</p>
+<pre><code>$ brew install nodebrew
+==&gt; Downloading https://github.com/hokaccha/nodebrew/archive/v0.8.1.tar.gz
+==&gt; Downloading from https://codeload.github.com/hokaccha/nodebrew/tar.gz/v0.8.1
+######################################################################## 100.0%
+==&gt; /usr/local/Cellar/nodebrew/0.8.1/bin/nodebrew setup_dirs
+==&gt; Caveats
+Add path:
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+To use Homebrew's directories rather than ~/.nodebrew add to your profile:
+  export NODEBREW_ROOT=/usr/local/var/nodebrew
+
+
+Bash completion has been installed to:
+  /usr/local/etc/bash_completion.d
+
+zsh completion has been installed to:
+  /usr/local/share/zsh/site-functions
+==&gt; Summary
+🍺  /usr/local/Cellar/nodebrew/0.8.1: 7 files, 48K, built in 3 seconds
+</code></pre><p>環境変数のPATHを設定します。</p>
+<pre><code>$ echo &quot;export PATH=$HOME/.nodebrew/current/bin:$PATH&quot; &gt;&gt; ~/.bashrc
+</code></pre><p>設定を読み込み直します。</p>
+<pre><code>$ source ~/.bashrc
+</code></pre><p>再起動した後も自動的に設定を読み込むように設定します。</p>
+<pre><code>$ echo &quot;if [ -f ~/.bashrc ]&quot; &gt;&gt; ~/.bash_login
+$ echo &quot;then&quot; &gt;&gt; ~/.bash_login
+$ echo &quot;  . ~/.bashrc&quot; &gt;&gt; ~/.bash_login
+$ echo &quot;fi&quot; &gt;&gt; ~/.bash_login
+</code></pre><h2 id="nodebrewの確認">nodebrewの確認</h2>
+<p>ターミナルからコマンドを入力します。</p>
+<pre><code>$ nodebrew help
+nodebrew 0.8.1
+...
+</code></pre><h2 id="nodejsのインストール">Node.jsのインストール</h2>
+<p>ターミナルからコマンドを入力します。
+ここでは安定バージョンのバイナリーのみ(ソースコード無し)をインストールしています。</p>
+<pre><code>$ nodebrew install-binary stable # 安定バージョン
+fetch: http://nodejs.org/dist/v5.2.0/node-v5.2.0-darwin-x64.tar.gz
+######################################################################## 100.0%
+Install successful
+</code></pre><p>インストールしたNode.jsを使う設定にします。</p>
+<pre><code>$ nodebrew use stable
+use v5.2.0
+</code></pre><h2 id="nodejsの確認">Node.jsの確認</h2>
+<p>ターミナルからコマンドを入力します。</p>
+<pre><code>$ node -v
+v5.2.0
+</code></pre><h2 id="nodebrewのよく使うコマンド">nodebrewのよく使うコマンド</h2>
+<h3 id="ヘルプ">ヘルプ</h3>
+<pre><code>$ nodebrew help
+</code></pre><h3 id="versionのnodejsのインストール"><code>&lt;version&gt;</code>のNode.jsのインストール</h3>
+<pre><code>$ nodebrew install-binary &lt;version&gt;
+</code></pre><p><code>&lt;version&gt;</code>は次のようなものがあります。</p>
+<ul>
+<li>stable(安定バージョン)</li>
+<li>latest(最新バージョン)(不安定な物も含めた最新のバージョンと思ってます・・)</li>
+<li>v5.2.0(v5.2.0)</li>
+<li>v5.2.x(v5.2の中の最新のバージョン)</li>
+</ul>
+<h3 id="versionのnodejsのアンインストール"><code>&lt;version&gt;</code>のNode.jsのアンインストール</h3>
+<pre><code>$ nodebrew uninstall &lt;version&gt;
+</code></pre><h3 id="versionのnodejsを使う"><code>&lt;version&gt;</code>のNode.jsを使う</h3>
+<pre><code>$ nodebrew use &lt;version&gt;
+</code></pre><h3 id="インストール済みのnodejsの一覧">インストール済みのNode.jsの一覧</h3>
+<pre><code>$ nodebrew list
+v5.2.0
+
+current: v5.2.0
+</code></pre><h3 id="インストール可能なnodejsの一覧">インストール可能なNode.jsの一覧</h3>
+<pre><code>$ nodebrew ls-remote
+</code></pre><h3 id="nodejsのソースファイルの削除">Node.jsのソースファイルの削除</h3>
+<pre><code>$ nodebrew clean &lt;version&gt; | all
+</code></pre><h3 id="nodebrewのアップデート">nodebrewのアップデート</h3>
+<pre><code>$ nodebrew selfupdate
+fetching nodebrew...
+Update successful
+</code></pre><h2 id="nodebrewのアンインストール">nodebrewのアンインストール</h2>
+<p>いらなくなった時のためにnodebrewのアンインストールについて書いておきます。</p>
+<pre><code>$ brew uninstall nodebrew
+</code></pre><h2 id="終わり">終わり</h2>
+<blockquote>
+<p>Build cross platform desktop apps with web technologies</p>
+<p><cite><a href="http://electron.atom.io">Electron</a></cite></p>
+</blockquote>
+<p>.</p>
+<blockquote>
+<p>Express
+特定の意見に固執しない、Node.js 向けの高速で最小限の Web フレームワーク</p>
+<p><cite><a href="http://expressjs.com/ja/">Express - Node.js Web アプリケーション・フレームワーク</a></cite></p>
+</blockquote>
+<p>ElectronやExpressでアプリケーションを作ってみたいと思ってます。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://github.com/hokaccha/nodebrew">hokaccha/nodebrew - GitHub</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a></li>
+<li><a href="http://nodejs.jp">Node.js 日本ユーザグループ</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

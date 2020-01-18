@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NumPy on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/numpy/</link>
+    <description>Recent content in NumPy on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 May 2018 10:20:26 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/numpy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python と NumPy と pandas の間のデータのやり取りを調べました</title>
+      <link>https://va2577.github.io/post/172/</link>
+      <pubDate>Tue, 22 May 2018 10:20:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/172/</guid>
+      <description>&lt;p&gt;pandas を使うことが多かったのですが、少しだけ NumPy も使ってみたので、データのやり取りについて書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python(NumPy, pandas) で最大ドローダウンを計算してみました</title>
+      <link>https://va2577.github.io/post/171/</link>
+      <pubDate>Mon, 21 May 2018 22:59:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/171/</guid>
+      <description>&lt;p&gt;バックテストをしていて最大ドローダウンを計算したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の range と ndarray と Series と DataFrame のイテレーターのパフォーマンスを比較してみました</title>
+      <link>https://va2577.github.io/post/170/</link>
+      <pubDate>Sun, 20 May 2018 19:56:02 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/170/</guid>
+      <description>&lt;p&gt;以前、作った&lt;a href=&#34;https://va2577.github.io/post/162/&#34;&gt;日足のヒストリカルデータ&lt;/a&gt;でバックテストをするのに、 Python の実行速度としてのパフォーマンスが気になったので比較してみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

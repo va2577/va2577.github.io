@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>S&amp;P500 で TDW （トレーディングデイ・オブ・ザ・ウィーク）を確認してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>S&amp;P500 で TDW （トレーディングデイ・オブ・ザ・ウィーク）を確認してみました</h1>
+    
+      <div><time>June 30, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>通貨で TDW を確認していたところ、本の結果と同じようにならなかったので、 S&amp;P500 でも確認してみました。</p>
+<h2 id="条件">条件</h2>
+<p>バックテストの条件は次の通りです。</p>
+<blockquote>
+<p>では、次に述べる条件が整ったときに翌日に何が起こるかを調べてみることにしよう。
+条件－－①今日の終値が30日前の終値よりも高い（上昇トレンド）、②今日の終値が9日前の終値を下回る（押し目）。
+これらの条件が整ったら、翌日の寄り付きで買って、その日の大引けで売る。
+市場が本当にランダムならば、全トレードのうち52%は勝ちトレードになるはずだ（50%でないのは、これらの調査期間では全体的に上昇トレンドにあったから。最初の調査で上げて引けた日が52%あったことがその何よりの証拠）。</p>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第2版】 第7章 勝つためのパターン</cite></p>
+</blockquote>
+<h2 id="想定結果">想定結果</h2>
+<p>想定する結果は次の通りです。</p>
+<blockquote>
+<p>この第2版のために1998年から2011年まで同じパターンで検証してみた。
+その結果を示したものが表7.2である。</p>
+<table>
+<thead>
+<tr>
+<th>曜日</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>月曜日</td>
+<td align="right">360</td>
+<td align="right">50</td>
+<td align="right">2801</td>
+<td align="right">-2229</td>
+<td align="right">1.26</td>
+<td align="right">286</td>
+<td align="right">-9575</td>
+<td align="right">102925</td>
+</tr>
+<tr>
+<td>火曜日</td>
+<td align="right">382</td>
+<td align="right">47.12</td>
+<td align="right">2610</td>
+<td align="right">-2372</td>
+<td align="right">1.1</td>
+<td align="right">-24</td>
+<td align="right">-4250</td>
+<td align="right">-9325</td>
+</tr>
+<tr>
+<td>水曜日</td>
+<td align="right">420</td>
+<td align="right">49.05</td>
+<td align="right">2629</td>
+<td align="right">-2385</td>
+<td align="right">1.1</td>
+<td align="right">74</td>
+<td align="right">-5750</td>
+<td align="right">31150</td>
+</tr>
+<tr>
+<td>木曜日</td>
+<td align="right">372</td>
+<td align="right">47.31</td>
+<td align="right">2557</td>
+<td align="right">-2368</td>
+<td align="right">1.08</td>
+<td align="right">-38</td>
+<td align="right">-6625</td>
+<td align="right">-14100</td>
+</tr>
+<tr>
+<td>金曜日</td>
+<td align="right">400</td>
+<td align="right">47.75</td>
+<td align="right">2733</td>
+<td align="right">-2436</td>
+<td align="right">1.12</td>
+<td align="right">32</td>
+<td align="right">-8925</td>
+<td align="right">12750</td>
+</tr>
+</tbody>
+</table>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第2版】 第7章 勝つためのパターン</cite></p>
+</blockquote>
+<h2 id="ユーロ米ドルのバックテストの結果">ユーロ／米ドルのバックテストの結果</h2>
+<table>
+<thead>
+<tr>
+<th>　</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mon</td>
+<td align="right">115</td>
+<td align="right">30.43</td>
+<td align="right">41.93</td>
+<td align="right">73.36</td>
+<td align="right">0.57</td>
+<td align="right">-38.27</td>
+<td align="right">-4322.61</td>
+<td align="right">-4401.03</td>
+</tr>
+<tr>
+<td>Tue</td>
+<td align="right">123</td>
+<td align="right">37.40</td>
+<td align="right">60.49</td>
+<td align="right">69.48</td>
+<td align="right">0.87</td>
+<td align="right">-20.87</td>
+<td align="right">-3034.73</td>
+<td align="right">-2567.05</td>
+</tr>
+<tr>
+<td>Wed</td>
+<td align="right">111</td>
+<td align="right">34.23</td>
+<td align="right">46.51</td>
+<td align="right">64.20</td>
+<td align="right">0.72</td>
+<td align="right">-26.30</td>
+<td align="right">-3078.44</td>
+<td align="right">-2919.35</td>
+</tr>
+<tr>
+<td>Thu</td>
+<td align="right">125</td>
+<td align="right">35.20</td>
+<td align="right">52.93</td>
+<td align="right">65.16</td>
+<td align="right">0.81</td>
+<td align="right">-23.59</td>
+<td align="right">-2959.36</td>
+<td align="right">-2949.07</td>
+</tr>
+<tr>
+<td>Fri</td>
+<td align="right">127</td>
+<td align="right">25.98</td>
+<td align="right">46.05</td>
+<td align="right">71.36</td>
+<td align="right">0.65</td>
+<td align="right">-40.85</td>
+<td align="right">-5262.89</td>
+<td align="right">-5188.46</td>
+</tr>
+</tbody>
+</table>
+<p>単純ではあるものの、条件をつけているのにすべての曜日の総損益がマイナスになってしまいました。</p>
+<h2 id="米ドル円のバックテストの結果">米ドル／円のバックテストの結果</h2>
+<table>
+<thead>
+<tr>
+<th>　</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mon</td>
+<td align="right">118</td>
+<td align="right">56.78</td>
+<td align="right">3435.67</td>
+<td align="right">4995.40</td>
+<td align="right">0.69</td>
+<td align="right">-208.27</td>
+<td align="right">-126833.50</td>
+<td align="right">-24575.41</td>
+</tr>
+<tr>
+<td>Tue</td>
+<td align="right">121</td>
+<td align="right">50.41</td>
+<td align="right">4517.90</td>
+<td align="right">5547.47</td>
+<td align="right">0.81</td>
+<td align="right">-473.19</td>
+<td align="right">-71004.51</td>
+<td align="right">-57256.31</td>
+</tr>
+<tr>
+<td>Wed</td>
+<td align="right">121</td>
+<td align="right">54.55</td>
+<td align="right">4581.97</td>
+<td align="right">5285.03</td>
+<td align="right">0.87</td>
+<td align="right">96.97</td>
+<td align="right">-76403.30</td>
+<td align="right">11733.69</td>
+</tr>
+<tr>
+<td>Thu</td>
+<td align="right">130</td>
+<td align="right">53.08</td>
+<td align="right">4871.44</td>
+<td align="right">5156.04</td>
+<td align="right">0.94</td>
+<td align="right">166.24</td>
+<td align="right">-74259.60</td>
+<td align="right">21610.99</td>
+</tr>
+<tr>
+<td>Fri</td>
+<td align="right">127</td>
+<td align="right">40.94</td>
+<td align="right">4866.05</td>
+<td align="right">4869.37</td>
+<td align="right">1.00</td>
+<td align="right">-883.21</td>
+<td align="right">-115474.90</td>
+<td align="right">-112168.10</td>
+</tr>
+</tbody>
+</table>
+<p>ユーロ／米ドルの結果よりは良かったです。
+が、もっと良くなってもいいように思っていました。</p>
+<h2 id="sp500-のバックテスト">S&amp;P500 のバックテスト</h2>
+<p>次のようなバックテストをしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>(df, commission<span style="color:#f92672">=</span><span style="color:#ae81ff">50.0</span>, unit<span style="color:#f92672">=</span><span style="color:#ae81ff">250</span>):
+    df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([df, df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">9</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>)], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    pl <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>full(df2<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size, np<span style="color:#f92672">.</span>nan), index<span style="color:#f92672">=</span>df2<span style="color:#f92672">.</span>index)
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>itertuples():
+        <span style="color:#75715e"># close2: 30日前の終値</span>
+        <span style="color:#75715e"># close3: 9日前の終値</span>
+        <span style="color:#75715e"># close4: 今日の終値</span>
+        <span style="color:#75715e"># open_: 翌日の寄り付き</span>
+        <span style="color:#75715e"># close: 翌日の大引け</span>
+        time, open_, high, low, close, close2, close3, close4 <span style="color:#f92672">=</span> row
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> (close2 <span style="color:#f92672">&lt;</span> close4 <span style="color:#f92672">and</span> close4 <span style="color:#f92672">&lt;</span> close3):
+            <span style="color:#75715e"># 次の条件に該当しない場合は取引しない</span>
+            <span style="color:#75715e"># ①今日の終値が30日前の終値よりも高い（上昇トレンド）</span>
+            <span style="color:#75715e"># ②今日の終値が9日前の終値を下回る（押し目）</span>
+            <span style="color:#66d9ef">continue</span>
+        <span style="color:#75715e"># unit: 1枚当たりの取引単位、指数値に250ドルを掛けた額</span>
+        <span style="color:#75715e"># commission: 50ドルの手数料</span>
+        <span style="color:#75715e"># 取引枚数は1枚</span>
+        p <span style="color:#f92672">=</span> ((close <span style="color:#f92672">-</span> open_) <span style="color:#f92672">*</span> unit <span style="color:#f92672">-</span> commission)
+        p2 <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>floor(p <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">100</span>
+        pl[time] <span style="color:#f92672">=</span> p2
+    <span style="color:#66d9ef">return</span> pl
+</code></pre></div><h2 id="sp500-の結果-1998-年-5-月-2011-年-5-月">S&amp;P500 の結果（ 1998 年 5 月～ 2011 年 5 月）</h2>
+<p>S&amp;P500 の同じ期間で確認してみました。</p>
+<table>
+<thead>
+<tr>
+<th>　</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mon</td>
+<td align="right">96</td>
+<td align="right">54.17</td>
+<td align="right">2318.74</td>
+<td align="right">2146.94</td>
+<td align="right">1.08</td>
+<td align="right">271.97</td>
+<td align="right">-20955.05</td>
+<td align="right">26109.52</td>
+</tr>
+<tr>
+<td>Tue</td>
+<td align="right">105</td>
+<td align="right">53.33</td>
+<td align="right">2992.09</td>
+<td align="right">2743.37</td>
+<td align="right">1.09</td>
+<td align="right">315.54</td>
+<td align="right">-14870.04</td>
+<td align="right">33131.83</td>
+</tr>
+<tr>
+<td>Wed</td>
+<td align="right">101</td>
+<td align="right">60.40</td>
+<td align="right">1990.65</td>
+<td align="right">2042.13</td>
+<td align="right">0.97</td>
+<td align="right">393.51</td>
+<td align="right">-33832.51</td>
+<td align="right">39744.68</td>
+</tr>
+<tr>
+<td>Thu</td>
+<td align="right">114</td>
+<td align="right">57.89</td>
+<td align="right">2326.09</td>
+<td align="right">3037.04</td>
+<td align="right">0.77</td>
+<td align="right">67.93</td>
+<td align="right">-50445.41</td>
+<td align="right">7744.39</td>
+</tr>
+<tr>
+<td>Fri</td>
+<td align="right">100</td>
+<td align="right">49.00</td>
+<td align="right">2367.65</td>
+<td align="right">2795.10</td>
+<td align="right">0.85</td>
+<td align="right">-265.35</td>
+<td align="right">-50687.77</td>
+<td align="right">-26535.46</td>
+</tr>
+</tbody>
+</table>
+<p>想定結果とかなり異なる結果になってしまいました。</p>
+<p>トレード数がかなり少ないのはなぜだろう？</p>
+<p>でも、通貨の場合と違って利益が残る結果になったみたいです。
+水曜日が一番良かったみたいでした。</p>
+<h2 id="sp500-の結果-2011-年-6-月-2017-年-12-月">S&amp;P500 の結果（ 2011 年 6 月～ 2017 年 12 月）</h2>
+<p>その後の期間も確認してみました。</p>
+<table>
+<thead>
+<tr>
+<th>　</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mon</td>
+<td align="right">53</td>
+<td align="right">58.49</td>
+<td align="right">2582.17</td>
+<td align="right">2827.05</td>
+<td align="right">0.91</td>
+<td align="right">336.83</td>
+<td align="right">-23355.08</td>
+<td align="right">17852.15</td>
+</tr>
+<tr>
+<td>Tue</td>
+<td align="right">50</td>
+<td align="right">58.00</td>
+<td align="right">3269.31</td>
+<td align="right">2764.52</td>
+<td align="right">1.18</td>
+<td align="right">735.10</td>
+<td align="right">-14269.91</td>
+<td align="right">36754.92</td>
+</tr>
+<tr>
+<td>Wed</td>
+<td align="right">64</td>
+<td align="right">57.81</td>
+<td align="right">2816.95</td>
+<td align="right">2581.11</td>
+<td align="right">1.09</td>
+<td align="right">539.64</td>
+<td align="right">-17775.02</td>
+<td align="right">34537.20</td>
+</tr>
+<tr>
+<td>Thu</td>
+<td align="right">61</td>
+<td align="right">47.54</td>
+<td align="right">3303.53</td>
+<td align="right">2815.94</td>
+<td align="right">1.17</td>
+<td align="right">93.32</td>
+<td align="right">-39927.59</td>
+<td align="right">5692.38</td>
+</tr>
+<tr>
+<td>Fri</td>
+<td align="right">65</td>
+<td align="right">49.23</td>
+<td align="right">3119.91</td>
+<td align="right">2548.33</td>
+<td align="right">1.22</td>
+<td align="right">242.19</td>
+<td align="right">-24212.56</td>
+<td align="right">15742.13</td>
+</tr>
+</tbody>
+</table>
+<p>想定結果と比較するのはあまり意味がないので、 1998 年 5 月～ 2011 年 5 月の結果と比較してみます。</p>
+<p>一番良かったのは水曜日でしたが、火曜日に変わっていました。
+一番悪かったのは金曜日でしたが、木曜日に変わっていました。</p>
+<h2 id="考察">考察</h2>
+<blockquote>
+<p>システムとは概してこんなものである。
+ある一定期間は非常にうまく機能するが、そのあとは破綻する。</p>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第2版】 第4章 ボラティリティブレイクアウト－－モメンタムブレイクスルー</cite></p>
+</blockquote>
+<p>システムって、長期的に機能するものが一番いいと思っていました。
+でもそうでもないと考えるようになりました。</p>
+<p>もっと重要なのは、短期的に機能するシステムであっても、それが機能する期間に運用できることだと思いました。
+結局これができないと損失で終わるだろうからです。</p>
+<p>その「長期的に機能する」のが明日、あるいは 1 年後に終わるかもしれないじゃないですか？
+明日、あるいは 1 年後に終わらない保証がどこにあるんですか？
+明日、あるいは 1 年後、あるいはそれ以降に機能しなくなったら、どうそれを判断するのですか？</p>
+<blockquote>
+<p>2011年に加筆した部分－－ここで第1版の続きを述べておこう。
+ウップスは忘れられないパターンだ。
+このパターンを使って100万ドル以上は稼いだと思うが、残念ながらこのパターンは今ではもう機能しない。
+理由は簡単だ。
+場立ちがいなくなってしまったからである。
+場立ち取引が行われていたころは、市場は大引けから翌日の寄り付きまで16時間から18時間閉じ、その間に注文がたまり、人々の感情は高まった。
+売りか買いかはともかく、この間に注文が急増し、翌日はギャップで寄り付いた。
+しかし、電子取引に変わった今は市場が閉じている時間は極めて短く（数分、長くても数時間）、われわれにとって好都合だった抑圧された注文の「噴出」効果は消えた。</p>
+<p><cite>ラリー・ウィリアムズの短期売買法【改定第2版】 第7章 勝つためのパターン</cite></p>
+</blockquote>
+<p>まだ具体的にはわからないですけれども、機能する原因が何か把握していないことには、そのシステムは運用しちゃいけなそうです。
+原因自体が変わったら運用を止めるときなんじゃないかなあ。</p>
+<p>「システム」と書いていますけれども、裁量トレードでも同じことが言えると思っています。</p>
+<h2 id="終わり">終わり</h2>
+<p>本の結果と同じにはできなかったのですが、プログラムの誤りや、本の内容の解釈の誤りに気づいたりしましたら教えてください。</p>
+<p>Gist に Jupyter Notebook のファイルをアップロードしておきました。</p>
+<ul>
+<li><a href="https://gist.github.com/va2577/9faa59d492993315d608017cfca5acda">TDW （トレーディングデイ・オブ・ザ・ウィーク） S&amp;P500</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

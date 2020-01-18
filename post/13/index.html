@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>JEKYLLのサイトマップの作成 - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Jekyllのサイトマップの作成</h1>
+    
+      <div><time>January 15, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/6/">Google Search Consoleの登録</a>をしましたので、JekyllでSitemapを作成してGoogle Search ConsoleにSitemapを送信してみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.2</li>
+<li>Jekyll バージョン 2.4.0</li>
+</ul>
+<h2 id="サイトマップ">サイトマップ？</h2>
+<blockquote>
+<p>サイトマップとは、サイトのウェブページのリストを指定して、Google や他の検索エンジンにサイトのコンテンツの構成を伝えるファイルです。Googlebot などの検索エンジンのウェブクローラは、このファイルを読み込んで、より高度なクロールを行います。</p>
+<p><cite><a href="https://support.google.com/webmasters/answer/156184?hl=ja&amp;ref_topic=4581190">サイトマップについて - Search Console ヘルプ</a></cite></p>
+</blockquote>
+<h2 id="jekyllの設定ファイルの変更">Jekyllの設定ファイルの変更</h2>
+<p>JekyllでSitemapを作成するには設定ファイルを変更するだけのようでした。
+プロジェクトのディレクトリーの直下にある<code>_config.yml</code>ファイルに以下の行を追加します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">gems:
+  <span style="color:#66d9ef">-</span> jekyll-sitemap
+</code></pre></div><h2 id="sitemapの作成">Sitemapの作成</h2>
+<pre><code>$ cd [YOUR-JEKYLL-SITE]
+$ bundle exec jekyll build
+</code></pre><p><code>_site</code>ディレクトリーに<code>sitemap.xml</code>が作成されます。</p>
+<pre><code>$ ls _site/sitemap.xml
+_site/sitemap.xml
+</code></pre><h2 id="sitemapの送信">Sitemapの送信</h2>
+<p>Google Search Consoleにサイトマップを送信します。
+以下の方法もあるようですが、記事を追加するたびに送信するのは面倒なので<code>robots.txt</code>を作成しました。</p>
+<blockquote>
+<p>Search Console サイトマップ ツールを使ってサイトマップを Google に送信する</p>
+</blockquote>
+<p><code>robots.txt</code>は以下の内容でプロジェクトのディレクトリーの直下に保存しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+layout: null
+---
+Sitemap: {{ site.url }}{{ site.baseurl }}/sitemap.xml
+</code></pre></div><p>ターミナルから以下のコマンドを実行します。</p>
+<pre><code>$ cd [YOUR-JEKYLL-SITE]
+$ bundle exec jekyll build
+</code></pre><p><code>_site</code>ディレクトリーに<code>robots.txt</code>が作成されます。</p>
+<pre><code>$ ls _site/robots.txt
+_site/robots.txt
+</code></pre><p>作成したファイルを公開するためにGitHubにpushします。</p>
+<pre><code>$ git add .
+$ git commit -m &quot;comment&quot;
+$ git push origin master
+</code></pre><p>これで<code>sitemap.xml</code>と<code>robots.txt</code>が公開されたことになります。
+すると検索エンジンのウェブクローラーがこの<code>robots.txt</code>を見て、その中で指定している<code>sitemap.xml</code>を見て、より高度なクロールをしてくれることになります。</p>
+<h2 id="終わり">終わり</h2>
+<p>Jekyllは記事からSitemapが作成できるので簡単でした。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://help.github.com/articles/sitemaps-for-github-pages/">Sitemaps for GitHub Pages - User Documentation</a></li>
+<li><a href="https://support.google.com/webmasters/answer/183668?hl=ja">サイトマップを作成、送信する - Search Console ヘルプ</a></li>
+</ul>
+<h2 id="24-january-2016-追記">24 January 2016 追記</h2>
+<p>Search Consoleのサイトマップを確認しても送信されていなかったため、Webからサイトマップの追加をしてみました。</p>
+<p><code>クロール - サイトマップ</code>から<code>サイトマップの追加/テスト</code>ボタンをクリックします。</p>
+<p><img src="/img/13-01.png" alt=""></p>
+<p><code>サイトマップの追加/テスト</code>に<code>sitemap.xml</code>と入力して<code>送信</code>ボタンをクリックします。</p>
+<p><img src="/img/13-02.png" alt=""></p>
+<p><code>ページを更新する。</code>リンクをクリックします。</p>
+<p><img src="/img/13-03.png" alt=""></p>
+<p><code>サイトマップのコンテンツ</code>が表示されていることが確認できました。</p>
+<p><img src="/img/13-04.png" alt=""></p>
+<p>たぶん、作ったばかりのサイトなのでクローラーが来ていないのかなと思います。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

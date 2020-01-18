@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>VUE.JS を使った - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Vue.js を使った</h1>
+    
+      <div><time>June 30, 2019</time></div>
+    
+    
+      <div><img alt="" src="/img/2019-06-30-01-01.png"></div>
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Vue.js を使ってランダムな文字列を生成するページを作った。</p>
+<style>
+  input[type="checkbox"] {
+    appearance: checkbox;
+    -moz-appearance: checkbox;
+    -webkit-appearance: checkbox;
+  }
+  input[type="range"] {
+    appearance: slider-horizontal;
+    -moz-appearance: range;
+    -webkit-appearance: slider-horizontal;
+  }
+  input[type="checkbox"] {
+    border: #343434 solid 1px;
+    color: #343434;
+  }
+  input[type="range"],
+  input[type="text"] {
+    border: #343434 solid 1px;
+    color: #343434;
+    padding: 10px;
+    width: 100%;
+  }
+</style>
+<section id="app">
+  <form>
+    <div>
+      <label>
+        Length (<span>{{ length }}</span>)
+        <input type="range" v-model="length" min="1" max="256" step="1" />
+      </label>
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" v-model="uppercase" />
+        Uppercase
+      </label>
+      <label>
+        <input type="checkbox" v-model="lowercase" />
+        Lowercase
+      </label>
+      <label>
+        <input type="checkbox" v-model="number" />
+        Number
+      </label>
+      <label>
+        <input type="checkbox" v-model="symbol" />
+        Symbol
+      </label>
+    </div>
+    <div>
+      <label>
+        String
+        <input type="text" v-model="gen3" readonly />
+      </label>
+    </div>
+  </form>
+</section>
+<!-- development version, includes helpful console warnings -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+<!-- production version, optimized for size and speed -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      length: 16,
+      uppercase: true,
+      lowercase: true,
+      number: true,
+      symbol: false,
+      chars: [...Array(128).keys()]
+        .filter(x => 33 <= x && x <= 126)
+        .map(x => String.fromCharCode(x)),
+      chars3: [...Array(128).keys()]
+        .filter(x => 33 <= x && x <= 126)
+    },
+    methods: {
+      getRandomInt: (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+      },
+      filteredChars3: function () {
+        const isSymbol = (x) => {
+          const s1 = 33 <= x && x <= 47
+          const s2 = 58 <= x && x <= 64
+          const s3 = 91 <= x && x <= 96
+          const s4 = 123 <= x && x <= 126
+          return s1 || s2 || s3 || s4
+        }
+        return this.chars3
+          .filter(x => !this.uppercase && !(65 <= x && x <= 90) || this.uppercase)
+          .filter(x => !this.lowercase && !(97 <= x && x <= 122) || this.lowercase)
+          .filter(x => !this.number && !(48 <= x && x <= 57) || this.number)
+          .filter(x => !this.symbol && !isSymbol(x) || this.symbol)
+          .map(x => String.fromCharCode(x))
+      }
+    },
+    computed: {
+      gen: function () {
+        const array2 = [...Array(Number(this.length)).keys()]
+          .map(x => this.getRandomInt(1, this.chars.length - 1))
+          .map(x => this.chars[x])
+        return array2.join('')
+      },
+      gen2: function () {
+        const array = new Uint32Array(Number(this.length))
+        crypto.getRandomValues(array)
+        const array2 = Array.from(array)
+          .map(x => x % (this.chars.length - 1))
+          .map(x => this.chars[x])
+        return array2.join('')
+      },
+      gen3: function () {
+        const array = new Uint32Array(Number(this.length))
+        crypto.getRandomValues(array)
+        const c = this.filteredChars3()
+        const array2 = Array.from(array)
+          .map(x => x % (c.length - 1))
+          .map(x => c[x])
+        return array2.join('')
+      }
+    }
+  })
+</script>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

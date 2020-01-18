@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ランダムウォークのグラフと米ドル／円のグラフを比較してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ランダムウォークのグラフと米ドル／円のグラフを比較してみました</h1>
+    
+      <div><time>June 9, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>『禁断の市場』を読んで試してみたことの続きです。
+<a href="/post/183/">前回</a>はランダムウォークのグラフを確認しました。
+そして正規分布のグラフができました。
+今回は米ドル／円のヒストリカルデータをもとにグラフを作って比較してみます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6</li>
+<li>Jupyter Notebook 5.2.0</li>
+<li>NumPy 1.14.4</li>
+<li>pandas 0.23.0</li>
+<li>matplotlib 2.2.2</li>
+</ul>
+<h2 id="米ドル円のヒストリカルデータ">米ドル／円のヒストリカルデータ</h2>
+<p>データは<a href="/post/162/">以前作ったもの</a>を使いました。
+デューカスコピーからダウンロードした 1 分足のヒストリカルデータを日足にしたものです。</p>
+<pre><code class="language-console" data-lang="console">$ head ~/Documents/data/d/USDJPY_D.csv
+time,open,high,low,close,volume
+2003-05-05,118.94,119.046,118.461,118.603,592866.9
+2003-05-06,118.591,118.751,117.29,117.5,581707.0
+2003-05-07,117.456,117.83,116.052,116.303,584496.2
+2003-05-08,116.311,116.969,115.94,116.823,588236.7
+2003-05-09,116.835,117.612,116.794,117.151,583132.9
+2003-05-12,117.286,117.286,116.304,117.025,586660.3
+2003-05-13,117.053,117.528,116.338,116.561,584984.4
+2003-05-14,116.554,116.837,115.557,116.16,586464.9
+2003-05-15,116.173,116.525,115.282,116.515,585585.1
+</code></pre><h2 id="比較">比較</h2>
+<p>ここからは Jupyter Notebook のセルに入力しながら進めます。</p>
+<p>最初に必要なモジュールを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>米ドル／円のヒストリカルデータを読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dtype <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+names <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/data/d/USDJPY_D.csv</span><span style="color:#e6db74">&#39;</span>, dtype<span style="color:#f92672">=</span>dtype, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, names<span style="color:#f92672">=</span>names, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><p>終値だけ使いたいので、終値だけのデータを <code>s11</code> にしました。
+それから変位のデータを <code>s12</code> にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s11 <span style="color:#f92672">=</span> df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]
+s12 <span style="color:#f92672">=</span> (s11 <span style="color:#f92672">-</span> s11<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>dropna()
+</code></pre></div><p>次にランダムなデータを作りました。
+標準偏差に収まる範囲を米ドル／円と同じにしたかったので <code>sigma</code> を <code>s12.std()</code> にしています。
+ランダムなデータも変位を用意して <code>s22</code> にしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n <span style="color:#f92672">=</span> s11<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size
+mu <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+sigma <span style="color:#f92672">=</span> s12<span style="color:#f92672">.</span>std()
+openprice <span style="color:#f92672">=</span> s11<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>item()
+s21 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(sigma <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(n) <span style="color:#f92672">+</span> mu, index<span style="color:#f92672">=</span>s11<span style="color:#f92672">.</span>index)<span style="color:#f92672">.</span>cumsum() <span style="color:#f92672">+</span> openprice
+s22 <span style="color:#f92672">=</span> (s21 <span style="color:#f92672">-</span> s21<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>))<span style="color:#f92672">.</span>dropna()
+</code></pre></div><p>データを折れ線グラフで表示しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s21<span style="color:#f92672">.</span>plot(label<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">random</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+s11<span style="color:#f92672">.</span>plot(label<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USD/JPY</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+plt<span style="color:#f92672">.</span>legend()
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/184-01.png" alt="img"></p>
+<p>変位の分布を表示しました。
+<code>density=True</code> の引数を渡して標準偏差に収まる範囲のデータが 1 になるように正規化してみました。
+これをつけないと思ったような比較のグラフになりませんでした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n, bins, patches <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>hist(s22, <span style="color:#ae81ff">100</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">random</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, density<span style="color:#f92672">=</span>True)
+n, bins, patches <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>hist(s12, <span style="color:#ae81ff">100</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USD/JPY</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, density<span style="color:#f92672">=</span>True)
+plt<span style="color:#f92672">.</span>legend()
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/184-02.png" alt="img"></p>
+<p>思った通りのグラフができました。</p>
+<p>変位も折れ線グラフで表示してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s22<span style="color:#f92672">.</span>plot(label<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">random</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+s12<span style="color:#f92672">.</span>plot(label<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USD/JPY</span><span style="color:#e6db74">&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>)
+plt<span style="color:#f92672">.</span>legend()
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/184-03.png" alt="img"></p>
+<p>こちらも思った通りのグラフができました。</p>
+<h2 id="市場の特徴">市場の特徴</h2>
+<p>作ったグラフからわかった市場の特徴を書いてみたいと思います。</p>
+<h3 id="変位の分布">変位の分布</h3>
+<blockquote>
+<p>中くらいの変動が期待するほどは多くはなく、非常に小さい変動と非常に大きな変動が目立つのです。</p>
+<p><cite>禁断の市場 第１０章 ノア、ヨセフ、そして市場のバブル</cite></p>
+</blockquote>
+<p>変位の分布からは引用したような特徴がわかります。</p>
+<p>非常に大きな変動は「ファット・テール」と名づけられていて、よく聞きます。
+非常に小さい変動は名前もなくてあまり聞かないですけれども、正規分布よりも頻繁に起こるみたいです。
+上で作った変位の分布は非常に大きな変動よりも非常に小さい変動の方が目立ちます（対数グラフにしていないからかもしれません）。</p>
+<h3 id="変位の折れ線グラフ">変位の折れ線グラフ</h3>
+<blockquote>
+<p>つまり、大きな突然の変動と平穏な状態が交互に繰り返される間欠的な性質と、その間隔がスケールに依存しないフラクタルになっているということです。</p>
+<p><cite>禁断の市場 第１２章 禁断の金融１０カ条</cite></p>
+</blockquote>
+<p>変位の折れ線グラフは他ではあまり見たことがなかったのですが、引用した特徴を表していると思いました。</p>
+<p>上で作ったグラフは日足のヒストリカルデータで確認しましたけれども、 1 時間足のデータでも同じような特徴を確認しました。
+参考までに 2005 年、 2010 年、 2015 年の 1 時間足のデータの変位の折れ線グラフです。</p>
+<p><img src="/img/184-04.png" alt="img"></p>
+<p><img src="/img/184-05.png" alt="img"></p>
+<p><img src="/img/184-06.png" alt="img"></p>
+<p>部分を切り取って拡大してみても同じような特徴がありました。</p>
+<blockquote>
+<p>キーワードはマルチフラクタルです。
+フラクタルの定義を思い出して下さい。
+フラクタルは、全体を一定の割合で縮小すると部分が再現できます。
+それに対し、マルチフラクタルは、一つの物のなかに複数の拡大縮小に関する特性を持っています。
+場所や方向によって拡大縮小する比率が異なるのです。</p>
+<p><cite>禁断の市場 第１１章 トレーディング時間のマルチフラクタル性</cite></p>
+</blockquote>
+<p>これがマルチフラクタルということみたいです。
+いや、確認できたのはフラクタルということだけかなあ。
+マルチフラクタルであることが確認できるのは、もっと時間と価格を複数確認してみてわかることかもしれません。</p>
+<blockquote>
+<p>価格の変動は過去のデータに依存する場合があるのは確かですし、正規分布はまったく事実に反します。
+数学的に言えば、市場は相関なしで依存性を示します。
+ちょっと矛盾したような表現ですが、符号の付いた量である変位を見るか、負の値をとらない変位の大きさを見るかの違いです。
+変位の符号は過去の値に無相関に決まるものとします。
+昨日、価格が下落したとしても、今日の価格が下落するわけではありません。
+それでも、価格の変位の大きさに過去との依存性を持たせることは可能です。
+普段よりもはるかに大きな１０％も価格が下落した翌日に１０％上昇するということはありうることです。
+しかし、翌日が１０％の下落になる可能性も同じだけあり、上がるか下がるかの予測はできない、ということです。
+変位の大きさには強い依存性があっても、価格の変位の相関は０になります。
+大きな価格の変動は、直前の大きな変動の後に出てくる可能性が高くなります。
+これは、ボラティリティ・クラスターと呼ばれる現象です。</p>
+<p><cite>禁断の市場 第１２章 禁断の金融１０カ条</cite></p>
+</blockquote>
+<p>上がるか下がるかは予測できない、けれども、ボラティリティは予測できるみたいです。</p>
+<p>そうすると普通に為替の取引をしても利益は見込めないんじゃないかと思ってしまいます。
+そしてオプションなら大きな利益が見込めるんじゃないかと思ってしまいます(オプションに詳しくないのですが、あれってボラティリティを取引している要素もあるんですよね？)。</p>
+<h2 id="終わり">終わり</h2>
+<p>比較してみて実際の市場について少し理解が深まったように思います。</p>
+<p>わたしはボリンジャーバンドを使うことが多かったので、正規分布と比較して良かったです。
+ボリンジャーバンドは正規分布や標準偏差を活用したインディケーターなので、チャートを見るときにこれらの比較がかなり影響してくるように思います。</p>
+<blockquote>
+<p>中くらいの変動が期待するほどは多くはなく、非常に小さい変動と非常に大きな変動が目立つのです。</p>
+</blockquote>
+<p>ボリンジャーバンドの正規分布と比較すると、中くらいの変動が期待するほど多くはないそうです。
+だから非常に小さい変動を利益につなげること、非常に大きな変動を利益につなげること、これらを意識すると良さそうに思いました。</p>
+<p><a href="https://gist.github.com/va2577/99c7b5108494e4e358b57a624c65b092">Gist</a> に Jupyter Notebook をアップしておきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

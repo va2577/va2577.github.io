@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gist on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/gist/</link>
+    <description>Recent content in Gist on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 30 Oct 2016 17:42:03 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/gist/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Gist を使ってみました</title>
+      <link>https://va2577.github.io/post/53/</link>
+      <pubDate>Sun, 30 Oct 2016 17:42:03 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/53/</guid>
+      <description>&lt;p&gt;他のブログで見る &lt;code&gt;hosted with ❤ by GitHuba&lt;/code&gt; のコードブロックが気になっていたので使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

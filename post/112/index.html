@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>INNO SETUP でインストーラーを作成してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Inno Setup でインストーラーを作成してみました</h1>
+    
+      <div><time>March 23, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><img src="/img/112-01.bmp" alt=""></p>
+<p>Windows のインストーラーを作成する必要がありましたので調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Windows 10 Pro</li>
+<li>Inno Setup 5.5.9</li>
+</ul>
+<h2 id="installshield">InstallShield</h2>
+<p>インストーラーに含めるアプリケーションが、 Visual Studio で開発したものなので、 Professional 以上であれば付属している InstallShield Limited Edition を使うことを考えていました。</p>
+<blockquote>
+<p>*InstallShield Limited Edition for Visual Studio is included with Visual Studio 2010 and newer versions.</p>
+<p>InstallShield Limited Edition for Visual Studio supports the following Visual Studio editions:</p>
+<ul>
+<li>Professional</li>
+<li>Premium</li>
+<li>Enterprise</li>
+<li>Ultimate</li>
+</ul>
+<p>*Visual Studio Community Edition is not supported.</p>
+<p><cite><a href="https://info.flexerasoftware.com/IS-EVAL-InstallShield-Limited-Edition-Visual-Studio">InstallShield Limited Edition for Visual Studio - Registration</a></cite></p>
+</blockquote>
+<p>ただ、使っている Visual Studio のエディションが Community で、 &ldquo;Community は対象外&rdquo; と記載されています。</p>
+<p>それから、過去に InstallShield を使ったことがあるのですが、ライセンスの関係から自分だけしかインストーラーを作成することができない状況になってしまった経緯があります。
+それは避けたいという思いから、他のインストーラー作成ツールを探してみました。</p>
+<p>次の記事が参考になりました。</p>
+<blockquote>
+<p>Windows Installerの仕組みを使わないツール</p>
+<p>２種類紹介します。</p>
+<p>Inno Setup</p>
+<p>Inno Setupは、基本的に.iniファイルのような書式でソースファイルを記述していきます。カスタマイズは、今となってはマイナーなPascal言語ですが、それほど複雑なことをやるわけではないので、他の言語の心得があれば簡単に習得できます。Inno Script Studio script editorというGUIツールも用意されていますが、起動も早く安定していて、秀逸な出来です。
+Windows Installerの仕組みを使わないツールとしては、イチオシです。</p>
+<p>Nullsoft Scriptable Install System (NSIS)</p>
+<p>NSISも比較的使われているツールだと思います。NSIS本体は最低限の機能しか持っていませんが、多くの方がプラグインで色々な機能を提供しています。業務で使う場合は、各プラグインのライセンスがどうなっているか気をつける必要があるでしょう。</p>
+<p><cite><a href="https://qiita.com/tohshima/items/314143d605f8ae1e0d87">インストーラー作成ツールの選択 - Qiita</a></cite></p>
+</blockquote>
+<p>次の 2 つが考えられるようです。</p>
+<ul>
+<li><a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a></li>
+<li><a href="http://nsis.sourceforge.net/Main_Page">NSIS(Nullsoft Scriptable Install System)</a></li>
+</ul>
+<h2 id="トレンド">トレンド</h2>
+<p>Inno Setup と NSIS の傾向を調べてみました。</p>
+<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1328_RC04/embed_loader.js"></script>
+<script type="text/javascript">
+  trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"inno setup","geo":"","time":"2004-01-01 2018-03-23"},{"keyword":"nsis","geo":"","time":"2004-01-01 2018-03-23"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=inno%20setup,nsis","guestPath":"https://trends.google.com:443/trends/embed/"});
+</script>
+<p>平均的には NSIS の方が使われてるようです。</p>
+<p>が、 Qiita の記事を参考に、 Inno Setup を採用することにしました。</p>
+<h2 id="inno-setup-をインストール">Inno Setup をインストール</h2>
+<p><a href="http://www.jrsoftware.org/isdl.php">Inno Setup Downloads</a> のページからダウンロードしました。</p>
+<p>unicode とそうでないものがあるようですが、日本語を扱うので、 unicode の方を選択しました。</p>
+<p>QuickStart Pack というものもあるようですが、 Inno Script Studio script editor というエディターが使用できたり、する程度みたいでしたので、通常のものをインストールすることにしました。
+エディターは Visual Studio Code でも十分だと思いまして。</p>
+<p>インストールのウィザードは基本的に初期値のまま進めました。</p>
+<p><img src="/img/112-02.png" alt=""></p>
+<p>Inno Setup Preprocessor という選択があって、これは .iss ファイルの中で <code>#define</code> が使えるもののようです。
+アプリケーションの名前やバージョンや発行元などが定数のように定義しておけるため、保守性が高くなるようです。
+Install Inno Setup Preprocessor のチェックボックスにチェックをしてウィザードを進めました。</p>
+<h2 id="iss-ファイル作成ウィザード">.iss ファイル作成ウィザード</h2>
+<p>Inno Setup では、インストーラーを作成するためのソースコードは .iss ファイルになるようです。
+.iss ファイルはウィザードから作成できるようなので、ウィザードを使ってみます。</p>
+<p>Inno Setup のメニューから [File]-[New] でウィザードを起動します。
+Next をクリックします。</p>
+<p><img src="/img/112-03.png" alt=""></p>
+<p>Application Infomation を入力します。</p>
+<p>コントロールパネルのプログラムと機能の名前、バージョン、発行元、サポートのリンク、ヘルプのリンク、更新情報に表示される内容です。
+Windows 10 の設定のアプリと機能には名前、バージョン、発行元だけが表示されるみたいです。</p>
+<ul>
+<li>Application Name</li>
+<li>Application Version</li>
+<li>Application Publisher</li>
+<li>Application website</li>
+</ul>
+<p><img src="/img/112-04.png" alt=""></p>
+<p>Application Folder を入力します。</p>
+<p>Program Files の中を選択することもできますし、それ以外を指定することもできるようです。</p>
+<p>Allow user to change the appliation folder にチェックすると、ユーザーが任意のフォルダーにアプリケーションをインストールできるようです。
+逆に、チェックしないと、決まったフォルダーにアプリケーションをインストールさせることができるようです。</p>
+<p><img src="/img/112-05.png" alt=""></p>
+<p>Application Files を入力します。</p>
+<p>Application main executable file にメインの実行ファイルを指定します。</p>
+<p>Allow user to start the application after Setup has finished にチェックすると、インストール直後にメインの実行ファイルを実行させることができるようです。</p>
+<p>Other application files にアプリケーションに必要なファイル(設定ファイル、ライブラリー、データ)を指定します。
+個別のファイルとして指定することもできますし、フォルダーを指定することもできます。</p>
+<p><img src="/img/112-06.png" alt=""></p>
+<p>Application Shortcuts を入力します。</p>
+<p>Create a shortcut to the main executable in the common Start Menu Programs folder にチェックすると、スタートメニューにアプリケーションのショートカットを作成できるようです。</p>
+<p>Allow user to create a desktop shortcut にチェックすると、デスクトップにショートカットを作成させることができるようです。</p>
+<p><img src="/img/112-07.png" alt=""></p>
+<p>Application Documentation を入力します。</p>
+<p>ライセンスファイルやお知らせファイルを指定できるようです。</p>
+<p><img src="/img/112-08.png" alt=""></p>
+<p>Setup Languages を入力します。</p>
+<p>ユーザーが選択した言語でセットアップを進めることができるようです。
+日本語もありました。</p>
+<p><img src="/img/112-09.png" alt=""></p>
+<p>Compiler Settings を入力します。</p>
+<p>Custom compiler output folder は標準だと Output フォルダーになるようです。</p>
+<p>Compiler output base file name が setup だと setup.exe としてインストーラーが作成されるようです。</p>
+<p>Custom Setup icon file で setup.exe のアイコンを指定できるようです。</p>
+<p>Setup password でインストーラーを起動する際のパスワードが指定できるようです。</p>
+<p><img src="/img/112-10.png" alt=""></p>
+<p>Inno Setup Preprocessor を入力します。</p>
+<p>Yes, use #define compiler directives にチェックすると、 <code>#define</code> でアプリケーションの名前やバージョンを .iss ファイルに記述してくれるようです。</p>
+<p><img src="/img/112-11.png" alt=""></p>
+<p>Finish をクリックします。</p>
+<p><img src="/img/112-12.png" alt=""></p>
+<p>Inno Setup Script File が作成できました。</p>
+<p><img src="/img/112-13.png" alt=""></p>
+<p>メニューから [Build]-[Compile] か、再生のマークからコンパイルできるようです。</p>
+<h2 id="iss-ファイル">.iss ファイル</h2>
+<p>Inno Setup のいいところは .iss ファイルがテキスト形式で、テキストエディターから修正できることです。
+バージョン管理しておけばやり直ししやすいです。</p>
+<p>ウィザードから標準の選択のまま作成した .iss ファイルは次の通りです。</p>
+<pre><code>; Script generated by the Inno Setup Script Wizard.
+; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
+
+#define MyAppName &quot;My Program&quot;
+#define MyAppVersion &quot;1.5&quot;
+#define MyAppPublisher &quot;My Company, Inc.&quot;
+#define MyAppURL &quot;http://www.example.com/&quot;
+#define MyAppExeName &quot;MyProg.exe&quot;
+
+[Setup]
+; NOTE: The value of AppId uniquely identifies this application.
+; Do not use the same AppId value in installers for other applications.
+; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
+AppId={{FFD0E913-41AE-470B-A642-FB90E9FC812F}
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+;AppVerName={#MyAppName} {#MyAppVersion}
+AppPublisher={#MyAppPublisher}
+AppPublisherURL={#MyAppURL}
+AppSupportURL={#MyAppURL}
+AppUpdatesURL={#MyAppURL}
+DefaultDirName={pf}\{#MyAppName}
+DisableProgramGroupPage=yes
+OutputBaseFilename=setup
+Compression=lzma
+SolidCompression=yes
+
+[Languages]
+Name: &quot;english&quot;; MessagesFile: &quot;compiler:Default.isl&quot;
+
+[Tasks]
+Name: &quot;desktopicon&quot;; Description: &quot;{cm:CreateDesktopIcon}&quot;; GroupDescription: &quot;{cm:AdditionalIcons}&quot;; Flags: unchecked
+
+[Files]
+Source: &quot;C:\Program Files (x86)\Inno Setup 5\Examples\MyProg.exe&quot;; DestDir: &quot;{app}&quot;; Flags: ignoreversion
+; NOTE: Don't use &quot;Flags: ignoreversion&quot; on any shared system files
+
+[Icons]
+Name: &quot;{commonprograms}\{#MyAppName}&quot;; Filename: &quot;{app}\{#MyAppExeName}&quot;
+Name: &quot;{commondesktop}\{#MyAppName}&quot;; Filename: &quot;{app}\{#MyAppExeName}&quot;; Tasks: desktopicon
+
+[Run]
+Filename: &quot;{app}\{#MyAppExeName}&quot;; Description: &quot;{cm:LaunchProgram,{#StringChange(MyAppName, '&amp;', '&amp;&amp;')}}&quot;; Flags: nowait postinstall skipifsilent
+
+
+</code></pre><p>インストーラーに含めるファイルを変更するだけなら、 [Files] セクションをテキストエディターで修正するだけで済みます。</p>
+<p>その他にも、 Inno Setup のフォルダーに examples がいくつかあって、参考にできそうでした。</p>
+<h2 id="コンパイル">コンパイル</h2>
+<p>.iss ファイルをコンパイルします。
+GUI からでも実行することができますが、開発においては CUI から実行できた方が扱いやすいです。</p>
+<blockquote>
+<p>Command Line Compiler Execution</p>
+<p>Scripts can also be compiled by the Setup Compiler from the command line. Command line usage is as follows:</p>
+<p>compil32 /cc &lt;script name&gt;</p>
+<pre><code>Example:
+compil32 /cc &quot;c:\isetup\samples\my script.iss&quot;
+</code></pre>
+<p>As shown in the example above, filenames that include spaces must be enclosed in quotes.</p>
+<p>Running the Setup Compiler from the command line does not suppress the normal progress display or any error messages. The Setup Compiler will return an exit code of 0 if the compile was successful, 1 if the command line parameters were invalid, or 2 if the compile failed.</p>
+<p>Alternatively, you can compile scripts using the console-mode compiler, ISCC.exe. Command line usage is as follows:</p>
+<p>iscc [options] &lt;script name&gt;<br>
+Or to read from standard input:<br>
+iscc [options] -</p>
+<pre><code>Example:
+iscc &quot;c:\isetup\samples\my script.iss&quot;
+</code></pre>
+<p>As shown in the example above, filenames that include spaces must be enclosed in quotes.</p>
+<p>Valid options are: &ldquo;/O-&rdquo; to disable output (overriding any Output setting in the script), &ldquo;/O+&rdquo; to enable output (overriding any Output setting in the script), &ldquo;/O&rdquo; to specify an output path (overriding any OutputDir setting in the script), &ldquo;/F&rdquo; to specify an output filename (overriding any OutputBaseFilename setting in the script), &ldquo;/S&rdquo; to specify a Sign Tool (any Sign Tools configured using the IDE will be specified automatically), &ldquo;/Q[p]&rdquo; for quiet compile (print only error messages, &ldquo;p&rdquo; will show progress info), and &ldquo;/?&rdquo; to show a help screen.</p>
+<pre><code>Example:
+iscc /Qp /O&quot;My Output&quot; /F&quot;MyProgram-1.0&quot; /Sbyparam=$p &quot;c:\isetup\samples\my script.iss&quot;
+</code></pre>
+<p>ISCC will return an exit code of 0 if the compile was successful, 1 if the command line parameters were invalid or an internal error occurred, or 2 if the compile failed.</p>
+<p><cite><a href="http://www.jrsoftware.org/ishelp/index.php?topic=compilercmdline">Inno Setup Help</a></cite></p>
+</blockquote>
+<p>compil32 は GUI のウィンドウが表示されて、コンパイルが始まるようです。
+iscc は CUI のコンソールの標準出力を使って、コンパイルが始まるようです。
+開発では CUI の方が扱いやすいので、 iscc を使いたいと思います。
+パスが設定されていないようでしたので、 Inno Setup をインストールしたフォルダーのパスも含めて指定します。</p>
+<p>PowerShell から次のように入力しました。</p>
+<pre><code>PS&gt; &amp; &quot;C:\Program Files (x86)\Inno Setup 5\ISCC.exe&quot; testsetup.iss
+</code></pre><p>標準出力には次のように出力されました。</p>
+<pre><code>Inno Setup 5 Command-Line Compiler
+Copyright (C) 1997-2016 Jordan Russell. All rights reserved.
+Portions Copyright (C) 2000-2016 Martijn Laan
+Inno Setup Preprocessor
+Copyright (C) 2001-2004 Alex Yackimoff. All rights reserved.
+
+Compiler engine version: Inno Setup 5.5.9 (u)
+
+[ISPP] Preprocessing.
+[ISPP] Preprocessed.
+
+Parsing [Setup] section, line 14
+Parsing [Setup] section, line 15
+Parsing [Setup] section, line 16
+Parsing [Setup] section, line 18
+Parsing [Setup] section, line 19
+Parsing [Setup] section, line 20
+Parsing [Setup] section, line 21
+Parsing [Setup] section, line 22
+Parsing [Setup] section, line 23
+Parsing [Setup] section, line 24
+Parsing [Setup] section, line 25
+Parsing [Setup] section, line 26
+Reading file (WizardImageFile)
+   File: C:\Program Files (x86)\Inno Setup 5\WIZMODERNIMAGE.BMP
+Reading file (WizardSmallImageFile)
+   File: C:\Program Files (x86)\Inno Setup 5\WIZMODERNSMALLIMAGE.BMP
+Preparing Setup program executable
+Determining language code pages
+Parsing [Languages] section, line 29
+   File: C:\Program Files (x86)\Inno Setup 5\Default.isl
+   Messages in script file
+Reading default messages from Default.isl
+Parsing [Languages] section, line 29
+   File: C:\Program Files (x86)\Inno Setup 5\Default.isl
+Parsing [LangOptions], [Messages], and [CustomMessages] sections
+   Messages in script file
+Reading [Code] section
+Parsing [Tasks] section, line 32
+Parsing [Icons] section, line 39
+Parsing [Icons] section, line 40
+Parsing [Run] section, line 43
+Parsing [Files] section, line 35
+Deleting setup.exe from output directory
+Creating setup files
+   Compressing: C:\Program Files (x86)\Inno Setup 5\Examples\MyProg.exe
+   Compressing Setup program executable
+   Updating version info
+
+Warning: Setting the [Setup] section &quot;OutputBaseFileName&quot; to &quot;setup&quot; is not recommended, all executables named &quot;setup.exe&quot; are shimmed by Windows application compatibility to load additional DLLs, such as version.dll. These DLLs are loaded unsafely by Windows and can be hijacked. Use a different name, for example &quot;mysetup&quot;.
+
+Successful compile (3.687 sec). Resulting Setup program filename is:
+C:\testsetup\Output\setup.exe
+</code></pre><p>setup.exe というファイルの名前をつけることはおすすめしない、という警告は出ましたが、正常終了したみたいです。</p>
+<p>Output フォルダーの中に setup.exe のインストーラーが作成されたようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>Google Trends の傾向は、 Inno Setup も NSIS も下り坂でした。
+.NET Framework のアプリケーションなら Click Once でもいいかな。
+でも、オフラインの PC とかもあるみたいですから、今後もインストーラーは残るのかな。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

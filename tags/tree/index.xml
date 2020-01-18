@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tree on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/tree/</link>
+    <description>Recent content in tree on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Apr 2018 13:27:40 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/tree/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL の Ubuntu で tree コマンドを使ってみました</title>
+      <link>https://va2577.github.io/post/142/</link>
+      <pubDate>Sun, 22 Apr 2018 13:27:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/142/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/23/&#34;&gt;Macでtreeコマンドを使う&lt;/a&gt;の記事を書いたことがありました。
+今回は、 WSL の Ubuntu で tree コマンドを使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Macでtreeコマンドを使う</title>
+      <link>https://va2577.github.io/post/23/</link>
+      <pubDate>Sat, 06 Feb 2016 11:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/23/</guid>
+      <description>&lt;p&gt;Windowsでフォルダー構造を見るために使っていたtreeコマンドをMacで使おうと思ったら、標準でその機能がありませんでしたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

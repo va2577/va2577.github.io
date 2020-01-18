@@ -1,0 +1,2234 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/</link>
+    <description>Recent content on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 17 Jan 2020 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2019 年のトレードの結果</title>
+      <link>https://va2577.github.io/post/2020-01-01-01/</link>
+      <pubDate>Wed, 01 Jan 2020 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2020-01-01-01/</guid>
+      <description>&lt;p&gt;2019 年は月ごとにトレードの結果を書かなかった。
+だからまとめて書いた。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ドルコスト平均法での運用にむけて</title>
+      <link>https://va2577.github.io/post/2019-12-31-01/</link>
+      <pubDate>Tue, 31 Dec 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-12-31-01/</guid>
+      <description>&lt;p&gt;どの株価指数が良いのか調べよう。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>変化率のグラフを作った</title>
+      <link>https://va2577.github.io/post/2019-12-30-01/</link>
+      <pubDate>Mon, 30 Dec 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-12-30-01/</guid>
+      <description>&lt;p&gt;Chart.js を使って通貨と株価指数の変化率のグラフを作った。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2019 年の相場を振り返った</title>
+      <link>https://va2577.github.io/post/2019-12-29-01/</link>
+      <pubDate>Sun, 29 Dec 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-12-29-01/</guid>
+      <description>&lt;p&gt;ここ数年、毎年やっていること。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ABOUT</title>
+      <link>https://va2577.github.io/about/</link>
+      <pubDate>Sat, 14 Dec 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/about/</guid>
+      <description>NAME Yu Ito
+BIO 迷走中。
+もう好きも嫌いもわからない。
+２０１９年６月から９月まで地獄だった。 １０月から回復中。 少し余裕ができたからブログのテーマを新しくした。</description>
+    </item>
+    
+    <item>
+      <title>Highcharts でマルチタイムフレームのチャートを作った</title>
+      <link>https://va2577.github.io/post/2019-11-23-01/</link>
+      <pubDate>Sat, 23 Nov 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-11-23-01/</guid>
+      <description>&lt;p&gt;Highcharts を使ってマルチタイムフレームのチャートを作ったのでその記録。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GatsbyJS を使った</title>
+      <link>https://va2577.github.io/post/2019-08-13-01/</link>
+      <pubDate>Tue, 13 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-08-13-01/</guid>
+      <description>&lt;p&gt;GatsbyJS を使ってスタティックサイトを作った。
+それを GitLab にアップして、そこから Netlify が自動的にデプロイしてくれるようにした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Netlify でリダイレクトの設定をする</title>
+      <link>https://va2577.github.io/post/2019-08-12-01/</link>
+      <pubDate>Mon, 12 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-08-12-01/</guid>
+      <description>&lt;p&gt;Netlify でリダイレクトを設定する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitLab のメールアドレスをプライベートにする</title>
+      <link>https://va2577.github.io/post/2019-08-10-01/</link>
+      <pubDate>Sat, 10 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-08-10-01/</guid>
+      <description>&lt;p&gt;GitHub でメールアドレスを公開しないようにプライベートに設定していたのですが、 GibLab でも同じことができないか、調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを変えた</title>
+      <link>https://va2577.github.io/post/2019-08-03-01/</link>
+      <pubDate>Sat, 03 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-08-03-01/</guid>
+      <description>&lt;p&gt;Hugo のままテーマを変えるか、 GitBook にするか、 VuePress にするか、 Gatsby にするか、検討してみた。
+結局 Hugo のテーマを使うことにした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Vue.js を使った</title>
+      <link>https://va2577.github.io/post/2019-06-30-01/</link>
+      <pubDate>Sun, 30 Jun 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-06-30-01/</guid>
+      <description>&lt;p&gt;Vue.js を使ってランダムな文字列を生成するページを作った。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Homebrew on Linux (Linuxbrew)</title>
+      <link>https://va2577.github.io/post/2019-06-22-01/</link>
+      <pubDate>Sat, 22 Jun 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-06-22-01/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; のサイトを見ていたら &lt;a href=&#34;https://linuxbrew.sh/&#34;&gt;Linuxbrew&lt;/a&gt; というものがあることを知った。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Riot.js を使った</title>
+      <link>https://va2577.github.io/post/2019-06-02-01/</link>
+      <pubDate>Sun, 02 Jun 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-06-02-01/</guid>
+      <description>&lt;p&gt;Riot.js を使って取引数量を定率で計算するページを作った。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 12 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/214/</link>
+      <pubDate>Sat, 29 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/214/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/214-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 12 月もトレードをしませんでした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年の相場を振り返ってみました</title>
+      <link>https://va2577.github.io/post/213/</link>
+      <pubDate>Sat, 22 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/213/</guid>
+      <description>&lt;p&gt;今年も相場を振り返ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>エントロピーの定義から市場の秩序と無秩序を考えてみました</title>
+      <link>https://va2577.github.io/post/212/</link>
+      <pubDate>Sat, 15 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/212/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4152096837/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51Uc%2BtrI5XL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『情報と秩序』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>バックテストにおけるマネーマネジメントについてです</title>
+      <link>https://va2577.github.io/post/211/</link>
+      <pubDate>Sat, 08 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/211/</guid>
+      <description>&lt;p&gt;バックテストで評価したいことはその売買ルールの期待値でした。
+だからマネーマネジメントを考慮していませんでした。
+ですがマネーマネジメントは期待値にも影響してくるようでした。
+今回はそのことを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 11 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/210/</link>
+      <pubDate>Sat, 01 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/210/</guid>
+      <description>&lt;p&gt;2018 年 11 月はトレードをしませんでした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ランダムな仕掛けでバックテストをしてみました</title>
+      <link>https://va2577.github.io/post/209/</link>
+      <pubDate>Sat, 24 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/209/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4775971271/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51a%2BICYcESL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『タープ博士のトレード学校 ポジションサイジング入門』のランダムな仕掛けの売買ルールでバックテストをしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>タートルズ・ブレイクアウト・システムでバックテストしてみました</title>
+      <link>https://va2577.github.io/post/208/</link>
+      <pubDate>Sat, 17 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/208/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4939103188/&#34;&gt;&lt;img src=&#34;https://va2577.github.io/img/208-01.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;!-- https://d1b14unh5d6w7g.cloudfront.net/4939103188.01.S001.LXXXXXXX.jpg?Expires=1549002131&amp;Signature=IfTkT86XRRA1KkFPMVYKFzQ4qJuZIkoTY4y2bt9+rYzvSOtAlZOaM3G9C3V4xA+cickezNwrFBtt2Rgz/SLGOffBhnO4XwZSkxGTzEsO5nrYmTZHAJP/EEgom7pp4fSA14SOzCajr08YZqJvVbsu5gA37HTeVBUqduRYk9Xc/gE=&amp;Key-Pair-Id=APKAIUO27P366FGALUMQ --&gt;
+&lt;p&gt;『タートルズの秘密』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python Bayesian Optimization でバックテストのパラメーターを最適化してみました</title>
+      <link>https://va2577.github.io/post/207/</link>
+      <pubDate>Sat, 10 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/207/</guid>
+      <description>&lt;p&gt;Bayesian Optimization を使ってみたかったので、これを使ってバックテストのパラメーターを最適化してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 10 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/206/</link>
+      <pubDate>Sat, 03 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/206/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/206-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python Matplotlib を使って 2 軸のグラフ（株価のラインと出来高のバー）を作ってみました</title>
+      <link>https://va2577.github.io/post/205/</link>
+      <pubDate>Sat, 27 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/205/</guid>
+      <description>&lt;p&gt;2 軸のグラフを作りたかったので、試しに株価のラインと出来高のバーのグラフを作りました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>『矢口新の短期トレード教室』のルールでバックテストをしてみました</title>
+      <link>https://va2577.github.io/post/204/</link>
+      <pubDate>Sat, 20 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/204/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/477599154X/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/518%2BfJdUoxL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『矢口新の短期トレード教室』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ローソク足 1 本のトレンドです</title>
+      <link>https://va2577.github.io/post/203/</link>
+      <pubDate>Sat, 13 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/203/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4775971735/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51Gj04YDOeL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『プライスアクショントレード入門』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>市場の値動きは変わります</title>
+      <link>https://va2577.github.io/post/202/</link>
+      <pubDate>Sat, 06 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/202/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4772695265&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51okavm7fvL.jpg&#34; alt=&#34;img&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『複雑で単純な世界』を読んで、市場の値動きは変わるから手法はいずれ通用しなくなると、改めて感じたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 9 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/201/</link>
+      <pubDate>Sun, 30 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/201/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/201-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 9 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>市場の秩序と無秩序についてです</title>
+      <link>https://va2577.github.io/post/200/</link>
+      <pubDate>Sat, 29 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/200/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4772695265&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51okavm7fvL.jpg&#34; alt=&#34;img&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『複雑で単純な世界』を読んで、秩序と無秩序について考えたことを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>効率的市場仮説についてです</title>
+      <link>https://va2577.github.io/post/199/</link>
+      <pubDate>Sat, 22 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/199/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4150504334&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51H1oyqqk3L.jpg&#34; alt=&#34;img&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『ウォール街の物理学者』を読みました。
+この本に効率的市場仮説のことが書かれていて少しだけ理解が深まった気がしたので書きました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python ローソク足とフラグを表示してみました</title>
+      <link>https://va2577.github.io/post/198/</link>
+      <pubDate>Sat, 15 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/198/</guid>
+      <description>&lt;p&gt;python-highcharts を使って、バックテストで売買した足にフラグを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python ローソク足と出来高とインディケーターを表示してみました</title>
+      <link>https://va2577.github.io/post/197/</link>
+      <pubDate>Sat, 08 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/197/</guid>
+      <description>&lt;p&gt;python-highcharts を使って、ローソク足と出来高とインディケーターを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 8 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/196/</link>
+      <pubDate>Sat, 01 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/196/</guid>
+      <description>&lt;p&gt;2018 年 8 月のトレードの結果を書いておきます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/196-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ローソク足のパターンの有効性を確認してみました</title>
+      <link>https://va2577.github.io/post/195/</link>
+      <pubDate>Sat, 25 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/195/</guid>
+      <description>&lt;p&gt;7 月からデイトレードをしていますが、負け続けています。
+負けている理由を把握するために、根拠にしているローソク足のパターンがどれだけ有効そうなのかを手探りで確認してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>なぜ通貨を取引するのですか？</title>
+      <link>https://va2577.github.io/post/194/</link>
+      <pubDate>Sat, 18 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/194/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/193/&#34;&gt;前回の記事&lt;/a&gt;で国際決済銀行のデータを見ていて思ったことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>世界の主要な金融センターはどこですか？</title>
+      <link>https://va2577.github.io/post/193/</link>
+      <pubDate>Sat, 11 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/193/</guid>
+      <description>&lt;p&gt;海外旅行しようと思って Wikipedia を見ていたら、&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%9D%E3%83%BC%E3%83%AB&#34;&gt;シンガポール&lt;/a&gt;のページに次のような記載がありました。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;外国為替市場の取引額で日本を上回り、世界3位に浮上するなど[37]、屈指の世界都市、金融センターになっている&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%9D%E3%83%BC%E3%83%AB#%E7%B5%8C%E6%B8%88&#34;&gt;シンガポール - Wikipedia&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;外国為替の主要な市場は東京、ロンドン、ニューヨークだと思っていたので驚きました。&lt;/p&gt;
+&lt;p&gt;実際のところどんなデータからシンガポールが上がってきたのか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 7 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/192/</link>
+      <pubDate>Sat, 04 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/192/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/192-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 7 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>実際のトレードでは利益を上げられませんでした</title>
+      <link>https://va2577.github.io/post/191/</link>
+      <pubDate>Sat, 14 Jul 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/191/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/191-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;7 月 9 日から短期の時間枠で実際のトレードをしてみました。
+ので、結果を書いておこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>実際のトレードの厳しさを感じました</title>
+      <link>https://va2577.github.io/post/190/</link>
+      <pubDate>Tue, 03 Jul 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/190/</guid>
+      <description>&lt;p&gt;7 月から短期の時間枠のトレードを始めました。
+7 月 2 日の初日に厳しいと思ったことを書いておこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 6 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/189/</link>
+      <pubDate>Sun, 01 Jul 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/189/</guid>
+      <description>&lt;p&gt;2018 年 6 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>S&amp;P500 で TDW （トレーディングデイ・オブ・ザ・ウィーク）を確認してみました</title>
+      <link>https://va2577.github.io/post/188/</link>
+      <pubDate>Sat, 30 Jun 2018 10:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/188/</guid>
+      <description>&lt;p&gt;通貨で TDW を確認していたところ、本の結果と同じようにならなかったので、 S&amp;amp;P500 でも確認してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>トレードで利益を積み上げていくイメージができたかもしれません</title>
+      <link>https://va2577.github.io/post/187/</link>
+      <pubDate>Sat, 30 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/187/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/187-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;検証で利益が上がり始めたときのグラフです。
+そのときのことを書いておこうと思いました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>TDW(トレーディングデイ・オブ・ザ・ウィーク)(曜日限定)を確認してみました</title>
+      <link>https://va2577.github.io/post/186/</link>
+      <pubDate>Sat, 23 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/186/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/185/&#34;&gt;前回&lt;/a&gt;に続いて『ラリー・ウィリアムズの短期売買法【改定第２版】』に書いてあったことを自分でも確認してみました。
+今回は TDW を確認しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>市場はランダムではないという証明を自分でも確認してみました</title>
+      <link>https://va2577.github.io/post/185/</link>
+      <pubDate>Sat, 16 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/185/</guid>
+      <description>&lt;p&gt;『ラリー・ウィリアムズの短期売買法【改定第２版】』を読み直しています。
+“市場はランダムではない”という証明を自分でもやってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ランダムウォークのグラフと米ドル／円のグラフを比較してみました</title>
+      <link>https://va2577.github.io/post/184/</link>
+      <pubDate>Sat, 09 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/184/</guid>
+      <description>&lt;p&gt;『禁断の市場』を読んで試してみたことの続きです。
+&lt;a href=&#34;https://va2577.github.io/post/183/&#34;&gt;前回&lt;/a&gt;はランダムウォークのグラフを確認しました。
+そして正規分布のグラフができました。
+今回は米ドル／円のヒストリカルデータをもとにグラフを作って比較してみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python SciPy でランダムウォークを確認してみました</title>
+      <link>https://va2577.github.io/post/183/</link>
+      <pubDate>Sun, 03 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/183/</guid>
+      <description>&lt;p&gt;『禁断の市場』という本を読みました。
+ランダムウォークのことが書かれていたので、 SciPy を使ってランダムウォークのグラフを作ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 5 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/182/</link>
+      <pubDate>Sat, 02 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/182/</guid>
+      <description>&lt;p&gt;2018 年 5 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に SciPy をインストールしてみました</title>
+      <link>https://va2577.github.io/post/181/</link>
+      <pubDate>Thu, 31 May 2018 17:33:44 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/181/</guid>
+      <description>&lt;p&gt;Jupyter Notebook と NumPy と pandas を個別にインストールしていたのですが、まとめて使いたいので SciPy をインストールしようと思いました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Windows の 1Password がアップデートされました</title>
+      <link>https://va2577.github.io/post/180/</link>
+      <pubDate>Wed, 30 May 2018 22:20:10 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/180/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/180-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Windows の 1Password がアップデートされて便利になっていました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の Pipenv を使ってみました</title>
+      <link>https://va2577.github.io/post/179/</link>
+      <pubDate>Tue, 29 May 2018 09:48:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/179/</guid>
+      <description>&lt;p&gt;Pipenv というものがあることを知りました。
+ので、使ってみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に Utuntu 16.04 で使っていたアプリケーションをインストールし直しました</title>
+      <link>https://va2577.github.io/post/178/</link>
+      <pubDate>Mon, 28 May 2018 18:42:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/178/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/177/&#34;&gt;前回&lt;/a&gt; WSL の Ubuntu 18.04 をインストールしたので、改めてアプリケーションをインストールし直しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 をインストールしてみました</title>
+      <link>https://va2577.github.io/post/177/</link>
+      <pubDate>Sun, 27 May 2018 11:05:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/177/</guid>
+      <description>&lt;p&gt;WSL の Ubuntu 18.04 LTS がリリースされていたようでしたのでインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>新しい Surface Pro(2017) を 6 ヶ月使ってみた感想です</title>
+      <link>https://va2577.github.io/post/176/</link>
+      <pubDate>Sat, 26 May 2018 10:46:46 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/176/</guid>
+      <description>&lt;p&gt;3 ヶ月あたりにも感想を書いておこうと思っていたのですが、忘れていたので 6 ヶ月の感想を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu を起動しようとしたら &#34;Installing, this may take a few minutes...&#34; 0x800703fa のエラーになりました</title>
+      <link>https://va2577.github.io/post/175/</link>
+      <pubDate>Fri, 25 May 2018 18:30:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/175/</guid>
+      <description>&lt;p&gt;以前にも同じようなエラーになったように思うのですが、今回は、エラーを解消したことを書いておこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python サマータイム (DST) について調べました</title>
+      <link>https://va2577.github.io/post/174/</link>
+      <pubDate>Thu, 24 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/174/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/173/&#34;&gt;前回の記事&lt;/a&gt;でヒストリカルデータを使うのにサマータイムを考慮する必要があったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python pandas ヒストリカルデータのサマータイムを考慮していませんでした</title>
+      <link>https://va2577.github.io/post/173/</link>
+      <pubDate>Wed, 23 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/173/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/162/&#34;&gt;以前の記事&lt;/a&gt;で 1 分足のヒストリカルデータから日足のヒストリカルデータを作りました。
+そのときに時間を UTC+3 に一律設定していたのですが、これだと問題がありました。
+修正した内容を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python と NumPy と pandas の間のデータのやり取りを調べました</title>
+      <link>https://va2577.github.io/post/172/</link>
+      <pubDate>Tue, 22 May 2018 10:20:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/172/</guid>
+      <description>&lt;p&gt;pandas を使うことが多かったのですが、少しだけ NumPy も使ってみたので、データのやり取りについて書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python(NumPy, pandas) で最大ドローダウンを計算してみました</title>
+      <link>https://va2577.github.io/post/171/</link>
+      <pubDate>Mon, 21 May 2018 22:59:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/171/</guid>
+      <description>&lt;p&gt;バックテストをしていて最大ドローダウンを計算したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の range と ndarray と Series と DataFrame のイテレーターのパフォーマンスを比較してみました</title>
+      <link>https://va2577.github.io/post/170/</link>
+      <pubDate>Sun, 20 May 2018 19:56:02 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/170/</guid>
+      <description>&lt;p&gt;以前、作った&lt;a href=&#34;https://va2577.github.io/post/162/&#34;&gt;日足のヒストリカルデータ&lt;/a&gt;でバックテストをするのに、 Python の実行速度としてのパフォーマンスが気になったので比較してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python と Jupyter Notebook と pandas と Highcharts を使って Price Channel を計算・表示してみました</title>
+      <link>https://va2577.github.io/post/169/</link>
+      <pubDate>Sat, 19 May 2018 18:01:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/169/</guid>
+      <description>&lt;p&gt;Price Channel を計算してみました。
+せっかくなので、 python-highcharts を使ってローソク足と一緒に表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>python-highcharts と pandas-highcharts を使って Jupyter Notebook にローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/168/</link>
+      <pubDate>Fri, 18 May 2018 08:56:03 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/168/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/167/&#34;&gt;前回&lt;/a&gt;、 &lt;code&gt;%%html&lt;/code&gt; と &lt;code&gt;%%javascript&lt;/code&gt; マジックコマンドを使って Highcharts のローソク足を表示してみました。
+今回は、 python-highcharts と pandas-highcharts を使ってローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook で Highcharts を使ってローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/167/</link>
+      <pubDate>Thu, 17 May 2018 23:21:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/167/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/149/&#34;&gt;Python で為替レートの折れ線グラフを表示してみました&lt;/a&gt;の記事を書いたときは、ローソク足を表示できなかったのですが、 Jupyter Notebook から JavaScript のライブラリーの Highcharts を読み込んで、ローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Bash でファイルの内容を 8 進数で出力しました</title>
+      <link>https://va2577.github.io/post/166/</link>
+      <pubDate>Wed, 16 May 2018 18:27:55 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/166/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/163/&#34;&gt;改行コードを調べたこと&lt;/a&gt;の続きです。
+ファイルの内容を 8 進数や 16 進数で表示したかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Surface Windows の Visual Studio Code のスクロールがスムーズじゃなかったので調べてみました</title>
+      <link>https://va2577.github.io/post/165/</link>
+      <pubDate>Tue, 15 May 2018 08:07:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/165/</guid>
+      <description>&lt;p&gt;Windows で Visual Studio Code を使っています。
+以前から気になっていたのですが、スクロールがスムーズじゃないので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASCII 文字の一覧を Bash で表示してみました</title>
+      <link>https://va2577.github.io/post/164/</link>
+      <pubDate>Mon, 14 May 2018 13:34:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/164/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/163/&#34;&gt;改行コードを扱った&lt;/a&gt;ときに、 Bash で CR の改行コードをファイルに書き込むことを調べたので、書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Bash で CRLF の改行コードのファイルを探してみました</title>
+      <link>https://va2577.github.io/post/163/</link>
+      <pubDate>Sun, 13 May 2018 07:25:22 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/163/</guid>
+      <description>&lt;p&gt;WSL(Windows Subsystem for Linux) で Ubuntu を使っていると、 Windows で CRLF で編集したテキストファイルをそのまま Ubuntu に持ってきてしまうことがあります。
+そういったファイルがあるか確認したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で 1 分足のヒストリカルデータから日足のデータを作りました</title>
+      <link>https://va2577.github.io/post/162/</link>
+      <pubDate>Sat, 12 May 2018 15:38:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/162/</guid>
+      <description>&lt;p&gt;売買ルールを検証するのに Python を使ってみようと思いました。
+かなりメカニカル、機械的にトレードをするようになったので、検証もメカニカルにプログラムを使ってできないかと思い始めています。
+でも、 MT4 の EA のような、システムトレードをしたいわけではないです。&lt;/p&gt;
+&lt;p&gt;今回は、データを用意するところを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook で処理時間を測りました</title>
+      <link>https://va2577.github.io/post/161/</link>
+      <pubDate>Fri, 11 May 2018 16:28:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/161/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/160/&#34;&gt;リスト内包表記のパフォーマンスを計測した&lt;/a&gt;ときに、 Jupyter Notebook のマジックコマンドを調べましたので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の for Statements(for 文) と List Comprehensions (リスト内包表記)のパフォーマンスを比較してみました</title>
+      <link>https://va2577.github.io/post/160/</link>
+      <pubDate>Thu, 10 May 2018 15:50:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/160/</guid>
+      <description>&lt;p&gt;一般的にはリスト内包表記の方がパフォーマンスがいいそうです。
+今回は、自分で for 文とリスト内包表記のパフォーマンスを比較してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Flask を使ってみました</title>
+      <link>https://va2577.github.io/post/159/</link>
+      <pubDate>Wed, 09 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/159/</guid>
+      <description>&lt;p&gt;Flask を使ってみたので、メモです。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio なしで C# のプログラムをコンパイルする</title>
+      <link>https://va2577.github.io/post/158/</link>
+      <pubDate>Tue, 08 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/158/</guid>
+      <description>&lt;p&gt;ちょっとだけ C# を使いたくて。
+そのために Visual Studio をインストールするのは時間もかかるし容量も必要になるので。
+調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>スワップポイントについて思ったことを書いてみます</title>
+      <link>https://va2577.github.io/post/157/</link>
+      <pubDate>Mon, 07 May 2018 11:45:35 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/157/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/156/&#34;&gt;トルコリラ/円を取引してみました&lt;/a&gt; の記事を書きました。
+スワップポイントに関して、また、別の取引で思ったことがあったので書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>トルコリラ/円を取引してみました</title>
+      <link>https://va2577.github.io/post/156/</link>
+      <pubDate>Sun, 06 May 2018 18:39:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/156/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/156-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;トルコリラは金利が高くて、スワップポイントも高いので取引してみたいと思っていました。
+2018 年 4 月から 5 月にかけて取引することができたので、そのときのことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 4 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/155/</link>
+      <pubDate>Sat, 05 May 2018 16:19:42 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/155/</guid>
+      <description>&lt;p&gt;2018 年 4 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript で Immutable.Range() のようなことがしたかったので調べました (ECMAScript 2015)</title>
+      <link>https://va2577.github.io/post/154/</link>
+      <pubDate>Fri, 04 May 2018 11:31:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/154/</guid>
+      <description>&lt;p&gt;&lt;code&gt;for&lt;/code&gt; とか使わずに連番を持つ配列を作ってみました。
+でも、 &lt;a href=&#34;https://facebook.github.io/immutable-js/&#34;&gt;Immutable.js&lt;/a&gt; の &lt;code&gt;Immutable.Range()&lt;/code&gt; のような無限の配列ではありません。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>二つのパターン(ランダム、期待値)の口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/153/</link>
+      <pubDate>Thu, 03 May 2018 21:34:38 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/153/</guid>
+      <description>&lt;p&gt;前回までに次の 2 つの記事を書きました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移をシミュレーションしてみました&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/152/&#34;&gt;期待値による口座残高の推移を折れ線グラフで表示してみました&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;今回は、比較しやすくなるかと思って、一つのグラフに 2 つの推移を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値による口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/152/</link>
+      <pubDate>Wed, 02 May 2018 15:26:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/152/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移のシミュレーション&lt;/a&gt;をしてみました。
+今回は、ランダムな勝敗による口座残高の推移のシミュレーションではなく、期待値による口座残高の推移を折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python の内包表記を覚えました</title>
+      <link>https://va2577.github.io/post/151/</link>
+      <pubDate>Tue, 01 May 2018 18:36:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/151/</guid>
+      <description>&lt;p&gt;Python の内包表記は、他の言語から入ってくると独特に感じます。
+だけど、便利なので、書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>口座残高の推移をシミュレーションしてみました</title>
+      <link>https://va2577.github.io/post/150/</link>
+      <pubDate>Mon, 30 Apr 2018 22:32:01 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/150/</guid>
+      <description>&lt;p&gt;勝率と平均利益、平均損失をもとに口座残高の推移を Chart.js の折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で為替レートの折れ線グラフを表示してみました</title>
+      <link>https://va2577.github.io/post/149/</link>
+      <pubDate>Sun, 29 Apr 2018 17:33:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/149/</guid>
+      <description>&lt;p&gt;Python で、 &lt;a href=&#34;https://matplotlib.org/&#34;&gt;Matplotlib&lt;/a&gt; を使って、為替レートの折れ線グラフを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Jupyter Notebook をインストールしました</title>
+      <link>https://va2577.github.io/post/148/</link>
+      <pubDate>Sat, 28 Apr 2018 17:50:46 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/148/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt; については、以前、&lt;a href=&#34;https://va2577.github.io/post/64/&#34;&gt;記事を書いた&lt;/a&gt;ことがあって、そのときに使いました。
+今回は、 WSL の Ubuntu でも使えるようにインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Highcharts を使ってみました</title>
+      <link>https://va2577.github.io/post/147/</link>
+      <pubDate>Fri, 27 Apr 2018 09:49:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/147/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/146/&#34;&gt;前回の記事&lt;/a&gt;で Chart.js を使って、みんかぶ FX のチャートのレートを折れ線グラフで表示してみました。
+今回は、 &lt;a href=&#34;https://www.highcharts.com&#34;&gt;Highcharts&lt;/a&gt; を使って、みんかぶ FX のチャートのレートをローソク足で表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>みんかぶ FX のチャートのレートを取得してみました</title>
+      <link>https://va2577.github.io/post/146/</link>
+      <pubDate>Thu, 26 Apr 2018 16:46:56 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/146/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://fx.minkabu.jp/pair/chart&#34;&gt;みんかぶ FX のチャート&lt;/a&gt; のレートを取得してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Chart.js を使ってみました</title>
+      <link>https://va2577.github.io/post/145/</link>
+      <pubDate>Wed, 25 Apr 2018 13:19:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/145/</guid>
+      <description>&lt;p&gt;為替レートのチャートをウェブサイトに表示したかったので、 &lt;a href=&#34;http://www.chartjs.org/&#34;&gt;Chart.js&lt;/a&gt; を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>パンローリングの本が Amazon Prime の Prime Reading でいくつか読めるようになっていました</title>
+      <link>https://va2577.github.io/post/144/</link>
+      <pubDate>Tue, 24 Apr 2018 15:45:57 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/144/</guid>
+      <description>&lt;p&gt;電子書籍は Kindle for iOS で読んでいます。
+Prime Reading を見ていたらパンローリングの本があったので、まとめておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js でランダムな文字列を作成してみました</title>
+      <link>https://va2577.github.io/post/143/</link>
+      <pubDate>Mon, 23 Apr 2018 09:03:45 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/143/</guid>
+      <description>&lt;p&gt;ランダムな文字列が必要になることがありまして、 Node.js で作成してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu で tree コマンドを使ってみました</title>
+      <link>https://va2577.github.io/post/142/</link>
+      <pubDate>Sun, 22 Apr 2018 13:27:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/142/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/23/&#34;&gt;Macでtreeコマンドを使う&lt;/a&gt;の記事を書いたことがありました。
+今回は、 WSL の Ubuntu で tree コマンドを使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git のすでにあるリポジトリーからサブモジュールにするためのリポジトリーを作成しました</title>
+      <link>https://va2577.github.io/post/141/</link>
+      <pubDate>Sat, 21 Apr 2018 09:04:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/141/</guid>
+      <description>&lt;p&gt;Hugo でウェブサイトを作っていて、テーマも自分で作っていたのですが、ウェブサイトとテーマが同じリポジトリーに含まれてしまっていたため、テーマだけのリポジトリーを独立して作成してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Stylus を使ってみました</title>
+      <link>https://va2577.github.io/post/140/</link>
+      <pubDate>Fri, 20 Apr 2018 12:39:59 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/140/</guid>
+      <description>&lt;p&gt;Hugo のテーマを作成したときに、少しだけ CSS を記述しました。
+SCSS にしようか、 LESS にしようか、とも思いましたが、 Stylus を使うことにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>HTML の &lt;meta name=&#34;viewport&#34; …&gt; を記述しなかったために…</title>
+      <link>https://va2577.github.io/post/139/</link>
+      <pubDate>Thu, 19 Apr 2018 15:15:47 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/139/</guid>
+      <description>&lt;p&gt;新しく作成した Hugo のテーマを&lt;a href=&#34;https://va2577.github.io/post/137/&#34;&gt;このウェブサイトに適用した&lt;/a&gt;のですが、 &lt;code&gt;&amp;lt;meta name=&amp;quot;viewport&amp;quot; …&lt;/code&gt; を記述しなかったために iOS の Safari で開いたら文字がちっちゃくなってしまいました。
+なので、調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ボスラテベースを飲みました</title>
+      <link>https://va2577.github.io/post/138/</link>
+      <pubDate>Wed, 18 Apr 2018 19:05:46 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/138/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/138-01.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;あまり、こういう記事は書いていなかったのですが、以前、記事にした&lt;a href=&#34;https://va2577.github.io/post/101/&#34;&gt;ジョージア エアロプレッソ カフェラテ&lt;/a&gt;に続いて、ボスラテベースを飲んだことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ウェブサイトのレイアウトを新しくしました</title>
+      <link>https://va2577.github.io/post/137/</link>
+      <pubDate>Tue, 17 Apr 2018 15:37:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/137/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/137-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;ここまで Hugo のテーマを作る記事をいくつか書いてきました。
+自分のウェブサイトにも新しく作ったテーマを適用してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 8(RSS, Sitemap, Robots.txt)</title>
+      <link>https://va2577.github.io/post/136/</link>
+      <pubDate>Mon, 16 Apr 2018 13:05:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/136/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/135/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/pagination/&#34;&gt;Pagination&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/rss/&#34;&gt;RSS&lt;/a&gt; と &lt;a href=&#34;https://gohugo.io/templates/sitemap-template/&#34;&gt;Sitemap&lt;/a&gt; と &lt;a href=&#34;https://gohugo.io/templates/robots/&#34;&gt;Robots.txt&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 7(Pagination)</title>
+      <link>https://va2577.github.io/post/135/</link>
+      <pubDate>Sun, 15 Apr 2018 08:43:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/135/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/132/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/menu-templates/&#34;&gt;Menu Templates&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/pagination/&#34;&gt;Pagination&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテンプレートで &lt;meta&gt; の description に出力する内容を調べました</title>
+      <link>https://va2577.github.io/post/134/</link>
+      <pubDate>Sat, 14 Apr 2018 23:53:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/134/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/133/&#34;&gt;前回の記事&lt;/a&gt;では、 &amp;lt;meta&amp;gt; の keywords について調べました。
+今回は、 &amp;lt;meta&amp;gt; の description について調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>PRIVACY POLICY</title>
+      <link>https://va2577.github.io/privacy/</link>
+      <pubDate>Fri, 13 Apr 2018 19:35:42 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/privacy/</guid>
+      <description>このウェブサイトでは、Google AdSense の広告を表示しています。 この広告は、Cookie を使用して、あなたがこのウェブサイトにアクセスした際の情報を収集しています。 この情報には、ユーザーのウェブ リクエスト、IP アドレス、ブラウザの種類や言語、リクエストの送信日時、ブラウザを一意に識別する 1 つ以上の Cookie が含まれます。
+広告 Cookie を使用することにより、あなたがこのウェブサイトや他のウェブサイトにアクセスした際の情報に基づいた適切な広告を表示しています。
+広告 Cookie は、広告設定から無効にすることもできます。 または、www.aboutads.info にアクセスすることでも無効にできます。</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテンプレートで &lt;meta&gt; の keywords が配列になってしまうので調べました</title>
+      <link>https://va2577.github.io/post/133/</link>
+      <pubDate>Fri, 13 Apr 2018 19:34:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/133/</guid>
+      <description>&lt;p&gt;SEO を考慮すると、 HTML の &amp;lt;meta&amp;gt; の description と keywords を記述しておくと良いそうですので、 Hugo のテーマを作るのに &amp;lt;meta&amp;gt; を記述しました。
+が、 keywords が &amp;ldquo;word1, word2, word3&amp;rdquo; ではなく、 &amp;ldquo;[word1, word2, word3]&amp;rdquo; のようになってしまったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 6(Menu Templates)</title>
+      <link>https://va2577.github.io/post/132/</link>
+      <pubDate>Thu, 12 Apr 2018 13:26:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/132/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/131/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/404/&#34;&gt;Custom 404 Page&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/menu-templates/&#34;&gt;Menu Templates&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 5(Custom 404 Page)</title>
+      <link>https://va2577.github.io/post/131/</link>
+      <pubDate>Wed, 11 Apr 2018 18:10:12 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/131/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/126/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/taxonomy-templates/&#34;&gt;Taxonomy Templates&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/404/&#34;&gt;Custom 404 Page&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>月○○ pips 獲得ってあまり意味ない表現でした</title>
+      <link>https://va2577.github.io/post/130/</link>
+      <pubDate>Tue, 10 Apr 2018 10:09:21 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/130/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/130-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;pips で評価することに対して、あまりよく思っていなかったところがあったので書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテンプレートの中でコメントを記述したかったので調べました</title>
+      <link>https://va2577.github.io/post/129/</link>
+      <pubDate>Mon, 09 Apr 2018 17:12:55 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/129/</guid>
+      <description>&lt;p&gt;Hugo のテーマを作成していたのですが、テンプレートの中でコメントを記述したかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>webpack を使ってみました</title>
+      <link>https://va2577.github.io/post/128/</link>
+      <pubDate>Sun, 08 Apr 2018 13:59:56 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/128/</guid>
+      <description>&lt;p&gt;以前、 &lt;a href=&#34;https://va2577.github.io/post/122/&#34;&gt;CommonJS Modules を使ったとき&lt;/a&gt;に Browserify を使いました。
+最近は(以前から)、 Browserify よりも webpack の方をよく見るので、 webpack を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Yarn を使ってみました</title>
+      <link>https://va2577.github.io/post/127/</link>
+      <pubDate>Sat, 07 Apr 2018 14:52:33 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/127/</guid>
+      <description>&lt;p&gt;たまたま &lt;a href=&#34;https://www.webprofessional.jp/yarn-vs-npm/&#34;&gt;Yarn の記事&lt;/a&gt;を読みまして、気になったので使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 4(Taxonomy Templates)</title>
+      <link>https://va2577.github.io/post/126/</link>
+      <pubDate>Fri, 06 Apr 2018 11:30:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/126/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/117/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/homepage/&#34;&gt;Homepage Templates&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/taxonomy-templates/&#34;&gt;Taxonomy Templates&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>npx を使ってみました</title>
+      <link>https://va2577.github.io/post/125/</link>
+      <pubDate>Thu, 05 Apr 2018 09:47:41 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/125/</guid>
+      <description>&lt;p&gt;Babel のページを見ていたら npx command という次の記載があって、気になっていたので使ってみました。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note: If you do not have a package.json, create one before installing. This will ensure proper interaction with the npx command.&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a href=&#34;https://babeljs.io/docs/usage/cli/&#34;&gt;CLI · Babel&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 4(Universal Module Definition)</title>
+      <link>https://va2577.github.io/post/124/</link>
+      <pubDate>Wed, 04 Apr 2018 08:09:47 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/124/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/123/&#34;&gt;前回の記事&lt;/a&gt;では、 SystemJS を使ってみました。
+今回は、 Universal Module Definition を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 3(SystemJS)</title>
+      <link>https://va2577.github.io/post/123/</link>
+      <pubDate>Tue, 03 Apr 2018 18:21:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/123/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/122/&#34;&gt;前回の記事&lt;/a&gt;では、 CommonJS を使ってみました。
+今回は、 SystemJS を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 2(CommonJS Modules)</title>
+      <link>https://va2577.github.io/post/122/</link>
+      <pubDate>Mon, 02 Apr 2018 14:35:24 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/122/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/120/&#34;&gt;前回の記事&lt;/a&gt;では、 RequireJS を使ってみました。
+今回は、 CommonJS を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 3 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/121/</link>
+      <pubDate>Sun, 01 Apr 2018 08:30:17 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/121/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/121-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 3 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 1(Asynchronous Module Definition)</title>
+      <link>https://va2577.github.io/post/120/</link>
+      <pubDate>Sat, 31 Mar 2018 10:18:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/120/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/119/&#34;&gt;前回の記事&lt;/a&gt;では、 Node.js で ECMAScript Modules を使ってみました。
+今回は、ブラウザーでも ECMAScript Modules を使ってみようと思いました。&lt;/p&gt;
+&lt;p&gt;結果的には、 ECMAScript Modules のままでは動かせていなくて、 Babel を使ってトランスパイルしてからブラウザーで動かしています。&lt;/p&gt;
+&lt;p&gt;調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js で ECMAScript Modules を使ってみました</title>
+      <link>https://va2577.github.io/post/119/</link>
+      <pubDate>Fri, 30 Mar 2018 19:48:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/119/</guid>
+      <description>&lt;p&gt;以前、 &lt;a href=&#34;https://va2577.github.io/post/18/&#34;&gt;ECMAScript 2015 (ES6) in Node.js で import と export がエラーになる&lt;/a&gt;という記事を書きました。
+この記事の中では、結局、 &lt;code&gt;import&lt;/code&gt; と &lt;code&gt;export&lt;/code&gt; を使わないで実行する方向で終わってしまいました。
+今回は、 &lt;code&gt;import&lt;/code&gt; と &lt;code&gt;export&lt;/code&gt; を使って、とりあえずでも、実行する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>DOM 要素の変更を監視する方法を調べました</title>
+      <link>https://va2577.github.io/post/118/</link>
+      <pubDate>Thu, 29 Mar 2018 15:57:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/118/</guid>
+      <description>&lt;p&gt;span の中の文字列が変わったというイベントをトリガーにして処理したかったので調べました。
+jQuery を使う前提で調べたのですが、調べた結果、 jQuery を使わない方法 (MutationObserver) になりました。
+調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 3(Homepage Templates)</title>
+      <link>https://va2577.github.io/post/117/</link>
+      <pubDate>Wed, 28 Mar 2018 17:47:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/117/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/116/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/base/&#34;&gt;Base Templates and Blocks&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/homepage/&#34;&gt;Homepage Templates&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 2(Base Templates and Blocks)</title>
+      <link>https://va2577.github.io/post/116/</link>
+      <pubDate>Tue, 27 Mar 2018 10:02:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/116/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/115/&#34;&gt;前回の記事&lt;/a&gt;では、サイトとテーマの骨組みを作成しました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/base/&#34;&gt;Base Templates and Blocks&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます</title>
+      <link>https://va2577.github.io/post/115/</link>
+      <pubDate>Mon, 26 Mar 2018 22:58:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/115/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/115-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;今のこのブログも自分で作成したテーマを適用しているのですが、もう 2 年も経過していたので、新しい Hugo のテーマを作ってみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>cTrader Web を使ってみました</title>
+      <link>https://va2577.github.io/post/114/</link>
+      <pubDate>Sun, 25 Mar 2018 13:20:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/114/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/114-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;普段、トレーディング・プラットフォームは cTrader の Windows デスクトップ版を使っています。
+今回は、 cTrader Web を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Inno Setup で .NET Framework をインストールさせる方法を調べました</title>
+      <link>https://va2577.github.io/post/113/</link>
+      <pubDate>Sat, 24 Mar 2018 22:55:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/113/</guid>
+      <description>&lt;p&gt;Windows のインストーラーで、 .NET Framework をインストールさせたかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Inno Setup でインストーラーを作成してみました</title>
+      <link>https://va2577.github.io/post/112/</link>
+      <pubDate>Fri, 23 Mar 2018 14:37:25 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/112/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/112-01.bmp&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Windows のインストーラーを作成する必要がありましたので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iTextSharp(C#) を使ってみました</title>
+      <link>https://va2577.github.io/post/111/</link>
+      <pubDate>Thu, 22 Mar 2018 09:05:17 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/111/</guid>
+      <description>&lt;p&gt;.NET Framework の C# を使って PDF を作成する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript の即時関数 (immediate function) の書き方を調べてしまいます</title>
+      <link>https://va2577.github.io/post/110/</link>
+      <pubDate>Wed, 21 Mar 2018 20:48:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/110/</guid>
+      <description>&lt;p&gt;即時関数の書き方は &lt;code&gt;(function () { /* ... */ })()&lt;/code&gt; だったか、 &lt;code&gt;(function () { /* ... */ }())&lt;/code&gt; だったか、調べてしまうので、書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript の文字列の結合のパフォーマンスを比較してみました</title>
+      <link>https://va2577.github.io/post/109/</link>
+      <pubDate>Tue, 20 Mar 2018 18:17:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/109/</guid>
+      <description>&lt;p&gt;2012 年に業務で初めて ActionScript を使っていたときに、文字列を &lt;code&gt;Array.push&lt;/code&gt; でまとめて &lt;code&gt;Array.join&lt;/code&gt; で結合した結果を取ってきていたのですが、パフォーマンスが気になったので比較してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js の express で session を使ってみました</title>
+      <link>https://va2577.github.io/post/108/</link>
+      <pubDate>Mon, 19 Mar 2018 15:26:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/108/</guid>
+      <description>&lt;p&gt;Node.js の express で session が使いたかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のデプロイのシェルの echo が気になったので調べました</title>
+      <link>https://va2577.github.io/post/107/</link>
+      <pubDate>Sun, 18 Mar 2018 14:38:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/107/</guid>
+      <description>&lt;p&gt;Bash で気になって調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Markdown の fenced code block の ``` をそのまま表示したかったので調べました</title>
+      <link>https://va2577.github.io/post/106/</link>
+      <pubDate>Sat, 17 Mar 2018 13:32:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/106/</guid>
+      <description>&lt;p&gt;Markdown のコードブロックのエスケープについて書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>block quote の中の fenced code block が崩れるので調べました</title>
+      <link>https://va2577.github.io/post/105/</link>
+      <pubDate>Fri, 16 Mar 2018 22:30:18 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/105/</guid>
+      <description>&lt;p&gt;Markdown のブロッククォートの中にコードブロックの記述したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Babel を使ってみました</title>
+      <link>https://va2577.github.io/post/104/</link>
+      <pubDate>Thu, 15 Mar 2018 21:42:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/104/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://babeljs.io/docs/setup/&#34;&gt;Using Babel&lt;/a&gt; を参考に進めてみます。
+軽く使えればよかったので、 Gulp とかのツールは使わずに、 Babel built-ins CLI を使うことにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ESLint を使ってみました</title>
+      <link>https://va2577.github.io/post/103/</link>
+      <pubDate>Wed, 14 Mar 2018 18:56:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/103/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://eslint.org/docs/user-guide/getting-started&#34;&gt;Getting Started&lt;/a&gt; を参考に ESLint を使ってみます。
+軽く使えればよかったため、 Gulp とかのツールを使わずに、純粋な ESLint を使うことにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js の forever を使ってみました</title>
+      <link>https://va2577.github.io/post/102/</link>
+      <pubDate>Tue, 13 Mar 2018 16:57:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/102/</guid>
+      <description>&lt;p&gt;express のウェブアプリを作っていたのですが、実行しながらソースの修正を自動で反映したかったので、 &lt;a href=&#34;https://github.com/foreverjs/forever&#34;&gt;forever&lt;/a&gt; を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ジョージア エアロプレッソ カフェラテを飲みました</title>
+      <link>https://va2577.github.io/post/101/</link>
+      <pubDate>Mon, 12 Mar 2018 16:02:44 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/101/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/101-01.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;セブンイレブンに行ったときに気になったので、細いアルミのボトルを買いました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript® 2017 の async/await を使ってみました</title>
+      <link>https://va2577.github.io/post/100/</link>
+      <pubDate>Sun, 11 Mar 2018 15:33:31 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/100/</guid>
+      <description>&lt;p&gt;今更ながら async/await を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js の express で POST した値を取ろうとしたら request.body が undefined になる</title>
+      <link>https://va2577.github.io/post/99/</link>
+      <pubDate>Sat, 10 Mar 2018 17:26:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/99/</guid>
+      <description>&lt;p&gt;request.body が undefined になるので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>npm をアップデートしました</title>
+      <link>https://va2577.github.io/post/98/</link>
+      <pubDate>Tue, 06 Mar 2018 09:20:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/98/</guid>
+      <description>&lt;p&gt;npm をアップデートしたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 2 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/97/</link>
+      <pubDate>Sun, 04 Mar 2018 13:44:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/97/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/97-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 2 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>システムの質を評価する</title>
+      <link>https://va2577.github.io/post/96/</link>
+      <pubDate>Sat, 24 Feb 2018 16:10:39 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/96/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/96-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;以前、 &lt;a href=&#34;https://va2577.github.io/post/91/&#34;&gt;R 倍数でトレードを考える&lt;/a&gt;を書きましたので、 R 倍数の分布を作成してからのことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Windows 10 で IIS を設定したい</title>
+      <link>https://va2577.github.io/post/95/</link>
+      <pubDate>Sun, 18 Feb 2018 10:02:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/95/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/95-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;ASP.NET で C# のページを動かす必要があったので設定したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>米商品先物取引委員会 (CFTC) の IMM 通貨先物ポジションのレポートがレガシーになっていた</title>
+      <link>https://va2577.github.io/post/94/</link>
+      <pubDate>Sat, 17 Feb 2018 18:43:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/94/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/94-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;米商品先物取引委員会(CFTC)(U.S. Commodity Futures Trading Commission)のデータをもとに IMM(International Monetary Market) の通貨先物ポジションを記録していたのですが、今まで参照していたページがレガシーの扱いになっていたため調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VMware Workstation Player で VMware Fusion の仮想マシンを使用する</title>
+      <link>https://va2577.github.io/post/93/</link>
+      <pubDate>Tue, 13 Feb 2018 13:50:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/93/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/93-01.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;MacBook Pro から Surface Pro に変えて、 macOS の VMware Fusion も使わなくなりましたので、 Windows の VMware Workstation Player で使えないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>検証でやってないことはできなかった</title>
+      <link>https://va2577.github.io/post/92/</link>
+      <pubDate>Sun, 11 Feb 2018 21:08:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/92/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/92-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;タイトルの通りで、自分の失敗を書いてみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>R 倍数でトレードを考える</title>
+      <link>https://va2577.github.io/post/91/</link>
+      <pubDate>Sat, 10 Feb 2018 13:35:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/91/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/91-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;R 倍数のことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iOS の cTrader で 為替レートのアラート機能 (Price Alerts) を使ってみました</title>
+      <link>https://va2577.github.io/post/90/</link>
+      <pubDate>Fri, 09 Feb 2018 18:00:35 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/90/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/90-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;iOS の cTrader を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>トレーディング・プラットフォームを検討してみました</title>
+      <link>https://va2577.github.io/post/89/</link>
+      <pubDate>Thu, 08 Feb 2018 15:29:24 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/89/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/89-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;トレードの機会を増やすために、マネーパートナーズで扱っている 20 通貨ペアがチェックできないかと思い、トレーディング・プラットフォームを検討してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>&#34;期待値を理由にトレードする&#34; ということを教えてくれた説明です</title>
+      <link>https://va2577.github.io/post/88/</link>
+      <pubDate>Wed, 07 Feb 2018 18:44:30 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/88/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/88-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;私の考えでは、トレーディングは期待値を上げる機会だけを求めて行うべきだ。&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;システムトレード　基本と原則　第９章　売買ルール　Methodology　No. 3487&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;ldquo;システムトレード　基本と原則&amp;rdquo; の著者である、ブレント・ペンフォールドさんは、引用のように、「トレーディングは期待値を上げる機会だけを求めて行うべきだ」、と言っています。&lt;/p&gt;
+&lt;p&gt;その具体的な意味を教えてくれた説明を書いてみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitHub のアイコンを元に戻したい(Identicons!)</title>
+      <link>https://va2577.github.io/post/87/</link>
+      <pubDate>Mon, 05 Feb 2018 16:19:38 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/87/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/87-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;GitHub のアイコンを元に戻したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 1 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/86/</link>
+      <pubDate>Sun, 04 Feb 2018 13:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/86/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/86-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;戒めの意味も込めて、今年はトレードの結果を書いていこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>cTrader で為替レートのアラートメールを送る</title>
+      <link>https://va2577.github.io/post/85/</link>
+      <pubDate>Wed, 31 Jan 2018 14:26:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/85/</guid>
+      <description>&lt;p&gt;iOS のアプリで為替レートのプッシュ通知ができるものを調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>米ドル建ての口座の取引数量の計算式</title>
+      <link>https://va2577.github.io/post/84/</link>
+      <pubDate>Tue, 30 Jan 2018 18:31:08 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/84/</guid>
+      <description>&lt;p&gt;Forex Tester で検証していて、複利で運用した場合の口座残高の推移を把握しておきたいと思いました。
+が、 Forex Tester 2 の口座はドル建てなので、取引数量の計算式について調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Code に WSL の Ubuntu の Git を設定する</title>
+      <link>https://va2577.github.io/post/83/</link>
+      <pubDate>Wed, 17 Jan 2018 16:49:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/83/</guid>
+      <description>&lt;p&gt;いつからだったか、Visual Studio Code を起動すると、勝手に「Git を探しています」みたいになって、「[警告] Git が見つかりません。Git をインストールするか &amp;lsquo;git.path&amp;rsquo; 設定で…」のようなメッセージが表示されるようになりました。&lt;/p&gt;
+&lt;p&gt;そのまま使っていたのですが、気になるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>radiko.jp で録音（保存、ダウンロード）したファイルが iOS の CloudBeats や OneDrive で聞けない</title>
+      <link>https://va2577.github.io/post/82/</link>
+      <pubDate>Sun, 14 Jan 2018 18:58:57 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/82/</guid>
+      <description>&lt;p&gt;iOS の CloudBeats で音楽を聴くようになったのですが、radiko.jp で録音した m4a ファイルが CloudBeats で聴けなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Hugo をインストールする</title>
+      <link>https://va2577.github.io/post/81/</link>
+      <pubDate>Sat, 13 Jan 2018 18:33:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/81/</guid>
+      <description>&lt;p&gt;このブログは &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo | A Fast and Flexible Website Generator&lt;/a&gt; で作成していますので、Ubuntu にインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Node.js をインストールする</title>
+      <link>https://va2577.github.io/post/80/</link>
+      <pubDate>Fri, 12 Jan 2018 11:11:36 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/80/</guid>
+      <description>&lt;p&gt;このブログの CSS や JavaScript を作成するのに Node.js を使っていたので、WSL の Ubuntu にインストールすることにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu の Python に pip がない</title>
+      <link>https://va2577.github.io/post/79/</link>
+      <pubDate>Fri, 05 Jan 2018 16:49:48 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/79/</guid>
+      <description>&lt;p&gt;WSL の Ubuntu には Python が標準でインストールされていましたので、Python を主に使っていこうと思っています。
+が、Python で仮想環境を作成しようとしたらエラーになったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL(Windows Subsystem for Linux) の Ubuntu に FFmpeg をインストールする</title>
+      <link>https://va2577.github.io/post/78/</link>
+      <pubDate>Thu, 04 Jan 2018 15:48:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/78/</guid>
+      <description>&lt;p&gt;Windows に変えてから、使ってみたかったのが、WSL(Windows Subsystem for Linux) です。
+コマンドプロンプトよりできることが増えるかなと思っています。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>新しい Surface Pro (2017) に接続した外付け HDD が断続的に切れる</title>
+      <link>https://va2577.github.io/post/77/</link>
+      <pubDate>Sun, 31 Dec 2017 15:35:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/77/</guid>
+      <description>&lt;p&gt;Surface に接続した外付け HDD が度々切断されるので、気になりつつもそのままにしていたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>新しい Surface Pro (2017) をしばらく使ってみた感想</title>
+      <link>https://va2577.github.io/post/76/</link>
+      <pubDate>Sat, 30 Dec 2017 16:15:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/76/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/74/&#34;&gt;新しい Surface Pro (2017) を購入しました&lt;/a&gt; からしばらく使ってみたので感想を書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2017 年の記録</title>
+      <link>https://va2577.github.io/post/75/</link>
+      <pubDate>Fri, 29 Dec 2017 18:38:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/75/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/65/&#34;&gt;2016 年の記録&lt;/a&gt; を書いてからもう一年経過していたので、2017 年の記録を書いてみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>新しい Surface Pro (2017) を購入しました</title>
+      <link>https://va2577.github.io/post/74/</link>
+      <pubDate>Sun, 26 Nov 2017 15:18:21 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/74/</guid>
+      <description>&lt;p&gt;新しい Surface Pro (2017) を購入したことを書いてみます。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Surface Pro、Surface Studio を 6 月 15 日（木）、Surface Laptop を 7 月 20 日（木）より発売&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://ncmedia.azureedge.net/ncmedia/2017/05/170526_NR-featured-779x389.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a href=&#34;https://news.microsoft.com/ja-jp/2017/05/26/surface/&#34;&gt;日本マイクロソフト Surface ファミリーを拡充 - News Center Japan&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>らじる★らじる NHKネットラジオを録音する 2017年9月</title>
+      <link>https://va2577.github.io/post/73/</link>
+      <pubDate>Sun, 10 Sep 2017 15:25:12 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/73/</guid>
+      <description>&lt;p&gt;9 月の 2 週目あたりになってらじる★らじるが録音できなくなっていたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>radiko.jp のタイムフリーの録音(保存、ダウンロード)</title>
+      <link>https://va2577.github.io/post/72/</link>
+      <pubDate>Fri, 28 Apr 2017 11:08:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/72/</guid>
+      <description>&lt;p&gt;radiko.jp のタイムフリーの録音(保存、ダウンロード)ができないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Docker のインストールから Docker の Anaconda(Jupyter, Numba) を使うまで</title>
+      <link>https://va2577.github.io/post/71/</link>
+      <pubDate>Sat, 08 Apr 2017 12:59:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/71/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/70/&#34;&gt;[Python]pip で Numba をインストールする時にエラーになる&lt;/a&gt;という状況でしたので、結果的に Docker で Anaconda を使うまでを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>pip で Numba をインストールする時にエラーになる</title>
+      <link>https://va2577.github.io/post/70/</link>
+      <pubDate>Fri, 07 Apr 2017 17:46:35 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/70/</guid>
+      <description>&lt;p&gt;GitHub にある誰かが作った Python のソースを動かしたくて、実行してみたのですが、Numba を使っているようで、Numba をインストールしようとしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.NET Framework C# で暗号化する AES(Advanced Encryption Standard)</title>
+      <link>https://va2577.github.io/post/69/</link>
+      <pubDate>Fri, 27 Jan 2017 10:13:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/69/</guid>
+      <description>&lt;p&gt;暗号化をする必要がありましたので、調べたことをまとめてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript でフォームの中の要素の値の型を再確認しました</title>
+      <link>https://va2577.github.io/post/68/</link>
+      <pubDate>Fri, 20 Jan 2017 14:49:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/68/</guid>
+      <description>&lt;p&gt;&lt;code&gt;&amp;lt;input type=&amp;quot;text&amp;quot;&amp;gt;&lt;/code&gt; の value に &lt;code&gt;1&lt;/code&gt; を設定したら、 Number なのか、 String なのか、ちゃんと把握していなかったので、確認してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>検索した文字列の行から後ろの内容を抽出したい(PowerShell)</title>
+      <link>https://va2577.github.io/post/67/</link>
+      <pubDate>Sat, 14 Jan 2017 11:30:43 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/67/</guid>
+      <description>&lt;p&gt;テキストファイルを文字列で検索して、その行から後ろの 10 行分抽出する、みたいなことができないか、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>テキストファイルの内容を 1 行ずつ置換、変更したい(PowerShell)</title>
+      <link>https://va2577.github.io/post/66/</link>
+      <pubDate>Wed, 28 Dec 2016 11:11:25 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/66/</guid>
+      <description>&lt;p&gt;Bash の sed みたいなことが Windows で簡単にできないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2016 年の記録</title>
+      <link>https://va2577.github.io/post/65/</link>
+      <pubDate>Sat, 24 Dec 2016 14:22:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/65/</guid>
+      <description>&lt;p&gt;トレードをするのに記録していることがありまして、年末なので 2016 年を振り返ってみようと思いました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook を使ってみました</title>
+      <link>https://va2577.github.io/post/64/</link>
+      <pubDate>Fri, 23 Dec 2016 20:35:45 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/64/</guid>
+      <description>&lt;p&gt;Jupyter Notebook を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQLite データベースをバッチファイルで作成する</title>
+      <link>https://va2577.github.io/post/63/</link>
+      <pubDate>Fri, 23 Dec 2016 18:22:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/63/</guid>
+      <description>&lt;p&gt;データベースを作成するためにバッチファイルでまとめて DDL を実行する方法を調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python 3 をインストールして venv で環境を設定する</title>
+      <link>https://va2577.github.io/post/62/</link>
+      <pubDate>Mon, 19 Dec 2016 15:59:13 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/62/</guid>
+      <description>&lt;p&gt;Machine Intelligence な &lt;a href=&#34;https://www.tensorflow.org&#34;&gt;TensorFlow&lt;/a&gt; を使ってみたくて、その前に Python をインストールして、使えるところまで調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git で差分ファイルを抽出する時にパスにスペースがあるとエラーになる</title>
+      <link>https://va2577.github.io/post/61/</link>
+      <pubDate>Sat, 17 Dec 2016 16:45:36 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/61/</guid>
+      <description>&lt;p&gt;Visual Studio の &lt;code&gt;My Project&lt;/code&gt; フォルダーの中にあるファイルを抽出しようとしてエラーになりましたので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mac の .DS_Store ファイルを一括で削除したい</title>
+      <link>https://va2577.github.io/post/60/</link>
+      <pubDate>Thu, 15 Dec 2016 16:45:33 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/60/</guid>
+      <description>&lt;p&gt;.DS_Store ファイルを一括で削除したいので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Touch Bar のスクリーンショット</title>
+      <link>https://va2577.github.io/post/59/</link>
+      <pubDate>Thu, 15 Dec 2016 10:24:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/59/</guid>
+      <description>&lt;p&gt;macOS 10.12.2 にアップデートしたら、Touch Bar のスクリーンショットならぬ、Touch Bar ショットが撮れるようになっていました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/59-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MacBook Pro 13インチ Touch Bar搭載モデルを購入したこと</title>
+      <link>https://va2577.github.io/post/58/</link>
+      <pubDate>Mon, 21 Nov 2016 16:27:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/58/</guid>
+      <description>&lt;p&gt;2016/11/20(日)、お昼頃に量販店に行ったら、シルバーが1つと、スペースグレイが1つだけ残っていましたので、新しいカラーのスペースグレイの方を購入してしてしまいました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/58-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mac のマウスのスクロールを逆にしたい</title>
+      <link>https://va2577.github.io/post/57/</link>
+      <pubDate>Mon, 14 Nov 2016 19:25:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/57/</guid>
+      <description>&lt;p&gt;Mac でマウスを使ってみたのですが、ホイールを下に回すと上にスクロールするので、逆にする設定を調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Forex Tester 2 のインディケーターで HL バンドを使いたい</title>
+      <link>https://va2577.github.io/post/56/</link>
+      <pubDate>Sun, 06 Nov 2016 17:58:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/56/</guid>
+      <description>&lt;p&gt;最近、ようやく &amp;ldquo;検証する&amp;rdquo; というのがどういうことかが理解できてきて、実践することができています。
+Forex Tester 2(FT2) で検証するために、HL バンドを使いたかったのですが、 &amp;ldquo;HL バンド&amp;rdquo; という名前のインディケーターがなかったので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Meta Trader 5 のインディケーター (Gerald Appel の MACD) を作る</title>
+      <link>https://va2577.github.io/post/55/</link>
+      <pubDate>Sun, 06 Nov 2016 17:19:50 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/55/</guid>
+      <description>&lt;p&gt;為替の取引をするのに Meta Trader 5(MT5) を使っているのですが、MACD を使おうと思った時に、このインディケーターの開発者である Gerald Appel の提唱するものと違うようなので、自分で作ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値の表</title>
+      <link>https://va2577.github.io/post/54/</link>
+      <pubDate>Thu, 03 Nov 2016 22:10:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/54/</guid>
+      <description>&lt;p&gt;勝率とリスクリワードレシオの範囲で期待値を計算した表を作ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Gist を使ってみました</title>
+      <link>https://va2577.github.io/post/53/</link>
+      <pubDate>Sun, 30 Oct 2016 17:42:03 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/53/</guid>
+      <description>&lt;p&gt;他のブログで見る &lt;code&gt;hosted with ❤ by GitHuba&lt;/code&gt; のコードブロックが気になっていたので使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VMware Fusion でフルスクリーンアプリケーション間をスワイプした場合にゲスト OS の解像度が変わってしまう</title>
+      <link>https://va2577.github.io/post/52/</link>
+      <pubDate>Fri, 21 Oct 2016 12:53:39 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/52/</guid>
+      <description>&lt;p&gt;ゲスト OS で解像度を変更しているのですが、フルスクリーンアプリケーション間をスワイプした場合に戻ってしまうので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iPhoneのメッセージアプリのメッセージを保存する</title>
+      <link>https://va2577.github.io/post/51/</link>
+      <pubDate>Fri, 14 Oct 2016 10:24:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/51/</guid>
+      <description>&lt;p&gt;iPhoneのメッセージアプリをMacに保存できないかと思って調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値の計算</title>
+      <link>https://va2577.github.io/post/50/</link>
+      <pubDate>Wed, 12 Oct 2016 18:16:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/50/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/46/&#34;&gt;破産確率の計算&lt;/a&gt;をしてみましたので、次は期待値を計算してみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>.NET Framework(C#, VB.NET) Excelのプロセスが残る</title>
+      <link>https://va2577.github.io/post/49/</link>
+      <pubDate>Tue, 11 Oct 2016 10:37:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/49/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/45/&#34;&gt;Office 2016 の PIA がない&lt;/a&gt;の記事で環境を設定していたところです。
+Excelの帳票を出力するアプリケーションを作っていて、よくあるExcelのプロセスが残る問題が発生してしまったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>macOS Sierraにアップグレード</title>
+      <link>https://va2577.github.io/post/48/</link>
+      <pubDate>Tue, 11 Oct 2016 09:57:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/48/</guid>
+      <description>&lt;p&gt;macOS Sierra にアップグレードして設定したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Excelのマクロで範囲を参照する</title>
+      <link>https://va2577.github.io/post/47/</link>
+      <pubDate>Mon, 03 Oct 2016 21:00:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/47/</guid>
+      <description>&lt;p&gt;Excelのマクロで範囲を参照する際の指定をいつも調べてしまうので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>破産確率の計算</title>
+      <link>https://va2577.github.io/post/46/</link>
+      <pubDate>Sat, 24 Sep 2016 14:32:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/46/</guid>
+      <description>&lt;p&gt;破産確率を自分でも計算してみようと思いまして調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Microsoft Office 2016 の PIA がない</title>
+      <link>https://va2577.github.io/post/45/</link>
+      <pubDate>Sat, 10 Sep 2016 11:25:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/45/</guid>
+      <description>&lt;p&gt;Windows Forms で Excel を使ってアプリケーションを作っています。
+Office 2016 をインストールしたのですが、参照設定に Excel が表示されなくて、設定できませんでしたので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>引っ越しをして感じたこと</title>
+      <link>https://va2577.github.io/post/44/</link>
+      <pubDate>Mon, 25 Jul 2016 15:50:56 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/44/</guid>
+      <description>&lt;p&gt;引っ越しをしました。
+これまで何度か引っ越しをしたことがありましたが、引っ越しなんて人生で何十回もするものでもないので、普段の生活では得られないものを感じられました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>捨てることで感じたこと</title>
+      <link>https://va2577.github.io/post/43/</link>
+      <pubDate>Sat, 09 Jul 2016 12:59:20 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/43/</guid>
+      <description>&lt;p&gt;使わないものを不用品回収業者さんに回収してもらって、その時に感じたことです。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SQL Server 2014 Express に外部から接続するための設定</title>
+      <link>https://va2577.github.io/post/42/</link>
+      <pubDate>Mon, 30 May 2016 14:34:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/42/</guid>
+      <description>&lt;p&gt;SQL Server に外部から接続するためにいつも調べてしまうので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルから指定した時間を無劣化で切り取る</title>
+      <link>https://va2577.github.io/post/41/</link>
+      <pubDate>Thu, 19 May 2016 18:06:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/41/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/28/&#34;&gt;FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する&lt;/a&gt;
+でAACファイルを抽出していたのですが、音楽が流れている部分だけ切り取りたいと思いましたので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugoを使う</title>
+      <link>https://va2577.github.io/post/40/</link>
+      <pubDate>Mon, 28 Mar 2016 15:27:07 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/40/</guid>
+      <description>&lt;p&gt;Hexoを使ってこのサイトのページを作成していましたが、中国語が気になり始めて、Hugoを使ってみることにしました。
+JekyllとHexoを使ってきましたが、あまり早くはなかったですし、Hugoは早いというのがいいということです。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Markdownでリンクを新規タブで開く</title>
+      <link>https://va2577.github.io/post/39/</link>
+      <pubDate>Sun, 27 Mar 2016 00:05:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/39/</guid>
+      <description>&lt;p&gt;Markdownで&lt;code&gt;target=&amp;quot;_blank&amp;quot;&lt;/code&gt;を書きたかったんですけど、それはできないようで、調べてみるとjQueryを使って実現しているものが多いようでした。
+jQueryは使っていないので、&lt;a href=&#34;http://youmightnotneedjquery.com&#34;&gt;You Might Not Need jQuery&lt;/a&gt;を参考にJavaScriptで書きました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>経済指標カレンダーと各種レートと取引数量計算とReact</title>
+      <link>https://va2577.github.io/post/38/</link>
+      <pubDate>Wed, 09 Mar 2016 23:24:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/38/</guid>
+      <description>&lt;p&gt;外国為替証拠金取引(FX, Forex, Foreign eXchange)で毎日使うもののページにしました。
+経済指標カレンダーとFX、指数、商品先物、金利と債券のレートはブログパーツがあったので、導入してみました。
+資金管理の取引数量計算は &lt;a href=&#34;https://facebook.github.io/react/&#34;&gt;React&lt;/a&gt; を使って実装してみました。
+コンポーネントとかは全く意識してません。the transformation in the browser.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Macのメールアプリで受信したメールが文字化けしたら？</title>
+      <link>https://va2577.github.io/post/37/</link>
+      <pubDate>Thu, 03 Mar 2016 15:00:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/37/</guid>
+      <description>&lt;p&gt;最近はPCを使っていてもあまり文字化けすることはなかったのですが、受信したメールが文字化けするので、読めるように調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>神の数式 第2回 宇宙はなぜ生まれたのか 〜最後の難問に挑む天才たち〜</title>
+      <link>https://va2577.github.io/post/36/</link>
+      <pubDate>Sat, 27 Feb 2016 11:09:33 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/36/</guid>
+      <description>&lt;p&gt;超弦理論についての書き起こしをしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>神の数式 第1回 この世は何からできているのか 〜天才たちの100年の苦闘〜</title>
+      <link>https://va2577.github.io/post/35/</link>
+      <pubDate>Fri, 26 Feb 2016 20:59:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/35/</guid>
+      <description>&lt;p&gt;素粒子の標準理論についての書き起こしをしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>HexoのMarkdownで勝手に改行されるのが気になる</title>
+      <link>https://va2577.github.io/post/34/</link>
+      <pubDate>Thu, 25 Feb 2016 09:42:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/34/</guid>
+      <description>&lt;p&gt;元々&lt;a href=&#34;https://va2577.github.io/post/20/&#34;&gt;JekyllのMarkdown&lt;/a&gt;を使っていたんですけど、HexoのMarkdownを使ってみたら、テキストで改行したところがそのままHTMLでも改行されていて気になったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSense 銀行口座振込で支払いを受け取る</title>
+      <link>https://va2577.github.io/post/33/</link>
+      <pubDate>Mon, 22 Feb 2016 13:27:10 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/33/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/32/&#34;&gt;Google AdSenseの支払いを受け取るために必要な手続き&lt;/a&gt;をしましたが、翌営業日にはデポジットの入金がされていたようですので、金額を入力しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの支払いを受け取るために必要な手続き</title>
+      <link>https://va2577.github.io/post/32/</link>
+      <pubDate>Sat, 20 Feb 2016 10:55:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/32/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/31/&#34;&gt;Google AdSenseの住所の確認&lt;/a&gt;をしましたが、お支払いを受け取るために必要な手続きがあるようでしたので、手続きしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの住所の確認</title>
+      <link>https://va2577.github.io/post/31/</link>
+      <pubDate>Fri, 19 Feb 2016 19:52:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/31/</guid>
+      <description>&lt;p&gt;Google AdSenseの&lt;a href=&#34;https://va2577.github.io/post/8/&#34;&gt;申し込み&lt;/a&gt;と&lt;a href=&#34;https://va2577.github.io/post/9/&#34;&gt;広告の掲載&lt;/a&gt;をしてから運用を続けていたところですが、Googleから郵送物が届きました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hexoの記事の中でsite変数は使えない？</title>
+      <link>https://va2577.github.io/post/30/</link>
+      <pubDate>Thu, 18 Feb 2016 20:54:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/30/</guid>
+      <description>&lt;p&gt;Hexoで記事を書いていて、設定ファイルの&lt;code&gt;_config.yml&lt;/code&gt;に書いてあるサイトのURLとかを記事の中で使えないかなと思って調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hexoを使ってみる</title>
+      <link>https://va2577.github.io/post/29/</link>
+      <pubDate>Fri, 12 Feb 2016 14:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/29/</guid>
+      <description>&lt;p&gt;Jekyllで記事を書いていますが、生成するのに2秒を超え始めてきました。
+Jekyllは遅いみたいなので、早くなるかわからないですけどHexoを使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する</title>
+      <link>https://va2577.github.io/post/28/</link>
+      <pubDate>Wed, 10 Feb 2016 12:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/28/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/24/&#34;&gt;らじる★らじる&lt;/a&gt;、&lt;a href=&#34;https://va2577.github.io/post/25/&#34;&gt;radiko.jp&lt;/a&gt;で録音したファイルから&lt;a href=&#34;https://va2577.github.io/post/27/&#34;&gt;AACファイルを抽出&lt;/a&gt;しましたが、MacのFinderから再生することはできるんですけど、iTunesでは再生できませんでした。
+なので今回はiTunesで再生できるようになるまでを調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>FLVファイルからAACファイルを抽出する</title>
+      <link>https://va2577.github.io/post/27/</link>
+      <pubDate>Tue, 09 Feb 2016 15:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/27/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/24/&#34;&gt;らじる★らじる&lt;/a&gt;、&lt;a href=&#34;https://va2577.github.io/post/25/&#34;&gt;radiko.jp&lt;/a&gt;で録音したファイルは&lt;a href=&#34;https://ja.wikipedia.org/wiki/Flash_Video&#34;&gt;Flash Video&lt;/a&gt;という&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88&#34;&gt;コンテナ型のファイルフォーマット&lt;/a&gt;なのでそのままだとMacで再生しづらいです。
+今回はFLVファイルからAACファイルを抽出することについて調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ファイルの更新日時を一括で変更するコマンド(PowerShell)</title>
+      <link>https://va2577.github.io/post/26/</link>
+      <pubDate>Mon, 08 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/26/</guid>
+      <description>&lt;p&gt;今回はWindowsにおいてファイルの更新日時を一括で変更するコマンド(PowerShell)について調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>radiko.jpを録音する</title>
+      <link>https://va2577.github.io/post/25/</link>
+      <pubDate>Sun, 07 Feb 2016 11:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/25/</guid>
+      <description>&lt;p&gt;radiko.jpを録音することについて調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>らじる★らじる NHKネットラジオを録音する</title>
+      <link>https://va2577.github.io/post/24/</link>
+      <pubDate>Sat, 06 Feb 2016 14:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/24/</guid>
+      <description>&lt;h2 id=&#34;10-september-2017-追記&#34;&gt;10 September 2017 追記&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.apple.com/streaming/&#34;&gt;HTTP Live Streaming (HLS)&lt;/a&gt; に変わったようなので新しい記事にしました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/73/&#34;&gt;らじる★らじる NHKネットラジオを録音する 2017年9月&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;ここから古い内容です。&lt;/p&gt;
+&lt;p&gt;インターネットでラジオを聞くことがありまして、録音できないかなと思って調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Macでtreeコマンドを使う</title>
+      <link>https://va2577.github.io/post/23/</link>
+      <pubDate>Sat, 06 Feb 2016 11:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/23/</guid>
+      <description>&lt;p&gt;Windowsでフォルダー構造を見るために使っていたtreeコマンドをMacで使おうと思ったら、標準でその機能がありませんでしたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RubyGemsのインストールにBundlerを使う</title>
+      <link>https://va2577.github.io/post/22/</link>
+      <pubDate>Fri, 05 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/22/</guid>
+      <description>&lt;p&gt;JekyllはRubyで書かれているため&lt;a href=&#34;https://www.ruby-lang.org/ja/libraries/&#34;&gt;RubyGems&lt;/a&gt;というRuby に特化した apt-get と同じようなパッケージングシステムが使われています。
+RubyでもNode.jsでも、今の流れとして、これらのライブラリーはプロジェクトごとにインストールするようになっていると感じます。
+たくさんのライブラリーを使うとプロジェクト間のバージョンの違いによる問題が出てくることがあるからなんですね。
+今回はBundlerでRubyGemsをインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>シンタックスハイライトをhighlight.jsでする</title>
+      <link>https://va2577.github.io/post/21/</link>
+      <pubDate>Thu, 04 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/21/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/20/&#34;&gt;前回&lt;/a&gt;、コードブロックについて調べましたが、Webで使えるシンタックスハイライトのライブラリーが良さそうでしたので、これでシンタックスハイライトをするように変更したいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JekyllのMarkdownのエンジンをRedcarpetからkramdownに切り替える</title>
+      <link>https://va2577.github.io/post/20/</link>
+      <pubDate>Thu, 04 Feb 2016 19:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/20/</guid>
+      <description>&lt;p&gt;Redcarpetからkramdownに切り替える時にコードブロックの扱いに違いがありましたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>SuperAgentでXMLのレスポンスのtextがundefinedになる</title>
+      <link>https://va2577.github.io/post/19/</link>
+      <pubDate>Tue, 02 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/19/</guid>
+      <description>&lt;p&gt;SuperAgentでXMLにアクセスした時にレスポンスのbodyやtextが取れなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript 2015 (ES6) in Node.jsでimportとexportがエラーになる</title>
+      <link>https://va2577.github.io/post/18/</link>
+      <pubDate>Sun, 31 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/18/</guid>
+      <description>&lt;p&gt;Node.jsがECMAScript 2015をサポートしているということで、Node.jsだけで動かすものはECMAScript 2015のまま実行してしまおうとしたところ、importのところがエラーになるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VMware FusionにWindows 10をクリーンインストールする</title>
+      <link>https://va2577.github.io/post/17/</link>
+      <pubDate>Sat, 30 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/17/</guid>
+      <description>&lt;p&gt;今回はすでにVMware FusionにWindows 10がインストールされていて(Windows 8.1からのアップグレード)、そこからWindows 10をクリーンインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Disqusに登録してJekyllのブログにコメント欄をつける</title>
+      <link>https://va2577.github.io/post/16/</link>
+      <pubDate>Sun, 24 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/16/</guid>
+      <description>&lt;p&gt;DisqusはFacebook、Twitter、Google+のアカウントで使えるコメント欄です。
+そう思って登録を始めましたが、もっと広い意味でウェブ上のコミュニティーの場を提供しているサービスのようでした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript® 2015とBabelを使う</title>
+      <link>https://va2577.github.io/post/15/</link>
+      <pubDate>Sat, 23 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/15/</guid>
+      <description>&lt;p&gt;2015年6月にECMAScript® 2015の仕様が策定されました。
+しかしブラウザーで使う場合は、まだ実装されていないものもあるようです。
+そのためBabelでECMAScript 5に変換してから使うのが主流のようですが、変換する方法がいくつもあって、結局どれが良いのかわからなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google アナリティクスの登録</title>
+      <link>https://va2577.github.io/post/14/</link>
+      <pubDate>Sat, 16 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/14/</guid>
+      <description>&lt;p&gt;Jekyllのテーマを見ていたらGoogle アナリティクスが設定されているものがありましたので、自分のブログにも設定してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jekyllのサイトマップの作成</title>
+      <link>https://va2577.github.io/post/13/</link>
+      <pubDate>Fri, 15 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/13/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/6/&#34;&gt;Google Search Consoleの登録&lt;/a&gt;をしましたので、JekyllでSitemapを作成してGoogle Search ConsoleにSitemapを送信してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jekyllの記事の投稿日付がずれる</title>
+      <link>https://va2577.github.io/post/12/</link>
+      <pubDate>Sun, 10 Jan 2016 23:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/12/</guid>
+      <description>&lt;p&gt;&lt;code&gt;jekyll serve&lt;/code&gt;で実行して確認した時に記事の投稿日付がずれるので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JekyllのLiquidテンプレートのエスケープ</title>
+      <link>https://va2577.github.io/post/11/</link>
+      <pubDate>Sun, 10 Jan 2016 22:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/11/</guid>
+      <description>&lt;p&gt;Jekyllで記事を書いていると&lt;code&gt;{{ site.url }}&lt;/code&gt;のようなLiquidテンプレートを使います。
+これのエスケープ(その意味を無効化させること)について調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jekyllの投稿</title>
+      <link>https://va2577.github.io/post/10/</link>
+      <pubDate>Sun, 10 Jan 2016 21:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/10/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/5/&#34;&gt;Jekyllでブログを作成&lt;/a&gt;した後に記事を投稿してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの広告の掲載</title>
+      <link>https://va2577.github.io/post/9/</link>
+      <pubDate>Sun, 10 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/9/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/8/&#34;&gt;Google AdSenseの申し込み&lt;/a&gt;をしてから、数時間後に申し込み内容の審査が完了したメールが届いていましたので、広告を掲載してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの申し込み</title>
+      <link>https://va2577.github.io/post/8/</link>
+      <pubDate>Sat, 09 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/8/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/5/&#34;&gt;GitHub PagesとJekyllで作ったブログ&lt;/a&gt;でGoogle AdSenseに登録しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Macのuidの確認</title>
+      <link>https://va2577.github.io/post/7/</link>
+      <pubDate>Fri, 08 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/7/</guid>
+      <description>&lt;p&gt;launchdのlaunchctlを使おうと思ったらOS X Yosemite バージョン 10.10からインターフェースが変わったみたいで、uidを知る必要があったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google Search Console (Google Webmaster Tools) の登録</title>
+      <link>https://va2577.github.io/post/6/</link>
+      <pubDate>Fri, 01 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/6/</guid>
+      <description>&lt;p&gt;GitHub PagesとJekyllで作ったブログをGoogle Search Consoleに登録してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jekyllでブログを作成する</title>
+      <link>https://va2577.github.io/post/5/</link>
+      <pubDate>Thu, 31 Dec 2015 22:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/5/</guid>
+      <description>&lt;p&gt;GitHub PagesでブログをするためにJekyllを使ってみました。
+費用がかからないのに広告も出ないので良いです。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitHubのサインアップ</title>
+      <link>https://va2577.github.io/post/4/</link>
+      <pubDate>Thu, 31 Dec 2015 21:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/4/</guid>
+      <description>&lt;p&gt;GitHubはソースコードのバージョンを管理できるサービスですけど、GitHub PagesとJekyllを使うとブログができるということでGitHubにサインアップしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>nodebrew, Node.jsのインストール</title>
+      <link>https://va2577.github.io/post/3/</link>
+      <pubDate>Wed, 30 Dec 2015 22:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/3/</guid>
+      <description>&lt;p&gt;Node.jsは頻繁にアップデートをしているのでバージョンを管理するためにnodebrewを使ってNode.jsをインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Homebrewのインストール</title>
+      <link>https://va2577.github.io/post/2/</link>
+      <pubDate>Wed, 30 Dec 2015 21:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2/</guid>
+      <description>&lt;p&gt;Node.jsをインストールするのにnodebrewを使いたかったので、そのために必要なHomebrewをインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Xcodeコマンドラインツールのインストール</title>
+      <link>https://va2577.github.io/post/1/</link>
+      <pubDate>Wed, 30 Dec 2015 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/1/</guid>
+      <description>&lt;p&gt;Homebrewを使うのに必要だったのでインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

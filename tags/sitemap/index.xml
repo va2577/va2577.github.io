@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sitemap on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/sitemap/</link>
+    <description>Recent content in Sitemap on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 Jan 2016 20:51:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/sitemap/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jekyllのサイトマップの作成</title>
+      <link>https://va2577.github.io/post/13/</link>
+      <pubDate>Fri, 15 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/13/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/6/&#34;&gt;Google Search Consoleの登録&lt;/a&gt;をしましたので、JekyllでSitemapを作成してGoogle Search ConsoleにSitemapを送信してみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

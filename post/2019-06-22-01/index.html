@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HOMEBREW ON LINUX (LINUXBREW) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Homebrew on Linux (Linuxbrew)</h1>
+    
+      <div><time>June 22, 2019</time></div>
+    
+    
+      <div><img alt="" src="/img/2019-06-22-01-01.jpg"></div>
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="https://gohugo.io/">Hugo</a> のサイトを見ていたら <a href="https://linuxbrew.sh/">Linuxbrew</a> というものがあることを知った。</p>
+<p>知らないうちに Linuxbrew というものがあって、それが Homebrew on Linux になっていたようだ。</p>
+<h2 id="requirements">Requirements</h2>
+<blockquote>
+<p>Linux/WSL Requirements</p>
+<ul>
+<li>GCC 4.7.0 or newer</li>
+<li>Linux 2.6.32 or newer</li>
+<li>Glibc 2.13 or newer</li>
+<li>64-bit x86_64 CPU</li>
+</ul>
+<p>Paste at a terminal prompt:</p>
+<p>Debian or Ubuntu</p>
+<pre><code>sudo apt-get install build-essential curl file git
+</code></pre>
+<p><cite><a href="https://docs.brew.sh/Homebrew-on-Linux#linuxwsl-requirements">Homebrew on Linux — Homebrew Documentation</a></cite></p>
+</blockquote>
+<p>Homebrew on Linux をインストールする前に。
+これらが必要らしい。</p>
+<p>curl, file, git はもうあるみたいだった。
+だから build-essential だけインストールすることにした。</p>
+<p>これは、 macOS の Homebrew でいうところの xcode-select に相当するものの印象。</p>
+<p>build-essential は容量が大きいのか、ダウンロードだけで４分程度かかった。</p>
+<h2 id="homebrew-on-linux">Homebrew on Linux</h2>
+<blockquote>
+<p>Install</p>
+<p>Paste at a terminal prompt:</p>
+<pre><code>sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)&quot;
+</code></pre>
+<p><cite><a href="https://docs.brew.sh/Homebrew-on-Linux#install">Homebrew on Linux — Homebrew Documentation</a></cite></p>
+</blockquote>
+<p>Homebrew on Linux のインストールは Homebrew と同じようにシェルスクリプト。</p>
+<blockquote>
+<p>Follow the Next steps instructions to add Homebrew to your PATH and to your bash shell profile script, either ~/.profile on Debian/Ubuntu or ~/.bash_profile on CentOS/Fedora/RedHat.</p>
+<pre><code>test -d ~/.linuxbrew &amp;&amp; eval $(~/.linuxbrew/bin/brew shellenv)
+test -d /home/linuxbrew/.linuxbrew &amp;&amp; eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+test -r ~/.bash_profile &amp;&amp; echo &quot;eval \$($(brew --prefix)/bin/brew shellenv)&quot; &gt;&gt;~/.bash_profile
+echo &quot;eval \$($(brew --prefix)/bin/brew shellenv)&quot; &gt;&gt;~/.profile
+</code></pre>
+<p><cite><a href="https://docs.brew.sh/Homebrew-on-Linux#install">Homebrew on Linux — Homebrew Documentation</a></cite></p>
+</blockquote>
+<p>インストールが終わったら環境変数を設定。
+このコマンドをそのまま実行。
+すると自分の WSL の Ubuntu の環境では ~/.profile にパスが設定されたようだ。</p>
+<pre><code class="language-console" data-lang="console">$ brew --version
+Homebrew 2.1.6
+Homebrew/linuxbrew-core (git revision a682; last commit 2019-06-22)
+</code></pre><p>大丈夫そう、ちゃんとインストールされているようだ。</p>
+<pre><code class="language-console" data-lang="console">$ brew install hello
+Updating Homebrew...
+==&gt; Auto-updated Homebrew!
+...
+...
+...
+</code></pre><p><code>brew</code> コマンドを使うと自動的にアップデートが入る。
+これがちょっと時間がかかったりする。
+気になる。</p>
+<pre><code class="language-console" data-lang="console">$ brew info node
+node: stable 12.4.0 (bottled), HEAD
+Platform built on V8 to build network applications
+https://nodejs.org/
+Not installed
+From: https://github.com/Homebrew/linuxbrew-core/blob/master/Formula/node.rb
+==&gt; Dependencies
+Build: pkg-config ✘, python@2 ✘
+Required: icu4c ✘
+==&gt; Options
+--HEAD
+        Install HEAD version
+==&gt; Analytics
+install: 339,691 (30 days), 1,037,758 (90 days), 4,031,236 (365 days)
+install_on_request: 249,043 (30 days), 765,568 (90 days), 2,991,164 (365 days)
+build_error: 0 (30 days)
+</code></pre><p>今の macOS の Homebrew も同じかな？
+<code>brew info</code> ってやると、 30 日、 90 日、 365 日のインストールの数とか表示されて面白い。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Google AdSense on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/google-adsense/</link>
+    <description>Recent content in Google AdSense on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 22 Feb 2016 13:27:10 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/google-adsense/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Google AdSense 銀行口座振込で支払いを受け取る</title>
+      <link>https://va2577.github.io/post/33/</link>
+      <pubDate>Mon, 22 Feb 2016 13:27:10 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/33/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/32/&#34;&gt;Google AdSenseの支払いを受け取るために必要な手続き&lt;/a&gt;をしましたが、翌営業日にはデポジットの入金がされていたようですので、金額を入力しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの支払いを受け取るために必要な手続き</title>
+      <link>https://va2577.github.io/post/32/</link>
+      <pubDate>Sat, 20 Feb 2016 10:55:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/32/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/31/&#34;&gt;Google AdSenseの住所の確認&lt;/a&gt;をしましたが、お支払いを受け取るために必要な手続きがあるようでしたので、手続きしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの住所の確認</title>
+      <link>https://va2577.github.io/post/31/</link>
+      <pubDate>Fri, 19 Feb 2016 19:52:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/31/</guid>
+      <description>&lt;p&gt;Google AdSenseの&lt;a href=&#34;https://va2577.github.io/post/8/&#34;&gt;申し込み&lt;/a&gt;と&lt;a href=&#34;https://va2577.github.io/post/9/&#34;&gt;広告の掲載&lt;/a&gt;をしてから運用を続けていたところですが、Googleから郵送物が届きました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの広告の掲載</title>
+      <link>https://va2577.github.io/post/9/</link>
+      <pubDate>Sun, 10 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/9/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/8/&#34;&gt;Google AdSenseの申し込み&lt;/a&gt;をしてから、数時間後に申し込み内容の審査が完了したメールが届いていましたので、広告を掲載してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Google AdSenseの申し込み</title>
+      <link>https://va2577.github.io/post/8/</link>
+      <pubDate>Sat, 09 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/8/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/5/&#34;&gt;GitHub PagesとJekyllで作ったブログ&lt;/a&gt;でGoogle AdSenseに登録しました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

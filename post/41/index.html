@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>FLVファイルから指定した時間を無劣化で切り取る - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>FLVファイルから指定した時間を無劣化で切り取る</h1>
+    
+      <div><time>May 19, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/28/">FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する</a>
+でAACファイルを抽出していたのですが、音楽が流れている部分だけ切り取りたいと思いましたので、調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.5</li>
+<li>FFmpeg バージョン 3.0.2</li>
+</ul>
+<h2 id="ffmpeg-とそのオプション">FFmpeg とそのオプション</h2>
+<p>FFmpeg で切り取ることもできるようでした。
+切り取るためのオプションの <code>man</code> を抜粋してみました。</p>
+<p><code>-ss</code> は開始する位置を指定するためのオプションのようです。</p>
+<pre><code>$ man ffmpeg
+-ss position (input/output)
+    When used as an input option (before &quot;-i&quot;), seeks in this input
+    file to position. Note that in most formats it is not possible to
+    seek exactly, so ffmpeg will seek to the closest seek point before
+    position.  When transcoding and -accurate_seek is enabled (the
+    default), this extra segment between the seek point and position
+    will be decoded and discarded. When doing stream copy or when
+    -noaccurate_seek is used, it will be preserved.
+
+    When used as an output option (before an output filename), decodes
+    but discards input until the timestamps reach position.
+
+    position must be a time duration specification, see the Time
+    duration section in the ffmpeg-utils(1) manual.
+</code></pre><!-- ` -->
+<p><code>-t</code> は切り取る長さを指定するためのオプションのようです。</p>
+<pre><code>$ man ffmpeg
+-t duration (input/output)
+    When used as an input option (before &quot;-i&quot;), limit the duration of
+    data read from the input file.
+
+    When used as an output option (before an output filename), stop
+    writing the output after its duration reaches duration.
+
+    duration must be a time duration specification, see the Time
+    duration section in the ffmpeg-utils(1) manual.
+
+    -to and -t are mutually exclusive and -t has priority.
+</code></pre><h2 id="ffmpeg-で切り取る">FFmpeg で切り取る</h2>
+<p>調べたどちらのオプションも <code>-i</code> オプションより前に指定するように記載されていましたので、そのように指定して実行してみます。</p>
+<pre><code>$ ffmpeg -ss 55:00 -t 3:00 -i in.flv -c:a copy out.aac
+ffmpeg version 3.0.2 Copyright (c) 2000-2016 the FFmpeg developers
+  built with Apple LLVM version 7.3.0 (clang-703.0.29)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/3.0.2 --enable-shared --enable-pthreads --enable-gpl --enable-version3 --enable-hardcoded-tables --enable-avresample --cc=clang --host-cflags= --host-ldflags= --enable-opencl --enable-libx264 --enable-libmp3lame --enable-libxvid --enable-vda
+  libavutil      55. 17.103 / 55. 17.103
+  libavcodec     57. 24.102 / 57. 24.102
+  libavformat    57. 25.100 / 57. 25.100
+  libavdevice    57.  0.101 / 57.  0.101
+  libavfilter     6. 31.100 /  6. 31.100
+  libavresample   3.  0.  0 /  3.  0.  0
+  libswscale      4.  0.100 /  4.  0.100
+  libswresample   2.  0.101 /  2.  0.101
+  libpostproc    54.  0.100 / 54.  0.100
+Input #0, flv, from 'in.flv':
+  Duration: 01:00:59.90, start: 0.000000, bitrate: 51 kb/s
+    Stream #0:0: Audio: aac (HE-AAC), 48000 Hz, stereo, fltp, 49 kb/s
+Output #0, adts, to 'out.aac':
+  Metadata:
+    encoder         : Lavf57.25.100
+    Stream #0:0: Audio: aac (HE-AAC), 48000 Hz, stereo, 49 kb/s
+Stream mapping:
+  Stream #0:0 -&gt; #0:0 (copy)
+Press [q] to stop, [?] for help
+size=    1084kB time=00:03:00.02 bitrate=  49.3kbits/s speed=7.52e+03x    
+video:0kB audio:1055kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 2.734380%
+</code></pre><p>指定した時間から微妙にずれるので、作成されたファイルの内容を聞きながら指定する時間を調整しました。
+無劣化で切り取るため一瞬で終わりました。
+サイズも切り取った分だけ小さいファイルが作成されました。</p>
+<pre><code>$ ls -l
+total 149752
+-rw-r--r--  1 user  staff  23418302  5 30 16:14 in.flv
+-rw-r--r--  1 user  staff   1109858  5 30 16:14 out.aac
+</code></pre><h2 id="終わり">終わり</h2>
+<p>これで、<a href="/post/28/">MP4BoxでM4Aファイルに変換</a> すれば iTunes で音楽のところだけ聞けます。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://ffmpeg.org">FFmpeg</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

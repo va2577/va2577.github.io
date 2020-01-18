@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/hugo/</link>
+    <description>Recent content in Hugo on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Aug 2019 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hugo のテーマを変えた</title>
+      <link>https://va2577.github.io/post/2019-08-03-01/</link>
+      <pubDate>Sat, 03 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-08-03-01/</guid>
+      <description>&lt;p&gt;Hugo のままテーマを変えるか、 GitBook にするか、 VuePress にするか、 Gatsby にするか、検討してみた。
+結局 Hugo のテーマを使うことにした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に Utuntu 16.04 で使っていたアプリケーションをインストールし直しました</title>
+      <link>https://va2577.github.io/post/178/</link>
+      <pubDate>Mon, 28 May 2018 18:42:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/178/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/177/&#34;&gt;前回&lt;/a&gt; WSL の Ubuntu 18.04 をインストールしたので、改めてアプリケーションをインストールし直しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ウェブサイトのレイアウトを新しくしました</title>
+      <link>https://va2577.github.io/post/137/</link>
+      <pubDate>Tue, 17 Apr 2018 15:37:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/137/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/137-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;ここまで Hugo のテーマを作る記事をいくつか書いてきました。
+自分のウェブサイトにも新しく作ったテーマを適用してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 8(RSS, Sitemap, Robots.txt)</title>
+      <link>https://va2577.github.io/post/136/</link>
+      <pubDate>Mon, 16 Apr 2018 13:05:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/136/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/135/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/pagination/&#34;&gt;Pagination&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/rss/&#34;&gt;RSS&lt;/a&gt; と &lt;a href=&#34;https://gohugo.io/templates/sitemap-template/&#34;&gt;Sitemap&lt;/a&gt; と &lt;a href=&#34;https://gohugo.io/templates/robots/&#34;&gt;Robots.txt&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 7(Pagination)</title>
+      <link>https://va2577.github.io/post/135/</link>
+      <pubDate>Sun, 15 Apr 2018 08:43:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/135/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/132/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/menu-templates/&#34;&gt;Menu Templates&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/pagination/&#34;&gt;Pagination&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテンプレートで &lt;meta&gt; の description に出力する内容を調べました</title>
+      <link>https://va2577.github.io/post/134/</link>
+      <pubDate>Sat, 14 Apr 2018 23:53:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/134/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/133/&#34;&gt;前回の記事&lt;/a&gt;では、 &amp;lt;meta&amp;gt; の keywords について調べました。
+今回は、 &amp;lt;meta&amp;gt; の description について調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテンプレートで &lt;meta&gt; の keywords が配列になってしまうので調べました</title>
+      <link>https://va2577.github.io/post/133/</link>
+      <pubDate>Fri, 13 Apr 2018 19:34:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/133/</guid>
+      <description>&lt;p&gt;SEO を考慮すると、 HTML の &amp;lt;meta&amp;gt; の description と keywords を記述しておくと良いそうですので、 Hugo のテーマを作るのに &amp;lt;meta&amp;gt; を記述しました。
+が、 keywords が &amp;ldquo;word1, word2, word3&amp;rdquo; ではなく、 &amp;ldquo;[word1, word2, word3]&amp;rdquo; のようになってしまったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 6(Menu Templates)</title>
+      <link>https://va2577.github.io/post/132/</link>
+      <pubDate>Thu, 12 Apr 2018 13:26:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/132/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/131/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/404/&#34;&gt;Custom 404 Page&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/menu-templates/&#34;&gt;Menu Templates&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 5(Custom 404 Page)</title>
+      <link>https://va2577.github.io/post/131/</link>
+      <pubDate>Wed, 11 Apr 2018 18:10:12 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/131/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/126/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/taxonomy-templates/&#34;&gt;Taxonomy Templates&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/404/&#34;&gt;Custom 404 Page&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテンプレートの中でコメントを記述したかったので調べました</title>
+      <link>https://va2577.github.io/post/129/</link>
+      <pubDate>Mon, 09 Apr 2018 17:12:55 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/129/</guid>
+      <description>&lt;p&gt;Hugo のテーマを作成していたのですが、テンプレートの中でコメントを記述したかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 4(Taxonomy Templates)</title>
+      <link>https://va2577.github.io/post/126/</link>
+      <pubDate>Fri, 06 Apr 2018 11:30:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/126/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/117/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/homepage/&#34;&gt;Homepage Templates&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/taxonomy-templates/&#34;&gt;Taxonomy Templates&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 3(Homepage Templates)</title>
+      <link>https://va2577.github.io/post/117/</link>
+      <pubDate>Wed, 28 Mar 2018 17:47:27 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/117/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/116/&#34;&gt;前回の記事&lt;/a&gt;では、 &lt;a href=&#34;https://gohugo.io/templates/base/&#34;&gt;Base Templates and Blocks&lt;/a&gt; を使ってみました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/homepage/&#34;&gt;Homepage Templates&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます 2(Base Templates and Blocks)</title>
+      <link>https://va2577.github.io/post/116/</link>
+      <pubDate>Tue, 27 Mar 2018 10:02:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/116/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/115/&#34;&gt;前回の記事&lt;/a&gt;では、サイトとテーマの骨組みを作成しました。
+今回は、 &lt;a href=&#34;https://gohugo.io/templates/base/&#34;&gt;Base Templates and Blocks&lt;/a&gt; を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のテーマを作ってみます</title>
+      <link>https://va2577.github.io/post/115/</link>
+      <pubDate>Mon, 26 Mar 2018 22:58:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/115/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/115-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;今のこのブログも自分で作成したテーマを適用しているのですが、もう 2 年も経過していたので、新しい Hugo のテーマを作ってみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のデプロイのシェルの echo が気になったので調べました</title>
+      <link>https://va2577.github.io/post/107/</link>
+      <pubDate>Sun, 18 Mar 2018 14:38:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/107/</guid>
+      <description>&lt;p&gt;Bash で気になって調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>block quote の中の fenced code block が崩れるので調べました</title>
+      <link>https://va2577.github.io/post/105/</link>
+      <pubDate>Fri, 16 Mar 2018 22:30:18 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/105/</guid>
+      <description>&lt;p&gt;Markdown のブロッククォートの中にコードブロックの記述したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Hugo をインストールする</title>
+      <link>https://va2577.github.io/post/81/</link>
+      <pubDate>Sat, 13 Jan 2018 18:33:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/81/</guid>
+      <description>&lt;p&gt;このブログは &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo | A Fast and Flexible Website Generator&lt;/a&gt; で作成していますので、Ubuntu にインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugoを使う</title>
+      <link>https://va2577.github.io/post/40/</link>
+      <pubDate>Mon, 28 Mar 2016 15:27:07 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/40/</guid>
+      <description>&lt;p&gt;Hexoを使ってこのサイトのページを作成していましたが、中国語が気になり始めて、Hugoを使ってみることにしました。
+JekyllとHexoを使ってきましたが、あまり早くはなかったですし、Hugoは早いというのがいいということです。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

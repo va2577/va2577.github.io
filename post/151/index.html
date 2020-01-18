@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON の内包表記を覚えました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python の内包表記を覚えました</h1>
+    
+      <div><time>May 1, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Python の内包表記は、他の言語から入ってくると独特に感じます。
+だけど、便利なので、書いておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Python 3.6</li>
+</ul>
+<h2 id="513-list-comprehensions">5.1.3. List Comprehensions</h2>
+<blockquote>
+<p>List comprehensions provide a concise way to create lists. Common applications are to make new lists where each element is the result of some operations applied to each member of another sequence or iterable, or to create a subsequence of those elements that satisfy a certain condition.</p>
+<p>For example, assume we want to create a list of squares, like:</p>
+<pre><code>&gt;&gt;&gt; squares = []
+&gt;&gt;&gt; for x in range(10):
+...     squares.append(x**2)
+...
+&gt;&gt;&gt; squares
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#list-comprehensions">5.1.3. List Comprehensions</a></cite></p>
+</blockquote>
+<p>リスト内包表記は、リストを作成する簡単な方法を提供してくれるようです。
+引用にあるような <code>for</code> でリストを作成するような処理は、次の引用のように記述することができるみたいです。</p>
+<blockquote>
+<p>Note that this creates (or overwrites) a variable named x that still exists after the loop completes. We can calculate the list of squares without any side effects using:</p>
+<pre><code>squares = list(map(lambda x: x**2, range(10)))
+</code></pre>
+<p>or, equivalently:</p>
+<pre><code>squares = [x**2 for x in range(10)]
+</code></pre>
+<p>which is more concise and readable.</p>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#list-comprehensions">5.1.3. List Comprehensions</a></cite></p>
+</blockquote>
+<p>下側の <code>[]</code> で囲んだものがリスト内包表記です。
+<code>[]</code> で囲んで <code>[... for ... in ...]</code> のように記述すると、リスト内包表記になるみたいです。
+リスト内包表記は簡潔で可読性が高いと記載されています。</p>
+<blockquote>
+<p>A list comprehension consists of brackets containing an expression followed by a for clause, then zero or more for or if clauses. The result will be a new list resulting from evaluating the expression in the context of the for and if clauses which follow it. For example, this listcomp combines the elements of two lists if they are not equal:</p>
+<pre><code>&gt;&gt;&gt; [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
+[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+</code></pre>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#list-comprehensions">5.1.3. List Comprehensions</a></cite></p>
+</blockquote>
+<p>入れ子にすることもできるようです。
+<code>x</code> と <code>y</code> が一致しない組み合わせのタプルのリストを作っているようです。
+リスト内包表記でリストを作るときに <code>if</code> で条件をつけることもできるようです。</p>
+<p>これは、次のように記述したものと同じようです。</p>
+<blockquote>
+<p>and it’s equivalent to:</p>
+<pre><code>&gt;&gt;&gt; combs = []
+&gt;&gt;&gt; for x in [1,2,3]:
+...     for y in [3,1,4]:
+...         if x != y:
+...             combs.append((x, y))
+...
+&gt;&gt;&gt; combs
+[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+</code></pre>
+<p>Note how the order of the for and if statements is the same in both these snippets.</p>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#list-comprehensions">5.1.3. List Comprehensions</a></cite></p>
+</blockquote>
+<p>どちらも <code>for</code> の記述が先で、 <code>if</code> の記述が後ろって記載されています。
+重要なのかな。</p>
+<blockquote>
+<p>If the expression is a tuple (e.g. the <code>(x, y)</code> in the previous example), it must be parenthesized.</p>
+<pre><code>&gt;&gt;&gt; vec = [-4, -2, 0, 2, 4]
+&gt;&gt;&gt; # create a new list with the values doubled
+&gt;&gt;&gt; [x*2 for x in vec]
+[-8, -4, 0, 4, 8]
+&gt;&gt;&gt; # filter the list to exclude negative numbers
+&gt;&gt;&gt; [x for x in vec if x &gt;= 0]
+[0, 2, 4]
+&gt;&gt;&gt; # apply a function to all the elements
+&gt;&gt;&gt; [abs(x) for x in vec]
+[4, 2, 0, 2, 4]
+&gt;&gt;&gt; # call a method on each element
+&gt;&gt;&gt; freshfruit = ['  banana', '  loganberry ', 'passion fruit  ']
+&gt;&gt;&gt; [weapon.strip() for weapon in freshfruit]
+['banana', 'loganberry', 'passion fruit']
+&gt;&gt;&gt; # create a list of 2-tuples like (number, square)
+&gt;&gt;&gt; [(x, x**2) for x in range(6)]
+[(0, 0), (1, 1), (2, 4), (3, 9), (4, 16), (5, 25)]
+&gt;&gt;&gt; # the tuple must be parenthesized, otherwise an error is raised
+&gt;&gt;&gt; [x, x**2 for x in range(6)]
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+    [x, x**2 for x in range(6)]
+               ^
+SyntaxError: invalid syntax
+&gt;&gt;&gt; # flatten a list using a listcomp with two 'for'
+&gt;&gt;&gt; vec = [[1,2,3], [4,5,6], [7,8,9]]
+&gt;&gt;&gt; [num for elem in vec for num in elem]
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#list-comprehensions">5.1.3. List Comprehensions</a></cite></p>
+</blockquote>
+<p>式がタプルの場合は、 <code>(x, y)</code> のように <code>()</code> で囲むようです。</p>
+<blockquote>
+<p>List comprehensions can contain complex expressions and nested functions:</p>
+<pre><code>&gt;&gt;&gt; from math import pi
+&gt;&gt;&gt; [str(round(pi, i)) for i in range(1, 6)]
+['3.1', '3.14', '3.142', '3.1416', '3.14159']
+</code></pre>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#list-comprehensions">5.1.3. List Comprehensions</a></cite></p>
+</blockquote>
+<p>リスト内包表記には、複雑な式やネストされた関数を含めることができるようです。</p>
+<p>Python の <code>range(n, n)</code> って便利です。
+JavaScript にも言語仕様として <code>range</code> 入ってこないのかな。</p>
+<h2 id="54-sets">5.4. Sets</h2>
+<blockquote>
+<p>Similarly to list comprehensions, set comprehensions are also supported:</p>
+<pre><code>&gt;&gt;&gt; a = {x for x in 'abracadabra' if x not in 'abc'}
+&gt;&gt;&gt; a
+{'r', 'd'}
+</code></pre>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#sets">5.4. Sets</a></cite></p>
+</blockquote>
+<p>Python には、配列じゃないですけど、データのまとまりとして Set というものがあるようです。
+Set は重複要素のない順不同の集合のようです。
+それも、リスト内包表記と同じように、セット内包表記ができるようです。
+<code>{}</code> で囲んで、 <code>{... for ... in ...}</code> のように記述すると、セット内包表記になるようです。</p>
+<h2 id="55-dictionaries">5.5. Dictionaries</h2>
+<blockquote>
+<p>In addition, dict comprehensions can be used to create dictionaries from arbitrary key and value expressions:</p>
+<pre><code>&gt;&gt;&gt; {x: x**2 for x in (2, 4, 6)}
+{2: 4, 4: 16, 6: 36}
+</code></pre>
+<p><cite><a href="https://docs.python.org/3.6/tutorial/datastructures.html#dictionaries">5.5. Dictionaries</a></cite></p>
+</blockquote>
+<p>辞書 (Dictionary) も内包表記ができるようです。
+セット内包表記と同じで、 <code>{}</code> で囲むようです。
+<code>{...: ... for ... in ...}</code> のように、 <code>for</code> の前に <code>key: value</code> のように、セミコロンでキーと値を記述するところが違うようです。</p>
+<h2 id="終わり">終わり</h2>
+<p>Python の内包表記について、次の 3 つを記載してみました。</p>
+<ul>
+<li>リスト内包表記</li>
+<li>セット内包表記</li>
+<li>辞書内包表記</li>
+</ul>
+<p>COBOL, Java, VB.NET, JavaScript, C#, Ruby なんかを使ってきて、独特の記述のように感じました。
+でも、この言語の文化のようですし、 <code>for</code> を使うよりも速いみたいなので、うまく使っていきたいと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://zashikiro.hateblo.jp/entry/2014/02/15/215953">Python2の map/filter 関数とリスト内包表記のパフォーマンス比較 - 座敷牢日誌</a></li>
+<li><a href="http://www.yukun.info/blog/2008/06/python-list-comprehension.html">Python: リスト内包表記(リストコンプリヘンション)をfor文に書き換える</a></li>
+<li><a href="https://qiita.com/ritarock/items/08913482cf4e97e7b657">pythonの内包表記について - Qiita</a></li>
+<li><a href="http://www.php6.jp/python/basics/%E3%83%AA%E3%82%B9%E3%83%88%E5%86%85%E5%8C%85%E8%A1%A8%E8%A8%98/">リスト内包表記 « python練習帳</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

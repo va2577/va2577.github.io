@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Inno Setup on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/inno-setup/</link>
+    <description>Recent content in Inno Setup on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 24 Mar 2018 22:55:26 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/inno-setup/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Inno Setup で .NET Framework をインストールさせる方法を調べました</title>
+      <link>https://va2577.github.io/post/113/</link>
+      <pubDate>Sat, 24 Mar 2018 22:55:26 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/113/</guid>
+      <description>&lt;p&gt;Windows のインストーラーで、 .NET Framework をインストールさせたかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Inno Setup でインストーラーを作成してみました</title>
+      <link>https://va2577.github.io/post/112/</link>
+      <pubDate>Fri, 23 Mar 2018 14:37:25 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/112/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/112-01.bmp&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Windows のインストーラーを作成する必要がありましたので調べました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

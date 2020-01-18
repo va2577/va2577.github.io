@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Excel on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/excel/</link>
+    <description>Recent content in Excel on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Oct 2016 10:37:15 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/excel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>.NET Framework(C#, VB.NET) Excelのプロセスが残る</title>
+      <link>https://va2577.github.io/post/49/</link>
+      <pubDate>Tue, 11 Oct 2016 10:37:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/49/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/45/&#34;&gt;Office 2016 の PIA がない&lt;/a&gt;の記事で環境を設定していたところです。
+Excelの帳票を出力するアプリケーションを作っていて、よくあるExcelのプロセスが残る問題が発生してしまったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Excelのマクロで範囲を参照する</title>
+      <link>https://va2577.github.io/post/47/</link>
+      <pubDate>Mon, 03 Oct 2016 21:00:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/47/</guid>
+      <description>&lt;p&gt;Excelのマクロで範囲を参照する際の指定をいつも調べてしまうので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

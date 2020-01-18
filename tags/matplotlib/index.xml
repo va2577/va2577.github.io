@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Matplotlib on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/matplotlib/</link>
+    <description>Recent content in Matplotlib on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Oct 2018 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/matplotlib/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python Matplotlib を使って 2 軸のグラフ（株価のラインと出来高のバー）を作ってみました</title>
+      <link>https://va2577.github.io/post/205/</link>
+      <pubDate>Sat, 27 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/205/</guid>
+      <description>&lt;p&gt;2 軸のグラフを作りたかったので、試しに株価のラインと出来高のバーのグラフを作りました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で為替レートの折れ線グラフを表示してみました</title>
+      <link>https://va2577.github.io/post/149/</link>
+      <pubDate>Sun, 29 Apr 2018 17:33:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/149/</guid>
+      <description>&lt;p&gt;Python で、 &lt;a href=&#34;https://matplotlib.org/&#34;&gt;Matplotlib&lt;/a&gt; を使って、為替レートの折れ線グラフを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/ubuntu/</link>
+    <description>Recent content in Ubuntu on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 May 2018 18:42:15 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 に Utuntu 16.04 で使っていたアプリケーションをインストールし直しました</title>
+      <link>https://va2577.github.io/post/178/</link>
+      <pubDate>Mon, 28 May 2018 18:42:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/178/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/177/&#34;&gt;前回&lt;/a&gt; WSL の Ubuntu 18.04 をインストールしたので、改めてアプリケーションをインストールし直しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu 18.04 をインストールしてみました</title>
+      <link>https://va2577.github.io/post/177/</link>
+      <pubDate>Sun, 27 May 2018 11:05:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/177/</guid>
+      <description>&lt;p&gt;WSL の Ubuntu 18.04 LTS がリリースされていたようでしたのでインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu を起動しようとしたら &#34;Installing, this may take a few minutes...&#34; 0x800703fa のエラーになりました</title>
+      <link>https://va2577.github.io/post/175/</link>
+      <pubDate>Fri, 25 May 2018 18:30:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/175/</guid>
+      <description>&lt;p&gt;以前にも同じようなエラーになったように思うのですが、今回は、エラーを解消したことを書いておこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Bash でファイルの内容を 8 進数で出力しました</title>
+      <link>https://va2577.github.io/post/166/</link>
+      <pubDate>Wed, 16 May 2018 18:27:55 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/166/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/163/&#34;&gt;改行コードを調べたこと&lt;/a&gt;の続きです。
+ファイルの内容を 8 進数や 16 進数で表示したかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASCII 文字の一覧を Bash で表示してみました</title>
+      <link>https://va2577.github.io/post/164/</link>
+      <pubDate>Mon, 14 May 2018 13:34:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/164/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/163/&#34;&gt;改行コードを扱った&lt;/a&gt;ときに、 Bash で CR の改行コードをファイルに書き込むことを調べたので、書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Bash で CRLF の改行コードのファイルを探してみました</title>
+      <link>https://va2577.github.io/post/163/</link>
+      <pubDate>Sun, 13 May 2018 07:25:22 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/163/</guid>
+      <description>&lt;p&gt;WSL(Windows Subsystem for Linux) で Ubuntu を使っていると、 Windows で CRLF で編集したテキストファイルをそのまま Ubuntu に持ってきてしまうことがあります。
+そういったファイルがあるか確認したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Jupyter Notebook をインストールしました</title>
+      <link>https://va2577.github.io/post/148/</link>
+      <pubDate>Sat, 28 Apr 2018 17:50:46 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/148/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt; については、以前、&lt;a href=&#34;https://va2577.github.io/post/64/&#34;&gt;記事を書いた&lt;/a&gt;ことがあって、そのときに使いました。
+今回は、 WSL の Ubuntu でも使えるようにインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu で tree コマンドを使ってみました</title>
+      <link>https://va2577.github.io/post/142/</link>
+      <pubDate>Sun, 22 Apr 2018 13:27:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/142/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/23/&#34;&gt;Macでtreeコマンドを使う&lt;/a&gt;の記事を書いたことがありました。
+今回は、 WSL の Ubuntu で tree コマンドを使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visual Studio Code に WSL の Ubuntu の Git を設定する</title>
+      <link>https://va2577.github.io/post/83/</link>
+      <pubDate>Wed, 17 Jan 2018 16:49:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/83/</guid>
+      <description>&lt;p&gt;いつからだったか、Visual Studio Code を起動すると、勝手に「Git を探しています」みたいになって、「[警告] Git が見つかりません。Git をインストールするか &amp;lsquo;git.path&amp;rsquo; 設定で…」のようなメッセージが表示されるようになりました。&lt;/p&gt;
+&lt;p&gt;そのまま使っていたのですが、気になるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Hugo をインストールする</title>
+      <link>https://va2577.github.io/post/81/</link>
+      <pubDate>Sat, 13 Jan 2018 18:33:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/81/</guid>
+      <description>&lt;p&gt;このブログは &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo | A Fast and Flexible Website Generator&lt;/a&gt; で作成していますので、Ubuntu にインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu に Node.js をインストールする</title>
+      <link>https://va2577.github.io/post/80/</link>
+      <pubDate>Fri, 12 Jan 2018 11:11:36 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/80/</guid>
+      <description>&lt;p&gt;このブログの CSS や JavaScript を作成するのに Node.js を使っていたので、WSL の Ubuntu にインストールすることにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL の Ubuntu の Python に pip がない</title>
+      <link>https://va2577.github.io/post/79/</link>
+      <pubDate>Fri, 05 Jan 2018 16:49:48 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/79/</guid>
+      <description>&lt;p&gt;WSL の Ubuntu には Python が標準でインストールされていましたので、Python を主に使っていこうと思っています。
+が、Python で仮想環境を作成しようとしたらエラーになったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>WSL(Windows Subsystem for Linux) の Ubuntu に FFmpeg をインストールする</title>
+      <link>https://va2577.github.io/post/78/</link>
+      <pubDate>Thu, 04 Jan 2018 15:48:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/78/</guid>
+      <description>&lt;p&gt;Windows に変えてから、使ってみたかったのが、WSL(Windows Subsystem for Linux) です。
+コマンドプロンプトよりできることが増えるかなと思っています。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

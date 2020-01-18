@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Babel on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/babel/</link>
+    <description>Recent content in Babel on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 04 Apr 2018 08:09:47 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/babel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 4(Universal Module Definition)</title>
+      <link>https://va2577.github.io/post/124/</link>
+      <pubDate>Wed, 04 Apr 2018 08:09:47 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/124/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/123/&#34;&gt;前回の記事&lt;/a&gt;では、 SystemJS を使ってみました。
+今回は、 Universal Module Definition を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 3(SystemJS)</title>
+      <link>https://va2577.github.io/post/123/</link>
+      <pubDate>Tue, 03 Apr 2018 18:21:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/123/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/122/&#34;&gt;前回の記事&lt;/a&gt;では、 CommonJS を使ってみました。
+今回は、 SystemJS を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 2(CommonJS Modules)</title>
+      <link>https://va2577.github.io/post/122/</link>
+      <pubDate>Mon, 02 Apr 2018 14:35:24 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/122/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/120/&#34;&gt;前回の記事&lt;/a&gt;では、 RequireJS を使ってみました。
+今回は、 CommonJS を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 1(Asynchronous Module Definition)</title>
+      <link>https://va2577.github.io/post/120/</link>
+      <pubDate>Sat, 31 Mar 2018 10:18:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/120/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/119/&#34;&gt;前回の記事&lt;/a&gt;では、 Node.js で ECMAScript Modules を使ってみました。
+今回は、ブラウザーでも ECMAScript Modules を使ってみようと思いました。&lt;/p&gt;
+&lt;p&gt;結果的には、 ECMAScript Modules のままでは動かせていなくて、 Babel を使ってトランスパイルしてからブラウザーで動かしています。&lt;/p&gt;
+&lt;p&gt;調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Babel を使ってみました</title>
+      <link>https://va2577.github.io/post/104/</link>
+      <pubDate>Thu, 15 Mar 2018 21:42:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/104/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://babeljs.io/docs/setup/&#34;&gt;Using Babel&lt;/a&gt; を参考に進めてみます。
+軽く使えればよかったので、 Gulp とかのツールは使わずに、 Babel built-ins CLI を使うことにしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript® 2015とBabelを使う</title>
+      <link>https://va2577.github.io/post/15/</link>
+      <pubDate>Sat, 23 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/15/</guid>
+      <description>&lt;p&gt;2015年6月にECMAScript® 2015の仕様が策定されました。
+しかしブラウザーで使う場合は、まだ実装されていないものもあるようです。
+そのためBabelでECMAScript 5に変換してから使うのが主流のようですが、変換する方法がいくつもあって、結局どれが良いのかわからなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

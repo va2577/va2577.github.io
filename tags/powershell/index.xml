@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PowerShell on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/powershell/</link>
+    <description>Recent content in PowerShell on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Jan 2017 11:30:43 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/powershell/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>検索した文字列の行から後ろの内容を抽出したい(PowerShell)</title>
+      <link>https://va2577.github.io/post/67/</link>
+      <pubDate>Sat, 14 Jan 2017 11:30:43 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/67/</guid>
+      <description>&lt;p&gt;テキストファイルを文字列で検索して、その行から後ろの 10 行分抽出する、みたいなことができないか、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>テキストファイルの内容を 1 行ずつ置換、変更したい(PowerShell)</title>
+      <link>https://va2577.github.io/post/66/</link>
+      <pubDate>Wed, 28 Dec 2016 11:11:25 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/66/</guid>
+      <description>&lt;p&gt;Bash の sed みたいなことが Windows で簡単にできないか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ファイルの更新日時を一括で変更するコマンド(PowerShell)</title>
+      <link>https://va2577.github.io/post/26/</link>
+      <pubDate>Mon, 08 Feb 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/26/</guid>
+      <description>&lt;p&gt;今回はWindowsにおいてファイルの更新日時を一括で変更するコマンド(PowerShell)について調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

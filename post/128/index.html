@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>WEBPACK を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>webpack を使ってみました</h1>
+    
+      <div><time>April 8, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>以前、 <a href="/post/122/">CommonJS Modules を使ったとき</a>に Browserify を使いました。
+最近は(以前から)、 Browserify よりも webpack の方をよく見るので、 webpack を使ってみました。</p>
+<p><a href="https://webpack.js.org/guides/getting-started/">Getting Started</a> を参考に進めてみます。</p>
+<h2 id="環境">環境</h2>
+<p>webpack 4.5.0</p>
+<h2 id="webpack">webpack?</h2>
+<blockquote>
+<p>Concepts</p>
+<p>At its core, webpack is a static module bundler for modern JavaScript applications.</p>
+<p><cite><a href="https://webpack.js.org/concepts/">Concepts</a></cite></p>
+</blockquote>
+<p>モジュールバンドラーのようです。</p>
+<h2 id="basic-setup">Basic Setup</h2>
+<p>作業するためのディレクトリーを作成するようです。</p>
+<pre><code>$ mkdir webpack-demo &amp;&amp; cd webpack-demo
+</code></pre><p>プロジェクトを初期化するようです。</p>
+<pre><code>$ npm init -y
+Wrote to /path/to/webpack-demo/package.json:
+
+{
+  &quot;name&quot;: &quot;webpack-demo&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+
+</code></pre><p>webpack と webpack-cli のパッケージをインストールするようです。</p>
+<pre><code>$ npm install webpack webpack-cli --save-dev
+npm WARN deprecated nomnom@1.8.1: Package no longer supported. Contact support@npmjs.com for more info.
+npm WARN deprecated babel-preset-es2015@6.24.1: 🙌  Thanks for using Babel: we recommend using babel-preset-env now: please read babeljs.io/env to update!
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN webpack-demo@1.0.0 No description
+npm WARN webpack-demo@1.0.0 No repository field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.1.3 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;} (current: {&quot;os&quot;:&quot;linux&quot;,&quot;arch&quot;:&quot;x64&quot;})
+
++ webpack@4.5.0
++ webpack-cli@2.0.14
+added 751 packages from 417 contributors in 77.495s
+</code></pre><p>Babel の警告が出ていますが、 webpack は Babel に依存しているみたいです。
+babel-preset-es2015 のプリセットじゃなくて、 babel-preset-env のプリセットを使うように言われました。</p>
+<p>index.html と index.js を作成するようです</p>
+<p>project</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">  webpack-demo
+  |- package.json
+<span style="color:#a6e22e">+ |- index.html
+</span><span style="color:#a6e22e"></span><span style="color:#a6e22e">+ |- /src
+</span><span style="color:#a6e22e"></span><span style="color:#a6e22e">+   |- index.js
+</span></code></pre></div><p>src/index.js ファイルを次の通り作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">component</span>() {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+
+  <span style="color:#75715e">// Lodash, currently included via a script, is required for this line to work
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">element</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_</span>.<span style="color:#a6e22e">join</span>([<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#e6db74">&#39;webpack&#39;</span>], <span style="color:#e6db74">&#39; &#39;</span>);
+
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">element</span>;
+}
+
+document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">component</span>());
+</code></pre></div><p>Lodash は使ったことないのですが、 <code>join</code> して HTML に設定しているようです。</p>
+<p>index.html ファイルを次の通り作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!doctype html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Getting Started&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://unpkg.com/lodash@4.16.6&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./src/index.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>Lodash を <code>&lt;script&gt;</code> で読み込むようです。</p>
+<p>package.json ファイルを次のように修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">  {
+    &#34;name&#34;: &#34;webpack-demo&#34;,
+    &#34;version&#34;: &#34;1.0.0&#34;,
+    &#34;description&#34;: &#34;&#34;,
+<span style="color:#a6e22e">+   &#34;private&#34;: true,
+</span><span style="color:#a6e22e"></span><span style="color:#f92672">-   &#34;main&#34;: &#34;index.js&#34;,
+</span><span style="color:#f92672"></span>    &#34;scripts&#34;: {
+      &#34;test&#34;: &#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;
+    },
+    &#34;keywords&#34;: [],
+    &#34;author&#34;: &#34;&#34;,
+    &#34;license&#34;: &#34;ISC&#34;,
+    &#34;devDependencies&#34;: {
+      &#34;webpack&#34;: &#34;^4.0.1&#34;,
+      &#34;webpack-cli&#34;: &#34;^2.0.9&#34;
+    },
+    &#34;dependencies&#34;: {}
+  }
+</code></pre></div><p>パッケージを誤って公開してしまわないように private にして、 main エントリーを削除しているようです。</p>
+<p>これで、 index.html をブラウザーから開きます。</p>
+<p>すると、 Hello webpack と表示されました。</p>
+<p>まだ、ここでは webpack でバンドルしていない状態です。
+どんな結果になるか最初に確認しているのかな。
+webpack でバンドルしても同じ結果になるだろう、と。</p>
+<h2 id="creating-a-bundle">Creating a Bundle</h2>
+<p>index.html を dsit/ ディレクトリーに移動するようです。</p>
+<p>project</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">  webpack-demo
+  |- package.json
+<span style="color:#a6e22e">+ |- /dist
+</span><span style="color:#a6e22e"></span><span style="color:#a6e22e">+   |- index.html
+</span><span style="color:#a6e22e"></span><span style="color:#f92672">- |- index.html
+</span><span style="color:#f92672"></span>  |- /src
+    |- index.js
+</code></pre></div><p>Lodash のパッケージをインストールするようです。</p>
+<pre><code>$ npm install --save lodash
+npm WARN webpack-demo@1.0.0 No description
+npm WARN webpack-demo@1.0.0 No repository field.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.1.3 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;} (current: {&quot;os&quot;:&quot;linux&quot;,&quot;arch&quot;:&quot;x64&quot;})
+
++ lodash@4.17.5
+updated 1 package in 18.089s
+</code></pre><p>Lodash は <code>&lt;script&gt;</code> で読み込むのではなく、 npm のパッケージのものを使用してバンドルするみたいです。</p>
+<p>src/index.js を次のように修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;lodash&#39;</span>;
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">component</span>() {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;div&#39;</span>);
+
+  <span style="color:#75715e">// Lodash, now imported by this script
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">element</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_</span>.<span style="color:#a6e22e">join</span>([<span style="color:#e6db74">&#39;Hello&#39;</span>, <span style="color:#e6db74">&#39;webpack&#39;</span>], <span style="color:#e6db74">&#39; &#39;</span>);
+
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">element</span>;
+}
+
+document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">component</span>());
+</code></pre></div><p>ECMAScript Modules の <code>import</code> を使って Lodash のパッケージ(モジュール)を読み込むようです。
+webpack は Babel に依存しているようでしたので、 ECMAScript Modules の記述のままバンドルすることができるのかな。</p>
+<p>dist/index.html を次のように修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!doctype html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Getting Started&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>Lodash を読み込む <code>&lt;script&gt;</code> が消えて、 main.js を読み込むだけになりました。</p>
+<p>バンドルします。</p>
+<pre><code>$ npx webpack
+Hash: 5c528a4f6539a8a8f045
+Version: webpack 4.5.0
+Time: 7292ms
+Built at: 2018-4-6 14:19:48
+  Asset    Size  Chunks             Chunk Names
+main.js  70 KiB       0  [emitted]  main
+Entrypoint main = main.js
+   [1] (webpack)/buildin/module.js 519 bytes {0} [built]
+   [2] (webpack)/buildin/global.js 509 bytes {0} [built]
+   [3] ./src/index.js 263 bytes {0} [built]
+    + 1 hidden module
+
+WARNING in configuration
+The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/
+</code></pre><p>遅かった、かつ、警告が出ていますが、バンドルできたようです。</p>
+<p>dist/main.js が作成されていました。
+webpack のデフォルトの設定では、 dist ディレクトリーの main.js ファイルを作成するのかな。</p>
+<p>dist/index.html をブラウザーで開きます。</p>
+<p>すると、 Hello webpack と表示されました。</p>
+<p>最初、 dist/index.html に <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code> を記述しなかったら何も表示されませんでした。
+Microsoft Edge はコンソールにエラーも表示されませんでした。
+Firefox は次のエラーが表示されました。</p>
+<pre><code>SyntaxError: unterminated character class
+HTML ドキュメントの文字エンコーディングが宣言されていません。ドキュメントに US ASCII 外の文字が含まれている場合、ブラウザーの設定によっては文字化けすることがあります。ページの文字エンコーディングはドキュメント中または転送プロトコルで宣言されなければなりません。
+</code></pre><p>Lodash が悪いのかな。
+<code>&lt;script&gt;</code> で読み込んでいたファイル (<a href="https://unpkg.com/lodash@4.16.6">https://unpkg.com/lodash@4.16.6</a>) の中では <code>'\xe6': 'ae'</code> となっていたところが、バンドルしたファイル (dist/main.js) の中では <code>&quot;æ&quot;:&quot;ae&quot;</code> となっていました。
+hex で記述されていた文字列もバンドルすると純粋な文字列に置き換わってしまうのかな。</p>
+<h2 id="using-a-configuration">Using a Configuration</h2>
+<p>webpack.config.js ファイルを作成するようです。</p>
+<p>project</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">  webpack-demo
+  |- package.json
+<span style="color:#a6e22e">+ |- webpack.config.js
+</span><span style="color:#a6e22e"></span>  |- /dist
+    |- index.html
+  |- /src
+    |- index.js
+</code></pre></div><p>webpack.config.js ファイルを次のように作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;path&#39;</span>);
+
+<span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">entry</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;./src/index.js&#39;</span>,
+  <span style="color:#a6e22e">output</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">filename</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;bundle.js&#39;</span>,
+    <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">__dirname</span>, <span style="color:#e6db74">&#39;dist&#39;</span>)
+  }
+};
+</code></pre></div><p>webpack の設定ファイルは json とかじゃなく、 js みたいです。
+これは、 Gulp も同じだったかもしれません。
+でも、 config という名前だと json っていうイメージになってしまいます。
+json っぽく記述することもできるのかな。</p>
+<p><a href="https://webpack.js.org/configuration/">Configuration</a> を見ると、たくさん設定項目があるようでした。</p>
+<p>webpack.config.js ファイルを使ってバンドルします。</p>
+<pre><code>$ npx webpack --config webpack.config.js
+Hash: 112fee20be517f32d471
+Version: webpack 4.5.0
+Time: 7444ms
+Built at: 2018-4-6 14:52:06
+    Asset      Size  Chunks             Chunk Names
+bundle.js  69.9 KiB       0  [emitted]  main
+Entrypoint main = bundle.js
+   [1] (webpack)/buildin/module.js 519 bytes {0} [built]
+   [2] (webpack)/buildin/global.js 509 bytes {0} [built]
+   [3] ./src/index.js 256 bytes {0} [built]
+    + 1 hidden module
+
+WARNING in configuration
+The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/
+</code></pre><p>バンドルできたようです。</p>
+<p>dist/index.html ファイルを次のように修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!doctype html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Getting Started&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bundle.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>dist/index.html ファイルをブラウザーから開きます。</p>
+<p>すると、 Hello webpack と表示されました。</p>
+<h2 id="終わり">終わり</h2>
+<p><a href="https://webpack.js.org/">webpack</a> のトップのページを見ると、 bundle your styles, bundle your images とか記載されていて、もっとできそうでした。
+今回は、ちょっとこれだけではあまりメリットが感じられませんでした。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

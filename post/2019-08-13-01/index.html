@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>GATSBYJS を使った - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>GatsbyJS を使った</h1>
+    
+      <div><time>August 13, 2019</time></div>
+    
+    
+      <div><img alt="" src="/img/2019-08-13-01-01.png"></div>
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>GatsbyJS を使ってスタティックサイトを作った。
+それを GitLab にアップして、そこから Netlify が自動的にデプロイしてくれるようにした。</p>
+<h2 id="gatsbyjs">GatsbyJS</h2>
+<p>最初は次のサイトを参考にした。</p>
+<ul>
+<li><a href="https://www.gatsbyjs.org/tutorial/part-zero/#using-the-gatsby-cli">Set Up Your Development Environment | GatsbyJS</a></li>
+</ul>
+<p>Node.js と npm と Git はインストールしてあったから、それ以降から始めた。</p>
+<p>Gatsby CLI をインストールした。</p>
+<pre><code class="language-console" data-lang="console">npm install -g gatsby-cli.
+</code></pre><p>Gatsby サイトを作った。</p>
+<pre><code class="language-console" data-lang="console">gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+</code></pre><p>Starter という GitHub のリポジトリを引数に渡すらしい。
+次のリンクを参考に選んだ。</p>
+<ul>
+<li><a href="https://www.gatsbyjs.org/docs/starters/">Gatsby Starters | GatsbyJS</a></li>
+<li><a href="https://www.gatsbyjs.org/starters/?v=2">Starter Library | GatsbyJS</a></li>
+</ul>
+<p>この <code>gatsby new</code> コマンドで Git の最初のコミットまでしてくれるようで、グローバルに <code>user.name</code> と <code>user.email</code> を設定していなかったために、最初エラーになってしまった…。</p>
+<p>自分の環境に npm と <a href="https://yarnpkg.com/ja/">yarn</a> のパッケージマネージャーの２つがあったため、途中でどちらを使うか選ばされた。
+それから Starter で使われているパッケージのバージョンもかなりの数、選ばされた。</p>
+<p>作ったサイトを起動した。</p>
+<pre><code class="language-console" data-lang="console">gatsby develop
+</code></pre><p>これはかなり時間がかかる。
+Starter の作り方によるのか、それとも GatsbyJS 自体がこれくらいの時間がかかるのか。
+30 秒くらい待たされる。</p>
+<p>Hugo は一瞬なのに。</p>
+<p>そして、ターミナルに表示された http://localhost:8000/ へアクセスする。
+ちゃんと表示された。</p>
+<p>終了する時はターミナルから Ctrl + C。</p>
+<p>なんか、 <code>gatsby develop</code> で起動して、終了するとプロンプトが戻ってこなくなる。
+とりあえず放置。</p>
+<h2 id="gitlab-へ">GitLab へ</h2>
+<p>これを Netlify にデプロイしたいんだけど。
+一旦 GitLab へ PUSH!</p>
+<p>次のページを参考に。</p>
+<blockquote>
+<pre><code>## Git push using SSH
+git push --set-upstream git@gitlab.example.com:namespace/nonexistent-project.git master
+
+## Git push using HTTPS
+git push --set-upstream https://gitlab.example.com/namespace/nonexistent-project.git master
+</code></pre>
+<p><cite><a href="https://docs.gitlab.com/ee/gitlab-basics/create-project.html#push-to-create-a-new-project">Creating projects | GitLab</a></cite></p>
+</blockquote>
+<p>ターミナルにも表示されるけど、このままじゃ次から <code>git push origin master</code> でプッシュできないので、次のコマンドを入力する。</p>
+<pre><code class="language-console" data-lang="console">git remote add origin https://gitlab.example.com/namespace/nonexistent-project.git
+</code></pre><p>これで origin でいける。</p>
+<h2 id="netlify">Netlify</h2>
+<p>Netlify にサインインして [Sites] のタブから [New site from Git] をクリック。</p>
+<p>次のようなウィザード的なページが表示される。</p>
+<p><img src="/img/2019-08-13-01-01.png" alt=""></p>
+<p>GitHub, GitLab, Bitbucket から選択できる。
+今回は GitLab を選択してウィザードの通りに進めるだけ。</p>
+<p>Build command にはは [gatsby build] を選択。
+Publish directory には [public/] を選択。</p>
+<p>そして Deploy site!</p>
+<p>xxxxx-xxxxx-xxxxx のような名前でサイトが作成された。
+netlify.com のサブドメインなので、 xxxxx-xxxxx-xxxxx.netlify.com のようになっていた。
+これをカスタムドメインにすることもできるようだ。</p>
+<p>deploy というボタンをクリック！</p>
+<p>Deploy in progress と表示されている。
+Deploy log には「5:03:22 PM: Build ready to start」のように表示されている。</p>
+<p>そのまま動かない。</p>
+<p>しばらく待つ。</p>
+<p>約３分後。</p>
+<p>Deploy log にログが出力され始めた。
+長い…。
+こんなに待つのか…。</p>
+<p>たくさんログが出力される。</p>
+<p>「5:07:44 PM: success run static queries — 0.010」のようなログが表示された。
+終わったようなので、上に戻ると Preview deploy のリンクが表示されている。
+リンクをクリックするとデプロイがちゃんとできたようで、表示された。</p>
+<h2 id="終わり">終わり</h2>
+<p>Hugo を使って GitHub Pages にデプロイする時はスクリプトを使っていたのだけど。</p>
+<p>Netlify はウィザードで選択していくだけでデプロイできた。
+しかもその後は GitLab にプッシュするだけでデプロイしてくれる。
+すごい。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

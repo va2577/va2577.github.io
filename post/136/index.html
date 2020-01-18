@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のテーマを作ってみます 8(RSS, SITEMAP, ROBOTS.TXT) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のテーマを作ってみます 8(RSS, Sitemap, Robots.txt)</h1>
+    
+      <div><time>April 16, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/135/">前回の記事</a>では、 <a href="https://gohugo.io/templates/pagination/">Pagination</a> を使ってみました。
+今回は、 <a href="https://gohugo.io/templates/rss/">RSS</a> と <a href="https://gohugo.io/templates/sitemap-template/">Sitemap</a> と <a href="https://gohugo.io/templates/robots/">Robots.txt</a> を使ってみます。</p>
+<p>最初に、<a href="/post/115/">この記事</a>の通り、サイトとテーマの骨組みを作成しておきました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Hugo Static Site Generator v0.38.2</li>
+</ul>
+<h2 id="rss-templates">RSS Templates</h2>
+<blockquote>
+<p>RSS Templates
+Hugo ships with its own RSS 2.0 template that requires almost no configuration, or you can create your own RSS templates.</p>
+<p><cite><a href="https://gohugo.io/templates/rss/">RSS Templates | Hugo</a></cite></p>
+</blockquote>
+<p>Hugo は、何も設定しなくても RSS 2.0 の仕様に沿ったファイルを作成してくれるようです。</p>
+<blockquote>
+<p>The Embedded rss.xml</p>
+<p>This is the default RSS template that ships with Hugo. It adheres to the RSS 2.0 Specification.</p>
+<pre><code>&lt;rss version=&quot;2.0&quot; xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+  &lt;channel&gt;
+    &lt;title&gt;{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}&lt;/title&gt;
+    &lt;link&gt;{{ .Permalink }}&lt;/link&gt;
+    &lt;description&gt;Recent content {{ if ne  .Title  .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}&lt;/description&gt;
+…略…
+</code></pre>
+<p><cite><a href="https://gohugo.io/templates/rss/#the-embedded-rss-xml">The Embedded rss.xml</a></cite></p>
+</blockquote>
+<p>これが Hugo の標準の RSS template のようです。
+詳しくないのですが、 1 行目の <code>&lt;rss version=&quot;2.0&quot; xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;&gt;</code> の記述について、 RSS 2.0 なのか、 ATOM 1.0 なのか、分からない始まり方しているように見えます。</p>
+<blockquote>
+<p>今後の展望</p>
+<p>RSS 1.0 と RSS 2.0 の関係について、バージョンを表す数値の大小関係から、前者が旧規格で後者が後継規格であるという誤解が見受けられるが、これは事実ではない。RSS 2.0 はシンプルさの代償として RSS 1.0 の備える（RDFによる）強力な表現力を放棄したため、RSS 1.0 を置き換えるものではない。従って RSS 1.0 は場面に応じて今後も継続利用されていくと目される。[要出典]</p>
+<p>…略…</p>
+<p>今日において、RSS 1.0、RSS 2.0 そして Atom は、いずれにも集約されることなく各々が広く普及している。RSSリーダーの多くはそれら全てに対応しており、一方のウェブサイト側も、フィード配信のためにそれらのうち複数を利用することも珍しくない。</p>
+<p><cite><a href="https://ja.wikipedia.org/wiki/RSS">RSS - Wikipedia</a></cite></p>
+</blockquote>
+<p>RSS 1.0, RSS 2.0, Atom 1.0 と、それぞれ事情があるようです。
+Hugo で複数のフィード配信ができるようには見えませんでした。
+できることは、 <a href="https://gohugo.io/templates/rss/#lookup-order-for-rss-templates">Lookup Order for RSS Templates</a> の優先度の高いファイルを作成して、いずれか一つの仕様に合わせておくことくらいかな。</p>
+<p>今回は、 Hugo の標準の RSS template を使ってみます。</p>
+<h3 id="content">content</h3>
+<p>次のファイルを作成しておきました。</p>
+<pre><code>$ install -d content/post
+$ for i in $(seq -f %02g 1 31)
+do
+cat &lt;&lt;word &gt; content/post/post-${i}.md
+---
+title: post ${i} title
+date: 2018-01-${i}
+---
+This is post ${i} *content*.
+
+This is paragraph **2**.
+
+This is paragraph ***3***.
+word
+done
+</code></pre><h3 id="hugo-のサーバーで確認">Hugo のサーバーで確認</h3>
+<p>次のコマンドを入力して Hugo のサーバーを起動しました。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/index.xml にアクセスしました。
+すると、次のようなページが表示されました。</p>
+<p><img src="/img/136-01.png" alt=""></p>
+<p>上のは Microsoft Edge でアクセスしたものです。
+Firefox でアクセスすると、フィードリーダーの購読ボタンとか表示されました。</p>
+<p><img src="/img/136-02.png" alt=""></p>
+<p>ここで確認したのは Homepage のアドレスだけでしたが、 Section ごとにも RSS は作成されているようで、 http://localhost:1313/post/index.xml では post Section の RSS が確認できました。</p>
+<p>Ctrl + C で Hugo のサーバーを終了しておきます。</p>
+<h3 id="rss-templates-のまとめ">RSS Templates のまとめ</h3>
+<p>RSS は使ったことがないので、どれくらい一般的な需要があるのかわからないのですが、 Hugo が自動的に作成してくれるので確認してみました。
+使っている人いるのかな。</p>
+<h2 id="sitemap-template">Sitemap Template</h2>
+<blockquote>
+<p>Sitemap Template</p>
+<p>Hugo ships with a built-in template file observing the v0.9 of the Sitemap Protocol, but you can override this template if needed.</p>
+<p><cite><a href="https://gohugo.io/templates/sitemap-template/">Sitemap Template | Hugo</a></cite></p>
+</blockquote>
+<p>Hugo は、何も設定しなくても、 Sitemap Protocol v0.9 の仕様に合わせたファイルを作成してくれるようです。</p>
+<blockquote>
+<p>If provided, Hugo will use /layouts/sitemap.xml instead of the internal sitemap.xml template that ships with Hugo.</p>
+<p><cite><a href="https://gohugo.io/templates/sitemap-template/">Sitemap Template | Hugo</a></cite></p>
+</blockquote>
+<p>必要であれば /layouts/sitemap.xml を作成することでオーバーライドすることができるようです。</p>
+<p>今回は、 Hugo の標準の Sitemap を使ってみます。</p>
+<h3 id="content-1">content</h3>
+<p><a href="#content">RSS Templates</a> で作成した content をそのまま使います。</p>
+<h3 id="hugo-のサーバーで確認-1">Hugo のサーバーで確認</h3>
+<p>次のコマンドを入力して Hugo のサーバーを起動しました。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/sitemap.xml にアクセスしました。
+すると、次のようなページが表示されました。</p>
+<p><img src="/img/136-03.png" alt=""></p>
+<p><code>&lt;url&gt;</code> の中に <code>&lt;loc&gt;</code> と <code>&lt;lastmod&gt;</code> しか出力されていなかったのですが、 <code>&lt;changefreq&gt;</code> と <code>&lt;priority&gt;</code> は設定ファイルに設定しておくもののようでした。</p>
+<blockquote>
+<p>Configure sitemap.xml</p>
+<p>Defaults for &lt;changefreq&gt;, &lt;priority&gt; and filename values can be set in the site’s config file, e.g.:</p>
+<p>config.toml</p>
+<pre><code>[sitemap]
+  changefreq = &quot;monthly&quot;
+  filename = &quot;sitemap.xml&quot;
+  priority = 0.5
+</code></pre>
+<p><cite><a href="https://gohugo.io/templates/sitemap-template/#configure-sitemap-xml">Configure sitemap.xml</a></cite></p>
+</blockquote>
+<p>あまり効果はよくわからないですが、必要そうなら設定しておこうと思います。</p>
+<p>Ctrl + C で Hugo のサーバーを終了しておきます。</p>
+<h3 id="sitemap-template-のまとめ">Sitemap Template のまとめ</h3>
+<p>Sitemap を作成しておくと、検索エンジンに早くインデックスを作ってもらえるようです。
+実際の効果はどうかわからないのですが、 Hugo がほぼ自動的に作ってくれるのでそのまま使おうと思います。</p>
+<h2 id="robotstxt-file">Robots.txt File</h2>
+<blockquote>
+<p>Robots.txt File</p>
+<p>Hugo can generate a customized robots.txt in the same way as any other template.</p>
+<p>To create your robots.txt as a template, first set the enableRobotsTXT value to true in your configuration file. By default, this option generates a robots.txt with the following content, which tells search engines that they are allowed to crawl everything:</p>
+<pre><code>User-agent: *
+</code></pre>
+<p><cite><a href="https://gohugo.io/templates/robots/">Robots.txt File | Hugo</a></cite></p>
+</blockquote>
+<p>Hugo は、設定ファイルに <code>enableRobotsTXT = true</code> と記述することで、 robots.txt を作成してくれるようです。
+標準では、すべてのコンテンツに対してクロールを許可する設定になっているようです。</p>
+<blockquote>
+<p>Robots.txt Template Lookup Order</p>
+<p>The lookup order for the robots.txt template is as follows:</p>
+<ul>
+<li>/layouts/robots.txt</li>
+<li>/themes/&lt;THEME&gt;/layouts/robots.txt</li>
+</ul>
+<p>If you do not want Hugo to create a default robots.txt or leverage the robots.txt template, you can hand code your own and place the file in static. Remember that everything in the static directory is copied over as-is when Hugo builds your site.</p>
+<p><cite><a href="https://gohugo.io/templates/robots/#robots-txt-template-lookup-order">Robots.txt Template Lookup Order</a></cite></p>
+</blockquote>
+<p>layouts/robots.txt や static/robots.txt を作成することでカスタマイズできるようです。</p>
+<p>今回は、 Hugo の標準の robots.txt を作成してみます。</p>
+<h3 id="configtoml">config.toml</h3>
+<p>設定ファイル (config.(yaml|toml|json)) に次の記述を追加しました。
+TOML の例です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#a6e22e">enableRobotsTXT</span> = <span style="color:#66d9ef">true</span>
+</code></pre></div><h3 id="hugo-のサーバーで確認-2">Hugo のサーバーで確認</h3>
+<p>次のコマンドを入力して Hugo のサーバーを起動しました。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><p>http://localhost:1313/robots.txt にアクセスしました。
+すると、次のようなページが表示されました。</p>
+<p><img src="/img/136-04.png" alt=""></p>
+<h3 id="robotstxt-file-のまとめ">Robots.txt File のまとめ</h3>
+<blockquote>
+<p>Google がサポートする非グループ メンバー レコード</p>
+<p>sitemap</p>
+<p>Google、Ask、Bing、Yahoo でサポートされます。sitemaps.org に定義されています。</p>
+<p>使用方法:</p>
+<pre><code>sitemap: [absoluteURL]
+</code></pre>
+<p>[absoluteURL] にはサイトマップ、サイトマップ インデックス ファイル、または同等の URL を指定します。この URL は robots.txt ファイルと同じホスト上でなくてもかまいません。複数の sitemap エントリを指定できます。非グループ メンバー レコードであるため、特定のユーザーエージェントには関連付けられません。すべてのクローラが使用できます（不許可に指定されているクローラを除く）。</p>
+<p><cite><a href="https://developers.google.com/search/reference/robots_txt#google---">Robots.txt の仕様  |  Search  |  Google Developers</a></cite></p>
+</blockquote>
+<p>サイトマップをクローラーに知らせるには、 robots.txt に <code>sitemap: https://domain.jp/sitemap.xml</code> のように記述すると良いそうです。
+この <code>domain.jp</code> は自分のサイトに合わせて変更します。</p>
+<h2 id="終わり">終わり</h2>
+<p>RSS, Sitemap, Robots.txt のいずれもほぼ自動的に Hugo が作ってくれるので、そのまま使おうと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gohugo.io/templates/rss/">RSS Templates | Hugo</a></li>
+<li><a href="https://gohugo.io/templates/sitemap-template/">Sitemap Template | Hugo</a></li>
+<li><a href="https://gohugo.io/templates/robots/">Robots.txt File | Hugo</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

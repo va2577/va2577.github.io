@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>NODE.JS で ECMASCRIPT MODULES を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Node.js で ECMAScript Modules を使ってみました</h1>
+    
+      <div><time>March 30, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>以前、 <a href="/post/18/">ECMAScript 2015 (ES6) in Node.js で import と export がエラーになる</a>という記事を書きました。
+この記事の中では、結局、 <code>import</code> と <code>export</code> を使わないで実行する方向で終わってしまいました。
+今回は、 <code>import</code> と <code>export</code> を使って、とりあえずでも、実行する方法を調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Node.js v8.9.4</li>
+</ul>
+<h2 id="ecmascript-modules-の実装">ECMAScript Modules の実装</h2>
+<blockquote>
+<p>ECMAScript Modules</p>
+<p>Stability: 1 - Experimental</p>
+<p><cite><a href="https://nodejs.org/dist/latest-v8.x/docs/api/esm.html#esm_ecmascript_modules">ECMAScript Modules | Node.js v8.10.0 Documentation</a></cite></p>
+</blockquote>
+<p><a href="/post/18/">記事</a> を書いたのが 2016 年なので、もう 2 年も前なのですが、調べてみると、 2018 年の現在でも、まだ、 ECMAScript Modules は正式な実装になっていないようです。
+実験的な実装のようです。</p>
+<blockquote>
+<p>Enabling</p>
+<p>The &ndash;experimental-modules flag can be used to enable features for loading ESM modules.
+Once this has been set, files ending with .mjs will be able to be loaded as ES Modules.
+node &ndash;experimental-modules my-app.mjs</p>
+<p><cite><a href="https://nodejs.org/dist/latest-v8.x/docs/api/esm.html#esm_ecmascript_modules">ECMAScript Modules | Node.js v8.10.0 Documentation</a></cite></p>
+</blockquote>
+<p>実験的だとしても、とにかく ECMAScript Modules を使うには、ファイルの拡張子を .mjs にして、オプションに <code>--experimental-modules</code> をつけるようです。</p>
+<h2 id="サンプルのファイル">サンプルのファイル</h2>
+<p>以前の<a href="/post/18/">記事</a>と同じですが、次の 2 つのファイルを作成しました。</p>
+<p><code>import</code> しているファイル。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// a.mjs
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">b</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;./b.mjs&#39;</span>;
+
+(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">b: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">b</span>()<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>)
+})()
+</code></pre></div><p><code>export</code> しているファイル。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// b.mjs
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> () =&gt; {
+  <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;b!&#39;</span>;
+}
+</code></pre></div><p>ファイルの拡張子は .mjs にしました。
+import しているファイル (a.mjs) は .mjs じゃなくても良さそうに思いましたが、 .mjs じゃないとダメなようです。</p>
+<h2 id="実行する">実行する</h2>
+<p>&ndash;experimental-modules オプションをつけて実行してみます。</p>
+<pre><code>$ $ node --experimental-modules a.mjs
+(node:204) ExperimentalWarning: The ESM module loader is experimental.
+b: b!
+</code></pre><p>うーん、実行したときにも、 &ldquo;ESM module loader is experimental&rdquo; と警告が出力されます。</p>
+<h2 id="終わり">終わり</h2>
+<p>なんでまだ ECMAScript Modules が正式に実装されていないのかな。
+と疑問を持ったのですが、次の記事にたくさん勉強になることが書いてありました。</p>
+<blockquote>
+<p>そもそも ECMAScript 2015 自身で定義されたのは構文だけなので、構文はともかく、どうやってモジュールを取ってくるかという Loader の部分がまだ決まりきっていません。</p>
+<p><a href="https://whatwg.github.io/loader/">https://whatwg.github.io/loader/</a></p>
+<p>現時点はいくつも決めなきゃいけないポイントがあって</p>
+<ul>
+<li>参照解決処理</li>
+<li>取得処理</li>
+<li>script タグでどう書くのか</li>
+<li>メモ化処理(所謂caching)</li>
+</ul>
+<p>の全てを決めて一旦ロードマップ上のMilestone 0 が達成されるような状況です。</p>
+<p><cite><a href="http://yosuke-furukawa.hatenablog.com/entry/2016/05/10/111102">ES Modules と Node.js について - from scratch</a></cite></p>
+</blockquote>
+<p>この記事が書かれたのが、 2016-05-10 のことのようですので、これももう 2 年近く前のことです。</p>
+<p>言語仕様の決定は大変そうです。
+でも、そういうことに関わってみたいです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON-HIGHCHARTS と PANDAS-HIGHCHARTS を使って JUPYTER NOTEBOOK にローソク足を表示してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>python-highcharts と pandas-highcharts を使って Jupyter Notebook にローソク足を表示してみました</h1>
+    
+      <div><time>May 18, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/167/">前回</a>、 <code>%%html</code> と <code>%%javascript</code> マジックコマンドを使って Highcharts のローソク足を表示してみました。
+今回は、 python-highcharts と pandas-highcharts を使ってローソク足を表示してみました。</p>
+<p>結果として、 python-highcharts でローソク足を表示することができましたが、 pandas-highcharts は candlestick をまだサポートしていないようで、表示することができませんでした。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Python 3.5.2</li>
+<li>numpy-1.14.3</li>
+<li>pandas-0.22.0</li>
+<li>jupyter 1.0.0</li>
+<li>jupyter-core 4.4.0</li>
+<li>python-highcharts 0.4.1</li>
+<li>pandas-highcharts 0.5.2</li>
+<li>requests 2.18.4</li>
+</ul>
+<p>Jupyter Notebook は<a href="/post/148/#installing-jupyter-with-pip">この記事</a>の通りインストールしておきました。
+pandas も<a href="/post/149/#pandas">この記事</a>の通りインストールしておきました。
+それから requests も <code>pip install requests</code> でインストールしておきました。</p>
+<h2 id="python-highcharts">python-highcharts</h2>
+<p>python-highcharts から使ってみます。</p>
+<h3 id="overview">Overview</h3>
+<blockquote>
+<p>python-highcharts is a simple translation layer between Python and Javascript for Highcharts projects (highcharts, highmaps, and highstocks).</p>
+<p>In addition, python-highcharts integrates with <a href="https://github.com/jupyter/notebook">Jupyter notebook</a>, which enables you to render Highcharts, Highmaps, and Highstock visualizations directly in notebooks. See examples <a href="https://github.com/kyper-data/python-highcharts/tree/developer/examples/ipynb">here</a>.</p>
+<p>The original framework was inspired by <a href="https://github.com/areski/python-nvd3">python-nvd3</a> and <a href="https://github.com/fidyeates/PyHighcharts">PyHighcharts</a>.</p>
+<p><cite><a href="https://github.com/kyper-data/python-highcharts#overview">kyper-data/python-highcharts: A simple translation layer between Python and Javascript for Highcharts projects (highcharts, highmaps, and highstocks).</a></cite></p>
+</blockquote>
+<p>Highchart 用の Python と JavaScript の間の単純な翻訳レイヤーのようです。</p>
+<p>Jupyter Notebook と統合されていて、チャートを直接レンダリングすることができるようです。
+Jupyter Notebook でしか使わないので、それ以外にどういう使い方をするのか見てみたら、チャートを表示するための、素の HTML を返してくれるようでした。
+通常の pandas-highcharts の <a href="https://github.com/kyper-data/python-highcharts/blob/developer/examples/highstock/candlestick-and-volume.py">example</a> では最後に <code>H.htmlcontent</code> と記述しているのに対して、 Jupyter Notebook 向けの pandas-highcharts の <a href="https://github.com/kyper-data/python-highcharts/blob/developer/examples/ipynb/highstock/candlestick-and-volume.ipynb">example</a> では最後に <code>H</code> と記述していました。
+(<code>H</code> は python-highcharts の Highcharts オブジェクト)</p>
+<h3 id="installation">Installation</h3>
+<blockquote>
+<p>python-highcharts supports Python 2.7/3.4+ and is available on PyPI. To install:</p>
+<pre><code>pip install python-highcharts
+</code></pre>
+<p><cite><a href="https://github.com/kyper-data/python-highcharts#installation">kyper-data/python-highcharts: A simple translation layer between Python and Javascript for Highcharts projects (highcharts, highmaps, and highstocks).</a></cite></p>
+</blockquote>
+<p>pip で普通にインストールすればいいみたいです。</p>
+<pre><code>$ pip install python-highcharts
+Collecting python-highcharts
+  Downloading https://files.pythonhosted.org/packages/68/3e/35468ee90e1d444f53e207b9f51d1bb64b83c714aaa529bcf7892d8c59ad/python-highcharts-0.4.1.tar.gz (52kB)
+    100% |████████████████████████████████| 61kB 1.0MB/s
+Requirement already satisfied: Jinja2 in /path/to/dir/lib/python3.5/site-packages (from python-highcharts) (2.10)
+Collecting future (from python-highcharts)
+  Downloading https://files.pythonhosted.org/packages/00/2b/8d082ddfed935f3608cc61140df6dcbf0edea1bc3ab52fb6c29ae3e81e85/future-0.16.0.tar.gz (824kB)
+    100% |████████████████████████████████| 829kB 1.3MB/s
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /path/to/dir/lib/python3.5/site-packages (from Jinja2-&gt;python-highcharts) (1.0)
+Building wheels for collected packages: python-highcharts, future
+  Running setup.py bdist_wheel for python-highcharts ... done
+  Stored in directory: /home/user/.cache/pip/wheels/1f/e2/78/f01d332a34554dbd90ba9f30529b3aeeb89ab41a8f7e374316
+  Running setup.py bdist_wheel for future ... done
+  Stored in directory: /home/user/.cache/pip/wheels/bf/c9/a3/c538d90ef17cf7823fa51fc701a7a7a910a80f6a405bf15b1a
+Successfully built python-highcharts future
+Installing collected packages: future, python-highcharts
+Successfully installed future-0.16.0 python-highcharts-0.4.1
+</code></pre><p>future と python-highcharts がインストールされたみたいです。</p>
+<h3 id="highstock-の-candlestick-ローソク足">HighStock の candlestick (ローソク足)</h3>
+<p>できないかと思っていたのですが、 python-highcharts でローソク足を表示することができるようでした。
+candlestick の <a href="https://github.com/kyper-data/python-highcharts/blob/master/examples/highstock/candlestick-and-volume.py">example</a> もありました。
+<a href="https://nbviewer.jupyter.org/github/kyper-data/python-highcharts/blob/master/examples/ipynb/highstock/candlestick-and-volume.ipynb">Jupyter Notebook Viewer</a> から example のローソク足のチャートが見られます。</p>
+<blockquote>
+<pre><code>H.add_data_set(ohlc, 'candlestick', 'AAPL', dataGrouping = {
+                    'units': groupingUnits
+                }
+)
+
+# …略…
+
+H.set_dict_options(options)
+</code></pre>
+<p><cite><a href="https://nbviewer.jupyter.org/github/kyper-data/python-highcharts/blob/master/examples/ipynb/highstock/candlestick-and-volume.ipynb">Highstock Demos | Jupyter Notebook Viewer</a></cite></p>
+</blockquote>
+<p><code>H.add_data_set</code> でデータを設定して、 <code>H.set_dict_options</code> でオプションを設定してあげればよさそうです。
+やってることは (<a href="https://www.highcharts.com/stock/demo/candlestick-and-volume">Highstock のデモ</a>)と同じように見えました。</p>
+<h3 id="モジュールを読み込む">モジュールを読み込む</h3>
+<p>pandas でデータを扱いたいので pandas を読み込みました。
+requests は<a href="/post/146/">みんかぶ FX からレートを取ってくる</a>ために読み込みました。
+ローソク足を表示するために Highstock を読み込みました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> requests
+<span style="color:#f92672">from</span> highcharts <span style="color:#f92672">import</span> Highstock
+</code></pre></div><h3 id="データを取ってくる">データを取ってくる</h3>
+<p>以前、<a href="/post/146/">みんかぶ FX のチャートのレートを取得してみました</a>でやったのと同じようにデータを取ってきました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">headers <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">User-Agent</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134</span><span style="color:#e6db74">&#39;</span> }
+r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://fx.minkabu.jp/api/v2/bar/USDJPY/daily.json?count=240</span><span style="color:#e6db74">&#39;</span>, headers<span style="color:#f92672">=</span>headers)
+r<span style="color:#f92672">.</span>raise_for_status()
+r<span style="color:#f92672">.</span>json()[:<span style="color:#ae81ff">10</span>]
+</code></pre></div><p>結果です。</p>
+<pre><code>[[1497474000000, '109.554', '110.979', '109.258', '110.911'],
+ [1497560400000, '110.925', '111.415', '110.637', '110.89'],
+ [1497819600000, '110.841', '111.601', '110.704', '111.526'],
+ [1497906000000, '111.514', '111.782', '111.306', '111.454'],
+ [1497992400000, '111.434', '111.738', '111.035', '111.375'],
+ [1498078800000, '111.337', '111.446', '110.93', '111.319'],
+ [1498165200000, '111.32', '111.427', '111.142', '111.226'],
+ [1498424400000, '111.157', '111.939', '111.101', '111.86'],
+ [1498510800000, '111.82', '112.464', '111.459', '112.337'],
+ [1498597200000, '112.337', '112.416', '111.829', '112.28']]
+</code></pre><p>2 次元配列の形式になっていること、日時は Unix エポックであること、 OHLC が <code>'109.554'</code> のようにシングルクォーテーションで囲まれているところがポイントだと思いました。</p>
+<h3 id="pandas-の-dataframe-にする">pandas の DataFrame にする</h3>
+<p>DataFrame にしました。</p>
+<pre><code>df = pd.DataFrame(data=r.json(), columns=['time', 'open', 'high', 'low', 'close'])
+df.head()
+</code></pre><p>結果です。</p>
+<pre><code>	time 	open 	high 	low 	close
+0 	1497474000000 	109.554 	110.979 	109.258 	110.911
+1 	1497560400000 	110.925 	111.415 	110.637 	110.89
+2 	1497819600000 	110.841 	111.601 	110.704 	111.526
+3 	1497906000000 	111.514 	111.782 	111.306 	111.454
+4 	1497992400000 	111.434 	111.738 	111.035 	111.375
+</code></pre><h3 id="時刻を-eest-にする">時刻を EEST にする</h3>
+<p>以前、<a href="/post/162/#時刻を-eest-にする">時刻を EEST にした</a>ことがあったのですが、同じように EEST にしました。
+でも、 python-highcharts の example を見ると Unix エポックでデータを渡していたので datetime 型から int64 型に戻しています。</p>
+<blockquote>
+<p>String value sent to series.data, expected Number</p>
+<p><cite><a href="https://www.highcharts.com/errors/14">Highcharts Error #14</a></cite></p>
+</blockquote>
+<p>それから、 OHLC が str 型になってしまっていて、このまま Highstock に渡してもエラーになってしまうので、 float64 型にしました。</p>
+<pre><code># [From Timestamps to Epoch](https://pandas.pydata.org/pandas-docs/stable/timeseries.html#from-timestamps-to-epoch)
+utc = pd.to_datetime(df['time'], unit='ms')
+utc3 = utc + pd.DateOffset(hours=3)
+epoch = (utc3 - pd.Timestamp(&quot;1970-01-01&quot;)) / pd.Timedelta('1ms')
+data1 = { 'time': epoch.astype('int64').values, 'open': df['open'].astype('float64').values, 'high': df['high'].astype('float64').values, 'low': df['low'].astype('float64').values, 'close': df['close'].astype('float64').values}
+columns1 = ['time', 'open', 'high', 'low', 'close']
+df2 = pd.DataFrame(data=data1, columns=columns1)
+df2.head()
+</code></pre><p>結果です。</p>
+<pre><code>time 	open 	high 	low 	close
+0 	1497484800000 	109.554 	110.979 	109.258 	110.911
+1 	1497571200000 	110.925 	111.415 	110.637 	110.890
+2 	1497830400000 	110.841 	111.601 	110.704 	111.526
+3 	1497916800000 	111.514 	111.782 	111.306 	111.454
+4 	1498003200000 	111.434 	111.738 	111.035 	111.375
+</code></pre><p><code>df.head()</code> で表示してしまったので、型が把握しづらいですが、 <code>df.dtypes</code> で float64 になっていることを確認しました。</p>
+<h3 id="ローソク足のチャートを表示する">ローソク足のチャートを表示する</h3>
+<p>example をもとに <code>H.add_data_set</code> と <code>H.set_dict_options</code> を記述しました。</p>
+<p><code>H.add_data_set</code> の方は、 <a href="/post/167/#チャートの表示-1">Highstock を使ったとき</a>と同じデータの形式を渡しているようなので、 <code>df2.values.tolist()</code> のように日時と OHLC を持つ 2 次元配列の形式で渡しました。</p>
+<p><code>H.set_dict_options</code> の方は、最低限のオプションを指定して渡しました。</p>
+<pre><code>H = Highstock()
+H.add_data_set(df2.values.tolist(), 'candlestick', '米ドル/円')
+
+options = {
+    'rangeSelector': {
+        'selected': 1
+    },
+    'title': {
+        'text': '米ドル/円 daily'
+    }
+}
+H.set_dict_options(options)
+
+H
+</code></pre><h3 id="gist-のソース">Gist のソース</h3>
+<p><a href="https://gist.github.com/va2577/979cf0f0c2c74b0c08dbb3ca3521c4c1">Gist</a> にアップしました。
+<a href="https://nbviewer.jupyter.org/gist/va2577/979cf0f0c2c74b0c08dbb3ca3521c4c1">Jupyter Notebook Viewer</a> から見ることができます。</p>
+<h2 id="pandas-highcharts">pandas-highcharts</h2>
+<blockquote>
+<p>pandas-highcharts is a Python package which allows you to easily build Highcharts plots with pandas.DataFrame objects.</p>
+<p><cite><a href="https://github.com/gtnx/pandas-highcharts#what-is-it">What is it</a></cite></p>
+</blockquote>
+<p>pandas の DataFrame を Highcharts のチャートに表示してくれるようです。</p>
+<h3 id="installation-1">Installation</h3>
+<blockquote>
+<p>Install the package using pip</p>
+<pre><code>pip install pandas-highcharts
+</code></pre>
+<p><cite><a href="https://github.com/gtnx/pandas-highcharts#installation">Installation</a></cite></p>
+</blockquote>
+<p>pip でインストールすればいいみたいです。</p>
+<pre><code>$ pip install pandas-highcharts
+Collecting pandas-highcharts
+  Downloading https://files.pythonhosted.org/packages/1a/70/fe7201bb6750e26dbf662d5b0f12fe6d41a4e3edf5e49314597913026bd1/pandas-highcharts-0.5.2.tar.gz
+Requirement already satisfied: pandas in /path/to/dir/lib/python3.5/site-packages (from pandas-highcharts) (0.22.0)
+Requirement already satisfied: ipython in /path/to/dir/lib/python3.5/site-packages (from pandas-highcharts) (6.3.1)
+Collecting coverage (from pandas-highcharts)
+  Downloading https://files.pythonhosted.org/packages/2c/c0/8047b7cbbcdbd7d21f8d68126196b7915da892c5af3d1a99dba082d33ec0/coverage-4.5.1-cp35-cp35m-manylinux1_x86_64.whl (202kB)
+    100% |████████████████████████████████| 204kB 649kB/s
+Requirement already satisfied: python-dateutil&gt;=2 in /path/to/dir/lib/python3.5/site-packages (from pandas-&gt;pandas-highcharts) (2.7.2)
+Requirement already satisfied: pytz&gt;=2011k in /path/to/dir/lib/python3.5/site-packages (from pandas-&gt;pandas-highcharts) (2018.4)
+Requirement already satisfied: numpy&gt;=1.9.0 in /path/to/dir/lib/python3.5/site-packages (from pandas-&gt;pandas-highcharts) (1.14.3)
+Requirement already satisfied: simplegeneric&gt;0.8 in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (0.8.1)
+Requirement already satisfied: setuptools&gt;=18.5 in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (39.1.0)
+Requirement already satisfied: backcall in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (0.1.0)
+Requirement already satisfied: jedi&gt;=0.10 in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (0.12.0)
+Requirement already satisfied: pickleshare in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (0.7.4)
+Requirement already satisfied: pexpect; sys_platform != &quot;win32&quot; in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (4.5.0)
+Requirement already satisfied: prompt-toolkit&lt;2.0.0,&gt;=1.0.15 in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (1.0.15)
+Requirement already satisfied: traitlets&gt;=4.2 in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (4.3.2)
+Requirement already satisfied: decorator in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (4.3.0)
+Requirement already satisfied: pygments in /path/to/dir/lib/python3.5/site-packages (from ipython-&gt;pandas-highcharts) (2.2.0)
+Requirement already satisfied: six&gt;=1.5 in /path/to/dir/lib/python3.5/site-packages (from python-dateutil&gt;=2-&gt;pandas-&gt;pandas-highcharts) (1.11.0)
+Requirement already satisfied: parso&gt;=0.2.0 in /path/to/dir/lib/python3.5/site-packages (from jedi&gt;=0.10-&gt;ipython-&gt;pandas-highcharts) (0.2.0)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /path/to/dir/lib/python3.5/site-packages (from pexpect; sys_platform != &quot;win32&quot;-&gt;ipython-&gt;pandas-highcharts) (0.5.2)
+Requirement already satisfied: wcwidth in /path/to/dir/lib/python3.5/site-packages (from prompt-toolkit&lt;2.0.0,&gt;=1.0.15-&gt;ipython-&gt;pandas-highcharts) (0.1.7)
+Requirement already satisfied: ipython-genutils in /path/to/dir/lib/python3.5/site-packages (from traitlets&gt;=4.2-&gt;ipython-&gt;pandas-highcharts) (0.2.0)
+Building wheels for collected packages: pandas-highcharts
+  Running setup.py bdist_wheel for pandas-highcharts ... done
+  Stored in directory: /home/user/.cache/pip/wheels/80/19/70/4d06e20e74ccdca862e7bcb5b1a9da97b3da45dbf1c7d26416
+Successfully built pandas-highcharts
+Installing collected packages: coverage, pandas-highcharts
+Successfully installed coverage-4.5.1 pandas-highcharts-0.5.2
+</code></pre><p>インストールできました。
+coverage と pandas-highcharts がインストールされたようです。</p>
+<h3 id="dataframe-を作るまで">DataFrame を作るまで</h3>
+<p>データを取ってきて、 pandas の DataFrame を作るところまでは上の <a href="#python-highcharts">python-highcharts</a> と同様に進めました。</p>
+<h3 id="ローソク足のチャートを表示する-1">ローソク足のチャートを表示する</h3>
+<p>ローソク足じゃないのですが、 Jupyter Notebook に表示するための <a href="http://nbviewer.jupyter.org/github/gtnx/pandas-highcharts/blob/master/example.ipynb">example</a> があったので、これを参考にしました。</p>
+<p>ローソク足を表示しようと、 <code>chart = display_charts(df2, render_to=&quot;my-chart&quot;, title=&quot;My Chart&quot;, kind=&quot;candlestick&quot;)</code> のような指定 <code>kind=&quot;candlestick&quot;</code> (ローソク足)をしました。
+すると、 <code># ValueError: candlestick plots are not yet supported</code> のようなメッセージが Out に表示されました。
+pandas-highcharts はローソク足に対応していないようでした。</p>
+<p>仕方ないので line chart を表示して終わりにしました。</p>
+<h3 id="gist-のソース-1">Gist のソース</h3>
+<p><a href="https://gist.github.com/va2577/c8c06800ea90316fe4b22e6e9654d95e">Gist</a> にアップしました。
+<a href="https://nbviewer.jupyter.org/gist/va2577/c8c06800ea90316fe4b22e6e9654d95e">Jupyter Notebook Viewer</a> から見ることができます。</p>
+<h3 id="highcharts-is-not-defined">Highcharts is not defined</h3>
+<p>pandas-highcharts の問題があって、 .ipynb ファイルを閉じて、開き直すと、 <code>ReferenceError: Highcharts is not defined</code> のエラーが表示されます。
+Highcharts のモジュールを読み込む前にチャートを表示する処理が動いてしまっているようです。</p>
+<p>前回、 <code>%%html</code> や <code>%%javascript</code> を使って無理やり実装したときは、<a href="/post/167/#highcharts-が読み込み終わったことを検知するために">読み込みが終わるのを待つような考慮</a>をしました。</p>
+<p>でも、 Jupyter Notebook Viewer で pandas-highcharts の <a href="https://nbviewer.jupyter.org/gist/va2577/c8c06800ea90316fe4b22e6e9654d95e">example</a> を見ると、このようなエラーは表示されません。
+ローカルで動かしているときにだけ起きるエラーなのかな。</p>
+<p>気になって Jupyter Notebook Viewer のページのソースを見たら次のようになっていました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output_html rendered_html output_subarea &#34;</span>&gt;
+
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;//code.highcharts.com/stock/highstock.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;//code.highcharts.com/highcharts-more.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;//code.highcharts.com/modules/exporting.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><code>from pandas_highcharts.display import display_charts</code> したセルの Out のところで <code>&lt;script&gt;</code> が記述されていました。</p>
+<p>ローカルで動かす Jupyter Notebook はセルを編集するので <code>&lt;script&gt;</code> を jQuery で動的に埋め込むようでした。
+動的に埋め込まれた <code>&lt;script&gt;</code> タグは <code>DOMContentLoaded</code> や <code>load</code> イベントと同期的に読み込まれないようです。</p>
+<p>Jupyter Notebook Viewer はセルを編集する必要がないので <code>&lt;script&gt;</code> をページのソースとして静的に記述しているようでした。
+結果、 Jupyter Notebook Viewer の方は上から順番にモジュールが読み込まれることでエラーになっていないようでした。</p>
+<h2 id="終わり">終わり</h2>
+<p>python-highcharts はローソク足が表示できるところがよかったです。</p>
+<p>pandas-highcharts はローソク足は表示できませんでしたが、 pandas と合わせて使いやすい API になっているところがよかったです。
+DataFrame の index が勝手に X 軸になってくれたり、日時は Unix エポックじゃなくて DateTimeIndex のまま渡すことができたり、扱いやすい印象です。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

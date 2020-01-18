@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ECMASCRIPT® 2017 の ASYNC/AWAIT を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ECMAScript® 2017 の async/await を使ってみました</h1>
+    
+      <div><time>March 11, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>今更ながら async/await を使ってみました。</p>
+<ul>
+<li><a href="https://www.ecma-international.org/ecma-262/6.0/index.html">Standard ECMA-262 6th Edition / June 2015 ECMAScript® 2015 Language Specification</a></li>
+<li><a href="https://www.ecma-international.org/ecma-262/7.0/index.html">ECMA-262 7ᵗʰ Edition / June 2016 ECMAScript® 2016 Language Specification</a></li>
+<li><a href="https://www.ecma-international.org/ecma-262/8.0/index.html">ECMAScript® 2017 Language Specification (ECMA-262, 8th edition, June 2017)</a></li>
+<li><a href="https://tc39.github.io/ecma402/">Draft ECMA-402 / February 16, 2018 ECMAScript® 2019 Internationalization API Specification</a></li>
+</ul>
+<p>async/await は ECMAScript® 2017 で正式に採用されたみたいです。
+現在は 2018 年なので、もう 1 年も前のことなのですね。
+現在は ECMAScript® 2019 が Draft なのでしょうか。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Node.js: v8.9.4</li>
+</ul>
+<h2 id="asyncawait-を使わない場合">async/await を使わない場合</h2>
+<p>async/await を使わない場合は、 then をつなげていました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// async.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">resolveAfter3Seconds</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">x</span>) =&gt; {
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>) =&gt; {
+    <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+      <span style="color:#a6e22e">resolve</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">resolved </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>)
+    }, <span style="color:#ae81ff">3000</span>)
+  })
+}
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">main</span> <span style="color:#f92672">=</span> () =&gt; {
+  <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">1</span>).<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">value</span>) =&gt; {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">2</span>)
+  }).<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">value</span>) =&gt; {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">3</span>)
+  }).<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">value</span>) =&gt; {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">value</span>)
+  })
+}
+<span style="color:#a6e22e">main</span>()
+</code></pre></div><p>Node.js で実行してみます。</p>
+<pre><code>$ node async.js
+resolved 1
+resolved 2
+resolved 3
+</code></pre><p>3 秒ごとに <code>resolved n</code> が表示されました。</p>
+<h2 id="asyncawait-を使う場合">async/await を使う場合</h2>
+<p>Promise を返す関数(resolveAfter3Seconds)を呼び出すところは await をつけました。
+それを定義している関数自体(main)には async をつけました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// async.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">resolveAfter3Seconds</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">x</span>) =&gt; {
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>) =&gt; {
+    <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+      <span style="color:#a6e22e">resolve</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">resolved </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>)
+    }, <span style="color:#ae81ff">3000</span>)
+  })
+}
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">main</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">async</span> () =&gt; { <span style="color:#75715e">// async をつける
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">1</span>)) <span style="color:#75715e">// await をつける
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">2</span>)) <span style="color:#75715e">// await をつける
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">3</span>)) <span style="color:#75715e">// await をつける
+</span><span style="color:#75715e"></span>}
+<span style="color:#a6e22e">main</span>()
+</code></pre></div><p>実行してみます。</p>
+<pre><code>$ node async.js
+resolved 1
+resolved 2
+resolved 3
+</code></pre><p>こちらも 3 秒ごとに <code>resolved n</code> が表示されました。</p>
+<h2 id="エラーの場合">エラーの場合</h2>
+<p>エラーの場合は try&hellip;catch なのかな。
+Promise を返す関数の中で、 3 回目は拒否するようにしました。
+呼び出す側は try&hellip;catch で例外を捉えるようにしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// async.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">resolveAfter3Seconds</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">x</span>) =&gt; {
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
+    <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">x</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">3</span>) {
+        <span style="color:#a6e22e">reject</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">reject </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>) <span style="color:#75715e">// 3 回目は拒否する
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span>
+      }
+      <span style="color:#a6e22e">resolve</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">resolved </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>)
+    }, <span style="color:#ae81ff">3000</span>)
+  })
+}
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">main</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">async</span> () =&gt; {
+  <span style="color:#66d9ef">try</span> { <span style="color:#75715e">// try...catch で囲む
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">1</span>))
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">2</span>))
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">resolveAfter3Seconds</span>(<span style="color:#ae81ff">3</span>))
+  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) { <span style="color:#75715e">// 例外を捉える
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">catch: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">e</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+  }
+}
+<span style="color:#a6e22e">main</span>()
+</code></pre></div><p>実行してみます。</p>
+<pre><code>$ node async.js
+resolved 1
+resolved 2
+catch: reject 3
+</code></pre><p>3 回目は拒否されたので、 catch に入って e がコンソールに出力されました。</p>
+<h2 id="終わり">終わり</h2>
+<p>then をつなげて記述する煩わしさがなくなっていいと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://www.ecma-international.org/ecma-262/8.0/index.html#sec-async-function-definitions">ecma-international.org</a></li>
+<li><a href="https://www.ecma-international.org/ecma-262/8.0/index.html">ECMAScript® 2017 Language Specification (ECMA-262, 8th edition, June 2017)</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

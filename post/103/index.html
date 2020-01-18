@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ESLINT を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ESLint を使ってみました</h1>
+    
+      <div><time>March 14, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="https://eslint.org/docs/user-guide/getting-started">Getting Started</a> を参考に ESLint を使ってみます。
+軽く使えればよかったため、 Gulp とかのツールを使わずに、純粋な ESLint を使うことにしました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>npm 5.6.0</li>
+<li>ESLint v4.18.1</li>
+</ul>
+<h2 id="npm-の初期設定">npm の初期設定</h2>
+<p>最初に npm の初期設定をしました。
+npm を使って ESLint をインストールするためです。</p>
+<pre><code>$ npm init -y
+Wrote to /home/user/dir/package.json:
+
+{
+  &quot;name&quot;: &quot;dir&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;main.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+$ ls
+package.json
+</code></pre><p>npm の package.json の雛形が作成されました。</p>
+<h2 id="eslint-のインストール">ESLint のインストール</h2>
+<p>ESLint をインストールします。</p>
+<pre><code>$ npm install eslint --save-dev
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN ajv-keywords@3.1.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN dir@1.0.0 No description
+npm WARN dir@1.0.0 No repository field.
+
++ eslint@4.18.1
+added 139 packages in 17.911s
+$ ls
+node_modules  package.json  package-lock.json
+</code></pre><p>node_modules に ESLint がインストールされたみたいです。</p>
+<h2 id="eslint-の初期設定">ESLint の初期設定</h2>
+<p>ESLint の初期設定をします。
+ESLint をグローバルではなく、ローカルにインストールしたため、 <code>./node_modules/.bin</code> にコマンドがあるみたいです。</p>
+<pre><code>$ ./node_modules/.bin/eslint --init
+? How would you like to configure ESLint?
+  Answer questions about your style
+❯ Use a popular style guide
+  Inspect your JavaScript file(s)
+</code></pre><p>初期設定に関する質問があるようで、矢印キーで選択しました。
+最初は <code>Use a popular style guide</code> を選択しました。</p>
+<pre><code>$ ./node_modules/.bin/eslint --init
+? How would you like to configure ESLint? Use a popular style guide
+? Which style guide do you want to follow?
+  Google
+  Airbnb
+❯ Standard
+</code></pre><p>次は <code>Standard</code> を選択しました。</p>
+<pre><code>$ ./node_modules/.bin/eslint --init
+? How would you like to configure ESLint? Use a popular style guide
+? Which style guide do you want to follow? Standard
+? What format do you want your config file to be in? (Use arrow keys)
+❯ JavaScript
+  YAML
+  JSON
+</code></pre><p>次は <code>JavaScript</code> を選択しました。</p>
+<pre><code>$ ./node_modules/.bin/eslint --init
+? How would you like to configure ESLint? Use a popular style guide
+? Which style guide do you want to follow? Standard
+? What format do you want your config file to be in? JavaScript
+Checking peerDependencies of eslint-config-standard@latest
+</code></pre><p>3 つ質問に答えるとインストールが始まりました。</p>
+<pre><code>$ ./node_modules/.bin/eslint --init
+? How would you like to configure ESLint? Use a popular style guide
+? Which style guide do you want to follow? Standard
+? What format do you want your config file to be in? JavaScript
+Checking peerDependencies of eslint-config-standard@latest
+Installing eslint-config-standard@latest, eslint-plugin-import@&gt;=2.8.0, eslint-plugin-node@&gt;=5.2.1, eslint-plugin-promise@&gt;=3.6.0, eslint-plugin-standard@&gt;=3.0.1
+npm WARN ajv-keywords@3.1.0 requires a peer of ajv@^6.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN dir@1.0.0 No description
+npm WARN dir@1.0.0 No repository field.
+
++ eslint-plugin-standard@3.0.1
++ eslint-config-standard@11.0.0
++ eslint-plugin-node@6.0.1
++ eslint-plugin-promise@3.6.0
++ eslint-plugin-import@2.9.0
+added 42 packages in 9.986s
+Successfully created .eslintrc.js file in /dir/
+</code></pre><p>ESLint の Standard の設定がインストールされたみたいです。
+<code>.eslintrc.js</code> が設定ファイルのようです。</p>
+<p><code>.eslintrc.js</code> ファイルの内容を確認してみました。</p>
+<pre><code>$ ls -a
+.  ..  .eslintrc.js  node_modules  package.json  package-lock.json
+$ cat .eslintrc.js
+module.exports = {
+    &quot;extends&quot;: &quot;standard&quot;
+};
+</code></pre><p>あっさりしてました。</p>
+<p>標準の設定を使うようになっているため個別のルールは記述されていないのかな。</p>
+<h2 id="チェック">チェック</h2>
+<p>次のソースファイルをチェックしてみます。</p>
+<pre><code>$ ls
+node_modules  package.json  package-lock.json  yourfile.js
+$ cat yourfile.js
+(() =&gt; {
+    console.log('message.');
+})();
+</code></pre><p>チェックするには、 eslint コマンドにソースファイルを引数として渡してあげればいいみたいです。</p>
+<pre><code>$ ./node_modules/.bin/eslint yourfile.js
+
+/dir/yourfile.js
+  2:1   error  Expected indentation of 2 spaces but found 4  indent
+  2:28  error  Extra semicolon                               semi
+  3:5   error  Extra semicolon                               semi
+
+✖ 3 problems (3 errors, 0 warnings)
+  3 errors, 0 warnings potentially fixable with the `--fix` option.
+</code></pre><p>3 つエラーがありました。
+標準ではインデントが 2 つみたいです。
+それから、セミコロンはつけないみたいです。</p>
+<p>次のようにファイルを修正しました。</p>
+<pre><code>$ cat yourfile.js
+(() =&gt; {
+  console.log('message.')
+})()
+</code></pre><p>チェックしてみます。</p>
+<pre><code>$ ./node_modules/.bin/eslint yourfile.js
+$
+</code></pre><p>何も表示されなかったので、エラーはなくなったみたいです。</p>
+<h2 id="もう少しチェック">もう少しチェック</h2>
+<p>スペースの扱いが気になっていたので、次のファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message.&#39;</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">string1</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;abc&#39;</span>.<span style="color:#a6e22e">substr</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>) <span style="color:#75715e">// = の前後のスペース、 , の後ろのスペース
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">string1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">array1</span><span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>] <span style="color:#75715e">// [ の後ろのスペース、 ] の前のスペース
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">array1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">object1</span><span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>} <span style="color:#75715e">// { の後ろのスペース、 : の後ろのスペース、 } の前のスペース
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">object1</span>)
+  <span style="color:#a6e22e">object1</span><span style="color:#f92672">=</span>{
+    <span style="color:#e6db74">&#39;a2&#39;</span><span style="color:#f92672">:</span><span style="color:#ae81ff">21</span>,
+    <span style="color:#e6db74">&#39;b2&#39;</span><span style="color:#f92672">:</span><span style="color:#ae81ff">22</span>,
+    <span style="color:#e6db74">&#39;c2&#39;</span><span style="color:#f92672">:</span><span style="color:#ae81ff">23</span>
+  }
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">object1</span>)
+})()
+</code></pre></div><p>チェックしてみます。</p>
+<pre><code>$ ./node_modules/.bin/eslint src/yourfile.js
+
+/home/dir/src/yourfile.js
+   3:16  error  Infix operators must be spaced                 space-infix-ops
+   3:31  error  A space is required after ','                  comma-spacing
+   5:15  error  Infix operators must be spaced                 space-infix-ops
+   5:18  error  A space is required after ','                  comma-spacing
+   5:20  error  A space is required after ','                  comma-spacing
+   7:16  error  Infix operators must be spaced                 space-infix-ops
+   7:22  error  Missing space before value for key 'a'         key-spacing
+   7:23  error  A space is required after ','                  comma-spacing
+   7:28  error  Missing space before value for key 'b'         key-spacing
+   7:29  error  A space is required after ','                  comma-spacing
+   7:34  error  Missing space before value for key 'c'         key-spacing
+   9:3   error  'object1' is constant                          no-const-assign
+   9:10  error  Infix operators must be spaced                 space-infix-ops
+  10:10  error  Missing space before value for key 'a2'        key-spacing
+  11:10  error  Missing space before value for key 'b2'        key-spacing
+  12:10  error  Missing space before value for key 'c2'        key-spacing
+  15:5   error  Newline required at end of file but not found  eol-last
+
+✖ 17 problems (17 errors, 0 warnings)
+  16 errors, 0 warnings potentially fixable with the `--fix` option.
+</code></pre><p>エラーを修正すると、次のようになりました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message.&#39;</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">string1</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;abc&#39;</span>.<span style="color:#a6e22e">substr</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>) <span style="color:#75715e">// = の前後のスペース必要、 , の後ろのスペース必要
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">string1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">array1</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>] <span style="color:#75715e">// [ の後ろのスペース不要、 ] の前のスペース不要
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">array1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">object1</span> <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>} <span style="color:#75715e">// { の後ろのスペース不要、 : の後ろのスペース必要、 } の前のスペース不要
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">object1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">object2</span> <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;a2&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">21</span>,
+    <span style="color:#e6db74">&#39;b2&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">22</span>,
+    <span style="color:#e6db74">&#39;c2&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">23</span>
+  }
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">object2</span>)
+})()
+</code></pre></div><p>チェックしてみます。</p>
+<pre><code>$ ./node_modules/.bin/eslint src/yourfile.js
+$
+</code></pre><p>何も表示されず、プロンプトに戻ってきたので、エラーはなくなったようです。</p>
+<p>配列リテラルの <code>[]</code> のスペースは不要で、普段から記述していた通りでした。
+オブジェクトリテラルの <code>{}</code> のスペースも不要で、普段から記述していた通りでした。</p>
+<p>が、オブジェクトリテラルについては気になることがあります。
+それは、関数を 1 行で記述するときに、 <code>const func = (arg) =&gt; { return `arg is ${arg}\` }</code> のように、 <code>{</code> の後ろにスペース、 <code>}</code> の前にスペースを入れて記述していることです。
+同じ <code>{}</code> の記号なので、統一したい感じがします。
+なので、次のファイルを作成してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message.&#39;</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">string1</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;abc&#39;</span>.<span style="color:#a6e22e">substr</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">string1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">array1</span> <span style="color:#f92672">=</span> [ <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span> ] <span style="color:#75715e">// ← [ の後ろにスペース、] の前にスペース
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">array1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">object1</span> <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;b&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;c&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span> } <span style="color:#75715e">// ← { の後ろにスペース、} の前にスペース
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">object1</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">object2</span> <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;a2&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">21</span>,
+    <span style="color:#e6db74">&#39;b2&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">22</span>,
+    <span style="color:#e6db74">&#39;c2&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">23</span>
+  }
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">table</span>(<span style="color:#a6e22e">object2</span>)
+})()
+</code></pre></div><p>チェックしてみます。</p>
+<pre><code>$ ./node_modules/.bin/eslint src/yourfile.js
+$
+</code></pre><p>何も表示されず、プロンプトに戻ってきたので、エラーはなかったようです。</p>
+<p>整理してみます。</p>
+<p>配列リテラルは、配列を参照するときに、 <code>array[1]</code> のように記述することから、 <code>const array = ['a', 'b', 'c']</code> と記述した方が統一感がある気がします。
+配列を参照するときに、あまり <code>array[ 1 ]</code> のようにしないですよね？
+するのかな？
+なので、 <code>[</code> の後ろにスペースは不要、 <code>]</code> の前にスペースは不要。</p>
+<p>オブジェクトリテラルは、先に書いたように、 1 行の関数の宣言のときに <code>const func = (arg) =&gt; { return `arg is ${arg}\` }</code> と記述することから、 <code>const object = { 'a': 1, 'b': 2, 'c': 3 }</code> のように記述した方が統一感がある気がします。
+なので、 <code>{</code> の後ろにスペースは必要、 <code>}</code> の前にスペースは必要。</p>
+<p>カンマの後ろのスペースなんて気にすることなく、記述できてしまう人もいるようなので、主観的な好みの話でした。</p>
+<h2 id="終わり">終わり</h2>
+<p>ESLint を使わないまま作成していた 2,000 行くらいのソースをチェックしたら、 2,000 くらいのエラーが出ました…</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://eslint.org/docs/user-guide/getting-started">Getting Started with ESLint - ESLint - Pluggable JavaScript linter</a></li>
+<li><a href="https://eslint.org/docs/user-guide/configuring">Configuring ESLint - ESLint - Pluggable JavaScript linter</a></li>
+<li><a href="https://eslint.org/docs/rules/">List of available rules - ESLint - Pluggable JavaScript linter</a></li>
+<li><a href="https://www.npmjs.com/package/eslint">eslint</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

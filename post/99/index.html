@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>NODE.JS の EXPRESS で POST した値を取ろうとしたら REQUEST.BODY が UNDEFINED になる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Node.js の express で POST した値を取ろうとしたら request.body が undefined になる</h1>
+    
+      <div><time>March 10, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>request.body が undefined になるので調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Node.js: v8.9.4</li>
+<li>express: 4.16.2</li>
+</ul>
+<h2 id="再現確認">再現確認</h2>
+<p>次のようなファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// app.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>()
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">body</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    &lt;!DOCTYPE html&gt;
+</span><span style="color:#e6db74">    &lt;html&gt;
+</span><span style="color:#e6db74">      &lt;head&gt;
+</span><span style="color:#e6db74">        &lt;meta charset=&#34;utf-8&#34;&gt;
+</span><span style="color:#e6db74">        &lt;title&gt;app.js&lt;/title&gt;
+</span><span style="color:#e6db74">      &lt;/head&gt;
+</span><span style="color:#e6db74">      &lt;body&gt;
+</span><span style="color:#e6db74">        &lt;form method=&#34;post&#34;&gt;
+</span><span style="color:#e6db74">          &lt;input type=&#34;text&#34; id=&#34;text1&#34; name=&#34;text1&#34; value=&#34;text1.value&#34;&gt;
+</span><span style="color:#e6db74">          &lt;input type=&#34;submit&#34;&gt;
+</span><span style="color:#e6db74">        &lt;/form&gt;
+</span><span style="color:#e6db74">      &lt;/body&gt;
+</span><span style="color:#e6db74">    &lt;/html&gt;
+</span><span style="color:#e6db74">  </span><span style="color:#e6db74">`</span>
+  <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">body</span>)
+})
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>)
+  <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>)
+})
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">3000</span>, () =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Example app listening on port 3000!&#39;</span>)
+})
+</code></pre></div><p>Node.js で実行します。</p>
+<pre><code>$ node app.js
+</code></pre><p>http://localhost:3000/ のアドレスにアクセスします。
+ボタンをクリックします。
+すると、コンソールに <code>undefined</code> と表示されます。</p>
+<h2 id="公式の-api-リファレンス">公式の API リファレンス</h2>
+<p>公式の API リファレンスから引用します。</p>
+<blockquote>
+<p>req.body</p>
+<p>Contains key-value pairs of data submitted in the request body. By default, it is undefined, and is populated when you use body-parsing middleware such as body-parser and multer.</p>
+<p><cite><a href="https://expressjs.com/en/4x/api.html#req.body">Express 4.x - API Reference</a></cite></p>
+</blockquote>
+<p>標準では request の body は undefined って書いてあります。
+一般的には body-parser ミドルウェアを使うそうです。</p>
+<h2 id="対処">対処</h2>
+<p>次のようにファイルを修正しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// app.js
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bodyParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;body-parser&#39;</span>) <span style="color:#75715e">// body-parser
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>()
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">bodyParser</span>.<span style="color:#a6e22e">urlencoded</span>({ <span style="color:#a6e22e">extended</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> })) <span style="color:#75715e">// for parsing application/x-www-form-urlencoded
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">body</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    &lt;!DOCTYPE html&gt;
+</span><span style="color:#e6db74">    &lt;html&gt;
+</span><span style="color:#e6db74">      &lt;head&gt;
+</span><span style="color:#e6db74">        &lt;meta charset=&#34;utf-8&#34;&gt;
+</span><span style="color:#e6db74">        &lt;title&gt;app.js&lt;/title&gt;
+</span><span style="color:#e6db74">      &lt;/head&gt;
+</span><span style="color:#e6db74">      &lt;body&gt;
+</span><span style="color:#e6db74">        &lt;form method=&#34;post&#34;&gt;
+</span><span style="color:#e6db74">          &lt;input type=&#34;text&#34; id=&#34;text1&#34; name=&#34;text1&#34; value=&#34;text1.value&#34;&gt;
+</span><span style="color:#e6db74">          &lt;input type=&#34;submit&#34;&gt;
+</span><span style="color:#e6db74">        &lt;/form&gt;
+</span><span style="color:#e6db74">      &lt;/body&gt;
+</span><span style="color:#e6db74">    &lt;/html&gt;
+</span><span style="color:#e6db74">  </span><span style="color:#e6db74">`</span>
+  <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">body</span>)
+})
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>)
+  <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>)
+})
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#ae81ff">3000</span>, () =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Example app listening on port 3000!&#39;</span>)
+})
+</code></pre></div><p>1 行目と 4 行目を追加しました。</p>
+<p>また Node.js で実行します。</p>
+<pre><code>$ node app.js
+</code></pre><p>http://localhost:3000/ のアドレスにアクセスします。
+ボタンをクリックします。
+すると、コンソールに <code>{ text1: 'text1.value' }</code> と表示されました。</p>
+<h2 id="終わり">終わり</h2>
+<p>久しぶりに express を使ってみたのですが、バージョン 3 と 4 ではかなり違うみたいでした。
+以前はバージョン 3 を使っていたのかどうか、記憶が怪しいのですが、 body-parser とか使わずに値が取れた気がしています。</p>
+<p>それ以外にもいろいろ express 本体から独立して、ミドルウェアと呼ばれる機能群ができているようです。</p>
+<p>改めて Fast, unopinionated, minimalist web framework for Node.js の express はお手軽にウェブアプリケーションが作れて便利です。
+サーバー側とクライアント側で ECMAScript が使えるところがいいです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

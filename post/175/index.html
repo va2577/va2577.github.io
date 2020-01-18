@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>WSL の UBUNTU を起動しようとしたら &#34;INSTALLING, THIS MAY TAKE A FEW MINUTES...&#34; 0X800703FA のエラーになりました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>WSL の Ubuntu を起動しようとしたら &#34;Installing, this may take a few minutes...&#34; 0x800703fa のエラーになりました</h1>
+    
+      <div><time>May 25, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>以前にも同じようなエラーになったように思うのですが、今回は、エラーを解消したことを書いておこうと思います。</p>
+<h2 id="エラー">エラー</h2>
+<p>WSL の Ubuntu を起動したらコンソールに次のメッセージが表示されました。</p>
+<pre><code>Installing, this may take a few minutes...
+WslRegisterDistribution failed with error: 0x800703fa
+Error: 0x800703fa ????????????????????? ???????????????????????
+
+Press any key to continue...
+
+</code></pre><p>文字化けしていますけれども。</p>
+<h2 id="検索">検索</h2>
+<p>エラーメッセージではあまりよい結果が得られなかったので、エラーコードで検索しました。
+すると、次のページがヒットしました。</p>
+<blockquote>
+<p>Edit: Restart indeed removes the problem. It might be related to Windows uptades.</p>
+<p><cite><a href="https://github.com/Microsoft/WSL/issues/2576">Error: 0x800703fa - Press any key to continue · Issue #2576 · Microsoft/WSL · GitHub</a></cite></p>
+</blockquote>
+<p>Windows Updates に関連する問題ぽいです。</p>
+<h2 id="windows-update">Windows Update</h2>
+<p>[設定]-[更新とセキュリティ]-[Windows Update]を確認しました。</p>
+<p>インストールの保留中になっていたようでした。</p>
+<p>インストールしてから WSL の Ubuntu を起動したらエラーは解消されました。</p>
+<h2 id="終わり">終わり</h2>
+<p>また次の Windows Update で同じエラーになるかな。
+覚えておこう。</p>
+<h2 id="14-aug-2019-追記">14 Aug 2019 追記</h2>
+<blockquote>
+<p>I find a solution other than a reboot: go to services.msc, make sure service LxssManager is running, if it is running already, restart it，after turn it on I can use wsl immediately.</p>
+<p><cite><a href="https://github.com/Microsoft/WSL/issues/2576">Error: 0x800703fa - Press any key to continue · Issue #2576 · Microsoft/WSL · GitHub</a></cite></p>
+</blockquote>
+<p><img src="/img/175-01.png" alt=""></p>
+<p>タスク マネージャーのサービスから [LxssManager] を起動（再起動）すると Windows を再起動しなくても良いらしい。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

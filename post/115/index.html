@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のテーマを作ってみます - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のテーマを作ってみます</h1>
+    
+      <div><time>March 26, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><img src="/img/115-01.png" alt=""></p>
+<p>今のこのブログも自分で作成したテーマを適用しているのですが、もう 2 年も経過していたので、新しい Hugo のテーマを作ってみたいと思います。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Hugo Static Site Generator v0.31.1</li>
+</ul>
+<h2 id="テーマの骨組みを作成する">テーマの骨組みを作成する</h2>
+<p>テーマの作成は次のページを参考に進めてみます。</p>
+<p><a href="https://gohugo.io/themes/creating/">Create a Theme | Hugo</a></p>
+<p>テーマの骨組みを作成するコマンドを入力します。</p>
+<pre><code>$ hugo new theme &lt;THEMENAME&gt;
+Error: Unable to locate Config file. Perhaps you need to create a new site.
+       Run `hugo help new` for details. (Config File &quot;config&quot; Not Found in &quot;[/path/to/dir/&lt;THEMENAME&gt;]&quot;)
+
+</code></pre><p>Hugo のサイトのディレクトリーじゃなかったのでエラーになりました。</p>
+<h2 id="サイトの骨組みを作成する">サイトの骨組みを作成する</h2>
+<p>テーマだけ作成したかったので、そのためのサイトを先に作成しました。
+サイトの作成は次のページを参考にしました。</p>
+<p><a href="https://gohugo.io/getting-started/quick-start/">Quick Start | Hugo</a></p>
+<p>サイトの骨組みを作成するコマンドを入力します。</p>
+<pre><code>$ hugo new site &lt;SITEPATH&gt;
+Congratulations! Your new Hugo site is created in /path/to/dir/&lt;SITEPATH&gt;.
+
+Just a few more steps and you're ready to go:
+
+1. Download a theme into the same-named folder.
+   Choose a theme from https://themes.gohugo.io/, or
+   create your own with the &quot;hugo new theme &lt;THEMENAME&gt;&quot; command.
+2. Perhaps you want to add some content. You can add single files
+   with &quot;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&quot;.
+3. Start the built-in live server via &quot;hugo server&quot;.
+
+Visit https://gohugo.io/ for quickstart guide and full documentation.
+$ ls -l
+total 0
+drwxrwxrwx 0 user user 512 Mar 13 22:17 archetypes
+-rw-rw-rw- 1 user user  82 Mar 13 22:17 config.toml
+drwxrwxrwx 0 user user 512 Mar 13 22:17 content
+drwxrwxrwx 0 user user 512 Mar 13 22:17 data
+drwxrwxrwx 0 user user 512 Mar 13 22:17 layouts
+drwxrwxrwx 0 user user 512 Mar 13 22:17 static
+drwxrwxrwx 0 user user 512 Mar 13 22:21 themes
+</code></pre><p>サイトの骨組みができました。</p>
+<h2 id="テーマの骨組みを作成する２">テーマの骨組みを作成する２</h2>
+<p>では、改めて、テーマを作成するコマンドを入力します。</p>
+<pre><code>$ hugo new theme &lt;THEMENAME&gt;
+$ ls -l themes/&lt;THEMENAME&gt;/
+total 2
+drwxrwxrwx 0 user user  512 Mar 13 22:21 archetypes
+drwxrwxrwx 0 user user  512 Mar 13 22:21 layouts
+-rw-rw-rw- 1 user user 1081 Mar 13 22:21 LICENSE.md
+drwxrwxrwx 0 user user  512 Mar 13 22:21 static
+-rw-rw-rw- 1 user user  437 Mar 13 22:21 theme.toml
+</code></pre><p>themes/&lt;THEMENAME&gt; ディレクトリーの中に、 3 つのディレクトリーと 2 つのファイルが作成されました。</p>
+<p>それぞれ次のような意味を持つようです。</p>
+<ul>
+<li>archetypes: 記事の原型のディレクトリー</li>
+<li>layouts: テーマのレイアウトディレクトリー</li>
+<li>LICENSE.md: ライセンスが記載されたファイル</li>
+<li>static: テーマの静的コンテンツディレクトリー</li>
+<li>theme.toml: テーマの設定ファイル</li>
+</ul>
+<p>テーマを作成していくにあたっては layouts ディレクトリーの中のファイルを作成していくことになるようです。</p>
+<p>layouts ディレクトリーの中のファイルは次のようなものがあるようです。</p>
+<ul>
+<li>シングルコンテンツ:
+<ul>
+<li>layouts/_default/single.html</li>
+<li>記事を表示するページのレイアウトファイル</li>
+</ul>
+</li>
+<li>コンテンツのリスト
+<ul>
+<li>layouts/_default/list.html</li>
+<li>記事の一覧を表示するページのレイアウトファイル</li>
+</ul>
+</li>
+<li>部分的なテンプレート
+<ul>
+<li>layouts/partials/*<PARTIALNAME>.html</li>
+<li>サイトの中の共通のレイアウトファイル(ヘッダー、フッター)</li>
+</ul>
+</li>
+</ul>
+<p>static ディレクトリーの中のファイルは次のようなものがあるようです。</p>
+<ul>
+<li>css</li>
+<li>js</li>
+<li>img</li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>いったんここまでにします。</p>
+<p>方針として、今もそうですが、シンプルなものにしたいです。
+CSS もあまり手を入れない形にしたいです。</p>
+<h2 id="7-april-2018-追記">7 April 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/116/">Hugo のテーマを作ってみます 2(Base Templates and Blocks)</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

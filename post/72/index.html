@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>RADIKO.JP のタイムフリーの録音(保存、ダウンロード) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>radiko.jp のタイムフリーの録音(保存、ダウンロード)</h1>
+    
+      <div><time>April 28, 2017</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>radiko.jp のタイムフリーの録音(保存、ダウンロード)ができないか調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>macOS Sierra バージョン10.12.4（16E195）</li>
+<li>swfextract - part of swftools 0.9.2</li>
+<li>ffmpeg version 3.3</li>
+</ul>
+<p>Homebrew をインストールして、swftools と ffmpeg をインストールしておきました。</p>
+<ul>
+<li><a href="/post/2/">Homebrewのインストール</a></li>
+</ul>
+<pre><code>$ brew install swftools
+$ brew install ffmpeg
+</code></pre><h2 id="radikojp-の通信の内容">radiko.jp の通信の内容</h2>
+<p>最初に radiko.jp の通信の内容を調べてみました。</p>
+<p>大きな流れは認証してからタイムフリー聴取をするようです。</p>
+<h3 id="1-認証">1. 認証</h3>
+<p>認証の流れは次の通りのようです。</p>
+<ol>
+<li>swf ファイルをダウンロードする</li>
+<li>ダウンロードした swf ファイルの中から画像ファイルを抽出する</li>
+<li>認証 1(auth1_fms)にアクセスして、<code>X-Radiko-Authtoken{1}</code>, <code>X-Radiko-KeyLength{2}</code>, <code>X-Radiko-KeyOffset{3}</code> を取得する</li>
+<li><code>X-Radiko-KeyLength{2}</code>, <code>X-Radiko-KeyOffset{3}</code> をもとに画像ファイルから <code>X-Radiko-Partialkey{4}</code> を抽出する</li>
+<li>認証 2(auth2_fms)に <code>X-Radiko-Authtoken{1}</code>, <code>X-Radiko-Partialkey{4}</code> を送信する</li>
+</ol>
+<h4 id="11-swf-ファイルのダウンロード">1.1. swf ファイルのダウンロード</h4>
+<pre><code>curl 'http://radiko.jp/apps/js/flash/myplayer-release.swf' \
+-XGET \
+-H 'Referer: http://radiko.jp/' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30'
+</code></pre><h4 id="12-認証-1">1.2. 認証 1</h4>
+<pre><code>curl 'https://radiko.jp/v2/api/auth1_fms' \
+-XPOST \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-H 'Referer: http://radiko.jp/' \
+-H 'Pragma: no-cache' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+-H 'X-Radiko-Device: pc' \
+-H 'X-Radiko-App-Version: 4.0.0' \
+-H 'X-Radiko-User: test-stream' \
+-H 'X-Radiko-App: pc_ts' \
+--data $'\r\n'
+</code></pre><h4 id="13-認証-2">1.3. 認証 2</h4>
+<pre><code>curl 'https://radiko.jp/v2/api/auth2_fms' \
+-XPOST \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-H 'Referer: http://radiko.jp/' \
+-H 'Pragma: no-cache' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+-H 'X-Radiko-Device: pc' \
+-H 'X-Radiko-Authtoken: mNzMUHWKtgzPYNPa0HiYyg' \
+-H 'X-Radiko-App-Version: 4.0.0' \
+-H 'X-Radiko-User: test-stream' \
+-H 'X-Radiko-Partialkey: /wDrfge1MkkLHBUZ25GeAA==' \
+-H 'X-Radiko-App: pc_ts' \
+--data $'\r\n'
+</code></pre><h3 id="2-タイムフリー聴取">2. タイムフリー聴取</h3>
+<h4 id="21-プレイリスト-1">2.1. プレイリスト 1</h4>
+<pre><code>curl 'https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=LFR&amp;l=15&amp;ft=20170423010000&amp;to=20170423030000' \
+-XPOST \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-H 'Referer: http://radiko.jp/' \
+-H 'Pragma: no-cache' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+-H 'X-Radiko-Authtoken: mNzMUHWKtgzPYNPa0HiYyg' \
+--data 'flash=1'
+</code></pre><h4 id="22-プレイリスト-2">2.2. プレイリスト 2</h4>
+<pre><code>curl 'https://radiko.jp/v2/api/ts/chunklist/TcAwn1TY.m3u8' \
+-XGET \
+-H 'Referer: http://radiko.jp/' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30'
+</code></pre><h2 id="実行">実行</h2>
+<h3 id="1-認証-1">1. 認証</h3>
+<h4 id="11-swf-ファイルのダウンロード-1">1.1. swf ファイルのダウンロード</h4>
+<p><code>-O</code> のオプションをつけて <code>myplayer-release.swf</code> ファイルを保存しました。</p>
+<pre><code>$ curl 'http://radiko.jp/apps/js/flash/myplayer-release.swf' \
+&gt; -XGET \
+&gt; -H 'Referer: http://radiko.jp/' \
+&gt; -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+&gt; -O
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  669k  100  669k    0     0   243k      0  0:00:02  0:00:02 --:--:--  243k
+</code></pre><h5 id="111-画像ファイルを抽出する">1.1.1. 画像ファイルを抽出する</h5>
+<p>swf ファイルの内容を確認します。</p>
+<pre><code>$ swfextract myplayer-release.swf
+Objects in file myplayer-release.swf:
+ [-i] 1 Shape: ID(s) 1
+ [-i] 1 MovieClip: ID(s) 2
+ [-b] 10 Binarys: ID(s) 3-12
+ [-f] 1 Frame: ID(s) 0
+</code></pre><p><code>Binarys</code> の最後の <code>12</code> の番号がついたファイルが &ldquo;それ&rdquo; らしいので、オプションに <code>-b 12</code> をつけて実行してみます。</p>
+<pre><code>$ swfextract myplayer-release.swf -b 12 -o authkey.png
+</code></pre><p><code>authkey.png</code> の名前で画像ファイルが抽出できたようです。</p>
+<pre><code>$ ls authkey.png
+authkey.png
+</code></pre><h4 id="12-認証-1-1">1.2. 認証 1</h4>
+<p>認証 1(auth1_fms)にアクセスして、<code>X-Radiko-AuthToken{1}</code>, <code>X-Radiko-KeyLength{2}</code>, <code>X-Radiko-KeyOffset{3}</code> を取得します。</p>
+<pre><code>$ curl 'https://radiko.jp/v2/api/auth1_fms' \
+&gt; -XPOST \
+&gt; -H 'Content-Type: application/x-www-form-urlencoded' \
+&gt; -H 'Referer: http://radiko.jp/' \
+&gt; -H 'Pragma: no-cache' \
+&gt; -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+&gt; -H 'X-Radiko-Device: pc' \
+&gt; -H 'X-Radiko-App-Version: 4.0.0' \
+&gt; -H 'X-Radiko-User: test-stream' \
+&gt; -H 'X-Radiko-App: pc_ts' \
+&gt; --data $'\r\n'
+X-Radiko-AppType=pc
+X-Radiko-AppType2=pc
+X-RADIKO-AUTHTOKEN=wpU-C0IvwTPf_magS8T7gA
+X-Radiko-AuthWait=0
+X-Radiko-Delay=15
+X-Radiko-KeyLength=16
+X-Radiko-KeyOffset=180274
+
+please send a part of key
+</code></pre><p><code>please send a part of key</code> と表示されていますので、先に抽出した画像ファイル(画像ファイルがキーとなっているらしい)から <code>X-Radiko-KeyOffset{3}</code> の次の 1 バイトを開始位置として、<code>X-Radiko-KeyLength{2}</code> の長さの分だけを抽出して、送信するように、とのことのようです。</p>
+<h5 id="121-partialkey-を抽出する">1.2.1. Partialkey を抽出する</h5>
+<p><code>X-Radiko-KeyLength{2}</code>, <code>X-Radiko-KeyOffset{3}</code> をもとに画像ファイルから <code>X-Radiko-Partialkey{4}</code> を抽出します。
+オプションは次の通りです。</p>
+<ul>
+<li>if: 先に抽出した画像ファイル</li>
+<li>ibs: 一度に指定したバイトのブロックを読み出す</li>
+<li>skip: 認証 1 で取得した <code>X-Radiko-KeyOffset{3}</code> の値</li>
+<li>count: 認証 1 で取得した <code>X-Radiko-KeyLength{2}</code> の値</li>
+</ul>
+<p><code>dd</code> コマンドで抽出できるのはバイナリーなので、<code>base64</code> コマンドにパイプで渡して文字列にしました。</p>
+<pre><code>$ dd if=authkey.png ibs=1 skip=180274 count=16 | base64
+16+0 records in
+0+1 records out
+16 bytes transferred in 0.000333 secs (48038 bytes/sec)
+LfX/AD/OhWw+4qRkjqOp7w==
+</code></pre><p>最後の行の <code>LfX/AD/OhWw+4qRkjqOp7w==</code> が <code>X-Radiko-Partialkey{4}</code> です。</p>
+<h4 id="13-認証-2-1">1.3. 認証 2</h4>
+<p>認証 2(auth2_fms)に <code>X-Radiko-Authtoken{1}</code>, <code>X-Radiko-Partialkey{4}</code> を送信します。</p>
+<p>送信すると言っても POST のデータ部分は改行だけのようで、次のヘッダーに指定するようです。</p>
+<ul>
+<li>X-Radiko-Authtoken: <code>X-Radiko-Authtoken{1}</code></li>
+<li>X-Radiko-Partialkey: <code>X-Radiko-Partialkey{4}</code></li>
+</ul>
+<pre><code>$ curl 'https://radiko.jp/v2/api/auth2_fms' \
+&gt; -XPOST \
+&gt; -H 'Content-Type: application/x-www-form-urlencoded' \
+&gt; -H 'Referer: http://radiko.jp/' \
+&gt; -H 'Pragma: no-cache' \
+&gt; -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+&gt; -H 'X-Radiko-Device: pc' \
+&gt; -H 'X-Radiko-Authtoken: wpU-C0IvwTPf_magS8T7gA' \
+&gt; -H 'X-Radiko-App-Version: 4.0.0' \
+&gt; -H 'X-Radiko-User: test-stream' \
+&gt; -H 'X-Radiko-Partialkey: LfX/AD/OhWw+4qRkjqOp7w==' \
+&gt; -H 'X-Radiko-App: pc_ts' \
+&gt; --data $'\r\n'
+
+
+JP13,東京都,tokyo Japan
+</code></pre><p>認証に成功すると、地域の情報が表示されるようです。</p>
+<p>認証した時の <code>X-Radiko-Authtoken{1}</code> がタイムフリー聴取する時に必要になるようです。</p>
+<h3 id="2-タイムフリー聴取-1">2. タイムフリー聴取</h3>
+<h4 id="21-プレイリスト-1-1">2.1. プレイリスト 1</h4>
+<p>ヘッダーに <code>X-Radiko-Authtoken{1}</code> を指定します。
+POST しているデータは <code>flash=1</code> となっているようです。</p>
+<p>クエリー文字列は次の通りです。</p>
+<ul>
+<li>station_id: 放送局 (<a href="http://radiko.jp/v2/station/list/JP13.xml">http://radiko.jp/v2/station/list/JP13.xml</a>) 地域ごとに異なる</li>
+<li>l: 15(謎)</li>
+<li>ft: 開始日時</li>
+<li>to: 終了日時</li>
+</ul>
+<pre><code>$ curl 'https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=LFR&amp;l=15&amp;ft=20170423223000&amp;to=20170423230000' \
+&gt; -XPOST \
+&gt; -H 'Content-Type: application/x-www-form-urlencoded' \
+&gt; -H 'Referer: http://radiko.jp/' \
+&gt; -H 'Pragma: no-cache' \
+&gt; -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+&gt; -H 'X-Radiko-Authtoken: wpU-C0IvwTPf_magS8T7gA' \
+&gt; --data 'flash=1'
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=52973,CODECS=&quot;mp4a.40.5&quot;
+https://radiko.jp/v2/api/ts/chunklist/JZTdYq-2.m3u8
+</code></pre><p>プレイリスト 1 にアクセスしてみると、さらにプレイリストの URL が記述されているようでした。</p>
+<h4 id="22-プレイリスト-2-1">2.2. プレイリスト 2</h4>
+<p>プレイリスト 2 にアクセスしてみると、aac ファイルの URL が記述されているようでした。</p>
+<p>プレイリスト 2 の URL に <code>chunklist</code> とあるように、5 秒ごとのファイルに分割されたものの集合になっているようです。</p>
+<pre><code>$ curl 'https://radiko.jp/v2/api/ts/chunklist/JZTdYq-2.m3u8' \
+&gt; -XGET \
+&gt; -H 'Referer: http://radiko.jp/' \
+&gt; -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30'
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-ALLOW-CACHE:NO
+#EXT-X-TARGETDURATION:5
+#EXT-X-MEDIA-SEQUENCE:1
+#EXT-X-PROGRAM-DATE-TIME:2017-04-23T22:30:00+09:00
+#EXTINF:5,
+http://media.radiko.jp/sound/b/LFR/20170423/20170423_223000_AxevQ.aac
+#EXT-X-PROGRAM-DATE-TIME:2017-04-23T22:30:05+09:00
+#EXTINF:5,
+http://media.radiko.jp/sound/b/LFR/20170423/20170423_223005_Lggb3.aac
+
+# ・・・略・・・
+
+#EXT-X-PROGRAM-DATE-TIME:2017-04-23T22:59:50+09:00
+#EXTINF:5,
+http://media.radiko.jp/sound/b/LFR/20170423/20170423_225950_mcvZi.aac
+#EXT-X-PROGRAM-DATE-TIME:2017-04-23T22:59:55+09:00
+#EXTINF:5,
+http://media.radiko.jp/sound/b/LFR/20170423/20170423_225955_Rt10X.aac
+
+#EXT-X-ENDLIST
+</code></pre><h4 id="23-録音保存ダウンロード">2.3. 録音(保存、ダウンロード)</h4>
+<p><code>ffmpeg</code> コマンドを使うと、プレイリスト 1 を入力に指定することで、録音(保存、ダウンロード)ができるようです。</p>
+<p>ヘッダーに <code>X-Radiko-AuthToken{1}</code> をつける必要があるようです。</p>
+<pre><code>$ ffmpeg \
+&gt; -content_type 'application/x-www-form-urlencoded' \
+&gt; -headers 'Referer: http://radiko.jp/' \
+&gt; -headers 'Pragma: no-cache' \
+&gt; -headers 'X-Radiko-AuthToken: wpU-C0IvwTPf_magS8T7gA' \
+&gt; -user_agent 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30' \
+&gt; -method 'POST' \
+&gt; -i 'https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=LFR&amp;l=15&amp;ft=20170423223000&amp;to=20170423230000' \
+&gt; -c copy \
+&gt; out.aac
+ffmpeg version 3.3 Copyright (c) 2000-2017 the FFmpeg developers
+  built with Apple LLVM version 8.1.0 (clang-802.0.41)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/3.3 --enable-shared --enable-pthreads --enable-gpl --enable-version3 --enable-hardcoded-tables --enable-avresample --cc=clang --host-cflags= --host-ldflags= --enable-libmp3lame --enable-libx264 --enable-libxvid --enable-opencl --disable-lzma --enable-vda
+  libavutil      55. 58.100 / 55. 58.100
+  libavcodec     57. 89.100 / 57. 89.100
+  libavformat    57. 71.100 / 57. 71.100
+  libavdevice    57.  6.100 / 57.  6.100
+  libavfilter     6. 82.100 /  6. 82.100
+  libavresample   3.  5.  0 /  3.  5.  0
+  libswscale      4.  6.100 /  4.  6.100
+  libswresample   2.  7.100 /  2.  7.100
+  libpostproc    54.  5.100 / 54.  5.100
+[https @ 0x7fa3f4504080] No trailing CRLF found in HTTP header.
+Input #0, hls,applehttp, from 'https://radiko.jp/v2/api/ts/playlist.m3u8?station_id=LFR&amp;l=15&amp;ft=20170423223000&amp;to=20170423230000':
+  Duration: 00:30:00.00, start: 23567.910400, bitrate: N/A
+  Program 0
+    Metadata:
+      variant_bitrate : 52973
+    Stream #0:0: Audio: aac (HE-AAC), 48000 Hz, stereo, fltp, 46 kb/s
+    Metadata:
+      variant_bitrate : 52973
+Output #0, adts, to 'out.aac':
+  Metadata:
+    encoder         : Lavf57.71.100
+    Stream #0:0: Audio: aac (HE-AAC), 48000 Hz, stereo, fltp, 46 kb/s
+    Metadata:
+      variant_bitrate : 52973
+Stream mapping:
+  Stream #0:0 -&gt; #0:0 (copy)
+Press [q] to stop, [?] for help
+size=   10546kB time=00:29:59.86 bitrate=  48.0kbits/s speed=  17x    
+video:0kB audio:10546kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.000000%
+</code></pre><p>ヘッダーの最後の改行が見つからない警告が出まして、</p>
+<pre><code>[https @ 0x7fa3f4504080] No trailing CRLF found in HTTP header.
+</code></pre><p><a href="https://trac.ffmpeg.org/ticket/3268">#3268 (CRLF problem with custom headers when playing hls streams on windows) – FFmpeg</a> と同じことかと思いまして、明示的に改行をつけてみたのですが、エラーになってしまうので放置しました。</p>
+<p>それから、<code>flash=1</code> のデータを送信したかったのですが、<code>post_data</code> の使い方がわからなくて、<code>Error setting option post_data to value flash=1.</code> のエラーになってしまうので、送信しないことにしました。
+FFmpeg のドキュメントにコマンドのサンプルがなかったので、わかりませんでした。</p>
+<blockquote>
+<p>3.11 http</p>
+<p>post_data<br>
+Set custom HTTP post data.</p>
+<p><cite><a href="https://www.ffmpeg.org/ffmpeg-protocols.html">FFmpeg Protocols Documentation</a></cite></p>
+</blockquote>
+<p>それでも録音(保存、ダウンロード)したファイルには影響はなく、大丈夫だと思うのですけど。</p>
+<h2 id="終わり">終わり</h2>
+<p>認証を済ませておけば <code>ffmpeg</code> コマンド 1 つで録音(保存、ダウンロード)できるようでした。
+ただ、ある程度時間が経過すると認証の期限的なものが切れるようですので、改めて認証しなければいけなそうでした。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://www.ffmpeg.org">FFmpeg</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

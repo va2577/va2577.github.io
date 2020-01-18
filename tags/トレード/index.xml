@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>トレード on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/%E3%83%88%E3%83%AC%E3%83%BC%E3%83%89/</link>
+    <description>Recent content in トレード on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Jan 2020 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/%E3%83%88%E3%83%AC%E3%83%BC%E3%83%89/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2019 年のトレードの結果</title>
+      <link>https://va2577.github.io/post/2020-01-01-01/</link>
+      <pubDate>Wed, 01 Jan 2020 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2020-01-01-01/</guid>
+      <description>&lt;p&gt;2019 年は月ごとにトレードの結果を書かなかった。
+だからまとめて書いた。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ドルコスト平均法での運用にむけて</title>
+      <link>https://va2577.github.io/post/2019-12-31-01/</link>
+      <pubDate>Tue, 31 Dec 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-12-31-01/</guid>
+      <description>&lt;p&gt;どの株価指数が良いのか調べよう。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>変化率のグラフを作った</title>
+      <link>https://va2577.github.io/post/2019-12-30-01/</link>
+      <pubDate>Mon, 30 Dec 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-12-30-01/</guid>
+      <description>&lt;p&gt;Chart.js を使って通貨と株価指数の変化率のグラフを作った。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2019 年の相場を振り返った</title>
+      <link>https://va2577.github.io/post/2019-12-29-01/</link>
+      <pubDate>Sun, 29 Dec 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-12-29-01/</guid>
+      <description>&lt;p&gt;ここ数年、毎年やっていること。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Highcharts でマルチタイムフレームのチャートを作った</title>
+      <link>https://va2577.github.io/post/2019-11-23-01/</link>
+      <pubDate>Sat, 23 Nov 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-11-23-01/</guid>
+      <description>&lt;p&gt;Highcharts を使ってマルチタイムフレームのチャートを作ったのでその記録。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 12 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/214/</link>
+      <pubDate>Sat, 29 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/214/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/214-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 12 月もトレードをしませんでした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年の相場を振り返ってみました</title>
+      <link>https://va2577.github.io/post/213/</link>
+      <pubDate>Sat, 22 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/213/</guid>
+      <description>&lt;p&gt;今年も相場を振り返ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>エントロピーの定義から市場の秩序と無秩序を考えてみました</title>
+      <link>https://va2577.github.io/post/212/</link>
+      <pubDate>Sat, 15 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/212/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4152096837/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51Uc%2BtrI5XL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『情報と秩序』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>バックテストにおけるマネーマネジメントについてです</title>
+      <link>https://va2577.github.io/post/211/</link>
+      <pubDate>Sat, 08 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/211/</guid>
+      <description>&lt;p&gt;バックテストで評価したいことはその売買ルールの期待値でした。
+だからマネーマネジメントを考慮していませんでした。
+ですがマネーマネジメントは期待値にも影響してくるようでした。
+今回はそのことを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 11 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/210/</link>
+      <pubDate>Sat, 01 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/210/</guid>
+      <description>&lt;p&gt;2018 年 11 月はトレードをしませんでした。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ランダムな仕掛けでバックテストをしてみました</title>
+      <link>https://va2577.github.io/post/209/</link>
+      <pubDate>Sat, 24 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/209/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4775971271/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51a%2BICYcESL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『タープ博士のトレード学校 ポジションサイジング入門』のランダムな仕掛けの売買ルールでバックテストをしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>タートルズ・ブレイクアウト・システムでバックテストしてみました</title>
+      <link>https://va2577.github.io/post/208/</link>
+      <pubDate>Sat, 17 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/208/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4939103188/&#34;&gt;&lt;img src=&#34;https://va2577.github.io/img/208-01.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;!-- https://d1b14unh5d6w7g.cloudfront.net/4939103188.01.S001.LXXXXXXX.jpg?Expires=1549002131&amp;Signature=IfTkT86XRRA1KkFPMVYKFzQ4qJuZIkoTY4y2bt9+rYzvSOtAlZOaM3G9C3V4xA+cickezNwrFBtt2Rgz/SLGOffBhnO4XwZSkxGTzEsO5nrYmTZHAJP/EEgom7pp4fSA14SOzCajr08YZqJvVbsu5gA37HTeVBUqduRYk9Xc/gE=&amp;Key-Pair-Id=APKAIUO27P366FGALUMQ --&gt;
+&lt;p&gt;『タートルズの秘密』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python Bayesian Optimization でバックテストのパラメーターを最適化してみました</title>
+      <link>https://va2577.github.io/post/207/</link>
+      <pubDate>Sat, 10 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/207/</guid>
+      <description>&lt;p&gt;Bayesian Optimization を使ってみたかったので、これを使ってバックテストのパラメーターを最適化してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 10 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/206/</link>
+      <pubDate>Sat, 03 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/206/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/206-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python Matplotlib を使って 2 軸のグラフ（株価のラインと出来高のバー）を作ってみました</title>
+      <link>https://va2577.github.io/post/205/</link>
+      <pubDate>Sat, 27 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/205/</guid>
+      <description>&lt;p&gt;2 軸のグラフを作りたかったので、試しに株価のラインと出来高のバーのグラフを作りました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>『矢口新の短期トレード教室』のルールでバックテストをしてみました</title>
+      <link>https://va2577.github.io/post/204/</link>
+      <pubDate>Sat, 20 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/204/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/477599154X/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/518%2BfJdUoxL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『矢口新の短期トレード教室』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ローソク足 1 本のトレンドです</title>
+      <link>https://va2577.github.io/post/203/</link>
+      <pubDate>Sat, 13 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/203/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4775971735/&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51Gj04YDOeL.jpg&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『プライスアクショントレード入門』を読みました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>市場の値動きは変わります</title>
+      <link>https://va2577.github.io/post/202/</link>
+      <pubDate>Sat, 06 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/202/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4772695265&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51okavm7fvL.jpg&#34; alt=&#34;img&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『複雑で単純な世界』を読んで、市場の値動きは変わるから手法はいずれ通用しなくなると、改めて感じたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 9 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/201/</link>
+      <pubDate>Sun, 30 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/201/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/201-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 9 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>市場の秩序と無秩序についてです</title>
+      <link>https://va2577.github.io/post/200/</link>
+      <pubDate>Sat, 29 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/200/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4772695265&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51okavm7fvL.jpg&#34; alt=&#34;img&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『複雑で単純な世界』を読んで、秩序と無秩序について考えたことを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>効率的市場仮説についてです</title>
+      <link>https://va2577.github.io/post/199/</link>
+      <pubDate>Sat, 22 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/199/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.amazon.co.jp/dp/4150504334&#34;&gt;&lt;img src=&#34;https://images-na.ssl-images-amazon.com/images/I/51H1oyqqk3L.jpg&#34; alt=&#34;img&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;『ウォール街の物理学者』を読みました。
+この本に効率的市場仮説のことが書かれていて少しだけ理解が深まった気がしたので書きました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python ローソク足とフラグを表示してみました</title>
+      <link>https://va2577.github.io/post/198/</link>
+      <pubDate>Sat, 15 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/198/</guid>
+      <description>&lt;p&gt;python-highcharts を使って、バックテストで売買した足にフラグを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python ローソク足と出来高とインディケーターを表示してみました</title>
+      <link>https://va2577.github.io/post/197/</link>
+      <pubDate>Sat, 08 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/197/</guid>
+      <description>&lt;p&gt;python-highcharts を使って、ローソク足と出来高とインディケーターを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 8 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/196/</link>
+      <pubDate>Sat, 01 Sep 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/196/</guid>
+      <description>&lt;p&gt;2018 年 8 月のトレードの結果を書いておきます。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/196-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ローソク足のパターンの有効性を確認してみました</title>
+      <link>https://va2577.github.io/post/195/</link>
+      <pubDate>Sat, 25 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/195/</guid>
+      <description>&lt;p&gt;7 月からデイトレードをしていますが、負け続けています。
+負けている理由を把握するために、根拠にしているローソク足のパターンがどれだけ有効そうなのかを手探りで確認してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>なぜ通貨を取引するのですか？</title>
+      <link>https://va2577.github.io/post/194/</link>
+      <pubDate>Sat, 18 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/194/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/193/&#34;&gt;前回の記事&lt;/a&gt;で国際決済銀行のデータを見ていて思ったことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>世界の主要な金融センターはどこですか？</title>
+      <link>https://va2577.github.io/post/193/</link>
+      <pubDate>Sat, 11 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/193/</guid>
+      <description>&lt;p&gt;海外旅行しようと思って Wikipedia を見ていたら、&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%9D%E3%83%BC%E3%83%AB&#34;&gt;シンガポール&lt;/a&gt;のページに次のような記載がありました。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;外国為替市場の取引額で日本を上回り、世界3位に浮上するなど[37]、屈指の世界都市、金融センターになっている&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a href=&#34;https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%9D%E3%83%BC%E3%83%AB#%E7%B5%8C%E6%B8%88&#34;&gt;シンガポール - Wikipedia&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;外国為替の主要な市場は東京、ロンドン、ニューヨークだと思っていたので驚きました。&lt;/p&gt;
+&lt;p&gt;実際のところどんなデータからシンガポールが上がってきたのか調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 7 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/192/</link>
+      <pubDate>Sat, 04 Aug 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/192/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/192-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 7 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>実際のトレードでは利益を上げられませんでした</title>
+      <link>https://va2577.github.io/post/191/</link>
+      <pubDate>Sat, 14 Jul 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/191/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/191-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;7 月 9 日から短期の時間枠で実際のトレードをしてみました。
+ので、結果を書いておこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>実際のトレードの厳しさを感じました</title>
+      <link>https://va2577.github.io/post/190/</link>
+      <pubDate>Tue, 03 Jul 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/190/</guid>
+      <description>&lt;p&gt;7 月から短期の時間枠のトレードを始めました。
+7 月 2 日の初日に厳しいと思ったことを書いておこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 6 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/189/</link>
+      <pubDate>Sun, 01 Jul 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/189/</guid>
+      <description>&lt;p&gt;2018 年 6 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>S&amp;P500 で TDW （トレーディングデイ・オブ・ザ・ウィーク）を確認してみました</title>
+      <link>https://va2577.github.io/post/188/</link>
+      <pubDate>Sat, 30 Jun 2018 10:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/188/</guid>
+      <description>&lt;p&gt;通貨で TDW を確認していたところ、本の結果と同じようにならなかったので、 S&amp;amp;P500 でも確認してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>トレードで利益を積み上げていくイメージができたかもしれません</title>
+      <link>https://va2577.github.io/post/187/</link>
+      <pubDate>Sat, 30 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/187/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/187-01.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;検証で利益が上がり始めたときのグラフです。
+そのときのことを書いておこうと思いました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>TDW(トレーディングデイ・オブ・ザ・ウィーク)(曜日限定)を確認してみました</title>
+      <link>https://va2577.github.io/post/186/</link>
+      <pubDate>Sat, 23 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/186/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/185/&#34;&gt;前回&lt;/a&gt;に続いて『ラリー・ウィリアムズの短期売買法【改定第２版】』に書いてあったことを自分でも確認してみました。
+今回は TDW を確認しました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>市場はランダムではないという証明を自分でも確認してみました</title>
+      <link>https://va2577.github.io/post/185/</link>
+      <pubDate>Sat, 16 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/185/</guid>
+      <description>&lt;p&gt;『ラリー・ウィリアムズの短期売買法【改定第２版】』を読み直しています。
+“市場はランダムではない”という証明を自分でもやってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ランダムウォークのグラフと米ドル／円のグラフを比較してみました</title>
+      <link>https://va2577.github.io/post/184/</link>
+      <pubDate>Sat, 09 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/184/</guid>
+      <description>&lt;p&gt;『禁断の市場』を読んで試してみたことの続きです。
+&lt;a href=&#34;https://va2577.github.io/post/183/&#34;&gt;前回&lt;/a&gt;はランダムウォークのグラフを確認しました。
+そして正規分布のグラフができました。
+今回は米ドル／円のヒストリカルデータをもとにグラフを作って比較してみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python SciPy でランダムウォークを確認してみました</title>
+      <link>https://va2577.github.io/post/183/</link>
+      <pubDate>Sun, 03 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/183/</guid>
+      <description>&lt;p&gt;『禁断の市場』という本を読みました。
+ランダムウォークのことが書かれていたので、 SciPy を使ってランダムウォークのグラフを作ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 5 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/182/</link>
+      <pubDate>Sat, 02 Jun 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/182/</guid>
+      <description>&lt;p&gt;2018 年 5 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python pandas ヒストリカルデータのサマータイムを考慮していませんでした</title>
+      <link>https://va2577.github.io/post/173/</link>
+      <pubDate>Wed, 23 May 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/173/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/162/&#34;&gt;以前の記事&lt;/a&gt;で 1 分足のヒストリカルデータから日足のヒストリカルデータを作りました。
+そのときに時間を UTC+3 に一律設定していたのですが、これだと問題がありました。
+修正した内容を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python(NumPy, pandas) で最大ドローダウンを計算してみました</title>
+      <link>https://va2577.github.io/post/171/</link>
+      <pubDate>Mon, 21 May 2018 22:59:15 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/171/</guid>
+      <description>&lt;p&gt;バックテストをしていて最大ドローダウンを計算したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python と Jupyter Notebook と pandas と Highcharts を使って Price Channel を計算・表示してみました</title>
+      <link>https://va2577.github.io/post/169/</link>
+      <pubDate>Sat, 19 May 2018 18:01:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/169/</guid>
+      <description>&lt;p&gt;Price Channel を計算してみました。
+せっかくなので、 python-highcharts を使ってローソク足と一緒に表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>python-highcharts と pandas-highcharts を使って Jupyter Notebook にローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/168/</link>
+      <pubDate>Fri, 18 May 2018 08:56:03 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/168/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/167/&#34;&gt;前回&lt;/a&gt;、 &lt;code&gt;%%html&lt;/code&gt; と &lt;code&gt;%%javascript&lt;/code&gt; マジックコマンドを使って Highcharts のローソク足を表示してみました。
+今回は、 python-highcharts と pandas-highcharts を使ってローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jupyter Notebook で Highcharts を使ってローソク足を表示してみました</title>
+      <link>https://va2577.github.io/post/167/</link>
+      <pubDate>Thu, 17 May 2018 23:21:23 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/167/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/149/&#34;&gt;Python で為替レートの折れ線グラフを表示してみました&lt;/a&gt;の記事を書いたときは、ローソク足を表示できなかったのですが、 Jupyter Notebook から JavaScript のライブラリーの Highcharts を読み込んで、ローソク足を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で 1 分足のヒストリカルデータから日足のデータを作りました</title>
+      <link>https://va2577.github.io/post/162/</link>
+      <pubDate>Sat, 12 May 2018 15:38:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/162/</guid>
+      <description>&lt;p&gt;売買ルールを検証するのに Python を使ってみようと思いました。
+かなりメカニカル、機械的にトレードをするようになったので、検証もメカニカルにプログラムを使ってできないかと思い始めています。
+でも、 MT4 の EA のような、システムトレードをしたいわけではないです。&lt;/p&gt;
+&lt;p&gt;今回は、データを用意するところを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>スワップポイントについて思ったことを書いてみます</title>
+      <link>https://va2577.github.io/post/157/</link>
+      <pubDate>Mon, 07 May 2018 11:45:35 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/157/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/156/&#34;&gt;トルコリラ/円を取引してみました&lt;/a&gt; の記事を書きました。
+スワップポイントに関して、また、別の取引で思ったことがあったので書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>トルコリラ/円を取引してみました</title>
+      <link>https://va2577.github.io/post/156/</link>
+      <pubDate>Sun, 06 May 2018 18:39:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/156/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/156-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;トルコリラは金利が高くて、スワップポイントも高いので取引してみたいと思っていました。
+2018 年 4 月から 5 月にかけて取引することができたので、そのときのことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 4 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/155/</link>
+      <pubDate>Sat, 05 May 2018 16:19:42 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/155/</guid>
+      <description>&lt;p&gt;2018 年 4 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>二つのパターン(ランダム、期待値)の口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/153/</link>
+      <pubDate>Thu, 03 May 2018 21:34:38 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/153/</guid>
+      <description>&lt;p&gt;前回までに次の 2 つの記事を書きました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移をシミュレーションしてみました&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/152/&#34;&gt;期待値による口座残高の推移を折れ線グラフで表示してみました&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;今回は、比較しやすくなるかと思って、一つのグラフに 2 つの推移を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値による口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/152/</link>
+      <pubDate>Wed, 02 May 2018 15:26:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/152/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移のシミュレーション&lt;/a&gt;をしてみました。
+今回は、ランダムな勝敗による口座残高の推移のシミュレーションではなく、期待値による口座残高の推移を折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>口座残高の推移をシミュレーションしてみました</title>
+      <link>https://va2577.github.io/post/150/</link>
+      <pubDate>Mon, 30 Apr 2018 22:32:01 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/150/</guid>
+      <description>&lt;p&gt;勝率と平均利益、平均損失をもとに口座残高の推移を Chart.js の折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Python で為替レートの折れ線グラフを表示してみました</title>
+      <link>https://va2577.github.io/post/149/</link>
+      <pubDate>Sun, 29 Apr 2018 17:33:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/149/</guid>
+      <description>&lt;p&gt;Python で、 &lt;a href=&#34;https://matplotlib.org/&#34;&gt;Matplotlib&lt;/a&gt; を使って、為替レートの折れ線グラフを表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Highcharts を使ってみました</title>
+      <link>https://va2577.github.io/post/147/</link>
+      <pubDate>Fri, 27 Apr 2018 09:49:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/147/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/146/&#34;&gt;前回の記事&lt;/a&gt;で Chart.js を使って、みんかぶ FX のチャートのレートを折れ線グラフで表示してみました。
+今回は、 &lt;a href=&#34;https://www.highcharts.com&#34;&gt;Highcharts&lt;/a&gt; を使って、みんかぶ FX のチャートのレートをローソク足で表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>みんかぶ FX のチャートのレートを取得してみました</title>
+      <link>https://va2577.github.io/post/146/</link>
+      <pubDate>Thu, 26 Apr 2018 16:46:56 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/146/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://fx.minkabu.jp/pair/chart&#34;&gt;みんかぶ FX のチャート&lt;/a&gt; のレートを取得してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>パンローリングの本が Amazon Prime の Prime Reading でいくつか読めるようになっていました</title>
+      <link>https://va2577.github.io/post/144/</link>
+      <pubDate>Tue, 24 Apr 2018 15:45:57 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/144/</guid>
+      <description>&lt;p&gt;電子書籍は Kindle for iOS で読んでいます。
+Prime Reading を見ていたらパンローリングの本があったので、まとめておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>月○○ pips 獲得ってあまり意味ない表現でした</title>
+      <link>https://va2577.github.io/post/130/</link>
+      <pubDate>Tue, 10 Apr 2018 10:09:21 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/130/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/130-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;pips で評価することに対して、あまりよく思っていなかったところがあったので書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 3 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/121/</link>
+      <pubDate>Sun, 01 Apr 2018 08:30:17 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/121/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/121-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 3 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>cTrader Web を使ってみました</title>
+      <link>https://va2577.github.io/post/114/</link>
+      <pubDate>Sun, 25 Mar 2018 13:20:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/114/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/114-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;普段、トレーディング・プラットフォームは cTrader の Windows デスクトップ版を使っています。
+今回は、 cTrader Web を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 2 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/97/</link>
+      <pubDate>Sun, 04 Mar 2018 13:44:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/97/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/97-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2018 年 2 月のトレードの結果を書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>システムの質を評価する</title>
+      <link>https://va2577.github.io/post/96/</link>
+      <pubDate>Sat, 24 Feb 2018 16:10:39 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/96/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/96-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;以前、 &lt;a href=&#34;https://va2577.github.io/post/91/&#34;&gt;R 倍数でトレードを考える&lt;/a&gt;を書きましたので、 R 倍数の分布を作成してからのことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>米商品先物取引委員会 (CFTC) の IMM 通貨先物ポジションのレポートがレガシーになっていた</title>
+      <link>https://va2577.github.io/post/94/</link>
+      <pubDate>Sat, 17 Feb 2018 18:43:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/94/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/94-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;米商品先物取引委員会(CFTC)(U.S. Commodity Futures Trading Commission)のデータをもとに IMM(International Monetary Market) の通貨先物ポジションを記録していたのですが、今まで参照していたページがレガシーの扱いになっていたため調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>検証でやってないことはできなかった</title>
+      <link>https://va2577.github.io/post/92/</link>
+      <pubDate>Sun, 11 Feb 2018 21:08:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/92/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/92-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;タイトルの通りで、自分の失敗を書いてみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>R 倍数でトレードを考える</title>
+      <link>https://va2577.github.io/post/91/</link>
+      <pubDate>Sat, 10 Feb 2018 13:35:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/91/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/91-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;R 倍数のことを書いてみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iOS の cTrader で 為替レートのアラート機能 (Price Alerts) を使ってみました</title>
+      <link>https://va2577.github.io/post/90/</link>
+      <pubDate>Fri, 09 Feb 2018 18:00:35 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/90/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/90-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;iOS の cTrader を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>トレーディング・プラットフォームを検討してみました</title>
+      <link>https://va2577.github.io/post/89/</link>
+      <pubDate>Thu, 08 Feb 2018 15:29:24 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/89/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/89-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;トレードの機会を増やすために、マネーパートナーズで扱っている 20 通貨ペアがチェックできないかと思い、トレーディング・プラットフォームを検討してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>&#34;期待値を理由にトレードする&#34; ということを教えてくれた説明です</title>
+      <link>https://va2577.github.io/post/88/</link>
+      <pubDate>Wed, 07 Feb 2018 18:44:30 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/88/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/88-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;私の考えでは、トレーディングは期待値を上げる機会だけを求めて行うべきだ。&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;システムトレード　基本と原則　第９章　売買ルール　Methodology　No. 3487&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;ldquo;システムトレード　基本と原則&amp;rdquo; の著者である、ブレント・ペンフォールドさんは、引用のように、「トレーディングは期待値を上げる機会だけを求めて行うべきだ」、と言っています。&lt;/p&gt;
+&lt;p&gt;その具体的な意味を教えてくれた説明を書いてみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2018 年 1 月のトレードの結果</title>
+      <link>https://va2577.github.io/post/86/</link>
+      <pubDate>Sun, 04 Feb 2018 13:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/86/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/86-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;戒めの意味も込めて、今年はトレードの結果を書いていこうと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>cTrader で為替レートのアラートメールを送る</title>
+      <link>https://va2577.github.io/post/85/</link>
+      <pubDate>Wed, 31 Jan 2018 14:26:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/85/</guid>
+      <description>&lt;p&gt;iOS のアプリで為替レートのプッシュ通知ができるものを調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>米ドル建ての口座の取引数量の計算式</title>
+      <link>https://va2577.github.io/post/84/</link>
+      <pubDate>Tue, 30 Jan 2018 18:31:08 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/84/</guid>
+      <description>&lt;p&gt;Forex Tester で検証していて、複利で運用した場合の口座残高の推移を把握しておきたいと思いました。
+が、 Forex Tester 2 の口座はドル建てなので、取引数量の計算式について調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2017 年の記録</title>
+      <link>https://va2577.github.io/post/75/</link>
+      <pubDate>Fri, 29 Dec 2017 18:38:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/75/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/65/&#34;&gt;2016 年の記録&lt;/a&gt; を書いてからもう一年経過していたので、2017 年の記録を書いてみたいと思います。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2016 年の記録</title>
+      <link>https://va2577.github.io/post/65/</link>
+      <pubDate>Sat, 24 Dec 2016 14:22:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/65/</guid>
+      <description>&lt;p&gt;トレードをするのに記録していることがありまして、年末なので 2016 年を振り返ってみようと思いました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Forex Tester 2 のインディケーターで HL バンドを使いたい</title>
+      <link>https://va2577.github.io/post/56/</link>
+      <pubDate>Sun, 06 Nov 2016 17:58:54 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/56/</guid>
+      <description>&lt;p&gt;最近、ようやく &amp;ldquo;検証する&amp;rdquo; というのがどういうことかが理解できてきて、実践することができています。
+Forex Tester 2(FT2) で検証するために、HL バンドを使いたかったのですが、 &amp;ldquo;HL バンド&amp;rdquo; という名前のインディケーターがなかったので、調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Meta Trader 5 のインディケーター (Gerald Appel の MACD) を作る</title>
+      <link>https://va2577.github.io/post/55/</link>
+      <pubDate>Sun, 06 Nov 2016 17:19:50 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/55/</guid>
+      <description>&lt;p&gt;為替の取引をするのに Meta Trader 5(MT5) を使っているのですが、MACD を使おうと思った時に、このインディケーターの開発者である Gerald Appel の提唱するものと違うようなので、自分で作ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値の表</title>
+      <link>https://va2577.github.io/post/54/</link>
+      <pubDate>Thu, 03 Nov 2016 22:10:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/54/</guid>
+      <description>&lt;p&gt;勝率とリスクリワードレシオの範囲で期待値を計算した表を作ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値の計算</title>
+      <link>https://va2577.github.io/post/50/</link>
+      <pubDate>Wed, 12 Oct 2016 18:16:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/50/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/46/&#34;&gt;破産確率の計算&lt;/a&gt;をしてみましたので、次は期待値を計算してみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>破産確率の計算</title>
+      <link>https://va2577.github.io/post/46/</link>
+      <pubDate>Sat, 24 Sep 2016 14:32:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/46/</guid>
+      <description>&lt;p&gt;破産確率を自分でも計算してみようと思いまして調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>経済指標カレンダーと各種レートと取引数量計算とReact</title>
+      <link>https://va2577.github.io/post/38/</link>
+      <pubDate>Wed, 09 Mar 2016 23:24:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/38/</guid>
+      <description>&lt;p&gt;外国為替証拠金取引(FX, Forex, Foreign eXchange)で毎日使うもののページにしました。
+経済指標カレンダーとFX、指数、商品先物、金利と債券のレートはブログパーツがあったので、導入してみました。
+資金管理の取引数量計算は &lt;a href=&#34;https://facebook.github.io/react/&#34;&gt;React&lt;/a&gt; を使って実装してみました。
+コンポーネントとかは全く意識してません。the transformation in the browser.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

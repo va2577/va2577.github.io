@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>venv on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/venv/</link>
+    <description>Recent content in venv on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 Dec 2016 15:59:13 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/venv/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python 3 をインストールして venv で環境を設定する</title>
+      <link>https://va2577.github.io/post/62/</link>
+      <pubDate>Mon, 19 Dec 2016 15:59:13 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/62/</guid>
+      <description>&lt;p&gt;Machine Intelligence な &lt;a href=&#34;https://www.tensorflow.org&#34;&gt;TensorFlow&lt;/a&gt; を使ってみたくて、その前に Python をインストールして、使えるところまで調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

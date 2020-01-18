@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>JUPYTER NOTEBOOK を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Jupyter Notebook を使ってみました</h1>
+    
+      <div><time>December 23, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Jupyter Notebook を使ってみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>macOS Sierra バージョン 10.12.3</li>
+<li>Python 3.6</li>
+<li>Jupyter Notebook 1.0.0</li>
+</ul>
+<h2 id="the-jupyter-notebook">The Jupyter Notebook?</h2>
+<blockquote>
+<p>The Jupyter Notebook</p>
+<p>The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, machine learning and much more.</p>
+<p><cite><a href="http://jupyter.org">Project Jupyter | Home</a></cite></p>
+</blockquote>
+<p>ウェブ上でコードが書けて、実行した結果にメモも含めて保存しておけるのですごいと感じました。
+まだ使いこなせてないですけど。</p>
+<p>これって、Python がインタプリタな言語だからできるのでしょうか。
+いや、複数の言語に対応しているようだから違うのでしょうか。</p>
+<p>Jupyter Notebook についての記事を読んで存在は知っていたのですが、便利さは理解できていませんでした。
+自分が理解できていなかったからですけど、Python 以外の言語から Python に入ってきた人にどういうものか伝えるのが難しい気がします。</p>
+<p>でも、便利なので使っていきたいと感じました。</p>
+<h2 id="インストール">インストール</h2>
+<blockquote>
+<p>While Jupyter runs code in many programming languages, Python is a requirement (Python 3.3 or greater, or Python 2.7) for installing the Jupyter Notebook.</p>
+<p>We recommend using the <a href="https://www.continuum.io/downloads">Anaconda</a> distribution to install Python and Jupyter. We’ll go through its installation in the next section.</p>
+<p><cite><a href="http://jupyter.org/install.html">Project Jupyter | Install</a></cite></p>
+</blockquote>
+<p>Jupyter Notebook を使うのに Anaconda というパッケージの詰め合わせをインストールすることがおすすめのようです。</p>
+<blockquote>
+<p>Alternative for experienced Python users: Installing Jupyter with pip</p>
+<p>As an existing Python user, you may wish to install Jupyter using Python’s package manager, pip, instead of Anaconda.</p>
+<p>First, ensure that you have the latest pip; older versions may have trouble with some dependencies:</p>
+<pre><code>pip3 install --upgrade pip
+</code></pre>
+<p>Then install the Jupyter Notebook using:</p>
+<pre><code>pip3 install jupyter
+</code></pre>
+<p><cite><a href="http://jupyter.org/install.html">Project Jupyter | Install</a></cite></p>
+</blockquote>
+<p>そうでない場合は pip で Jupyter というパッケージをインストールするようです。</p>
+<p>今回は pip でインストールしてみたいと思います。</p>
+<pre><code>$ pip3 install jupyter
+Collecting jupyter
+  Downloading jupyter-1.0.0-py2.py3-none-any.whl
+Collecting nbconvert (from jupyter)
+  Downloading nbconvert-5.1.1-py2.py3-none-any.whl (372kB)
+    100% |████████████████████████████████| 378kB 906kB/s
+Collecting qtconsole (from jupyter)
+  Downloading qtconsole-4.2.1-py2.py3-none-any.whl (104kB)
+    100% |████████████████████████████████| 112kB 1.3MB/s
+Collecting ipywidgets (from jupyter)
+  Downloading ipywidgets-6.0.0-py2.py3-none-any.whl (46kB)
+    100% |████████████████████████████████| 51kB 1.6MB/s
+Collecting ipykernel (from jupyter)
+  Downloading ipykernel-4.5.2-py2.py3-none-any.whl (98kB)
+    100% |████████████████████████████████| 102kB 1.5MB/s
+Collecting notebook (from jupyter)
+  Downloading notebook-4.4.1-py2.py3-none-any.whl (6.9MB)
+    100% |████████████████████████████████| 6.9MB 191kB/s
+Collecting jupyter-console (from jupyter)
+  Downloading jupyter_console-5.1.0-py2.py3-none-any.whl
+Requirement already satisfied: traitlets&gt;=4.2 in ./lib/python3.6/site-packages (from nbconvert-&gt;jupyter)
+Collecting bleach (from nbconvert-&gt;jupyter)
+  Downloading bleach-2.0.0-py2.py3-none-any.whl
+Requirement already satisfied: pygments in ./lib/python3.6/site-packages (from nbconvert-&gt;jupyter)
+Collecting jupyter-core (from nbconvert-&gt;jupyter)
+  Downloading jupyter_core-4.3.0-py2.py3-none-any.whl (76kB)
+    100% |████████████████████████████████| 81kB 2.1MB/s
+Collecting nbformat (from nbconvert-&gt;jupyter)
+  Downloading nbformat-4.3.0-py2.py3-none-any.whl (154kB)
+    100% |████████████████████████████████| 163kB 2.1MB/s
+Collecting mistune!=0.6 (from nbconvert-&gt;jupyter)
+  Downloading mistune-0.7.4-cp36-cp36m-macosx_10_12_x86_64.whl (235kB)
+    100% |████████████████████████████████| 235kB 1.7MB/s
+Collecting entrypoints&gt;=0.2.2 (from nbconvert-&gt;jupyter)
+  Downloading entrypoints-0.2.2-py2.py3-none-any.whl
+Collecting jinja2 (from nbconvert-&gt;jupyter)
+  Downloading Jinja2-2.9.5-py2.py3-none-any.whl (340kB)
+    100% |████████████████████████████████| 348kB 2.4MB/s
+Collecting pandocfilters&gt;=1.4.1 (from nbconvert-&gt;jupyter)
+  Downloading pandocfilters-1.4.1.tar.gz
+Collecting testpath (from nbconvert-&gt;jupyter)
+  Downloading testpath-0.3-py2.py3-none-any.whl (82kB)
+    100% |████████████████████████████████| 92kB 572kB/s
+Collecting jupyter-client&gt;=4.1 (from qtconsole-&gt;jupyter)
+  Downloading jupyter_client-5.0.0-py2.py3-none-any.whl (83kB)
+    100% |████████████████████████████████| 92kB 2.1MB/s
+Collecting widgetsnbextension~=2.0.0 (from ipywidgets-&gt;jupyter)
+  Downloading widgetsnbextension-2.0.0-py2.py3-none-any.whl (1.1MB)
+    100% |████████████████████████████████| 1.1MB 623kB/s
+Requirement already satisfied: ipython&gt;=4.0.0 in ./lib/python3.6/site-packages (from ipywidgets-&gt;jupyter)
+Collecting tornado&gt;=4.0 (from ipykernel-&gt;jupyter)
+  Downloading tornado-4.4.2.tar.gz (460kB)
+    100% |████████████████████████████████| 460kB 1.3MB/s
+Collecting terminado&gt;=0.3.3; sys_platform != &quot;win32&quot; (from notebook-&gt;jupyter)
+  Downloading terminado-0.6.tar.gz
+Requirement already satisfied: ipython-genutils in ./lib/python3.6/site-packages (from notebook-&gt;jupyter)
+Requirement already satisfied: prompt-toolkit&lt;2.0.0,&gt;=1.0.0 in ./lib/python3.6/site-packages (from jupyter-console-&gt;jupyter)
+Requirement already satisfied: six in ./lib/python3.6/site-packages (from traitlets&gt;=4.2-&gt;nbconvert-&gt;jupyter)
+Requirement already satisfied: decorator in ./lib/python3.6/site-packages (from traitlets&gt;=4.2-&gt;nbconvert-&gt;jupyter)
+Collecting html5lib&gt;=0.99999999 (from bleach-&gt;nbconvert-&gt;jupyter)
+  Downloading html5lib-0.999999999-py2.py3-none-any.whl (112kB)
+    100% |████████████████████████████████| 122kB 2.0MB/s
+Collecting jsonschema!=2.5.0,&gt;=2.4 (from nbformat-&gt;nbconvert-&gt;jupyter)
+  Downloading jsonschema-2.6.0-py2.py3-none-any.whl
+Collecting MarkupSafe&gt;=0.23 (from jinja2-&gt;nbconvert-&gt;jupyter)
+  Downloading MarkupSafe-1.0.tar.gz
+Requirement already satisfied: python-dateutil&gt;=2.1 in ./lib/python3.6/site-packages (from jupyter-client&gt;=4.1-&gt;qtconsole-&gt;jupyter)
+Collecting pyzmq&gt;=13 (from jupyter-client&gt;=4.1-&gt;qtconsole-&gt;jupyter)
+  Downloading pyzmq-16.0.2-cp36-cp36m-macosx_10_6_intel.whl (1.1MB)
+    100% |████████████████████████████████| 1.1MB 716kB/s
+Requirement already satisfied: pexpect; sys_platform != &quot;win32&quot; in ./lib/python3.6/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Requirement already satisfied: pickleshare in ./lib/python3.6/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Requirement already satisfied: simplegeneric&gt;0.8 in ./lib/python3.6/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Requirement already satisfied: appnope; sys_platform == &quot;darwin&quot; in ./lib/python3.6/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Requirement already satisfied: setuptools&gt;=18.5 in ./lib/python3.6/site-packages (from ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Requirement already satisfied: ptyprocess in ./lib/python3.6/site-packages (from terminado&gt;=0.3.3; sys_platform != &quot;win32&quot;-&gt;notebook-&gt;jupyter)
+Requirement already satisfied: wcwidth in ./lib/python3.6/site-packages (from prompt-toolkit&lt;2.0.0,&gt;=1.0.0-&gt;jupyter-console-&gt;jupyter)
+Collecting webencodings (from html5lib&gt;=0.99999999-&gt;bleach-&gt;nbconvert-&gt;jupyter)
+  Downloading webencodings-0.5.tar.gz
+Requirement already satisfied: packaging&gt;=16.8 in ./lib/python3.6/site-packages (from setuptools&gt;=18.5-&gt;ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Requirement already satisfied: appdirs&gt;=1.4.0 in ./lib/python3.6/site-packages (from setuptools&gt;=18.5-&gt;ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Requirement already satisfied: pyparsing in ./lib/python3.6/site-packages (from packaging&gt;=16.8-&gt;setuptools&gt;=18.5-&gt;ipython&gt;=4.0.0-&gt;ipywidgets-&gt;jupyter)
+Building wheels for collected packages: pandocfilters, tornado, terminado, MarkupSafe, webencodings
+  Running setup.py bdist_wheel for pandocfilters ... done
+  Stored in directory: /Users/user/Library/Caches/pip/wheels/d4/01/68/49055c80b9f01ccb49241e73c8019628605064730941d70b56
+  Running setup.py bdist_wheel for tornado ... done
+  Stored in directory: /Users/user/Library/Caches/pip/wheels/b3/db/47/46e05d1ee3ecfba252fcab42f0a156dab0df0cddf99fa0827c
+  Running setup.py bdist_wheel for terminado ... done
+  Stored in directory: /Users/user/Library/Caches/pip/wheels/3b/c2/ea/af635ffb63857a8c2ddd22da6a4b52f5b7ea3065db94ef5d7c
+  Running setup.py bdist_wheel for MarkupSafe ... done
+  Stored in directory: /Users/user/Library/Caches/pip/wheels/88/a7/30/e39a54a87bcbe25308fa3ca64e8ddc75d9b3e5afa21ee32d57
+  Running setup.py bdist_wheel for webencodings ... done
+  Stored in directory: /Users/user/Library/Caches/pip/wheels/0a/73/c2/1dcc99951b6aeac495e7695505d1837616ca194938f07d1d7b
+Successfully built pandocfilters tornado terminado MarkupSafe webencodings
+Installing collected packages: webencodings, html5lib, bleach, jupyter-core, jsonschema, nbformat, mistune, entrypoints, MarkupSafe, jinja2, pandocfilters, testpath, nbconvert, pyzmq, jupyter-client, tornado, ipykernel, qtconsole, terminado, notebook, widgetsnbextension, ipywidgets, jupyter-console, jupyter
+Successfully installed MarkupSafe-1.0 bleach-2.0.0 entrypoints-0.2.2 html5lib-0.999999999 ipykernel-4.5.2 ipywidgets-6.0.0 jinja2-2.9.5 jsonschema-2.6.0 jupyter-1.0.0 jupyter-client-5.0.0 jupyter-console-5.1.0 jupyter-core-4.3.0 mistune-0.7.4 nbconvert-5.1.1 nbformat-4.3.0 notebook-4.4.1 pandocfilters-1.4.1 pyzmq-16.0.2 qtconsole-4.2.1 terminado-0.6 testpath-0.3 tornado-4.4.2 webencodings-0.5 widgetsnbextension-2.0.0
+</code></pre><p>何かたくさんのパッケージがインストールされました。</p>
+<p>パッケージを確認します。</p>
+<pre><code>$ pip3 list --format=columns
+Package            Version    
+------------------ -----------
+appdirs            1.4.3      
+appnope            0.1.0      
+bleach             2.0.0      
+coverage           4.3.4      
+decorator          4.0.11     
+entrypoints        0.2.2      
+html5lib           0.999999999
+ipykernel          4.5.2      
+ipython            5.3.0      
+ipython-genutils   0.2.0      
+ipywidgets         6.0.0      
+Jinja2             2.9.5      
+jsonschema         2.6.0      
+jupyter            1.0.0      
+jupyter-client     5.0.0      
+jupyter-console    5.1.0      
+jupyter-core       4.3.0      
+MarkupSafe         1.0        
+mistune            0.7.4      
+nbconvert          5.1.1      
+nbformat           4.3.0      
+notebook           4.4.1      
+numpy              1.12.1     
+packaging          16.8       
+pandas             0.19.2     
+pandas-highcharts  0.5.2      
+pandocfilters      1.4.1      
+pexpect            4.2.1      
+pickleshare        0.7.4      
+pip                9.0.1      
+prompt-toolkit     1.0.13     
+ptyprocess         0.5.1      
+Pygments           2.2.0      
+pyparsing          2.2.0      
+python-dateutil    2.6.0      
+pytz               2016.10    
+pyzmq              16.0.2     
+qtconsole          4.2.1      
+setuptools         34.3.2     
+simplegeneric      0.8.1      
+six                1.10.0     
+terminado          0.6        
+testpath           0.3        
+tornado            4.4.2      
+traitlets          4.3.2      
+wcwidth            0.1.7      
+webencodings       0.5        
+wheel              0.29.0     
+widgetsnbextension 2.0.0      
+</code></pre><h2 id="jupyter-notebook-を起動する">Jupyter Notebook を起動する</h2>
+<blockquote>
+<p>Basic Steps</p>
+<p>.1. Start the notebook server from the <a href="https://jupyter.readthedocs.io/en/latest/glossary.html#term-command-line">command line</a>:</p>
+<pre><code>jupyter notebook
+</code></pre>
+<p>.2. You should see the notebook open in your browser.</p>
+<p><cite><a href="https://jupyter.readthedocs.io/en/latest/running.html#running">Running the Notebook — Jupyter Documentation 4.1.1 alpha documentation</a></cite></p>
+</blockquote>
+<p>コマンドを入力します。</p>
+<pre><code>$ jupyter notebook
+[I 22:03:40.378 NotebookApp] Serving notebooks from local directory: /Users/user/ENV
+[I 22:03:40.378 NotebookApp] 0 active kernels
+[I 22:03:40.378 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/?token=7144ce7cf1635c6531f7ea102aacdbf866ab781a84b84762
+[I 22:03:40.378 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 22:03:40.379 NotebookApp]
+
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8888/?token=7144ce7cf1635c6531f7ea102aacdbf866ab781a84b84762
+[I 22:03:41.138 NotebookApp] Accepting one-time-token-authenticated connection from ::1
+</code></pre><p>ブラウザーが起動して Home が表示されています。</p>
+<p><img src="/img/64-01.png" alt=""></p>
+<h2 id="ファイルを作成する">ファイルを作成する</h2>
+<p>Home の画面の右側から [New]-[Python 3] をクリックします。</p>
+<p>Untitled のドキュメントの入力画面が表示されます。</p>
+<p>次のページに記載されているフィボナッチ数列を表示するプログラムを入力してみます。</p>
+<p><a href="https://docs.python.jp/3/tutorial/modules.html">6. モジュール (module) — Python 3.6.1 ドキュメント</a></p>
+<p>セルの単位で入力できて、セルのタイプが Code, Markdown とかから選べます。
+それ以外のタイプはまだ理解できていません。。</p>
+<p>[Cell]-[Run All]をクリックすると、上から順番に実行されます。</p>
+<p><img src="/img/64-02.png" alt=""></p>
+<p>[File]-[Close and Halt]をクリックすると、ファイルを閉じることができます。</p>
+<h2 id="jupyter-notebook-を終了する">Jupyter Notebook を終了する</h2>
+<p>ターミナルから [Control-C] で終了することができます。</p>
+<h2 id="終わり">終わり</h2>
+<p>プログラムを見やすくドキュメントにしておけるところ、他の言語で見たことがなくて、すごいと感じました。</p>
+<p>Python のインタプリタがあるから当然ですけど、対話形式で実行できるところもすごいと感じました。
+デバッグをするよりもトライアンドエラーがしやすそうで、プログラムを途中の状態から修正して、途中から実行を繰り返すことができるようです。
+その途中経過も見やすい図や表で表示することができるようです。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://jupyter.readthedocs.io/en/latest/index.html">Overview — Jupyter Documentation 4.1.1 alpha documentation</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

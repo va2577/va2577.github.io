@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VBA on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/vba/</link>
+    <description>Recent content in VBA on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Oct 2016 21:00:04 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/vba/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Excelのマクロで範囲を参照する</title>
+      <link>https://va2577.github.io/post/47/</link>
+      <pubDate>Mon, 03 Oct 2016 21:00:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/47/</guid>
+      <description>&lt;p&gt;Excelのマクロで範囲を参照する際の指定をいつも調べてしまうので書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

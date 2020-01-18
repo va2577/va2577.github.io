@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ECMAScript on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/ecmascript/</link>
+    <description>Recent content in ECMAScript on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 04 May 2018 11:31:28 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/ecmascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JavaScript で Immutable.Range() のようなことがしたかったので調べました (ECMAScript 2015)</title>
+      <link>https://va2577.github.io/post/154/</link>
+      <pubDate>Fri, 04 May 2018 11:31:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/154/</guid>
+      <description>&lt;p&gt;&lt;code&gt;for&lt;/code&gt; とか使わずに連番を持つ配列を作ってみました。
+でも、 &lt;a href=&#34;https://facebook.github.io/immutable-js/&#34;&gt;Immutable.js&lt;/a&gt; の &lt;code&gt;Immutable.Range()&lt;/code&gt; のような無限の配列ではありません。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>二つのパターン(ランダム、期待値)の口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/153/</link>
+      <pubDate>Thu, 03 May 2018 21:34:38 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/153/</guid>
+      <description>&lt;p&gt;前回までに次の 2 つの記事を書きました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移をシミュレーションしてみました&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/152/&#34;&gt;期待値による口座残高の推移を折れ線グラフで表示してみました&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;今回は、比較しやすくなるかと思って、一つのグラフに 2 つの推移を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値による口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/152/</link>
+      <pubDate>Wed, 02 May 2018 15:26:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/152/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移のシミュレーション&lt;/a&gt;をしてみました。
+今回は、ランダムな勝敗による口座残高の推移のシミュレーションではなく、期待値による口座残高の推移を折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>口座残高の推移をシミュレーションしてみました</title>
+      <link>https://va2577.github.io/post/150/</link>
+      <pubDate>Mon, 30 Apr 2018 22:32:01 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/150/</guid>
+      <description>&lt;p&gt;勝率と平均利益、平均損失をもとに口座残高の推移を Chart.js の折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Highcharts を使ってみました</title>
+      <link>https://va2577.github.io/post/147/</link>
+      <pubDate>Fri, 27 Apr 2018 09:49:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/147/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/146/&#34;&gt;前回の記事&lt;/a&gt;で Chart.js を使って、みんかぶ FX のチャートのレートを折れ線グラフで表示してみました。
+今回は、 &lt;a href=&#34;https://www.highcharts.com&#34;&gt;Highcharts&lt;/a&gt; を使って、みんかぶ FX のチャートのレートをローソク足で表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>みんかぶ FX のチャートのレートを取得してみました</title>
+      <link>https://va2577.github.io/post/146/</link>
+      <pubDate>Thu, 26 Apr 2018 16:46:56 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/146/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://fx.minkabu.jp/pair/chart&#34;&gt;みんかぶ FX のチャート&lt;/a&gt; のレートを取得してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Chart.js を使ってみました</title>
+      <link>https://va2577.github.io/post/145/</link>
+      <pubDate>Wed, 25 Apr 2018 13:19:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/145/</guid>
+      <description>&lt;p&gt;為替レートのチャートをウェブサイトに表示したかったので、 &lt;a href=&#34;http://www.chartjs.org/&#34;&gt;Chart.js&lt;/a&gt; を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js でランダムな文字列を作成してみました</title>
+      <link>https://va2577.github.io/post/143/</link>
+      <pubDate>Mon, 23 Apr 2018 09:03:45 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/143/</guid>
+      <description>&lt;p&gt;ランダムな文字列が必要になることがありまして、 Node.js で作成してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 4(Universal Module Definition)</title>
+      <link>https://va2577.github.io/post/124/</link>
+      <pubDate>Wed, 04 Apr 2018 08:09:47 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/124/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/123/&#34;&gt;前回の記事&lt;/a&gt;では、 SystemJS を使ってみました。
+今回は、 Universal Module Definition を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 3(SystemJS)</title>
+      <link>https://va2577.github.io/post/123/</link>
+      <pubDate>Tue, 03 Apr 2018 18:21:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/123/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/122/&#34;&gt;前回の記事&lt;/a&gt;では、 CommonJS を使ってみました。
+今回は、 SystemJS を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 2(CommonJS Modules)</title>
+      <link>https://va2577.github.io/post/122/</link>
+      <pubDate>Mon, 02 Apr 2018 14:35:24 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/122/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/120/&#34;&gt;前回の記事&lt;/a&gt;では、 RequireJS を使ってみました。
+今回は、 CommonJS を使ってみます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ブラウザーで ECMAScript Modules を使うことを調べました 1(Asynchronous Module Definition)</title>
+      <link>https://va2577.github.io/post/120/</link>
+      <pubDate>Sat, 31 Mar 2018 10:18:19 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/120/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/119/&#34;&gt;前回の記事&lt;/a&gt;では、 Node.js で ECMAScript Modules を使ってみました。
+今回は、ブラウザーでも ECMAScript Modules を使ってみようと思いました。&lt;/p&gt;
+&lt;p&gt;結果的には、 ECMAScript Modules のままでは動かせていなくて、 Babel を使ってトランスパイルしてからブラウザーで動かしています。&lt;/p&gt;
+&lt;p&gt;調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js で ECMAScript Modules を使ってみました</title>
+      <link>https://va2577.github.io/post/119/</link>
+      <pubDate>Fri, 30 Mar 2018 19:48:29 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/119/</guid>
+      <description>&lt;p&gt;以前、 &lt;a href=&#34;https://va2577.github.io/post/18/&#34;&gt;ECMAScript 2015 (ES6) in Node.js で import と export がエラーになる&lt;/a&gt;という記事を書きました。
+この記事の中では、結局、 &lt;code&gt;import&lt;/code&gt; と &lt;code&gt;export&lt;/code&gt; を使わないで実行する方向で終わってしまいました。
+今回は、 &lt;code&gt;import&lt;/code&gt; と &lt;code&gt;export&lt;/code&gt; を使って、とりあえずでも、実行する方法を調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>DOM 要素の変更を監視する方法を調べました</title>
+      <link>https://va2577.github.io/post/118/</link>
+      <pubDate>Thu, 29 Mar 2018 15:57:40 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/118/</guid>
+      <description>&lt;p&gt;span の中の文字列が変わったというイベントをトリガーにして処理したかったので調べました。
+jQuery を使う前提で調べたのですが、調べた結果、 jQuery を使わない方法 (MutationObserver) になりました。
+調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript の即時関数 (immediate function) の書き方を調べてしまいます</title>
+      <link>https://va2577.github.io/post/110/</link>
+      <pubDate>Wed, 21 Mar 2018 20:48:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/110/</guid>
+      <description>&lt;p&gt;即時関数の書き方は &lt;code&gt;(function () { /* ... */ })()&lt;/code&gt; だったか、 &lt;code&gt;(function () { /* ... */ }())&lt;/code&gt; だったか、調べてしまうので、書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript の文字列の結合のパフォーマンスを比較してみました</title>
+      <link>https://va2577.github.io/post/109/</link>
+      <pubDate>Tue, 20 Mar 2018 18:17:16 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/109/</guid>
+      <description>&lt;p&gt;2012 年に業務で初めて ActionScript を使っていたときに、文字列を &lt;code&gt;Array.push&lt;/code&gt; でまとめて &lt;code&gt;Array.join&lt;/code&gt; で結合した結果を取ってきていたのですが、パフォーマンスが気になったので比較してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Node.js の express で session を使ってみました</title>
+      <link>https://va2577.github.io/post/108/</link>
+      <pubDate>Mon, 19 Mar 2018 15:26:14 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/108/</guid>
+      <description>&lt;p&gt;Node.js の express で session が使いたかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript® 2017 の async/await を使ってみました</title>
+      <link>https://va2577.github.io/post/100/</link>
+      <pubDate>Sun, 11 Mar 2018 15:33:31 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/100/</guid>
+      <description>&lt;p&gt;今更ながら async/await を使ってみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JavaScript でフォームの中の要素の値の型を再確認しました</title>
+      <link>https://va2577.github.io/post/68/</link>
+      <pubDate>Fri, 20 Jan 2017 14:49:06 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/68/</guid>
+      <description>&lt;p&gt;&lt;code&gt;&amp;lt;input type=&amp;quot;text&amp;quot;&amp;gt;&lt;/code&gt; の value に &lt;code&gt;1&lt;/code&gt; を設定したら、 Number なのか、 String なのか、ちゃんと把握していなかったので、確認してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Markdownでリンクを新規タブで開く</title>
+      <link>https://va2577.github.io/post/39/</link>
+      <pubDate>Sun, 27 Mar 2016 00:05:37 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/39/</guid>
+      <description>&lt;p&gt;Markdownで&lt;code&gt;target=&amp;quot;_blank&amp;quot;&lt;/code&gt;を書きたかったんですけど、それはできないようで、調べてみるとjQueryを使って実現しているものが多いようでした。
+jQueryは使っていないので、&lt;a href=&#34;http://youmightnotneedjquery.com&#34;&gt;You Might Not Need jQuery&lt;/a&gt;を参考にJavaScriptで書きました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript 2015 (ES6) in Node.jsでimportとexportがエラーになる</title>
+      <link>https://va2577.github.io/post/18/</link>
+      <pubDate>Sun, 31 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/18/</guid>
+      <description>&lt;p&gt;Node.jsがECMAScript 2015をサポートしているということで、Node.jsだけで動かすものはECMAScript 2015のまま実行してしまおうとしたところ、importのところがエラーになるので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ECMAScript® 2015とBabelを使う</title>
+      <link>https://va2577.github.io/post/15/</link>
+      <pubDate>Sat, 23 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/15/</guid>
+      <description>&lt;p&gt;2015年6月にECMAScript® 2015の仕様が策定されました。
+しかしブラウザーで使う場合は、まだ実装されていないものもあるようです。
+そのためBabelでECMAScript 5に変換してから使うのが主流のようですが、変換する方法がいくつもあって、結局どれが良いのかわからなかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGO のテーマを作ってみます 2(BASE TEMPLATES AND BLOCKS) - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugo のテーマを作ってみます 2(Base Templates and Blocks)</h1>
+    
+      <div><time>March 27, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/115/">前回の記事</a>では、サイトとテーマの骨組みを作成しました。
+今回は、 <a href="https://gohugo.io/templates/base/">Base Templates and Blocks</a> を使ってみます。</p>
+<p>最初に、<a href="/post/115/">この記事</a>の通り、サイトとテーマの骨組みを作成しておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Hugo Static Site Generator v0.31.1</li>
+</ul>
+<h2 id="base-templates-and-blocks">Base Templates and Blocks</h2>
+<p>以前はなかったと思うのですが、 Base Templates and Blocks というものがあるみたいです。</p>
+<blockquote>
+<p>Base Template Lookup Order</p>
+<p>The lookup order for base templates is as follows:</p>
+<ol>
+<li>/layouts/section/&lt;TYPE&gt;-baseof.html</li>
+<li>/themes/&lt;THEME&gt;/layouts/section/&lt;TYPE&gt;-baseof.html</li>
+<li>/layouts/&lt;TYPE&gt;/baseof.html</li>
+<li>/themes/&lt;THEME&gt;/layouts/&lt;TYPE&gt;/baseof.html</li>
+<li>/layouts/section/baseof.html</li>
+<li>/themes/&lt;THEME&gt;/layouts/section/baseof.html</li>
+<li>/layouts/_default/&lt;TYPE&gt;-baseof.html</li>
+<li>/themes/&lt;THEME&gt;/layouts/_default/&lt;TYPE&gt;-baseof.html</li>
+<li>/layouts/_default/baseof.html</li>
+<li>/themes/&lt;THEME&gt;/layouts/_default/baseof.html</li>
+</ol>
+<p><cite><a href="https://gohugo.io/templates/base/">Base Templates and Blocks | Hugo</a></cite></p>
+</blockquote>
+<p>レイアウトの適用の優先度があって、上の方が優先度が高くて、下の方が優先度が低いようです。
+サイトのレイアウトが優先されて、テーマのレイアウトは優先されないようです。</p>
+<blockquote>
+<p>Content Sections</p>
+<p>Hugo generates a section tree that matches your content.</p>
+<p>A Section is a collection of pages that gets defined based on the organization structure under the content/ directory.</p>
+<p>By default, all the first-level directories under content/ form their own sections (root sections).</p>
+<p><cite><a href="https://gohugo.io/content-management/sections/">Content Sections | Hugo</a></cite></p>
+</blockquote>
+<p>section は、記事を保存するディレクトリー (content/) の直下のディレクトリーのことのようです。
+content/blog/ というディレクトリーは、 blog セクションになるようです。
+section ごとにレイアウトを適用することができるようです。</p>
+<blockquote>
+<p>Content Types</p>
+<p>Hugo supports sites with multiple content types and assumes your site will be organized into sections, where each section represents the corresponding type.</p>
+<p><cite><a href="https://gohugo.io/content-management/types/">Content Types | Hugo</a></cite></p>
+</blockquote>
+<p>Type は、記事の front matter で指定する Type のようです。
+<code>type = &quot;event&quot;</code> (TOML の例) と記述すると、 event という Type になるようです。
+Type ごとにもレイアウトを適用することができるようです。</p>
+<h3 id="baseofhtml">baseof.html</h3>
+<p>一番優先度の低いレイアウト (<code>themes/&lt;THEME&gt;/layouts/_default/baseof.html</code>) を作成してみます。
+テーマとして、このファイルを作成しておけば、記事のページにアクセスしても、記事のリストのページにアクセスしても、トップのページにアクセスしても、他に優先されるレイアウトがなければこのレイアウトで表示してくれることになるようです。</p>
+<p>次のような HTML ファイルを作成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;
+      {{ block &#34;title&#34; . }}
+        {{/* <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Blocks may include default content. </span><span style="color:#75715e">--&gt;</span> */}}
+        {{ .Site.Title }}
+      {{ end }}
+    &lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Code that all your templates share, like a header </span><span style="color:#75715e">--&gt;</span>
+    {{ block &#34;main&#34; . }}
+      <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> The part of the page that begins to differ between templates </span><span style="color:#75715e">--&gt;</span>
+    {{ end }}
+    {{ block &#34;footer&#34; . }}
+      <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> More shared code, perhaps a footer but that can be overridden if need be in  </span><span style="color:#75715e">--&gt;</span>
+    {{ end }}
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h3 id="listhtml">list.html</h3>
+<blockquote>
+<p>What is a List Page Template?</p>
+<p>A list page template is a template used to render multiple pieces of content in a single HTML page. The exception to this rule is the homepage, which is still a list but has its own dedicated template.</p>
+<p><cite><a href="https://gohugo.io/templates/lists/#what-is-a-list-page-template">Lists of Content in Hugo | Hugo</a></cite></p>
+</blockquote>
+<p>記事の一覧を表示するページのレイアウト (<code>themes/&lt;THEME&gt;/layouts/_default/list.html</code>) です。</p>
+<p>ベースとなるレイアウト (baseof.html) の <code>{{ block }}</code> を実装(オーバーライド)してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;main&#34; }}
+  &lt;<span style="color:#f92672">h1</span>&gt;Posts&lt;/<span style="color:#f92672">h1</span>&gt;
+  {{ range .Data.Pages }}
+    &lt;<span style="color:#f92672">article</span>&gt;
+      &lt;<span style="color:#f92672">h2</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">h2</span>&gt;
+      {{ .Content }}
+    &lt;/<span style="color:#f92672">article</span>&gt;
+  {{ end }}
+{{ end }}
+</code></pre></div><p><code>{{ define }}</code> で <code>{{ block }}</code> を実装できるようです。
+実装すると、 baseof.html の <code>{{ block }}</code> の部分が list.html の <code>{{ define }}</code> に置き換わって HTML が生成されるようです。</p>
+<p>list.html では <code>{{ block &quot;main&quot; }}</code> しか実装していないため、 <code>{{ block &quot;title&quot; }}</code> と <code>{{ block &quot;footer&quot; }}</code> は baseof.html の内容がそのまま HTML として生成されるようです。</p>
+<h3 id="singlehtml">single.html</h3>
+<blockquote>
+<p>Single Page Templates
+The primary view of content in Hugo is the single view. Hugo will render every Markdown file provided with a corresponding single template.</p>
+<p><cite><a href="https://gohugo.io/templates/single-page-templates/">Single Page Templates | Hugo</a></cite></p>
+</blockquote>
+<p>記事を表示するページのレイアウト (<code>themes/&lt;THEME&gt;/layouts/_default/single.html</code>) です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">{{ define &#34;title&#34; }}
+  {{/* <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> This will override the default value set in baseof.html; i.e., &#34;{{.Site.Title}}&#34; in the original example</span><span style="color:#75715e">--&gt;</span> */}}
+  {{ .Title }} &amp;ndash; {{ .Site.Title }}
+{{ end }}
+{{ define &#34;main&#34; }}
+  &lt;<span style="color:#f92672">h1</span>&gt;{{ .Title }}&lt;/<span style="color:#f92672">h1</span>&gt;
+  {{ .Content }}
+{{ end }}
+</code></pre></div><p>こちらは <code>{{ define &quot;title&quot; }}</code> も実装してみました。</p>
+<h2 id="content">content</h2>
+<p>content/post ディレクトリーに次の 2 つの examples の記事を作成しました。</p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/gohugoio/hugo/master/examples/blog/content/post/hello-hugo.md">hello-hugo.md</a></li>
+<li><a href="https://raw.githubusercontent.com/gohugoio/hugo/master/examples/blog/content/post/another-post.md">another-post.md</a></li>
+</ul>
+<p>次のコマンドでダウンロードしました。</p>
+<pre><code>$ install -d content/post
+$ curl -L -o content/post/hello-hugo.md 'https://raw.githubusercontent.com/gohugoio/hugo/master/examples/blog/content/post/hello-hugo.md'
+$ curl -L -o content/post/another-post.md 'https://raw.githubusercontent.com/gohugoio/hugo/master/examples/blog/content/post/another-post.md'
+</code></pre><h2 id="hugo-のサーバーで確認">Hugo のサーバーで確認</h2>
+<p>Hugo のサーバーで確認するために次のコマンドを入力します。</p>
+<pre><code>$ hugo -t &lt;THEMENAME&gt; server
+</code></pre><h3 id="記事の一覧を表示するページ">記事の一覧を表示するページ</h3>
+<p>http://localhost:1313/post/ にアクセスします。</p>
+<p>すると、テーマで作成した、 baseof.html と list.html のレイアウトが適用されたものが表示されます。</p>
+<p><img src="/img/116-01.png" alt=""></p>
+<p>この例だと、記事の内容をすべて一覧に表示してしまっていて、一覧という感じじゃないかもしれません。</p>
+<h3 id="記事を表示するページ">記事を表示するページ</h3>
+<p>次に、 http://localhost:1313/post/hello-hugo/ にアクセスします。</p>
+<p>すると、テーマで作成した、 baseof.html と single.html のレイアウトが適用されたものが表示されます。</p>
+<p><img src="/img/116-02.png" alt=""></p>
+<p>Ctrl + C で Hugo のサーバーを終了します。</p>
+<h2 id="終わり">終わり</h2>
+<p>以前は、 Base Templates はなかったと思います。
+そのため、 Partial Templates で、ヘッダーのレイアウトのファイルは <code>&lt;div&gt;</code> タグで終了して、フッターのレイアウトのファイルは <code>&lt;/div&gt;</code> タグで開始するような、気持ちの悪い区切り方をしていました。
+Base Templates はタグの単位でレイアウトのファイルを区切ることができるので、良さそうに感じました。</p>
+<p>今回は、ここまでにします。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gohugo.io/templates/base/">Base Templates and Blocks | Hugo</a></li>
+<li><a href="https://gohugo.io/templates/lists/">Lists of Content in Hugo | Hugo</a></li>
+<li><a href="https://gohugo.io/templates/single-page-templates/">Single Page Templates | Hugo</a></li>
+<li><a href="https://gohugo.io/templates/section-templates/">Section Page Templates | Hugo</a></li>
+</ul>
+<h2 id="7-april-2018-追記">7 April 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/117/">Hugo のテーマを作ってみます 3(Homepage Templates)</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

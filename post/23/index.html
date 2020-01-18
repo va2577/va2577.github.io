@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>MACでTREEコマンドを使う - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Macでtreeコマンドを使う</h1>
+    
+      <div><time>February 6, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Windowsでフォルダー構造を見るために使っていたtreeコマンドをMacで使おうと思ったら、標準でその機能がありませんでしたので調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Homebrew バージョン 0.9.5</li>
+<li>Tree バージョン 1.7.0</li>
+</ul>
+<h2 id="tree">Tree？</h2>
+<blockquote>
+<p>Description: Tree is a recursive directory listing command that produces a depth indented listing of files, which is colorized ala dircolors if the LS_COLORS environment variable is set and output is to tty. Tree has been ported and reported to work under the following operating systems: Linux, FreeBSD, OS X, Solaris, HP/UX, Cygwin, HP Nonstop and OS/2.</p>
+<p><cite><a href="http://mama.indstate.edu/users/ice/tree/">Extracted automatically from Tree homepage</a></cite></p>
+</blockquote>
+<h2 id="インストール">インストール</h2>
+<p>Homebrewを先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/2/">Homebrewのインストール</a></li>
+</ul>
+<p>treeをインストールします。</p>
+<pre><code>$ brew install tree
+==&gt; Downloading https://homebrew.bintray.com/bottles/tree-1.7.0.el_capitan.bottl
+Already downloaded: /Library/Caches/Homebrew/tree-1.7.0.el_capitan.bottle.1.tar.gz
+==&gt; Pouring tree-1.7.0.el_capitan.bottle.1.tar.gz
+🍺  /usr/local/Cellar/tree/1.7.0: 7 files, 112.4K
+</code></pre><h2 id="コマンド">コマンド</h2>
+<pre><code>$ tree
+.
+├── directory1
+│   ├── directory11
+│   │   ├── file111.txt
+│   │   └── file112.txt
+│   └── directory12
+│       └── file121.txt
+└── directory2
+
+4 directories, 3 files
+</code></pre><h2 id="オプション">オプション</h2>
+<ul>
+<li><code>-a</code> 隠しファイルも表示する</li>
+<li><code>-d</code> ディレクトリーだけ表示する</li>
+<li><code>-L level</code> <code>level</code>階層まで表示する</li>
+<li><code>-P pattern</code> <code>pattern</code>に該当するファイルを表示する</li>
+<li><code>-I pattern</code> <code>pattern</code>に該当しないファイルを表示する</li>
+<li><code>--charset X</code> 文字コード<code>X</code>を使って表示する</li>
+<li><code>-X</code> XMLの形式で表示する</li>
+<li><code>-J</code> JSONの形式で表示する</li>
+</ul>
+<h2 id="ヘルプ">ヘルプ</h2>
+<pre><code>$ tree --help
+usage: tree [-acdfghilnpqrstuvxACDFJQNSUX] [-H baseHREF] [-T title ]
+	[-L level [-R]] [-P pattern] [-I pattern] [-o filename] [--version]
+	[--help] [--inodes] [--device] [--noreport] [--nolinks] [--dirsfirst]
+	[--charset charset] [--filelimit[=]#] [--si] [--timefmt[=]&lt;f&gt;]
+	[--sort[=]&lt;name&gt;] [--matchdirs] [--ignore-case] [--] [&lt;directory list&gt;]
+  ------- Listing options -------
+# ...略...
+</code></pre><h2 id="アンインストール">アンインストール</h2>
+<pre><code>$ brew uninstall tree
+Uninstalling /usr/local/Cellar/tree/1.7.0... (7 files, 112.4K)
+</code></pre><h2 id="終わり">終わり</h2>
+<p>記事にコードブロックでディレクトリー構造を記載しようとした時に便利です。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://brewformulas.org/Tree">Tree — BrewFormulas</a></li>
+<li><a href="http://mama.indstate.edu/users/ice/tree/">The Tree Command for Linux Homepage</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON PANDAS ヒストリカルデータのサマータイムを考慮していませんでした - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python pandas ヒストリカルデータのサマータイムを考慮していませんでした</h1>
+    
+      <div><time>May 23, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/162/">以前の記事</a>で 1 分足のヒストリカルデータから日足のヒストリカルデータを作りました。
+そのときに時間を UTC+3 に一律設定していたのですが、これだと問題がありました。
+修正した内容を書いておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 18.04 LTS</li>
+<li>Python 3.6</li>
+<li>pandas 0.23.0</li>
+</ul>
+<h2 id="問題">問題</h2>
+<p>作った日足のデータを読み込んでおいて土曜日の行を表示してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>dayofweek <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>]<span style="color:#f92672">.</span>tail()
+</code></pre></div><p>結果です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> open high low close volume
+time
+<span style="color:#ae81ff">2017</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">112.107</span> <span style="color:#ae81ff">112.282</span> <span style="color:#ae81ff">112.099</span> <span style="color:#ae81ff">112.176</span> <span style="color:#ae81ff">2201.3</span>
+<span style="color:#ae81ff">2017</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">09</span> <span style="color:#ae81ff">113.489</span> <span style="color:#ae81ff">113.525</span> <span style="color:#ae81ff">113.454</span> <span style="color:#ae81ff">113.461</span> <span style="color:#ae81ff">3260.2</span>
+<span style="color:#ae81ff">2017</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">16</span> <span style="color:#ae81ff">112.581</span> <span style="color:#ae81ff">112.636</span> <span style="color:#ae81ff">112.562</span> <span style="color:#ae81ff">112.585</span> <span style="color:#ae81ff">3219.1</span>
+<span style="color:#ae81ff">2017</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">23</span> <span style="color:#ae81ff">113.268</span> <span style="color:#ae81ff">113.343</span> <span style="color:#ae81ff">113.254</span> <span style="color:#ae81ff">113.260</span> <span style="color:#ae81ff">3561.4</span>
+<span style="color:#ae81ff">2017</span><span style="color:#f92672">-</span><span style="color:#ae81ff">12</span><span style="color:#f92672">-</span><span style="color:#ae81ff">30</span> <span style="color:#ae81ff">112.680</span> <span style="color:#ae81ff">112.714</span> <span style="color:#ae81ff">112.647</span> <span style="color:#ae81ff">112.658</span> <span style="color:#ae81ff">5856.3</span>
+</code></pre></div><p>土曜日は取引がないはずなのに該当してしまいました。
+これだと日足が 6 本できてしまいます。</p>
+<h2 id="原因">原因</h2>
+<p>結果を見ていると、土曜日のデータがあるのはサマータイム以外の期間だけでした。</p>
+<p>どうやらサマータイムじゃないときにも UTC+3 を設定したことで、月曜日の 1 時に始まり、金曜日の 25 時(土曜日の 1 時)に終わるようになってしまっていたようでした。</p>
+<h2 id="対処">対処</h2>
+<p>サマータイムを考慮して、サマータイムのときは UTC+3 、サマータイムじゃないときは UTC+2 を設定してあげる必要があるようでした。</p>
+<p>ここからは Jupyter Notebook のセルに入力しながら進めます。</p>
+<p>必要なモジュールを読み込みます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> calendar
+<span style="color:#f92672">import</span> datetime
+<span style="color:#f92672">import</span> functools
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><p>1 分足のヒストリカルデータを読み込む関数です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read</span>(filepath):
+    dtype <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+    names <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+    df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(filepath, dtype<span style="color:#f92672">=</span>dtype, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, names<span style="color:#f92672">=</span>names, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+    <span style="color:#66d9ef">return</span> df
+</code></pre></div><p>UTC+3 と UTC+2 を設定する関数です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dstdt</span>(year, month, week, hours):
+    day <span style="color:#f92672">=</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> calendar<span style="color:#f92672">.</span>Calendar()<span style="color:#f92672">.</span>itermonthdays2(year, month) <span style="color:#66d9ef">if</span> i[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> i[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> calendar<span style="color:#f92672">.</span>SUNDAY][week][<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">return</span> datetime<span style="color:#f92672">.</span>datetime(year, month, day, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">+</span> datetime<span style="color:#f92672">.</span>timedelta(hours<span style="color:#f92672">=</span><span style="color:#f92672">-</span>hours)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dst</span>(year):
+    dic <span style="color:#f92672">=</span> {
+        <span style="color:#ae81ff">1918</span>: [(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>), (<span style="color:#ae81ff">10</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>)],
+        <span style="color:#ae81ff">2007</span>: [(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>), (<span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>)]
+    }
+    key <span style="color:#f92672">=</span> functools<span style="color:#f92672">.</span>reduce(<span style="color:#66d9ef">lambda</span> x, y: x <span style="color:#66d9ef">if</span> year <span style="color:#f92672">&lt;</span> y <span style="color:#66d9ef">else</span> y, dic<span style="color:#f92672">.</span>keys(), <span style="color:#ae81ff">0</span>)
+    <span style="color:#66d9ef">if</span> key <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#66d9ef">return</span> []
+    <span style="color:#66d9ef">return</span> [dstdt(year, i[<span style="color:#ae81ff">0</span>], i[<span style="color:#ae81ff">1</span>], i[<span style="color:#ae81ff">2</span>]) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dic[key]]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">offset</span>(df):
+    data <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values }
+    columns <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+    l <span style="color:#f92672">=</span> [dst(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2001</span>, <span style="color:#ae81ff">2018</span>)]
+    l2 <span style="color:#f92672">=</span> [(i[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>index) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>index <span style="color:#f92672">&lt;</span> i[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> l]
+    is_dst <span style="color:#f92672">=</span> functools<span style="color:#f92672">.</span>reduce(<span style="color:#66d9ef">lambda</span> x, y: x <span style="color:#f92672">|</span> y, l2)
+    eest <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>index[is_dst] <span style="color:#f92672">+</span> pd<span style="color:#f92672">.</span>DateOffset(hours<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>) <span style="color:#75715e"># サマータイムは UTC+3</span>
+    eet <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>index[<span style="color:#f92672">~</span>is_dst] <span style="color:#f92672">+</span> pd<span style="color:#f92672">.</span>DateOffset(hours<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>) <span style="color:#75715e"># サマータイム以外は UTC+2</span>
+    index <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([eest<span style="color:#f92672">.</span>to_series(), eet<span style="color:#f92672">.</span>to_series()])<span style="color:#f92672">.</span>sort_values()
+    df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data, columns<span style="color:#f92672">=</span>columns, index<span style="color:#f92672">=</span>index)
+    <span style="color:#66d9ef">return</span> df
+</code></pre></div><p>サマータイムの期間を求める関数も実装しました。
+最初 pandas.Timestamp の dst 関数を使ったり、 pytz の dst 関数を使ったりしたのですが、遅かったので実装することにしました。</p>
+<p>1 分足から日足にする関数です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">resample</span>(df, rule):
+    df2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>resample(rule)<span style="color:#f92672">.</span>ohlc()
+    df3 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>resample(rule)<span style="color:#f92672">.</span>sum()
+    data <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: df2[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: df2[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: df2[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: df2[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values }
+    columns <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+    df4 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data, columns<span style="color:#f92672">=</span>columns, index<span style="color:#f92672">=</span>df2<span style="color:#f92672">.</span>index)<span style="color:#f92672">.</span>dropna()
+    <span style="color:#66d9ef">return</span> df4
+</code></pre></div><p><code>rule</code> に <code>'D'</code> を指定すると日足、 <code>'H'</code> を指定すると 1 時間足、 <code>'15T'</code> にすると 15 分足、 <code>'5T'</code> にすると 5 分足になります。</p>
+<p>上の関数をまとめて、それから csv を作る関数です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>(filepath, rule, decimals, to):
+    df <span style="color:#f92672">=</span> read(filepath)
+    df2 <span style="color:#f92672">=</span> offset(df)
+    df3 <span style="color:#f92672">=</span> resample(df2, rule)
+    df4 <span style="color:#f92672">=</span> df3<span style="color:#f92672">.</span>round({ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: decimals[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: decimals[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: decimals[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: decimals[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: decimals[<span style="color:#ae81ff">1</span>] })
+    df4<span style="color:#f92672">.</span>to_csv(to)
+    <span style="color:#66d9ef">return</span> to, df4[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>count()
+</code></pre></div><p><code>filepath</code> は入力する 1 分足のファイルのパスです。
+<code>rule</code> は resample 関数の <code>rule</code> です。
+<code>decimals</code> は小数点以下の桁数です。
+価格に対する小数点以下の桁数と、出来高に対する小数点以下の桁数をセットか配列で渡すことを想定しています。
+価格について、円クロスの通貨ペアは 3 、それ以外は 5 になることを想定しています。
+<code>to</code> は作る csv のパスです。</p>
+<h2 id="確認">確認</h2>
+<p>データは以前使ったのと同じものです。</p>
+<pre><code class="language-console" data-lang="console">Time (UTC),Open,High,Low,Close,Volume
+2003.05.04 21:00:00,118.94,118.952,118.94,118.952,253
+2003.05.04 21:01:00,118.961,118.967,118.958,118.967,154.6
+2003.05.04 21:02:00,118.972,118.972,118.955,118.955,219.7
+2003.05.04 21:03:00,118.953,118.961,118.949,118.949,309.9
+2003.05.04 21:04:00,118.953,118.953,118.946,118.946,229.4
+2003.05.04 21:05:00,118.952,118.954,118.944,118.944,112.2
+2003.05.04 21:06:00,118.95,118.952,118.945,118.945,170.2
+2003.05.04 21:07:00,118.947,118.956,118.947,118.947,124.5
+2003.05.04 21:08:00,118.946,118.954,118.934,118.934,355
+</code></pre><p>実行しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>time main(f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/data/USDJPY_1 Min_Bid_2000.01.01_2018.01.01.csv</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#39;</span>, (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>), f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/data/USDJPY_D.csv</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console">CPU times: user 20.9 s, sys: 5.45 s, total: 26.4 s
+Wall time: 29.8 s
+
+[('~/Documents/data/d/USDJPY_D.csv', 3827)]
+</code></pre><p>500 万行程度の 1 分足のデータを読み込んで 3,800 行程度の日足のデータを作りました。
+30 秒程度かかりました。</p>
+<p>日足のデータです。</p>
+<pre><code class="language-console" data-lang="console">time,open,high,low,close,volume
+2003-05-05,118.94,119.046,118.461,118.603,592866.9
+2003-05-06,118.591,118.751,117.29,117.5,581707.0
+2003-05-07,117.456,117.83,116.052,116.303,584496.2
+2003-05-08,116.311,116.969,115.94,116.823,588236.7
+2003-05-09,116.835,117.612,116.794,117.151,583132.9
+2003-05-12,117.286,117.286,116.304,117.025,586660.3
+2003-05-13,117.053,117.528,116.338,116.561,584984.4
+2003-05-14,116.554,116.837,115.557,116.16,586464.9
+2003-05-15,116.173,116.525,115.282,116.515,585585.1
+</code></pre><p>土曜日のデータがあるか確認しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> read(f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/Documents/data/d/USDJPY_D.csv</span><span style="color:#e6db74">&#39;</span>)
+df[df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>dayofweek <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>]
+</code></pre></div><p>結果です。</p>
+<pre><code class="language-console" data-lang="console"> open high low close volume
+time
+</code></pre><p>ヘッダーだけで行が出力されなかったので大丈夫そうでした。</p>
+<h2 id="gist">Gist</h2>
+<p>Jupyter Notebook のファイルを Gist にアップしておきました。</p>
+<ul>
+<li><a href="https://gist.github.com/va2577/2ca817ca3d34fb1f6ab715bc967c9e10">ヒストリカルデータ 2018/08/20</a></li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>まだ取引の環境のことをちゃんと理解できていないようでした…。</p>
+<p>変なデータで検証を進めるところでした。
+気をつけます。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

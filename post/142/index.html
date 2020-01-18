@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>WSL の UBUNTU で TREE コマンドを使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>WSL の Ubuntu で tree コマンドを使ってみました</h1>
+    
+      <div><time>April 22, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>以前、<a href="/post/23/">Macでtreeコマンドを使う</a>の記事を書いたことがありました。
+今回は、 WSL の Ubuntu で tree コマンドを使ってみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 16.04</li>
+</ul>
+<h2 id="windows-の-tree-コマンド">Windows の tree コマンド</h2>
+<p>tree コマンドは Windows にもあって、 C:\Windows\System32\tree.com がそれのようです。
+拡張子は、 .exe ではなくて、 .com のようでした。</p>
+<pre><code>PS C:\Users\user\Pictures&gt; tree
+フォルダー パスの一覧:  ボリューム Local Disk
+ボリューム シリアル番号は 620B-xxxx です
+C:.
+├─Camera Roll
+└─Saved Pictures
+</code></pre><p>フォルダーの構造を表示してくれます。</p>
+<p>WSL の Ubuntu からも Windows のコマンドが呼び出せるようで、 /mnt/c/Windows/System32/tree.com のコマンドを実行してみました。
+パスが通っているようで、 tree.com でも実行はできるみたいです。</p>
+<pre><code>$ /mnt/c/Windows/System32/tree.com ./
+Folder PATH listing for volume Local Disk
+Volume serial number is 0000xxxx 620B:xxxx
+C:\WINDOWS\SYSTEM32\
+Invalid path - \WINDOWS\SYSTEM32\
+No subfolders exist
+</code></pre><p>カレントディレクトリーが変わってしまうようでした。</p>
+<p>それから、今回、 Ubuntu 側のディレクトリーを扱いたかったのですが、 Windows のアプリから Ubuntu 側のディレクトリーを扱うのは<a href="https://kledgeb.blogspot.jp/2016/11/wsl-60-windowsubuntu.html">よくない</a>そうなので、おとなしく Ubuntu の tree を使おうと思いました。</p>
+<h2 id="install">install</h2>
+<p>Ubuntu の tree をインストールします。
+リポジトリーに tree コマンドのパッケージがあるみたいなので、 <code>apt install</code> でインストールしてみます。</p>
+<pre><code>$ sudo apt install tree
+[sudo] password for user:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following NEW packages will be installed:
+  tree
+0 upgraded, 1 newly installed, 0 to remove and 67 not upgraded.
+Need to get 40.6 kB of archives.
+After this operation, 138 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu xenial/universe amd64 tree amd64 1.7.0-3 [40.6 kB]
+Fetched 40.6 kB in 2s (14.9 kB/s)
+Selecting previously unselected package tree.
+(Reading database ... 26614 files and directories currently installed.)
+Preparing to unpack .../tree_1.7.0-3_amd64.deb ...
+Unpacking tree (1.7.0-3) ...
+Processing triggers for man-db (2.7.5-1) ...
+Setting up tree (1.7.0-3) ...
+</code></pre><p>インストールできたみたいです。</p>
+<h2 id="tree-コマンド">tree コマンド</h2>
+<p><code>tree</code> コマンドを使ってみます。</p>
+<pre><code>$ tree
+.
+├── css
+│   └── style.css
+├── img
+│   ├── apple-touch-icon.png
+│   ├── favicon.png
+│   └── logo.png
+└── js
+    └── script.js
+
+3 directories, 5 files
+</code></pre><p>Ubuntu の tree コマンドが使えているようです。</p>
+<h2 id="アンインストール">アンインストール</h2>
+<blockquote>
+<p>Remove a Package: Removal of a package (or packages) is also straightforward. To remove the package installed in the previous example, type the following:</p>
+<pre><code>sudo apt remove nmap
+</code></pre>
+<p><cite><a href="https://help.ubuntu.com/lts/serverguide/apt.html">Apt</a></cite></p>
+</blockquote>
+<p>アンインストールをあまりすることがなくて忘れてしまうのですが、 <code>apt remove</code> でアンインストールできるようです。</p>
+<pre><code>$ sudo apt remove tree
+</code></pre><h2 id="終わり">終わり</h2>
+<p>Windows で Linux が使えるといっても、制約があることがやっぱり面倒で、 macOS を使った方がいいとも思うところでした。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://kledgeb.blogspot.jp/2016/10/wsl-51-bashwindows.html">WSL その51 - BashからWindowsコマンドを呼び出すコマンドの実行例 - kledgeb</a></li>
+<li><a href="https://kledgeb.blogspot.jp/2016/11/wsl-60-windowsubuntu.html">WSL その60 - WindowsアプリからUbuntu環境内のファイルを決していじってはならない - kledgeb</a></li>
+</ul>
+<h2 id="26-april-2018-追記">26 April 2018 追記</h2>
+<p>もう少し WSL の Ubuntu から Windows の tree コマンドを使う方法を確認してみました。</p>
+<pre><code>$ /mnt/c/Windows/System32/tree.com ./
+Folder PATH listing for volume Local Disk
+Volume serial number is 0000xxxx 620B:xxxx
+C:\WINDOWS\SYSTEM32\
+Invalid path - \WINDOWS\SYSTEM32\
+No subfolders exist
+</code></pre><p>この記事の最初に Windows の tree コマンドを実行したときの、このエラー。
+C:\WINDOWS\SYSTEM32\ のパスが渡されているにも関わらず、 Invalid path として \WINDOWS\SYSTEM32\ というパスを出力しています。
+<code>:</code> (コロン)がうまく渡せていないのかな、と思いました。</p>
+<pre><code>$ tree.com C:\Users\user\Pictures
+Folder PATH listing for volume Local Disk
+Volume serial number is 0000xxxx 620B:xxxx
+C:\WINDOWS\SYSTEM32\USERSUSERPICTURES
+Invalid path - \WINDOWS\SYSTEM32\USERSUSERPICTURES
+No subfolders exist
+</code></pre><p>別のフォルダーのパスを渡しても Invalid path - \WINDOWS\SYSTEM32\USERSUSERPICTURES のエラーになりました。
+C: が消えてしまっています。
+それから、 C:\WINDOWS\SYSTEM32\ が基準のフォルダーになってしまっていて、その下に USERS フォルダーがあるように認識されてしまっています。
+USERS フォルダー以降の \ マークもなくなってしまっています。</p>
+<pre><code>$ tree.com &quot;C:\Users\user\Pictures&quot;
+Folder PATH listing for volume Local Disk
+Volume serial number is 0000xxxx 620B:xxxx
+C:\USERS\USER\PICTURES
+</code></pre><p>ダブルクォーテーションでパスを囲んでみました。
+すると、エラーはなくなりました。</p>
+<p>でも、 Windows からは見えていた Camera Roll と Saved Pictures は出力されませんでした。
+空のディレクトリーであるかのように見えてしまっています。</p>
+<p>特殊なフォルダーなのかな、と思って、普通のフォルダーを作ってみました。
+そして、まず Windows の tree コマンドで確認してみました。</p>
+<pre><code>PS C:\Users\user\Pictures&gt; tree
+フォルダー パスの一覧:  ボリューム Local Disk
+ボリューム シリアル番号は 620B-xxxx です
+C:.
+├─Camera Roll
+├─fol1
+│  ├─fol11
+│  └─fol12
+└─Saved Pictures
+</code></pre><p>fol1 と、その下に fol11 と fol12 を作成しました。</p>
+<p>そして、 Ubuntu から Windows の tree コマンドで確認してみました。</p>
+<pre><code>$ tree.com &quot;C:\Users\user\Pictures&quot;
+Folder PATH listing for volume Local Disk
+Volume serial number is 0000xxxx 620B:xxxx
+C:\USERS\USER\PICTURES
+   fol11
+   fol12
+</code></pre><p>なぜか Pictures の下に fol11 と fol12 があるかのような出力になってしまっています。</p>
+<p>おとなしく Ubuntu の tree コマンドを使おうと思います。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

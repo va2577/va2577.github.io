@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>FLVファイルからAACファイルに、AACファイルからM4Aファイルに無劣化で変換する</h1>
+    
+      <div><time>February 10, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/24/">らじる★らじる</a>、<a href="/post/25/">radiko.jp</a>で録音したファイルから<a href="/post/27/">AACファイルを抽出</a>しましたが、MacのFinderから再生することはできるんですけど、iTunesでは再生できませんでした。
+なので今回はiTunesで再生できるようになるまでを調べてみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.3</li>
+<li>Homebrew バージョン 0.9.5</li>
+<li>MP4Box バージョン 0.5.1 rev4065</li>
+</ul>
+<h2 id="mp4box">MP4Box？</h2>
+<blockquote>
+<p>The multimedia packager available in GPAC is called MP4Box.
+It can be used for performing many manipulations on multimedia files like AVI, MPG, TS, but mostly on ISO media files (e.g. MP4, 3GP).</p>
+<p><cite><a href="https://gpac.wp.mines-telecom.fr/mp4box/">MP4Box</a></cite></p>
+</blockquote>
+<h2 id="インストール">インストール</h2>
+<p>Homebrewを先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/2/">Homebrewのインストール</a></li>
+</ul>
+<p>FFmpegを先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/27/">FFmpegのインストール</a></li>
+</ul>
+<p>MP4Boxを使って変換しますのでMP4Boxをインストールします。</p>
+<pre><code>$ brew install mp4box
+==&gt; Downloading https://github.com/gpac/gpac/archive/v0.5.2.tar.gz
+==&gt; Downloading from https://codeload.github.com/gpac/gpac/tar.gz/v0.5.2
+######################################################################## 100.0%
+==&gt; ./configure --disable-wx --prefix=/usr/local/Cellar/gpac/0.5.2 --mandir=/usr
+==&gt; make
+==&gt; make install
+🍺  /usr/local/Cellar/gpac/0.5.2: 112 files, 5.2M, built in 1 minute 42 seconds
+</code></pre><p>Homebrewって便利です。</p>
+<h2 id="flvファイルからaacファイルを抽出">FLVファイルからAACファイルを抽出</h2>
+<p><a href="/post/27/">前回</a>と同様にFLVファイルからAACファイルを抽出します。</p>
+<pre><code>$ ffmpeg -i filename.flv -c:a copy out.aac
+ffmpeg version 2.8.6 Copyright (c) 2000-2016 the FFmpeg developers
+  built with Apple LLVM version 7.0.2 (clang-700.1.81)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/2.8.6 --enable-shared --enable-pthreads --enable-gpl --enable-version3 --enable-hardcoded-tables --enable-avresample --cc=clang --host-cflags= --host-ldflags= --enable-opencl --enable-libx264 --enable-libmp3lame --enable-libvo-aacenc --enable-libxvid --enable-vda
+  libavutil      54. 31.100 / 54. 31.100
+  libavcodec     56. 60.100 / 56. 60.100
+  libavformat    56. 40.101 / 56. 40.101
+  libavdevice    56.  4.100 / 56.  4.100
+  libavfilter     5. 40.101 /  5. 40.101
+  libavresample   2.  1.  0 /  2.  1.  0
+  libswscale      3.  1.101 /  3.  1.101
+  libswresample   1.  2.101 /  1.  2.101
+  libpostproc    53.  3.100 / 53.  3.100
+Input #0, flv, from 'filename.flv':
+  Duration: 01:01:57.97, start: 0.000000, bitrate: 51 kb/s
+    Stream #0:0: Audio: aac (HE-AAC), 48000 Hz, stereo, fltp, 49 kb/s
+Output #0, adts, to 'out.aac':
+  Metadata:
+    encoder         : Lavf56.40.101
+    Stream #0:0: Audio: aac, 48000 Hz, stereo, 49 kb/s
+Stream mapping:
+  Stream #0:0 -&gt; #0:0 (copy)
+Press [q] to stop, [?] for help
+size=   22381kB time=01:01:58.01 bitrate=  49.3kbits/s    
+video:0kB audio:21785kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 2.734391%
+</code></pre><h2 id="aacファイルからm4aファイルに変換">AACファイルからM4Aファイルに変換</h2>
+<p><code>MP4Box</code>で<a href="https://ja.wikipedia.org/wiki/Spectral_Band_Replication">Spectral Band Replication</a>の情報を付加してM4Aファイルを作成します。
+<code>MP4Box</code>は<code>MP</code>と<code>B</code>が大文字だったので注意です・・</p>
+<pre><code>$ MP4Box -add out.aac out.m4a -sbr
+AAC ADTS import SBR - sample rate 24000 - MPEG-4 audio - 2 channels
+Setting up iTunes/iPod file...                       
+Saving to out.m4a: 0.500 secs Interleaving
+</code></pre><p>M4Aの<a href="https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">コンテナフォーマット</a>にAACファイルを含めているだけなので、一瞬で終わりました。
+エンコード、デコードはしていません。</p>
+<h2 id="ファイルサイズ">ファイルサイズ</h2>
+<p>1時間程度録音したファイルのサイズは、FLVファイルで23.7MB程度、AACファイルで22.9MB程度、M4Aファイルで22.6MB程度でした。</p>
+<pre><code>$ ls -l
+-rw-r--r--  1 user  staff  23789474  2  7 18:00 filename.flv
+-rw-r--r--  1 user  staff  22917952  2  9 22:12 out.aac
+-rw-r--r--  1 user  staff  22688921  2  9 22:12 out.m4a
+</code></pre><h2 id="aacadvanced-audio-coding-先進的音響符号化httpsjawikipediaorgwikimpeg-4_part_3aac"><a href="https://ja.wikipedia.org/wiki/MPEG-4_Part_3#AAC">AAC（Advanced Audio Coding, 先進的音響符号化）</a></h2>
+<p>ここからはAACについて調べてみたことを書いてみました。</p>
+<p>MPEG-2 AACで標準化されたAAC（Advanced Audio Coding）っていうのは3つのプロファイルがあるようです。</p>
+<ul>
+<li>AAC Main</li>
+<li>AAC LC(Low Complexity)</li>
+<li>AAC SSR(Scalable Sample Rate)</li>
+</ul>
+<h2 id="he-aac-high-efficiency-advanced-audio-codinghttpsjawikipediaorgwikimpeg-4_part_3he-aac"><a href="https://ja.wikipedia.org/wiki/MPEG-4_Part_3#HE-AAC">HE-AAC (High-Efficiency Advanced Audio Coding)</a></h2>
+<p>上のAAC LCがコアとなってSBR（Spectral Band Replication、スペクトル帯域複製）やPS（Parametric Stereo）のツールで圧縮効率を向上させたものとしてHE-AACというプロファイルがあるようです。</p>
+<ul>
+<li>HE-AAC v1</li>
+<li>HE-AAC v2</li>
+</ul>
+<!-- HE-AACの関連の図がWikiにありました。
+
+> [MPEG-4 Part 3 - Wikipedia](https://ja.wikipedia.org/wiki/MPEG-4_Part_3#AAC)
+>
+> ![AAC、HE-AAC、HE-AAC v2 各プロファイルの階層構造と各ツールの関係](https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/HE-AAC_and_HE-AAC_v2.svg/600px-HE-AAC_and_HE-AAC_v2.svg.png)
+>
+> ![MPEG-2 AAC LC（Low Complexity）プロファイルと MPEG-4 AAC LC から HE-AAC v2 プロファイルまでの変遷](https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/AAC_profiles.svg/500px-AAC_profiles.svg.png) -->
+<p>らじる★らじるやradiko.jpから保存したFLVファイルの中にあるAACは、FFmpegでファイルの内容を確認した時に<code>Audio: aac (HE-AAC)</code>と表示されることからHE-AACなんだと思います。
+HE-AACはiTunesで再生できる認識なんですけど。</p>
+<p>FFmpegは拡張子からファイルのフォーマットを自動的に判断するようです</p>
+<blockquote>
+<p>-f fmt (input/output)</p>
+<p>Force input or output file format. The format is normally auto detected for input files and guessed from the file extension for output files, so this option is not needed in most cases.</p>
+<p><a href="https://www.ffmpeg.org/ffmpeg.html#Main-options">ffmpeg Documentation</a></p>
+</blockquote>
+<p>が、FFmpegでAACファイルを抽出した時の<code>Output #0, adts, to 'out.aac':</code>にある<code>adts</code>は</p>
+<blockquote>
+<p>放送では ADTS (Audio Data Transport Stream) と呼ばれるヘッダ形式で伝送されることが多い。</p>
+<p><a href="https://ja.wikipedia.org/wiki/AAC#.E6.A6.82.E8.A6.81">AAC - Wikipedia</a></p>
+</blockquote>
+<p>ということのようで、ADTSのフォーマットでファイルが作成されていることがよくないからiTunesで再生できないのかな・・</p>
+<p>FFmpegでAACファイルを抽出して、MP4BoxでSBRを追加しているので、抽出の時にHE-AACであるべきところのSBRが失われているように思うんですけど、これらをまとめて抽出する時にHE-AACとして抽出して、M4Aファイルを一発で作成するような簡単な方法は今のところ見つけられませんでした。</p>
+<h2 id="itunesのhe-aac">iTunesのHE-AAC</h2>
+<p>今回、AACファイルの種類がこんなにあることを知ったんですけど、iTunesにもHE-AACのエンコードがあるようでした。</p>
+<p>iTunesのメニューから<code>環境設定...</code>-<code>一般</code>-<code>CDがセットされたとき：の読み込み設定...</code>を選択します。
+<code>読み込み方法</code>から<code>AACエンコーダ</code>、<code>設定</code>から<code>カスタム</code>を選択します。
+<code>High Efficiencyエンコーディング（HE）を使用</code>にチェックすると使えるようです。
+このとき<code>ステレオビットレート：</code>を<code>48 kbps</code>以下にすると理論的には効果を発揮するようです。
+（64 kbpsが最低でしたけど・・）
+こんな低いビットレートで音質は大丈夫か？と思いますが、理論的にはCDと同じ音質程度でそれまでのAACの半分程度のファイルサイズになるようです。</p>
+<blockquote>
+<p>HE-AAC では、Coding Technologiesがmp3PROで採用している Spectral Band Replication（SBR）技術をAACに組み込むことにより、再生帯域を拡大して主に低ビットレート(128kbps以下[1])での音質(圧縮効率)を大幅に向上させている。</p>
+<p>HE-AAC v2 では、さらなる低ビットレート (48kbps以下[1])で音質を改善している。</p>
+<p>高音域と中低音を分離した結果、「48kbps程度のレートでCDの音質を実現している」とされる。48kbpsでMUSHRAが80点 (Excellent) である。24kbpsでは HE-AAC v2 で Good である。全てのビットレートで AAC &lt; HE-AAC v1 &lt; HE-AAC v2 と音質が改善されている。</p>
+<p><a href="https://ja.wikipedia.org/wiki/HE-AAC">HE-AAC - Wikipedia</a></p>
+</blockquote>
+<p>自分は今までiTunes Plusの256 kbpsにしていたので、これからはHE-AACにしてみようかと思っています。
+今まで取り込んだものは、ここから更に変換してしまうと再エンコーディングになってしまうので、圧縮されたものを更に圧縮していて、失われるものが大きいんじゃないか？ということでそのままにしようと思います。
+CDも圧縮されているでしょうから本当に気持ち的な問題ですね。</p>
+<h2 id="終わり">終わり</h2>
+<p>iTunesで再生できるAACファイルが抽出できましたので、<a href="/post/24/">らじる★らじる</a>、<a href="/post/25/">radiko.jp</a>で録音したファイルが個人で楽しめるものにできそうです。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gpac.wp.mines-telecom.fr/mp4box/">MP4Box | GPAC</a></li>
+</ul>
+<h2 id="28-january-2018-追記">28 January 2018 追記</h2>
+<p>MP4Box で変換した m4a ファイルは、iOS の OneDrive で再生できませんでしたので、再生できるようにする記事を書きました。</p>
+<ul>
+<li><a href="/post/82/">radiko.jp で録音（保存、ダウンロード）したファイルが iOS の CloudBeats や OneDrive で聞けない</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

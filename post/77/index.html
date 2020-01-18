@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>新しい SURFACE PRO (2017) に接続した外付け HDD が断続的に切れる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>新しい Surface Pro (2017) に接続した外付け HDD が断続的に切れる</h1>
+    
+      <div><time>December 31, 2017</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Surface に接続した外付け HDD が度々切断されるので、気になりつつもそのままにしていたので調べてみました。</p>
+<p>自分の場合は、次の引用のように設定したところ解消されたようでした。</p>
+<blockquote>
+<ol>
+<li>USBで問題の外付けHDDを接続します。</li>
+<li>デバイスマネージャーを起動し、問題のHDDを見つけます。「ディスク ドライブ」から外付けHDDを見つけて選択状態にします。</li>
+<li>デバイスマネージャーの表示方法を変更します。上のメニューから[表示]→[デバイス（接続別）]を選びます。</li>
+<li>接続別にすることで問題となる「USB 大容量記憶装置」が分かるので、「USB 大容量記憶装置」を右クリックして「プロパティ」を選択します。</li>
+<li>[詳細]タブを開き、「プロパティ」を「ハードウェア ID」にします。この時、画像赤枠の部分（ &ldquo;VID_&rdquo; と &ldquo;PID_&rdquo; に続く英数字）をメモしてください。この場合は「041100A2」となります。</li>
+<li>レジストリエディタを開きます。以下の場所にアクセスします。<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\usbstor</code></li>
+<li>「usbstor」以下に新しいキーを作成します。「usbstor」を右クリックして「新規」→「キー」を選択し、新しいキーを作成します。キーの名前は、先ほどメモした英数字を入力してください。順番はVID→PIDです。先ほどの例でいけば「041100A2」になります。</li>
+<li>新しく作成したキーの中に新しくサブキーを作成します。右クリックし「新規」→「DWORD（32ビット）値」を選択して新しいレジストリサブキーを作成します。キー名は「DeviceHackFlags」として、値を16進数で「400」としてください。</li>
+<li>追加と変更が完了したら、F5キーを押して変更を反映させます。</li>
+</ol>
+<p>外付けHDDですが、一度取り外してから再度接続するとうまく反映されるようです。これで一定時間経ってもスリープへ移行しなければ成功です。</p>
+<p><cite><a href="http://michisugara.jp/archives/2013/windows8.1_hdd_2.html">Windows8.1で外付けHDDがスリープする問題解決したかも？ - 道すがら講堂</a></cite></p>
+</blockquote>
+<h2 id="終わり">終わり</h2>
+<p>レジストリーはあまり好きになれなくて、Microsoft が変わって、Windows からもレジストリーがなくならないかな。</p>
+<h2 id="20-may-2018-追記">20 May 2018 追記</h2>
+<p><a href="https://support.microsoft.com/en-us/help/4028685/windows-10-get-the-update">Windows 10 April 2018 Update</a> を適用したらまた切れるようになりました。
+HDD のハードウェア ID が前と変わったように見えました。
+同じように設定したら解消されたみたいでした。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

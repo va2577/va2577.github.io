@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>STYLUS を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Stylus を使ってみました</h1>
+    
+      <div><time>April 20, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Hugo のテーマを作成したときに、少しだけ CSS を記述しました。
+SCSS にしようか、 LESS にしようか、とも思いましたが、 Stylus を使うことにしました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Stylus 0.54.5</li>
+</ul>
+<h2 id="install">install</h2>
+<blockquote>
+<p><a href="http://stylus-lang.com/#get-styling-with-stylus">Get styling with Stylus</a></p>
+<p>Installing Stylus is very easy once you have Node.js. So get the binaries for your platform and make sure that they also include npm, Node’s package manager.</p>
+<p>Now, type in your terminal:</p>
+<pre><code>$ npm install stylus -g
+</code></pre>
+<p><cite><a href="http://stylus-lang.com/#get-styling-with-stylus">Get styling with Stylus</a></cite></p>
+</blockquote>
+<p>npm でインストールしました。</p>
+<pre><code>$ npm install stylus --save-dev
+</code></pre><p>グローバルにはインストールしたくなかったので、 <code>--save-dev</code> をつけてローカルにインストールしました。
+実行するときには <a href="/post/125/"><code>npx</code></a> を使おうと思っています。</p>
+<h2 id="try-stylus-online">Try Stylus Online!</h2>
+<p><a href="http://stylus-lang.com/try.html">Try Stylus Online!</a> を順番に見ていきたいと思います。
+このページで編集しながらコンパイルもできてしまうようで便利です。
+Node.js で使えるくらいだからブラウザー(JavaScript)でも動かせてしまうのは当然と言えば当然かな。</p>
+<h3 id="nesting">Nesting</h3>
+<pre><code>/* Stylus */
+body {
+  font: 14px/1.5 Helvetica, arial, sans-serif;
+  #logo {
+    border-radius: 5px;
+  }
+}
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  <span style="color:#66d9ef">font</span>: <span style="color:#ae81ff">14</span><span style="color:#66d9ef">px</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.5</span> Helvetica, arial, <span style="color:#66d9ef">sans-serif</span>;
+}
+<span style="color:#f92672">body</span> #logo {
+  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p><code>body #logo</code> がネストされています。</p>
+<p>Nesting は便利で使いやすそうです。</p>
+<h3 id="flexible-syntax">Flexible syntax</h3>
+<pre><code>/* Stylus */
+body
+  font 14px/1.5 Helvetica, arial, sans-serif
+  button
+  button.button
+  input[type='button']
+  input[type='submit']
+    border-radius 5px
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  <span style="color:#66d9ef">font</span>: <span style="color:#ae81ff">14</span><span style="color:#66d9ef">px</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.5</span> Helvetica, arial, <span style="color:#66d9ef">sans-serif</span>;
+}
+<span style="color:#f92672">body</span> <span style="color:#f92672">button</span><span style="color:#f92672">,</span>
+<span style="color:#f92672">body</span> <span style="color:#f92672">button</span>.<span style="color:#a6e22e">button</span><span style="color:#f92672">,</span>
+<span style="color:#f92672">body</span> <span style="color:#f92672">input</span><span style="color:#f92672">[</span><span style="color:#f92672">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;button&#39;</span><span style="color:#f92672">]</span><span style="color:#f92672">,</span>
+<span style="color:#f92672">body</span> <span style="color:#f92672">input</span><span style="color:#f92672">[</span><span style="color:#f92672">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;submit&#39;</span><span style="color:#f92672">]</span> {
+  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p><code>;</code> と <code>:</code> と <code>{}</code> が省略できるようです。
+<a href="http://sass-lang.com/guide">SASS</a> っぽいようです。</p>
+<p>Flexible syntax も便利で使いやすそうです。</p>
+<h3 id="parent-reference">Parent reference</h3>
+<pre><code>/* Stylus */
+ul
+  li a
+    display: block
+    color: blue
+    padding: 5px
+    html.ie &amp;
+      padding: 6px
+    &amp;:hover
+      color: red
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">ul</span> <span style="color:#f92672">li</span> <span style="color:#f92672">a</span> {
+  <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">block</span>;
+  <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#00f</span>;
+  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+}
+<span style="color:#f92672">html</span>.<span style="color:#a6e22e">ie</span> <span style="color:#f92672">ul</span> <span style="color:#f92672">li</span> <span style="color:#f92672">a</span> {
+  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">6</span><span style="color:#66d9ef">px</span>;
+}
+<span style="color:#f92672">ul</span> <span style="color:#f92672">li</span> <span style="color:#f92672">a</span>:<span style="color:#a6e22e">hover</span> {
+  <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#f00</span>;
+}
+</code></pre></div><p><code>&amp;</code> で親の要素を参照できるようです。</p>
+<p>Parent reference も便利で使いやすそうです。</p>
+<h3 id="mixins">Mixins</h3>
+<pre><code>/* Stylus */
+border-radius(val)
+  -webkit-border-radius: val
+  -moz-border-radius: val
+  border-radius: val
+  
+button {
+  border-radius(5px);
+}
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">button</span> {
+  <span style="color:#66d9ef">-webkit-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">-moz-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p>再利用可能な関数のようなものが定義しておけるようです。</p>
+<p><code>border-radius</code> という名前は、 CSS のプロパティの名前なのか、 Mixin の名前なのか、混乱しそうに感じます。
+<code>border-radius()</code> のように、呼び出すときに <code>()</code> をつけると Mixin として判断してくれるのかな。</p>
+<p>CSS に慣れていないせいか、どこまでを Mixin として定義すればよいのかが難しかったです。
+中途半端に共通化した定義をすると、全体的に見通しが悪く、メンテナンスするのが大変そうに感じてしまいました。</p>
+<p>Mixins はすぐに使いこなせそうです。</p>
+<h3 id="transparent-mixins">Transparent mixins</h3>
+<pre><code>/* Stylus */
+border-radius()
+  -webkit-border-radius: arguments
+  -moz-border-radius: arguments
+  border-radius: arguments
+
+button {
+  border-radius: 5px 10px;
+}
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">button</span> {
+  <span style="color:#66d9ef">-webkit-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">-moz-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p>透明な Mixins かな？</p>
+<p>Mixin は呼び出すときに <code>()</code> は必要ではないようでした。
+<code>border-radius: 5px 10px;</code> のように、 CSS のプロパティと同じように記述できるようでした。
+<code>:</code> と <code>;</code> を省略して、 <code>border-radius 5px 10px</code> のようにも記述できるようです。
+そうなると、この記述は、 CSS のプロパティの <code>border-radius</code> を直接的に設定する記述なのか、 Mixin の <code>border-radius</code> を設定する記述なのか、やっぱり混乱しそうです。
+命名規則の問題かな。
+CSS の命名規則をあまり見たことないですけれども。</p>
+<p><code>arguments</code> ですべての引数を受け取れるようです。</p>
+<blockquote>
+<p>making it easy to provide cross-browser support</p>
+</blockquote>
+<p>ブラウザー間のサポートを簡単に提供できる、と記載されていましたので、そういう目的のために Mixin を使えばいいのかな。
+<code>-webkit-</code> や <code>-moz-</code> の指定をするために。
+逆に、そういうこと以外に積極的に Mixin を使わなくてもいいのかな。</p>
+<p>Transparent mixins もすぐに使いこなせそうです。</p>
+<h3 id="variables">Variables</h3>
+<pre><code>/* Stylus */
+#prompt
+  position: absolute
+  top: 150px
+  left: 50%
+  width: w = 200px
+  margin-left: -(w / 2)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+#prompt {
+  <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">absolute</span>;
+  <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">150</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">50</span><span style="color:#66d9ef">%</span>;
+  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">200</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">margin-left</span>: <span style="color:#ae81ff">-100</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p>変数が使えるようです。
+<code>width: w = 200px</code> のように、 CSS のプロパティを設定しながら、同時に、変数も定義することができるようです。
+ここでは <code>w</code> という変数が定義されているようです。</p>
+<blockquote>
+<p>may optionally be prefixed by the “$” character:</p>
+</blockquote>
+<p>任意に <code>&quot;$&quot;</code> の文字をつけることができるようです。
+なので、 <code>$w</code> の変数の名前にすると、変数であることがわかりやすくなりそうです。</p>
+<p>Variables は便利で使いやすそうです。</p>
+<h3 id="block-property-access">Block property access</h3>
+<pre><code>/* Stylus */
+#prompt
+  position: absolute
+  top: 150px
+  left: 50%
+  width: 200px
+  margin-left: -(@width / 2)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+#prompt {
+  <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">absolute</span>;
+  <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">150</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">50</span><span style="color:#66d9ef">%</span>;
+  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">200</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">margin-left</span>: <span style="color:#ae81ff">-100</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p>現在のブロック内のプロパティにアクセスできるようです。
+<code>@</code> をつけるだけのようです。</p>
+<p><code>@width</code> と記述すると、ブロック内の <code>width</code> プロパティにアクセスできるようです。</p>
+<p>Block property access も便利で使いやすそうです。</p>
+<h3 id="robust-feature-rich-language">Robust feature-rich language</h3>
+<pre><code>/* Stylus */
+-pos(type, args)
+  i = 0
+  position: unquote(type)
+  {args[i]}: args[i + 1] is a 'unit' ? args[i += 1] : 0
+  {args[i += 1]}: args[i + 1] is a 'unit' ? args[i += 1] : 0
+
+absolute()
+  -pos('absolute', arguments)
+
+fixed()
+  -pos('fixed', arguments)
+
+#prompt
+  absolute: top 150px left 5px
+  width: 200px
+  margin-left: -(@width / 2)
+
+#logo
+  fixed: top left
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+#prompt {
+  <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">absolute</span>;
+  <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">150</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">200</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">margin-left</span>: <span style="color:#ae81ff">-100</span><span style="color:#66d9ef">px</span>;
+}
+#logo {
+  <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">fixed</span>;
+  <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>これは少し難しかったです。</p>
+<p><code>#prompt</code> からは <code>absolute()</code> 経由で <code>-pos()</code> が呼び出されています。
+<code>#logo</code> からは <code>fixed()</code> 経由で <code>-pos()</code> が呼び出されています。</p>
+<p>Stylus の &lsquo;string&rsquo; で受け取った文字列を CSS のプロパティに設定する場合は、 <code>unquote(type)</code> のように、 <a href="http://stylus-lang.com/docs/bifs.html#unquotestr--ident">unquote(str | ident)</a> という Built-in Function を使うようです。
+<code>'</code> や <code>&quot;</code> を取り除いてくれるようです。</p>
+<p>CSS のプロパティの名前として変数を展開する場合は、 <code>{args[i]}</code> のように、 <a href="http://stylus-lang.com/docs/interpolation.html">Interpolation</a> を使うようです。</p>
+<p>配列にアクセスする場合は、 <code>[]</code> のように、 <a href="http://stylus-lang.com/docs/operators.html#subscript-">Subscript []</a> オペレーターを使うようです。</p>
+<p>変数の型をチェックする場合は、 <code>args[i + 1] is a 'unit'</code> のように、 <a href="http://stylus-lang.com/docs/operators.html#instance-check-is-a">Instance Check: is a</a> オペレーターを使うようです。
+ここで言う型は、 Built-in Functions の <a href="http://stylus-lang.com/docs/bifs.html#typeofnode">typeof(node)</a> で確認できるようで、いくつか確認した結果を記載しておきます。</p>
+<table>
+<thead>
+<tr>
+<th align="left">node</th>
+<th align="left">typeof(node)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">test</td>
+<td align="left">&lsquo;ident&rsquo;</td>
+</tr>
+<tr>
+<td align="left">width</td>
+<td align="left">&lsquo;ident&rsquo;</td>
+</tr>
+<tr>
+<td align="left">&lsquo;absolute&rsquo;</td>
+<td align="left">&lsquo;string&rsquo;</td>
+</tr>
+<tr>
+<td align="left">&lsquo;fixed&rsquo;</td>
+<td align="left">&lsquo;string&rsquo;</td>
+</tr>
+<tr>
+<td align="left">150</td>
+<td align="left">&lsquo;unit&rsquo;</td>
+</tr>
+<tr>
+<td align="left">150%</td>
+<td align="left">&lsquo;unit&rsquo;</td>
+</tr>
+<tr>
+<td align="left">150em</td>
+<td align="left">&lsquo;unit&rsquo;</td>
+</tr>
+<tr>
+<td align="left">150pt</td>
+<td align="left">&lsquo;unit&rsquo;</td>
+</tr>
+<tr>
+<td align="left">150px</td>
+<td align="left">&lsquo;unit&rsquo;</td>
+</tr>
+<tr>
+<td align="left">150rem</td>
+<td align="left">&lsquo;unit&rsquo;</td>
+</tr>
+<tr>
+<td align="left">-(@width / 2)</td>
+<td align="left">&lsquo;unit&rsquo;</td>
+</tr>
+<tr>
+<td align="left">#fff</td>
+<td align="left">&lsquo;rgba&rsquo;</td>
+</tr>
+<tr>
+<td align="left">white</td>
+<td align="left">&lsquo;rgba&rsquo;</td>
+</tr>
+</tbody>
+</table>
+<p>Stylus でも <code>args[i + 1] is a 'unit' ? args[i += 1] : 0</code> のように、 <a href="http://stylus-lang.com/docs/operators.html#conditional-assignment--">Conditional Assignment: ?= :=</a> オペレーターが使えるようです。</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">Conditional (ternary) Operator - JavaScript | MDN</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator">?: Operator (C# Reference) | Microsoft Docs</a></li>
+<li><a href="https://msdn.microsoft.com/en-us/library/e4213hs1.aspx">Conditional Operator: ? :</a></li>
+</ul>
+<p>三項演算子。プログラミング言語では、 Conditional Operator や ternary Operator と呼ぶのかな。</p>
+<p>Robust feature-rich language は、この例だけ見てしまうと、見通しがあまりよくなく、メンテナンスしづらい印象を受けてしまいました。
+すぐには使いこなせなそうです。</p>
+<h3 id="iteration">Iteration</h3>
+<pre><code>/* Stylus */
+table
+  for row in 1 2 3 4 5
+    tr:nth-child({row})
+      height: 10px * row
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">table</span> <span style="color:#f92672">tr</span>:<span style="color:#a6e22e">nth-child</span><span style="color:#f92672">(</span><span style="color:#f92672">1</span><span style="color:#f92672">)</span> {
+  <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+}
+<span style="color:#f92672">table</span> <span style="color:#f92672">tr</span>:<span style="color:#a6e22e">nth-child</span><span style="color:#f92672">(</span><span style="color:#f92672">2</span><span style="color:#f92672">)</span> {
+  <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+}
+<span style="color:#f92672">table</span> <span style="color:#f92672">tr</span>:<span style="color:#a6e22e">nth-child</span><span style="color:#f92672">(</span><span style="color:#f92672">3</span><span style="color:#f92672">)</span> {
+  <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">30</span><span style="color:#66d9ef">px</span>;
+}
+<span style="color:#f92672">table</span> <span style="color:#f92672">tr</span>:<span style="color:#a6e22e">nth-child</span><span style="color:#f92672">(</span><span style="color:#f92672">4</span><span style="color:#f92672">)</span> {
+  <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">40</span><span style="color:#66d9ef">px</span>;
+}
+<span style="color:#f92672">table</span> <span style="color:#f92672">tr</span>:<span style="color:#a6e22e">nth-child</span><span style="color:#f92672">(</span><span style="color:#f92672">5</span><span style="color:#f92672">)</span> {
+  <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">50</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p>繰り返しができるようです。</p>
+<p><a href="http://stylus-lang.com/docs/operators.html#range--">Range .. …</a> オペレーターを使って、 <code>for row in 1..5</code> のようにも記述できるようです。</p>
+<p>Iteration は便利そうです。
+けれども、自分にとっては、あまり使うことはなさそうです。</p>
+<h3 id="interpolation">Interpolation</h3>
+<pre><code>/* Stylus */
+vendors = webkit moz o ms official
+
+border-radius()
+  for vendor in vendors
+    if vendor == official
+      border-radius: arguments
+    else
+      -{vendor}-border-radius: arguments
+#content
+  border-radius: 5px
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+#content {
+  <span style="color:#66d9ef">-webkit-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">-moz-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">-o-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">-ms-</span><span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+}
+</code></pre></div><p>Interpolation は &ldquo;補間&rdquo; という意味があるようです。</p>
+<p>この例は、 <code>-{vendor}-</code> のことを指しているのかな。
+Stylus はブラウザー間のサポートのために複雑な機能を持っているように感じてきました。</p>
+<p><code>-webkit-</code> とかって、 2018 年の現在も記述する必要があるのかな。
+もうないんじゃないかという印象も受けているのですけれども。
+あるいは、こういう記述をするほど複雑なものって必要なのかなとか思っています。</p>
+<p>自分にとっては、あまり使うことはなさそうです。</p>
+<h3 id="operators">Operators</h3>
+<pre><code>/* Stylus */
+body
+  foo: 5px + 10
+  foo: 2 ** 8
+  foo: 5px * 2
+  foo: !!''
+  foo: foo and bar and baz
+  foo: foo or bar or baz
+  foo: 1..5
+  foo: 1...5
+  foo: 'foo' is a 'string'
+  foo: (1 2 3) == (1 2 3)
+  foo: (1 2 3) == (1 2)
+  foo: ((one 1) (two 2)) == ((one 1) (two 2)) 
+  foo: ((one 1) (two 2)) == ((one 1) (two)) 
+  foo: ((one 1) (two 2))[0]
+  foo: 3 in (1 2 3 4)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: <span style="color:#ae81ff">15</span><span style="color:#66d9ef">px</span>;
+  foo: <span style="color:#ae81ff">256</span>;
+  foo: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+  foo: false;
+  foo: baz;
+  foo: foo;
+  foo: <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span>;
+  foo: <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span>;
+  foo: true;
+  foo: true;
+  foo: false;
+  foo: true;
+  foo: false;
+  foo: one <span style="color:#ae81ff">1</span>;
+  foo: true;
+}
+</code></pre></div><p>オペレーターは <a href="http://stylus-lang.com/docs/operators.html">Operators</a> を参考にします。</p>
+<p>Operators は便利そうです。
+自分でも加減算は使うこともありそうかな。</p>
+<h3 id="type-coercion">Type coercion</h3>
+<pre><code>/* Stylus */
+body
+  foo: foo + bar
+  foo: 'foo ' + bar
+  foo: 'foo ' + 'bar'
+  foo: 'foo ' + 5px
+  foo: 2s - 500ms
+  foo: 5000ms == 5s
+  foo: 50deg
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: foobar;
+  foo: <span style="color:#e6db74">&#39;foo bar&#39;</span>;
+  foo: <span style="color:#e6db74">&#39;foo bar&#39;</span>;
+  foo: <span style="color:#e6db74">&#39;foo 5px&#39;</span>;
+  foo: <span style="color:#ae81ff">1.5</span><span style="color:#66d9ef">s</span>;
+  foo: true;
+  foo: <span style="color:#ae81ff">50</span><span style="color:#66d9ef">deg</span>;
+}
+</code></pre></div><p>型を強制することについて記載されているようです。
+これを見ると、 <code>2s</code> や <code>500ms</code> とかは &lsquo;unit&rsquo; 型のようで、文字列としては扱われず、 <code>-</code> オペレーターで減算することができるようです。</p>
+<p>型の扱いは注意しておいた方が良さそうです。</p>
+<h3 id="the-sprintf-operator">The sprintf operator</h3>
+<pre><code>/* Stylus */
+body
+  foo: '%s / %s' % (5px 10px)
+  foo: 'MS:WeirdStuff(opacity=%s)' % 1
+  foo: unquote('MS:WeirdStuff(opacity=1)')
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+  foo: MS<span style="color:#f92672">:</span><span style="color:#a6e22e">WeirdStuff</span>(opacity<span style="color:#960050;background-color:#1e0010">=</span><span style="color:#ae81ff">1</span>);
+  foo: MS<span style="color:#f92672">:</span><span style="color:#a6e22e">WeirdStuff</span>(opacity<span style="color:#960050;background-color:#1e0010">=</span><span style="color:#ae81ff">1</span>);
+}
+</code></pre></div><p><code>sprintf</code> のようなことができるようです。
+<code>sprintf</code> は C 言語の構文だったかな。
+<code>%</code> を使った書式に従った文字列を出力することができるようです。</p>
+<p>あまり使うところがイメージできないです。</p>
+<h3 id="color-operations">Color operations</h3>
+<pre><code>/* Stylus */
+body
+  foo: white - 50%
+  foo: black + 50%
+  foo: #eee - #f00
+  foo: #eee - rgba(black,.5)
+  foo: #cc0000 + 30deg
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: <span style="color:#ae81ff">#808080</span>;
+  foo: <span style="color:#ae81ff">#808080</span>;
+  foo: <span style="color:#ae81ff">#0ee</span>;
+  foo: rgba(<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">0.5</span>);
+  foo: <span style="color:#ae81ff">#c60</span>;
+}
+</code></pre></div><p>Color に対して加減算できるようです。
+加減算する値は、 &lsquo;unit&rsquo; 型の <code>50%</code> とかでもいいみたいですし、 &lsquo;rgba&rsquo; 型の <code>rgba(black,.5)</code> とかでもいいみたいです。</p>
+<p><code>deg</code> って、初めて知ったのですが、 CSS3 のゆがみを表す単位のようでした。
+それも Color に対して加減算することができるようです。</p>
+<p><code>-50%</code> とか <code>+ 50%</code> とかは使うこともありそうかな。</p>
+<h3 id="functions">Functions</h3>
+<pre><code>/* Stylus */
+sum(nums...)
+  n = 0
+  n += num for num in nums
+
+body
+  foo: sum(1, 2, 3)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: <span style="color:#ae81ff">6</span>;
+}
+</code></pre></div><p>何か値を返す関数を定義することができるようです。</p>
+<p>mixin と同じ方法で定義することができると記載されていました。
+Function は値を返すところが Mixin と違う、とも記載されていました。</p>
+<p>これを見ると、最後に設定した変数の値が返されるのかな。
+というより、最後に評価した式の値が返されるのかな。</p>
+<p>あまり使うところがイメージできないです。</p>
+<h3 id="keyword-arguments">Keyword arguments</h3>
+<pre><code>/* Stylus */
+fade-out(color, amount = 50%)
+  color - rgba(0,0,0,amount)
+
+body
+  foo: fade-out(#eee)
+  foo: fade-out(#eee, 20%)
+  foo: fade-out(#eee, amount: 50%)
+  foo: fade-out(color: #eee, amount: 50%)
+  foo: fade-out(amount: 50%, #eee)
+  foo: fade-out(amount: 50%, color: #eee)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: rgba(<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">0.5</span>);
+  foo: rgba(<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">0.8</span>);
+  foo: rgba(<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">0.5</span>);
+  foo: rgba(<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">0.5</span>);
+  foo: rgba(<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">0.5</span>);
+  foo: rgba(<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">238</span>,<span style="color:#ae81ff">0.5</span>);
+}
+</code></pre></div><p>キーワード引数があるようです。</p>
+<p><code>fade-out(amount: 50%, #eee)</code> のように、引数の順番を無視できることに意味があるようです。</p>
+<p>Mixin と合わせて使うのかな。</p>
+<h3 id="built-in-functions">Built-in functions</h3>
+<pre><code>/* Stylus */
+body
+  foo: red(#fc0)
+  foo: green(#fc0)
+  foo: blue(#fc0)
+  foo: alpha(#fff)
+  foo: alpha(rgba(#fff, .5))
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: <span style="color:#ae81ff">255</span>;
+  foo: <span style="color:#ae81ff">204</span>;
+  foo: <span style="color:#ae81ff">0</span>;
+  foo: <span style="color:#ae81ff">1</span>;
+  foo: <span style="color:#ae81ff">0.5</span>;
+}
+</code></pre></div><p>組み込み関数は <a href="http://stylus-lang.com/docs/bifs.html">Built-in Functions</a> を参考にします。</p>
+<p><code>red(#fc0)</code> とかは、指定された色の赤の成分を返す組み込み関数のようです。
+これはどういうときに必要なのだろう？</p>
+<p>Built-in functions はほかにもたくさんあったので、使うこともありそうです。</p>
+<h3 id="color-bifs">Color BIFs</h3>
+<pre><code>/* Stylus */
+body
+  foo: light(#eee)
+  foo: dark(#eee)
+  foo: dark(#333)
+  foo: darken(#eee, 50%)
+  foo: lighten(black, 50%)
+  foo: #eee - 50%
+  foo: black + 50%
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
+<span style="color:#f92672">body</span> {
+  foo: true;
+  foo: false;
+  foo: true;
+  foo: <span style="color:#ae81ff">#777</span>;
+  foo: <span style="color:#ae81ff">#808080</span>;
+  foo: <span style="color:#ae81ff">#777</span>;
+  foo: <span style="color:#ae81ff">#808080</span>;
+}
+</code></pre></div><p>Color に関する Built-in Functions のようです。
+<code>darken(#eee, 50%)</code> や <code>lighten(black, 50%)</code> は SASS, SCSS で使ったことがありました。</p>
+<p><a href="#color-operations">Color operations</a> のところにも記載されていましたが、こちらにも <code>#eee - 50%</code> のような Color に対する加減算の記載がありました。
+これは Built-in Functions でもあるようです。</p>
+<p>Color BIFs は便利で使いやすそうです。</p>
+<h3 id="end">End</h3>
+<blockquote>
+<p>That’s it for now! To view the rest of the powerful features Stylus provides click “View Documentation” in the corner.</p>
+<pre><code>come-back later
+  to-see: more unquote(':)')
+</code></pre>
+<hr>
+<pre><code>come-back later {
+  to-see: more :);
+}
+</code></pre>
+</blockquote>
+<p>Try Stylus! が一通り終わりました。</p>
+<h2 id="executable">Executable</h2>
+<p>コンパイルについて引用しておきます。
+Stylus のファイルの拡張子は .styl のようです。</p>
+<h3 id="stdio">STDIO</h3>
+<blockquote>
+<p>stylus reads from stdin and outputs to stdout, so for example:</p>
+<pre><code>$ stylus --compress &lt; some.styl &gt; some.css
+</code></pre>
+<p><cite><a href="http://stylus-lang.com/docs/executable.html#stdio-compilation-example">STDIO Compilation Example</a></cite></p>
+</blockquote>
+<p>標準入出力のリダイレクトを使ってコンパイルできるようです。
+<code>&lt;</code> で Stylus のファイルを読み込んで、 <code>&gt;</code> で CSS のファイルを出力しているようです。</p>
+<p>npx で実行するなら、 Stylus をインストールしたディレクトリーに移動して、次のようになるかな。</p>
+<pre><code>$ npx stylus --compress &lt; some.styl &gt; some.css
+</code></pre><h3 id="files">Files</h3>
+<blockquote>
+<p>stylus also accepts files and directories. For example, a directory named css will compile and output .css files in the same directory.</p>
+<pre><code>$ stylus css
+</code></pre>
+<p>The following will output to ./public/stylesheets:</p>
+<pre><code>$ stylus css --out public/stylesheets
+</code></pre>
+<p><cite><a href="http://stylus-lang.com/docs/executable.html#compiling-files-example">Compiling Files Example</a></cite></p>
+</blockquote>
+<p>オプションなしの引数に Styles のファイル(ディレクトリー)を指定して、 <code>--out</code> オプションの引数に CSS のファイル(ディレクトリー)を指定するようです。</p>
+<p>npx で実行するなら、 Stylus をインストールしたディレクトリーに移動して、次のようになるかな。</p>
+<pre><code>$ npx stylus css --out public/stylesheets
+</code></pre><h2 id="終わり">終わり</h2>
+<p>Try Stylus! を見ながらこの記事を書いてみましたが、書きながら調べたりもしまして、ただ眺めるだけの Try Stylus! よりは少しだけ理解が深まったと思います。</p>
+<p>自分で作った Hugo のテーマでは、シンプルにしたかったので、ここに記載した機能のほとんど使いませんでした。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://stylus-lang.com/">Expressive, dynamic, robust CSS — expressive, robust, feature-rich CSS preprocessor</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

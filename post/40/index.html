@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>HUGOを使う - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Hugoを使う</h1>
+    
+      <div><time>March 28, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Hexoを使ってこのサイトのページを作成していましたが、中国語が気になり始めて、Hugoを使ってみることにしました。
+JekyllとHexoを使ってきましたが、あまり早くはなかったですし、Hugoは早いというのがいいということです。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.4</li>
+<li>Hugo バージョン v0.15</li>
+</ul>
+<h2 id="インストール">インストール</h2>
+<p>Homebrewを先にインストールしておきます。</p>
+<ul>
+<li><a href="/post/2/">Homebrewのインストール</a></li>
+</ul>
+<p>Hugoをインストールします。</p>
+<pre><code>$ brew update &amp;&amp; brew install hugo
+</code></pre><p>確認のコマンドを2つ入力しました。</p>
+<pre><code>$ hugo help
+</code></pre><pre><code>$ hugo version
+</code></pre><h2 id="scaffold">Scaffold</h2>
+<p>サイトの雛形となるディレクトリーの構成を作ります。
+ここでは<code>bookshelf</code>という名前のディレクトリーで作りました。</p>
+<pre><code>$ hugo new site bookshelf
+$ cd bookshelf
+</code></pre><pre><code>$ tree -a
+.
+├── archetypes
+├── config.toml
+├── content
+├── data
+├── layouts
+└── static
+
+5 directories, 1 file
+</code></pre><p>各ディレクトリーは次のような意味があるようです。</p>
+<ul>
+<li>archetypes: hugo new で新しい記事を追加する時に雛形となるようなファイルのディレクトリー</li>
+<li>config.toml: サイトの設定ファイル、<a href="https://github.com/toml-lang/toml">TOML</a>というもの(<a href="https://ja.wikipedia.org/wiki/YAML">YAML</a>に似たような種類のものがいくつかあるんだ・・)</li>
+<li>content: 記事、コンテンツのディレクトリー</li>
+<li>data: データ、テーマを見ると多言語にする場合に言語別のファイルを用意しているようなものがある</li>
+<li>layouts: レイアウト、テーマより優先するレイアウトのディレクトリー</li>
+<li>static: 静的ファイル、画像やcssなどのそのまま公開するようなファイルのディレクトリー</li>
+</ul>
+<h2 id="コンテンツを追加する">コンテンツを追加する</h2>
+<p><code>content</code>以下のパスを指定して追加するようです。</p>
+<pre><code>$ hugo new post/good-to-great.md
+</code></pre><pre><code>$ tree -a content/
+content/
+└── post
+   └── good-to-great.md
+
+1 directory, 1 file
+</code></pre><p>追加された直後の内容は次の通りです。
+ファイルの先頭はTOMLで、YAMLでも書けるみたいですけど、Hugoの標準はTOMLのようです。
+そこには<code>date</code>、<code>draft</code>、<code>title</code>が設定されていました。
+最初は公開されないドラフトの状態のようです。
+<code>title</code>はファイル名の<code>-</code>がスペースになったものでした。</p>
+<pre><code>$ cat content/post/good-to-great.md
++++
+date = &quot;2016-03-28T15:47:40+09:00&quot;
+draft = true
+title = &quot;good to great&quot;
+
++++
+
+</code></pre><p>追加したファイルは次のように編集しました。</p>
+<pre><code>$ cat content/post/good-to-great.md
++++
+date = &quot;2016-03-28T15:47:40+09:00&quot;
+draft = true
+title = &quot;good to great&quot;
+
++++
+
+I read **Good to Great in January 2016**. An awesome read sharing detailed analysis on how good companies became great.
+</code></pre><p><a href="https://gohugo.io/overview/quickstart/">Hugo - Hugo Quickstart Guide</a>では、ここでローカルでサーバーを起動して確認しているんだけど、何も表示されないので次のステップのテーマを追加することにします。</p>
+<h2 id="テーマを追加する">テーマを追加する</h2>
+<p><code>themes</code>ディレクトリーを作成します。</p>
+<pre><code>$ mkdir themes &amp;&amp; cd themes
+</code></pre><p><a href="http://themes.gohugo.io">Hugo Themes Site</a>からROBUSTというテーマを選んでみました。</p>
+<pre><code>$ git clone https://github.com/dim0627/hugo_theme_robust.git
+</code></pre><p>ローカルでサーバーを起動して確認します。
+<code>--theme</code>でテーマを指定しています。
+ドラフトの記事しか追加していないので、<code>--buildDrafts</code>と指定してドラフトの記事も表示されるようにしています。</p>
+<pre><code>$ cd ..
+$ hugo server --theme=hugo_theme_robust --buildDrafts
+</code></pre><p>http://localhost:1313/ にアクセスします。
+テーマが適用された記事が表示できました。</p>
+<p><img src="/img/40-01.jpg" alt="">
+<img src="/img/40-02.jpg" alt=""></p>
+<h2 id="投稿を公開する">投稿を公開する</h2>
+<p>ドラフトから公開の状態にします。</p>
+<pre><code>$ hugo undraft content/post/good-to-great.md
+</code></pre><p>記事のTOMLの<code>draft</code>のところが<code>false</code>になりました。</p>
+<pre><code>$ cat content/post/good-to-great.md
++++
+date = &quot;2016-03-28T16:14:56+09:00&quot;
+draft = false
+title = &quot;good to great&quot;
+
++++
+
+I read **Good to Great in January 2016**. An awesome read sharing detailed analysis on how good companies became great.
+</code></pre><h2 id="ウェブサイトを生成する">ウェブサイトを生成する</h2>
+<p>あとでGitHub Pagesにpushするので、設定ファイルの<code>baseurl</code>をGitHub PagesのURLに変更しておきます。
+<code>baseurl</code>のところが<code>http://replace-this-with-your-hugo-site.com/</code>になっています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">$ cat config.toml
+baseurl = &#34;http://replace-this-with-your-hugo-site.com/&#34;
+languageCode = &#34;en-us&#34;
+title = &#34;My New Hugo Site&#34;
+</code></pre></div><p><code>baseurl</code>を変更したものです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">$ cat config.toml
+baseurl = &#34;http://&lt;github-username&gt;.github.io/bookshelf/&#34;
+languageCode = &#34;en-us&#34;
+title = &#34;My New Hugo Site&#34;
+</code></pre></div><p>サイトの生成の前にディレクトリーの構成を確認しておきます。</p>
+<pre><code>$ tree -a -L 2
+.
+├── archetypes
+├── config.toml
+├── content
+│   └── post
+├── data
+├── layouts
+├── static
+└── themes
+    └── hugo_theme_robust
+
+8 directories, 1 file
+</code></pre><p>17ミリ秒で生成できました。
+1記事しかないのですが・・</p>
+<pre><code>$ hugo --theme=hugo_theme_robust
+0 draft content
+0 future content
+1 pages created
+2 paginator pages created
+0 tags created
+0 categories created
+in 17 ms
+</code></pre><p><code>public</code>というディレクトリーにサイトが生成されたようです。</p>
+<pre><code>$ tree -a -L 2
+.
+├── archetypes
+├── config.toml
+├── content
+│   └── post
+├── data
+├── layouts
+├── public
+│   ├── 404.html
+│   ├── categories
+│   ├── css
+│   ├── images
+│   ├── index.html
+│   ├── index.xml
+│   ├── page
+│   ├── post
+│   ├── sitemap.xml
+│   └── tags
+├── static
+└── themes
+    └── hugo_theme_robust
+
+15 directories, 5 files
+</code></pre><h2 id="github-pagesにデプロイする">GitHub Pagesにデプロイする</h2>
+<p>先にGitHubに<code>bookshelf</code>という名前のリポジトリーを作成しておきます。</p>
+<p><code>bookshelf-public</code>という名前のディレクトリーを、最初に作った<code>bookshelf</code>ディレクトリーの外に作っているようなので、それに習って作りました。
+それからgitの設定をしました。</p>
+<pre><code>$ cd ..
+$ mkdir bookshelf-public
+$ cd bookshelf-public
+$ git init
+$ git remote add origin https://github.com/&lt;github-username&gt;/bookshelf.git
+</code></pre><p><code>bookshelf</code>ディレクトリーで生成した<code>public</code>以下のファイルをコピーします。</p>
+<pre><code>$ cp -r ../bookshelf/public/ .
+</code></pre><p><code>gh-pages</code>というブランチに変えます。
+プロジェクトページはこういう慣習になっているようです。</p>
+<pre><code>$ git checkout -b gh-pages
+</code></pre><p>コピーしたファイルをGitHubにpushします。</p>
+<pre><code>$ git add --all
+$ git commit -am &quot;bookshelf added&quot;
+$ git push origin gh-pages
+</code></pre><p>http://&lt;github-username&gt;.github.io/bookshelf/ にアクセスするとデプロイされたページが確認できました。</p>
+<p><img src="/img/40-03.jpg" alt=""></p>
+<h2 id="終わり">終わり</h2>
+<p>これから自分でテーマを作ってみようと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gohugo.io/overview/quickstart/">Hugo - Hugo Quickstart Guide</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

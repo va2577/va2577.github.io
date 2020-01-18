@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>GOOGLE SEARCH CONSOLE (GOOGLE WEBMASTER TOOLS) の登録 - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Google Search Console (Google Webmaster Tools) の登録</h1>
+    
+      <div><time>January 1, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>GitHub PagesとJekyllで作ったブログをGoogle Search Consoleに登録してみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS X El Capitan バージョン 10.11.2</li>
+<li>git バージョン 2.5.4 (Apple Git-61)</li>
+<li>Jekyll バージョン 2.4.0</li>
+</ul>
+<h2 id="search-console-とは">Search Console とは？</h2>
+<blockquote>
+<p>Google Search Console は、Google 検索結果でのサイトのパフォーマンスを監視、管理できる Google の無料サービスです。自分のサイトが Google 検索結果に表示されるようにするために Search Console に登録する必要はありませんが、登録していただくとサイトが Google にどのように認識されるかを確認し、検索結果でのサイトのパフォーマンスを最適化できるようになります。</p>
+<p><cite><a href="https://support.google.com/webmasters/answer/4559176?hl=ja">Search Console とは - Search Console ヘルプ</a></cite></p>
+</blockquote>
+<h2 id="プロパティの追加">プロパティの追加</h2>
+<p>Googleのアカウントが必要なので最初にアカウントを作成しておきます。</p>
+<p><a href="https://www.google.com/webmasters/tools/?hl=ja">Google Search Console</a>にアクセスしてログインします。
+<code>プロパティを追加</code>の欄にサイトを入力して<code>プロパティを追加</code>ボタンをクリックします。
+このサイトの場合は<code>http://va2577.github.io</code>と入力しました。
+<img src="/img/6-01.png" alt=""></p>
+<h2 id="所有権の確認">所有権の確認</h2>
+<p>追加をすると所有権の確認について表示されます。
+ここではおすすめの方法で確認してみます。
+GitHubに記事のコンテンツとはあまり関係ないhtmlファイルをアップロードするのはどうかと思いましたが、それほど悪い影響もないかなと思いましたので、このhtmlファイルをアップロードすることにしました。</p>
+<h3 id="ダウンロード">ダウンロード</h3>
+<p>まず<code>1. この HTML 確認ファイル (google~) をダウンロードします。</code>のファイルをダウンロードします。
+<img src="/img/6-02.png" alt=""></p>
+<h3 id="アップロード">アップロード</h3>
+<p>Jekyllの雛形のディレクトリーにダウンロードしたファイルをコピーします。
+<img src="/img/6-03.png" alt=""></p>
+<p>コピーしたファイルをGitHubにpushします。</p>
+<pre><code>$ git status
+On branch master
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+	googleff2dfe1bd5ecxxxxs.html
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+$ git add .
+$ git commit -m &quot;comment&quot;
+[master 0677489] comment
+ 1 file changed, 1 insertion(+)
+ create mode 100644 googleff2dfe1bd5ecxxxx.html
+$ git push origin master
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 329 bytes | 0 bytes/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To https://github.com/xxxxxx/xxxxxx.github.io.git
+   7c8cc2a..0677489  master -&gt; master
+</code></pre><h3 id="アップロードの確認">アップロードの確認</h3>
+<p>GitHubにpushしたらGitHub Pagesで公開されているはずなので、<code>3.ブラウザでhttp://~にアクセスして、〜</code>のリンクをクリックします。
+GitHub Pagesに公開されるまで数十秒程度かかるので少し待った方がいいかもしれません。
+<img src="/img/6-02.png" alt=""></p>
+<p>ちゃんとアップロードできていれば<code>googleff2dfe1bd5ecxxxx.html</code>の内容が表示されます。
+<img src="/img/6-04.png" alt=""></p>
+<h3 id="所有権の確認-1">所有権の確認</h3>
+<p><code>4.以下の[確認]をクリックします。</code>のリンクをクリックします。
+<img src="/img/6-02.png" alt=""></p>
+<p><code>所有権が確認されました。</code>が表示されます。
+<code>Search Console</code>のリンクをクリックします。
+<img src="/img/6-05.png" alt=""></p>
+<p><code>新しい重要メッセージ</code>、<code>現在のステータス</code>が表示されます。
+<img src="/img/6-06.png" alt=""></p>
+<h2 id="終わり">終わり</h2>
+<p>Googole Search Consoleを使って、検索結果の向上につながるようなサイトの改善の参考にしようと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://support.google.com/webmasters/answer/34397?hl=ja&amp;ref_topic=3309469">Google へのサイトの登録 - Search Console ヘルプ</a></li>
+<li><a href="https://support.google.com/webmasters/answer/6258314?hl=ja&amp;ref_topic=3309469">ウェブサイトで Search Console を使用する - Search Console ヘルプ</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

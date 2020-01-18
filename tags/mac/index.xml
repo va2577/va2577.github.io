@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/mac/</link>
+    <description>Recent content in Mac on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Apr 2017 12:59:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker のインストールから Docker の Anaconda(Jupyter, Numba) を使うまで</title>
+      <link>https://va2577.github.io/post/71/</link>
+      <pubDate>Sat, 08 Apr 2017 12:59:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/71/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://va2577.github.io/post/70/&#34;&gt;[Python]pip で Numba をインストールする時にエラーになる&lt;/a&gt;という状況でしたので、結果的に Docker で Anaconda を使うまでを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mac の .DS_Store ファイルを一括で削除したい</title>
+      <link>https://va2577.github.io/post/60/</link>
+      <pubDate>Thu, 15 Dec 2016 16:45:33 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/60/</guid>
+      <description>&lt;p&gt;.DS_Store ファイルを一括で削除したいので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Touch Bar のスクリーンショット</title>
+      <link>https://va2577.github.io/post/59/</link>
+      <pubDate>Thu, 15 Dec 2016 10:24:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/59/</guid>
+      <description>&lt;p&gt;macOS 10.12.2 にアップデートしたら、Touch Bar のスクリーンショットならぬ、Touch Bar ショットが撮れるようになっていました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/59-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MacBook Pro 13インチ Touch Bar搭載モデルを購入したこと</title>
+      <link>https://va2577.github.io/post/58/</link>
+      <pubDate>Mon, 21 Nov 2016 16:27:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/58/</guid>
+      <description>&lt;p&gt;2016/11/20(日)、お昼頃に量販店に行ったら、シルバーが1つと、スペースグレイが1つだけ残っていましたので、新しいカラーのスペースグレイの方を購入してしてしまいました。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/58-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mac のマウスのスクロールを逆にしたい</title>
+      <link>https://va2577.github.io/post/57/</link>
+      <pubDate>Mon, 14 Nov 2016 19:25:11 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/57/</guid>
+      <description>&lt;p&gt;Mac でマウスを使ってみたのですが、ホイールを下に回すと上にスクロールするので、逆にする設定を調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VMware Fusion でフルスクリーンアプリケーション間をスワイプした場合にゲスト OS の解像度が変わってしまう</title>
+      <link>https://va2577.github.io/post/52/</link>
+      <pubDate>Fri, 21 Oct 2016 12:53:39 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/52/</guid>
+      <description>&lt;p&gt;ゲスト OS で解像度を変更しているのですが、フルスクリーンアプリケーション間をスワイプした場合に戻ってしまうので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>iPhoneのメッセージアプリのメッセージを保存する</title>
+      <link>https://va2577.github.io/post/51/</link>
+      <pubDate>Fri, 14 Oct 2016 10:24:04 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/51/</guid>
+      <description>&lt;p&gt;iPhoneのメッセージアプリをMacに保存できないかと思って調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>macOS Sierraにアップグレード</title>
+      <link>https://va2577.github.io/post/48/</link>
+      <pubDate>Tue, 11 Oct 2016 09:57:49 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/48/</guid>
+      <description>&lt;p&gt;macOS Sierra にアップグレードして設定したことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Macのメールアプリで受信したメールが文字化けしたら？</title>
+      <link>https://va2577.github.io/post/37/</link>
+      <pubDate>Thu, 03 Mar 2016 15:00:34 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/37/</guid>
+      <description>&lt;p&gt;最近はPCを使っていてもあまり文字化けすることはなかったのですが、受信したメールが文字化けするので、読めるように調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Macでtreeコマンドを使う</title>
+      <link>https://va2577.github.io/post/23/</link>
+      <pubDate>Sat, 06 Feb 2016 11:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/23/</guid>
+      <description>&lt;p&gt;Windowsでフォルダー構造を見るために使っていたtreeコマンドをMacで使おうと思ったら、標準でその機能がありませんでしたので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VMware FusionにWindows 10をクリーンインストールする</title>
+      <link>https://va2577.github.io/post/17/</link>
+      <pubDate>Sat, 30 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/17/</guid>
+      <description>&lt;p&gt;今回はすでにVMware FusionにWindows 10がインストールされていて(Windows 8.1からのアップグレード)、そこからWindows 10をクリーンインストールしてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Macのuidの確認</title>
+      <link>https://va2577.github.io/post/7/</link>
+      <pubDate>Fri, 08 Jan 2016 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/7/</guid>
+      <description>&lt;p&gt;launchdのlaunchctlを使おうと思ったらOS X Yosemite バージョン 10.10からインターフェースが変わったみたいで、uidを知る必要があったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>nodebrew, Node.jsのインストール</title>
+      <link>https://va2577.github.io/post/3/</link>
+      <pubDate>Wed, 30 Dec 2015 22:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/3/</guid>
+      <description>&lt;p&gt;Node.jsは頻繁にアップデートをしているのでバージョンを管理するためにnodebrewを使ってNode.jsをインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Homebrewのインストール</title>
+      <link>https://va2577.github.io/post/2/</link>
+      <pubDate>Wed, 30 Dec 2015 21:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2/</guid>
+      <description>&lt;p&gt;Node.jsをインストールするのにnodebrewを使いたかったので、そのために必要なHomebrewをインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Xcodeコマンドラインツールのインストール</title>
+      <link>https://va2577.github.io/post/1/</link>
+      <pubDate>Wed, 30 Dec 2015 20:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/1/</guid>
+      <description>&lt;p&gt;Homebrewを使うのに必要だったのでインストールしました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

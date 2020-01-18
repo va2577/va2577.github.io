@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON ローソク足とフラグを表示してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python ローソク足とフラグを表示してみました</h1>
+    
+      <div><time>September 15, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>python-highcharts を使って、バックテストで売買した足にフラグを表示してみました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>jupyter 1.0.0</li>
+<li>numpy 1.15.4</li>
+<li>pandas 0.23.4</li>
+<li>python-highcharts 0.4.2</li>
+</ul>
+<h2 id="準備">準備</h2>
+<p>ここから Jupyter Notebook のセルに入力しながら進めていきます。</p>
+<p>モジュールを読み込みます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> math
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">from</span> highcharts <span style="color:#f92672">import</span> Highstock
+</code></pre></div><p>ヒストリカルデータを読み込みます。</p>
+<p>データは <a href="https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC">Yahoo Finance</a> から予めダウンロードしておきました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read</span>(filepath):
+    names <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">adjclose</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+    usecols <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+    dtype <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+    df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(filepath, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, names<span style="color:#f92672">=</span>names, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, usecols<span style="color:#f92672">=</span>usecols, dtype<span style="color:#f92672">=</span>dtype, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+    <span style="color:#66d9ef">return</span> df
+
+df <span style="color:#f92672">=</span> read(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">~/historical/^GSPC.csv</span><span style="color:#e6db74">&#39;</span>)
+df<span style="color:#f92672">.</span>head()
+df<span style="color:#f92672">.</span>tail()
+</code></pre></div><h2 id="バックテスト">バックテスト</h2>
+<p>以前やった<a href="/post/188/">バックテスト</a>の関数を使いました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>(df, commission<span style="color:#f92672">=</span><span style="color:#ae81ff">50.0</span>, unit<span style="color:#f92672">=</span><span style="color:#ae81ff">250</span>):
+    df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([df, df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">9</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>)], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    pl <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>full(df2<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size, np<span style="color:#f92672">.</span>nan), index<span style="color:#f92672">=</span>df2<span style="color:#f92672">.</span>index)
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>itertuples():
+        time, open_, high, low, close, value, close2, close3, close4 <span style="color:#f92672">=</span> row
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> (close2 <span style="color:#f92672">&lt;</span> close4 <span style="color:#f92672">and</span> close4 <span style="color:#f92672">&lt;</span> close3):
+            <span style="color:#66d9ef">continue</span>
+        p <span style="color:#f92672">=</span> ((close <span style="color:#f92672">-</span> open_) <span style="color:#f92672">*</span> unit <span style="color:#f92672">-</span> commission)
+        p2 <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>floor(p <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">100</span>
+        pl[time] <span style="color:#f92672">=</span> p2
+    <span style="color:#66d9ef">return</span> pl
+</code></pre></div><p>2017 年のヒストリカルデータでバックテストをしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df2017 <span style="color:#f92672">=</span> df[df<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>year <span style="color:#f92672">==</span> <span style="color:#ae81ff">2017</span>]
+pl <span style="color:#f92672">=</span> test(df2017)
+pl<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>tail()
+</code></pre></div><h2 id="フラグ-1">フラグ 1</h2>
+<p>この<a href="https://github.com/kyper-data/python-highcharts/blob/master/examples/highstock/flags-general.py">デモ</a>と同じように表示してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">H <span style="color:#f92672">=</span> Highstock()
+
+r <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: round(x, <span style="color:#ae81ff">2</span>)
+
+ohlc <span style="color:#f92672">=</span> [[x[<span style="color:#ae81ff">0</span>], r(x[<span style="color:#ae81ff">1</span>]), r(x[<span style="color:#ae81ff">2</span>]), r(x[<span style="color:#ae81ff">3</span>]), r(x[<span style="color:#ae81ff">4</span>])] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> df2017<span style="color:#f92672">.</span>itertuples()]
+flags <span style="color:#f92672">=</span> [{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>: x<span style="color:#f92672">.</span>to_pydatetime(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Buy</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#39;</span>: r(y) } <span style="color:#66d9ef">for</span> x, y <span style="color:#f92672">in</span> pl<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>iteritems()]
+
+H<span style="color:#f92672">.</span>add_data_set(ohlc, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">candlestick</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">S&amp;P500</span><span style="color:#e6db74">&#39;</span>, id<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dataseries</span><span style="color:#e6db74">&#39;</span>)
+H<span style="color:#f92672">.</span>add_data_set(flags, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flags</span><span style="color:#e6db74">&#39;</span>, onSeries<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dataseries</span><span style="color:#e6db74">&#39;</span>, shape<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">circlepin</span><span style="color:#e6db74">&#39;</span>, width<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
+
+H
+</code></pre></div><p>フラグのデータの <code>x</code> には、 datetime を渡してあげる必要があるみたいでした。
+pandas の Timestamp のままじゃダメそうでした。
+<code>title</code> はチャート上で見える文字を指定します。
+<code>text</code> はカーソルを合わせたときに表示される文字を指定します。</p>
+<p>ローソク足のデータを指定しているところの <code>id='dataseries'</code> と、フラグのデータを指定しているところの <code>onSeries='dataseries'</code> を一致させることで、ローソク足にくっつくようにフラグを表示してくれるみたいです。</p>
+<p>結果です。</p>
+<p><img src="/img/198-01.png" alt="img"></p>
+<h2 id="フラグ-2">フラグ 2</h2>
+<p>上の例だと、ローソク足の終値にフラグがくっつく形になります。
+これだとローソク足自体が見づらいかもしれません。
+<code>onSeries='dataseries'</code> を指定しないとフラグはチャートの下側に表示されます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">H <span style="color:#f92672">=</span> Highstock()
+
+r <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: round(x, <span style="color:#ae81ff">2</span>)
+
+ohlc <span style="color:#f92672">=</span> [[x[<span style="color:#ae81ff">0</span>], r(x[<span style="color:#ae81ff">1</span>]), r(x[<span style="color:#ae81ff">2</span>]), r(x[<span style="color:#ae81ff">3</span>]), r(x[<span style="color:#ae81ff">4</span>])] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> df2017<span style="color:#f92672">.</span>itertuples()]
+flags <span style="color:#f92672">=</span> [{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>: x<span style="color:#f92672">.</span>to_pydatetime(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Buy</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#39;</span>: r(y) } <span style="color:#66d9ef">for</span> x, y <span style="color:#f92672">in</span> pl<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>iteritems()]
+
+H<span style="color:#f92672">.</span>add_data_set(ohlc, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">candlestick</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">S&amp;P500</span><span style="color:#e6db74">&#39;</span>)
+H<span style="color:#f92672">.</span>add_data_set(flags, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flags</span><span style="color:#e6db74">&#39;</span>)
+
+H
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/198-02.png" alt="img"></p>
+<p>こちらの方が見づらいこともあるかもしれません。
+使い分けてあげる必要がありそうかな。</p>
+<h2 id="出来高とインディケーターとフラグ">出来高とインディケーターとフラグ</h2>
+<p><a href="/post/197/">前回</a>の出来高とインディケーターも一緒に表示してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">H <span style="color:#f92672">=</span> Highstock()
+
+groupingUnits <span style="color:#f92672">=</span> [
+    [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">week</span><span style="color:#e6db74">&#39;</span>, [<span style="color:#ae81ff">1</span>]], 
+    [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">month</span><span style="color:#e6db74">&#39;</span>, [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">6</span>]]
+]
+
+ohlc <span style="color:#f92672">=</span> [[x[<span style="color:#ae81ff">0</span>], r(x[<span style="color:#ae81ff">1</span>]), r(x[<span style="color:#ae81ff">2</span>]), r(x[<span style="color:#ae81ff">3</span>]), r(x[<span style="color:#ae81ff">4</span>])] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> df2017<span style="color:#f92672">.</span>itertuples()]
+volume <span style="color:#f92672">=</span> [[x[<span style="color:#ae81ff">0</span>], r(x[<span style="color:#ae81ff">5</span>])] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> df2017<span style="color:#f92672">.</span>itertuples()]
+sma <span style="color:#f92672">=</span> [[x[<span style="color:#ae81ff">0</span>], r(x[<span style="color:#ae81ff">4</span>])] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> df2017<span style="color:#f92672">.</span>rolling(window<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>)<span style="color:#f92672">.</span>mean()<span style="color:#f92672">.</span>itertuples()]
+ema <span style="color:#f92672">=</span> [[x[<span style="color:#ae81ff">0</span>], r(x[<span style="color:#ae81ff">4</span>])] <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> df2017<span style="color:#f92672">.</span>ewm(span<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)<span style="color:#f92672">.</span>mean()<span style="color:#f92672">.</span>itertuples()]
+flags <span style="color:#f92672">=</span> [{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>: x<span style="color:#f92672">.</span>to_pydatetime(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Buy</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#39;</span>: r(y) } <span style="color:#66d9ef">for</span> x, y <span style="color:#f92672">in</span> pl<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>iteritems()]
+
+options <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">rangeSelector</span><span style="color:#e6db74">&#39;</span>: {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">selected</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">1</span>
+    },
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>: {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">S&amp;P500 Historical</span><span style="color:#e6db74">&#39;</span>
+    },
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">yAxis</span><span style="color:#e6db74">&#39;</span>: [{
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">labels</span><span style="color:#e6db74">&#39;</span>: {
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">align</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">right</span><span style="color:#e6db74">&#39;</span>,
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>: <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>
+        },
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>: {
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">OHLC</span><span style="color:#e6db74">&#39;</span>
+        },
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">height</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">60</span><span style="color:#e6db74">%</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">lineWidth</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">2</span>
+    },
+    {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">labels</span><span style="color:#e6db74">&#39;</span>: {
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">align</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">right</span><span style="color:#e6db74">&#39;</span>,
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#39;</span>: <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>
+        },
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#39;</span>: {
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>
+        },
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">top</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">65</span><span style="color:#e6db74">%</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">height</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">35</span><span style="color:#e6db74">%</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">offset</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">0</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">lineWidth</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">2</span>
+    }],
+    <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">chart</span><span style="color:#e6db74">&#39;</span>: {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">height</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">720</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">width</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">1280</span>,
+    },
+}
+
+H<span style="color:#f92672">.</span>add_data_set(ohlc, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">candlestick</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">S&amp;P500</span><span style="color:#e6db74">&#39;</span>, dataGrouping<span style="color:#f92672">=</span>{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">units</span><span style="color:#e6db74">&#39;</span>: groupingUnits }, id<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dataseries</span><span style="color:#e6db74">&#39;</span>)
+H<span style="color:#f92672">.</span>add_data_set(volume, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">column</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Volume</span><span style="color:#e6db74">&#39;</span>, yAxis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, dataGrouping<span style="color:#f92672">=</span>{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">units</span><span style="color:#e6db74">&#39;</span>: groupingUnits })
+H<span style="color:#f92672">.</span>add_data_set(sma, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">line</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">SMA (20)</span><span style="color:#e6db74">&#39;</span>, dataGrouping<span style="color:#f92672">=</span>{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">units</span><span style="color:#e6db74">&#39;</span>: groupingUnits })
+H<span style="color:#f92672">.</span>add_data_set(ema, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">line</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">EMA (10)</span><span style="color:#e6db74">&#39;</span>, dataGrouping<span style="color:#f92672">=</span>{ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">units</span><span style="color:#e6db74">&#39;</span>: groupingUnits })
+H<span style="color:#f92672">.</span>add_data_set(flags, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flags</span><span style="color:#e6db74">&#39;</span>, onSeries<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dataseries</span><span style="color:#e6db74">&#39;</span>, shape<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">circlepin</span><span style="color:#e6db74">&#39;</span>, width<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
+H<span style="color:#f92672">.</span>set_dict_options(options)
+
+H
+</code></pre></div><p>結果です。</p>
+<p><img src="/img/198-03.png" alt="img"></p>
+<h2 id="終わり">終わり</h2>
+<p>このバックテストの売買ルールは買った足と売った足が同じなのでフラグも一つで十分でした。
+買った足と売った足が違う場合はフラグのデータの配列を 2 つ作ってあげて、それぞれ <code>H.add_data_set([], 'flags')</code> に指定してあげれば良さそうです。</p>
+<p>Gist に Jupyter Notebook のファイルをアップロードしておきました。</p>
+<ul>
+<li><a href="https://gist.github.com/va2577/0425ba6bbcda221056080b9db9c5ed67">ローソク足とフラグ python-highcharts</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

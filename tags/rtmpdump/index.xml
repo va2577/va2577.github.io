@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RTMPDump on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/rtmpdump/</link>
+    <description>Recent content in RTMPDump on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 Feb 2016 11:51:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/rtmpdump/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>radiko.jpを録音する</title>
+      <link>https://va2577.github.io/post/25/</link>
+      <pubDate>Sun, 07 Feb 2016 11:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/25/</guid>
+      <description>&lt;p&gt;radiko.jpを録音することについて調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>らじる★らじる NHKネットラジオを録音する</title>
+      <link>https://va2577.github.io/post/24/</link>
+      <pubDate>Sat, 06 Feb 2016 14:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/24/</guid>
+      <description>&lt;h2 id=&#34;10-september-2017-追記&#34;&gt;10 September 2017 追記&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://developer.apple.com/streaming/&#34;&gt;HTTP Live Streaming (HLS)&lt;/a&gt; に変わったようなので新しい記事にしました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/73/&#34;&gt;らじる★らじる NHKネットラジオを録音する 2017年9月&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;ここから古い内容です。&lt;/p&gt;
+&lt;p&gt;インターネットでラジオを聞くことがありまして、録音できないかなと思って調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

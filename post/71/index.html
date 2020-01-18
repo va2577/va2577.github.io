@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>DOCKER のインストールから DOCKER の ANACONDA(JUPYTER, NUMBA) を使うまで - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Docker のインストールから Docker の Anaconda(Jupyter, Numba) を使うまで</h1>
+    
+      <div><time>April 8, 2017</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/70/">[Python]pip で Numba をインストールする時にエラーになる</a>という状況でしたので、結果的に Docker で Anaconda を使うまでを書いてみました。</p>
+<h2 id="anaconda-pyenv-の問題を理解する">Anaconda, pyenv の問題を理解する</h2>
+<p>Anaconda を使う方向で考え始めたのですが、</p>
+<blockquote>
+<p>もともと、homebrewを用いてNode.js等の環境を構築し、hubotと戯れていた環境。
+最近、話題のTensorFlowを使ってみるべくPythonの環境をAnacondaで作り、チュートリアルを少々動かし始めていました。</p>
+<p>久々にnpmコマンドを打ったところ…</p>
+<pre><code>-bash: npm: command not found
+</code></pre>
+<p><cite><a href="http://qiita.com/spiky00/items/3f3ca3a2092e531ea1ad">Anacondaを入れたらHomebrewの環境が吹っ飛んだ話 - Qiita</a></cite></p>
+</blockquote>
+<p>Anaconda を公式サイトの Graphical Installer(.pkg file), Command Line Installer(Anaconda3-4.3.1-MacOSX-x86_64.sh) でインストールすると、環境変数の PATH を Anaconda のコマンドが優先されるように設定されるため、Homebrew でインストールしたコマンドが使えない状況になると解釈しました。</p>
+<p>だから、</p>
+<blockquote>
+<p>このままだとHomebrewとAnaconda環境がバッティングするのでコメントアウトしておく。</p>
+<pre><code>#export PATH=&quot;/Users/*ユーザーネーム*/anaconda/bin:$PATH&quot;
+</code></pre>
+<p>そして、~/.bashrcに以下の関数を追加する。</p>
+<pre><code>#!/usr/local/bin/bash
+function enter_conda()
+{
+  source /Users/*ユーザーネーム*/anaconda/bin/activate root
+}
+function quit_conda()
+{
+  source /Users/*ユーザーネーム*/anaconda/bin/deactivate
+}
+</code></pre>
+<p><cite><a href="http://qiita.com/KDOG08/items/0cced521c327fb815982">[Python]Anacondaで環境構築[Mac] - Qiita</a></cite></p>
+</blockquote>
+<p>環境変数の設定をこねくり回したりしなければいけないのだと解釈しました。</p>
+<p>そうしなくても良いように、</p>
+<blockquote>
+<ul>
+<li>多くは2.xなので、3.xと共存したいなと思います。</li>
+<li>システムの方をうかつにさわるとはまります。</li>
+<li>別途apt-get install python3などとして入れても、環境変数を自分で弄る必要があります。</li>
+<li>anaconda単独だと実は問題があります。
+<ul>
+<li>curlやsqlite3,opensslなどを一緒にインストールして動作をのっとります。</li>
+</ul>
+</li>
+<li>推奨はpyenvを経由することです。
+<ul>
+<li>現在のpyenvはanacondaに対応しています。</li>
+</ul>
+</li>
+</ul>
+<p>環境構築方法</p>
+<p>.1. pyenvをインストールします。</p>
+<pre><code>$ git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+$ echo 'export PYENV_ROOT=&quot;$HOME/.pyenv&quot;' &gt;&gt; ~/.bashrc
+$ echo 'export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;' &gt;&gt; ~/.bashrc
+$ echo 'eval &quot;$(pyenv init -)&quot;' &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+</code></pre>
+<p>.2. anacondaをインストールします。 3系でも2系でもどっちでもいいですが、3で殆どの場合不都合が無いです。 pyenvで両方共存させることも可能ですが、condaで2/3の切り替えができるので片方でいいです。</p>
+<pre><code>$ pyenv install -l | grep ana
+# 最新版を確認。anaconda3-2.5.0 (2系はanaconda-2.5.0)
+# minicondaがいい人はminicondaを入れてください。
+$ pyenv install anaconda3-2.5.0
+$ pyenv rehash
+$ pyenv global anaconda3-2.5.0
+# anacondaをメインのpythonに設定。
+$ echo 'export PATH=&quot;$PYENV_ROOT/versions/anaconda3-2.5.0/bin/:$PATH&quot;' &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+# activateがpyenvとanacondaでバッティングするので、pathに明示しておく。
+$ conda update conda
+#念のためconda自体をアップデートしておく。
+</code></pre>
+<p><cite><a href="http://qiita.com/y__sama/items/5b62d31cb7e6ed50f02c">データサイエンティストを目指す人のpython環境構築 2016 - Qiita</a></cite></p>
+</blockquote>
+<p>Anaconda をインストールするのに、pyenv を使った方が良さそうに解釈しました。</p>
+<p>ただ、pyenv も Anaconda と衝突するところがあるようで、</p>
+<blockquote>
+<p>pyenvとanacondaのactivate衝突問題とは?
+linuxやMacではpyenvを介してanacondaをインストールできます。
+更に、anacondaで複数開発環境の切り替えをしたいケースがあると思います。
+anacondaでの環境は、source activate &lt;環境名&gt;として切り替えを行えますが、pyenvの下では下記のようなエラーが出てシェルごと落ちます。</p>
+<pre><code>$ source activate
+#&gt;&gt;&gt; pyenv: -bash: command not found
+</code></pre>
+<p>理由はよくわかりませんが、pyenvがshimスクリプトを使ってpathをのっとっているので、変な事が起こっているのかもしれません。</p>
+<p>anacondaがconda activateを採用してくれていれば&hellip; orz</p>
+<p><cite><a href="http://qiita.com/y__sama/items/f732bb7bec2bff355b69">pyenvとanacondaを共存させる時のactivate衝突問題の回避策3種類 - Qiita</a></cite></p>
+</blockquote>
+<p>pyenv で Anaconda をインストールしても面倒そうです。</p>
+<p>次の記事を見て、</p>
+<ul>
+<li><a href="http://qiita.com/shibukawa/items/0daab479a2fd2cb8a0e7">pyenvが必要かどうかフローチャート - Qiita</a></li>
+<li><a href="http://ymotongpoo.hatenablog.com/entry/2017/01/26/154124">Pythonの環境設定でむかついてる人はとりあえずこれをコピペで実行してください 2017.01 - YAMAGUCHI::weblog</a></li>
+<li><a href="http://qiita.com/maskedw/items/aaa2fd7abfd493cf2820">Pythonの仮想環境構築(2017年版) pyenvとpyenv-virtualenvとvirtualenvとvirtualenvwrapperとpyvenvとvenv - Qiita</a></li>
+</ul>
+<p>pyenv, Anaconda を避けてきたのですが、<a href="/post/70/">Numba のインストールでわざわざ LLVM のバージョンを落としてインストールするのが面倒</a>な状況になりました。</p>
+<p>だから、Anaconda で一式使える状態にしようと考え始めたので、</p>
+<blockquote>
+<p>ウェブサービスのガチ開発者</p>
+<p>pyenvではなくて、今ならDockerとかvagrantとかを使って、コンテナ化/仮想化の方が良いと思います。Pythonのバージョンだけじゃなくて、データベースのバージョンとか、周りのミドルウェアとか、OSのバージョンとか、サービスごとに要件はいろいろあるはずですし。</p>
+<p><cite><a href="http://qiita.com/shibukawa/items/0daab479a2fd2cb8a0e7">pyenvが必要かどうかフローチャート - Qiita</a></cite></p>
+</blockquote>
+<p>Python と必要なパッケージを、設定の面倒さなく、影響を閉じ込めて使いたいので、Docker のコンテナーを使ってみようと思いました。</p>
+<p>Docker が初めてなので、Docker Hub の Anaconda(<a href="https://hub.docker.com/r/continuumio/anaconda/">continuumio/anaconda - Docker Hub</a>) で Numba が使えるところまで進めたいと思います。</p>
+<h2 id="docker-のインストール">Docker のインストール</h2>
+<p>いくつか種類があるようでしたが、</p>
+<p><a href="https://store.docker.com/editions/community/docker-ce-desktop-mac?tab=description">Docker Community Edition for Mac</a></p>
+<p>Docker Community Edition for Mac(Stable) を選びました。</p>
+<p>Docker.dmg をダブルクリックして、ウィザードの通りに進めました。</p>
+<blockquote>
+<p>Install it</p>
+<p>Double-click Docker.dmg to start the install process.</p>
+<p>When the installation completes and Docker starts, the whale in the top status bar shows that Docker is running, and accessible from a terminal.</p>
+<p><cite><a href="https://store.docker.com/editions/community/docker-ce-desktop-mac?tab=description">Docker Community Edition for Mac - Docker Store</a></cite></p>
+</blockquote>
+<p>特に悩む選択肢はなかったと思います。</p>
+<p>次のコマンドでインストールされていることを確認しました。</p>
+<pre><code>$ docker --version
+Docker version 17.03.1-ce, build c6d412e
+$ docker-compose --version
+docker-compose version 1.11.2, build dfed245
+$ docker-machine --version
+docker-machine version 0.10.0, build 76ed2a6
+</code></pre><h2 id="docker-で-hello-world">Docker で hello-world</h2>
+<p>最初なので、hello-world をしてみます。</p>
+<blockquote>
+<p>Run it</p>
+<p>Open a command-line terminal, and try out some Docker commands.</p>
+<p>Run docker version to check that you have the latest release installed.</p>
+<p>Run docker run hello-world to verify that Docker is pulling images and running as expected.</p>
+<p><cite><a href="https://store.docker.com/editions/community/docker-ce-desktop-mac?tab=description">Docker Community Edition for Mac - Docker Store</a></cite></p>
+</blockquote>
+<p>ターミナルから次のコマンドを実行すると、Docker Hub からイメージをダウンロードして、実行してくれるみたいです。</p>
+<p><a href="https://docs.docker.com/engine/reference/commandline/run/">docker run - Docker Documentation</a></p>
+<pre><code>$ docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+78445dd45222: Pull complete
+Digest: sha256:c5515758d4c5e1e838e9cd307f6c6a0d620b5e07e6f927b07d05f6d12a1ac8d7
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://cloud.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/engine/userguide/
+</code></pre><p>次のコマンドでローカルにあるイメージが確認できるようです。</p>
+<p><a href="https://docs.docker.com/engine/reference/commandline/images/">docker images - Docker Documentation</a></p>
+<pre><code>$ docker images hello-world
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+hello-world         latest              48b5124b2768        2 months ago        1.84 kB
+</code></pre><p>Docker Hub のこれ(<a href="https://hub.docker.com/_/hello-world/">library/hello-world - Docker Hub</a>)がダウンロードされているようです。</p>
+<blockquote>
+<p>Description</p>
+<p>Run a command in a new container</p>
+<p><cite><a href="https://docs.docker.com/engine/reference/commandline/run/">docker run - Docker Documentation</a></cite></p>
+</blockquote>
+<p><code>docker run</code> は新しいコンテナーの中でイメージを実行するようです。
+hello-world を実行した直後はコンテナーは停止しているだけで、プロセスは残っている状態のようです。</p>
+<p>次のコマンドでコンテナーが確認できるようです。
+<code>-a</code> のオプションで停止しているコンテナーも含めてすべて表示できるようです。</p>
+<p><a href="https://docs.docker.com/engine/reference/commandline/ps/">docker ps - Docker Documentation</a></p>
+<pre><code>$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+f033a686f252        hello-world         &quot;/hello&quot;            58 seconds ago      Exited (0) 56 seconds ago                       flamboyant_yalow
+</code></pre><p>次のコマンドでコンテナーを削除することができるようです。</p>
+<p><a href="https://docs.docker.com/engine/reference/commandline/rm/">docker rm - Docker Documentation</a></p>
+<pre><code>$ docker rm f033a686f252
+f033a686f252
+</code></pre><p>コンテナーが削除されているようです。</p>
+<pre><code>$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre><p>コンテナーはイメージとは別なので、イメージから実行するたびに同じ環境のコンテナーが作成できるものだと認識しました。
+オブジェクト指向プログラミングで言うとクラスとインスタンスの関係みたいなものでしょうか。</p>
+<h2 id="nginx">nginx</h2>
+<h3 id="nginx-イメージのダウンロード">nginx イメージのダウンロード</h3>
+<p>次は HTTP サーバーである nginx(<a href="https://hub.docker.com/_/nginx/">library/nginx - Docker Hub</a>) のイメージを実行してみます。</p>
+<p>コンテナーの実行(作成)はしないで、イメージだけをローカルにダウンロードする場合は <code>docker pull</code> コマンドを実行するようです。</p>
+<p><a href="https://docs.docker.com/engine/reference/commandline/pull/">docker pull - Docker Documentation</a></p>
+<pre><code>$ docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+6d827a3ef358: Pull complete
+b556b18c7952: Pull complete
+03558b976e24: Pull complete
+9abee7e1ef9d: Pull complete
+Digest: sha256:52f84ace6ea43f2f58937e5f9fc562e99ad6876e82b99d171916c1ece587c188
+Status: Downloaded newer image for nginx:latest
+</code></pre><p>ダウンロードできました。
+イメージを確認してみます。</p>
+<pre><code>$ docker images nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              5e69fe4b3c31        11 days ago         183 MB
+</code></pre><h3 id="nginx-の実行">nginx の実行</h3>
+<p>nginx のイメージからコンテナーを実行(作成)します。</p>
+<pre><code>$ docker run --name some-nginx -d -p 8080:80 nginx
+bba2da7144dc2649ce97219de5e8d73b68e9bbbc548f332ccde77ee41a06b417
+</code></pre><p>オプションの <code>--name</code> はコンテナーの名前をつけることができるようです。
+<code>-d</code> はコンテナーをバックグラウンドで「デタッチド」モード（detached mode）で実行することができるようです。
+<code>-p</code> はコンテナーのポートをホストのポートに公開することができるようです。</p>
+<p>コンテナーを確認してみます。</p>
+<pre><code>$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
+bba2da7144dc        nginx               &quot;nginx -g 'daemon ...&quot;   10 seconds ago      Up 8 seconds        443/tcp, 0.0.0.0:8080-&gt;80/tcp   some-nginx
+</code></pre><p>STATUS が UP の状態でコンテナーが動いているようです。
+PORTS　は <code>0.0.0.0:8080-&gt;80/tcp</code> となっていて、コンテナーの <code>80</code> のポートがホストの <code>8080</code> で公開されているようです。
+NAMES は <code>--name</code> でつけた <code>some-nginx</code> になっています。</p>
+<p>http://localhost:8080 にアクセスしてみます。</p>
+<p><img src="/img/71-01.png" alt=""></p>
+<p>nginx の標準のページが表示できました。</p>
+<p>コンテナーを停止します。
+<code>docker stop</code> でコンテナーを停止することができるようです。</p>
+<p><a href="https://docs.docker.com/engine/reference/commandline/stop/">docker stop - Docker Documentation</a></p>
+<pre><code>$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
+bba2da7144dc        nginx               &quot;nginx -g 'daemon ...&quot;   8 minutes ago       Up 8 minutes        443/tcp, 0.0.0.0:8080-&gt;80/tcp   some-nginx
+$ docker stop bba2da7144dc
+bba2da7144dc
+</code></pre><p>コンテナーを削除します。</p>
+<pre><code>$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                     PORTS               NAMES
+bba2da7144dc        nginx               &quot;nginx -g 'daemon ...&quot;   8 minutes ago       Exited (0) 8 seconds ago                       some-nginx
+$ docker rm bba2da7144dc
+bba2da7144dc
+</code></pre><h3 id="nginx-の実行オリジナルコンテンツを公開">nginx の実行(オリジナルコンテンツを公開)</h3>
+<p>nginx の標準のコンテンツを公開するのではなく、自分のコンテンツを公開するために、docker の<code>-v</code> オプションを使うようです。</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/tutorials/dockervolumes/">Manage data in containers - Docker Documentation</a></li>
+</ul>
+<pre><code>$ docker run --name some-nginx -v /Users/user/content:/usr/share/nginx/html:ro -d -p 8080:80 nginx
+71cd51a3403584329421261d2d49a52a03314b6d1b034b23942042377a5cb21e
+</code></pre><p><code>/Users/user/content</code> はホストのコンテンツのあるディレクトリーです。
+<code>/usr/share/nginx/html</code> はコンテナーの nginx の公開用ディレクトリーのようです。
+<code>/Users/user/content:/usr/share/nginx/html</code> のように記述することで、ホストのコンテンツのあるディレクトリーがコンテナーの nginx の公開用ディレクトリーにマウントされるようです。
+<code>ro</code> はホストのファイルを読み取り専用にできるようです。</p>
+<p>公開用のファイルとして、次のファイルを作成して、<code>/Users/user/content/index.html</code> として保存しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> index.html </span><span style="color:#75715e">--&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;sample nginx&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;sample nginx&lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>http://localhost:8080 にブラウザーでアクセスします。</p>
+<p><img src="/img/71-02.png" alt=""></p>
+<p>作成したファイルが公開されているようです。</p>
+<p>コンテナーを停止して、削除します。</p>
+<pre><code>$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
+71cd51a34035        nginx               &quot;nginx -g 'daemon ...&quot;   3 seconds ago       Up 2 seconds        443/tcp, 0.0.0.0:8080-&gt;80/tcp   some-nginx
+$ docker stop 71cd51a34035
+71cd51a34035
+$ docker rm 71cd51a34035
+71cd51a34035
+$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre><p>nginx に限らず、コンテナーの中でドキュメントを永続化するのではなくて、ホストのディレクトリーをマウントすることで、データはホスト側で永続化するようです。</p>
+<h2 id="anaconda">Anaconda</h2>
+<h3 id="anaconda-のイメージのダウンロード">Anaconda のイメージのダウンロード</h3>
+<p>Docker の Anaconda(<a href="https://hub.docker.com/r/continuumio/anaconda/">continuumio/anaconda - Docker Hub</a>) のイメージをダウンロードします。</p>
+<pre><code>$ docker pull continuumio/anaconda
+Using default tag: latest
+latest: Pulling from continuumio/anaconda
+8ad8b3f87b37: Pull complete
+16deb7e607c1: Pull complete
+8f70420d5249: Pull complete
+542bf307a831: Pull complete
+Digest: sha256:4c9abc36612cfcaebbacb399696184dba27b132ccdae9c2ccbb4fad81f96902d
+Status: Downloaded newer image for continuumio/anaconda:latest
+$ docker images anaconda
+REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
+continuumio/anaconda   latest              083a044e94ca        3 weeks ago         2.25 GB
+</code></pre><p>2.25GB もありました。</p>
+<h3 id="anaconda-の実行">Anaconda の実行</h3>
+<p>Anaconda のコンテナーを実行(作成)します。</p>
+<pre><code>$ docker run -i -t continuumio/anaconda /bin/bash
+root@ea0b0fab39e2:/#
+</code></pre><p>オプションの <code>-i</code> と <code>-t</code> は、</p>
+<blockquote>
+<p>Assign name and allocate pseudo-TTY (–name, -it)</p>
+<p>The -it instructs Docker to allocate a pseudo-TTY connected to the container’s stdin; creating an interactive bash shell in the container</p>
+<p><cite><a href="https://docs.docker.com/engine/reference/commandline/run/#parent-command">docker run - Docker Documentation</a></cite></p>
+</blockquote>
+<p>コンテナーの中の <code>bash</code> の標準入出力を使えるもののようです。</p>
+<p><code>/bin/bash</code> はコンテナーの実行直後に <code>/bin/bash</code> コマンドを実行した状態にしておくものと解釈しました。</p>
+<p>Python のバージョンを確認してみます。</p>
+<pre><code>root@ea0b0fab39e2:/# python --version
+Python 2.7.13 :: Anaconda 4.3.1 (64-bit)
+root@ea0b0fab39e2:/#
+</code></pre><p>Python のバージョンは 2.7.13, Anaconda のバージョンは 4.3.1 のようです。</p>
+<p><code>exit</code> でコンテナーの中のシェルから抜けることができるようです。</p>
+<pre><code>root@ea0b0fab39e2:/# exit
+exit
+</code></pre><p>コンテナーを削除します。</p>
+<pre><code>$ docker ps -a
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                       PORTS               NAMES
+ea0b0fab39e2        continuumio/anaconda   &quot;/usr/bin/tini -- ...&quot;   13 minutes ago      Exited (130) 7 seconds ago                       eloquent_bose
+$ docker rm ea0b0fab39e2
+ea0b0fab39e2
+$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre><h3 id="anaconda-の-jupyter">Anaconda の Jupyter</h3>
+<blockquote>
+<p>Alternatively, you can start a Jupyter Notebook server and interact with Anaconda via your browser:</p>
+<pre><code>docker run -i -t -p 8888:8888 continuumio/anaconda /bin/bash -c &quot;/opt/conda/bin/conda install jupyter -y --quiet &amp;&amp; mkdir /opt/notebooks &amp;&amp; /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --no-browser&quot;
+</code></pre>
+<p>You can then view the Jupyter Notebook by opening <code>http://localhost:8888</code> in your browser, or <code>http://&lt;DOCKER-MACHINE-IP&gt;:8888</code> if you are using a Docker Machine VM.</p>
+<p><cite><a href="https://hub.docker.com/r/continuumio/anaconda/">continuumio/anaconda - Docker Hub</a></cite></p>
+</blockquote>
+<p>Docker Hub の Anaconda のページには、ホストのコマンドからコンテナーの Jupyter を実行するところまでしているようです。
+ここでは 1 つずつコマンドを確認したいので、対話式にコマンドを入力してみます。</p>
+<p>Jupyter をインストールするコマンドも含まれているようですが、Anaconda の中に Jupyter もインストールされているようですので、Jupyter のインストールはしないこととします。</p>
+<p>次のようにコマンドを入力しました。</p>
+<pre><code>$ docker run -i -t -p 8888:8888 continuumio/anaconda /bin/bash
+root@27ab9f9474ac:/# mkdir /opt/notebooks
+root@27ab9f9474ac:/# /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --no-browser
+[I 08:42:05.890 NotebookApp] Writing notebook server cookie secret to /root/.local/share/jupyter/runtime/notebook_cookie_secret
+[W 08:42:05.909 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
+[I 08:42:05.920 NotebookApp] Serving notebooks from local directory: /opt/notebooks
+[I 08:42:05.920 NotebookApp] 0 active kernels
+[I 08:42:05.921 NotebookApp] The Jupyter Notebook is running at: http://[all ip addresses on your system]:8888/?token=2c0e5f6c42d282d4d4bad1f00502f1366448ef21e8cba8b4
+[I 08:42:05.921 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 08:42:05.923 NotebookApp]
+
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8888/?token=2c0e5f6c42d282d4d4bad1f00502f1366448ef21e8cba8b4
+</code></pre><p>Jupyter の実行に次の引数が指定されていますが、雰囲気で察することにしました。</p>
+<ul>
+<li><code>--notebook-dir=/opt/notebooks</code></li>
+<li><code>--ip='*'</code></li>
+<li><code>--port=8888</code></li>
+<li><code>--no-browser</code></li>
+</ul>
+<p>一番下に表示されている token のついた URL にブラウザーからアクセスします。</p>
+<p><img src="/img/71-03.png" alt=""></p>
+<p>Anaconda の Jupyter が表示されました。</p>
+<h3 id="anaconda-の-numba">Anaconda の Numba</h3>
+<p>Jupyter で <a href="http://numba.pydata.org">Numba — Numba</a> の Example にあるコードを実行してみます。</p>
+<p><img src="/img/71-04.png" alt=""></p>
+<p>Numba のコードもエラーにならずに実行することができました。</p>
+<p>コンテナーの <code>/opt/notebooks</code> に作成したファイルが保存されるのですが、コンテナーの中のデータは、コンテナーを停止して削除するとなくなってしまいます。
+データの永続化のために <code>docker run</code> の <code>-v</code> のオプションでホスト側のディレクトリーをコンテナーにマウントして、ホスト側でデータを永続化しようと思いました。</p>
+<h2 id="anaconda3">Anaconda3</h2>
+<p>後から気づいたのですが、Python 3.5 の Anaconda の Docker イメージがこちらにありました。</p>
+<p><a href="https://hub.docker.com/r/continuumio/anaconda3/">continuumio/anaconda3 - Docker Hub</a></p>
+<pre><code>$ docker pull continuumio/anaconda3
+Using default tag: latest
+latest: Pulling from continuumio/anaconda3
+8ad8b3f87b37: Already exists
+26e5bbd29116: Pull complete
+26a23cde1ff7: Pull complete
+0947a413f98b: Pull complete
+Digest: sha256:d04148529d340097c08677061e7d08f42e13a51dbdbf7488d92af0a65fd82973
+Status: Downloaded newer image for continuumio/anaconda3:latest
+</code></pre><pre><code>$ docker images
+REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
+continuumio/anaconda3   latest              2f12b7e5bd80        3 weeks ago         2.23 GB
+</code></pre><p>2.23 GB ありました。
+Python 2.7 より少し小さいみたいです。</p>
+<h2 id="終わり">終わり</h2>
+<p>Numba のエラーから遠回りをしたような&hellip;
+Anaconda が使えるようになりましたので、しばらくこのコンテナーで使ってみたいと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://www.docker.com">Docker - Build, Ship, and Run Any App, Anywhere</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

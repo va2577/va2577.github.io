@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>SQLITE データベースをバッチファイルで作成する - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>SQLite データベースをバッチファイルで作成する</h1>
+    
+      <div><time>December 23, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>データベースを作成するためにバッチファイルでまとめて DDL を実行する方法を調べてみました。</p>
+<h2 id="command-line-shell-for-sqlite">Command Line Shell For SQLite</h2>
+<p>ここに記載されている通りでした。</p>
+<ul>
+<li><a href="https://www.sqlite.org/cli.html">Command Line Shell For SQLite</a></li>
+</ul>
+<p>ドットコマンドで実行するようです。</p>
+<h2 id="create-table">CREATE TABLE</h2>
+<p>SQL を記述したファイルを読み込んで実行するには <code>.read</code> コマンドを使うようです。</p>
+<pre><code>$ sqlite3 database.db &quot;.read create_table1.sql&quot;
+$ sqlite3 database.db &quot;.read create_table2.sql&quot;
+$ sqlite3 database.db &quot;.read create_table3.sql&quot;
+</code></pre><p>公式のページには記載されていないようでしたが、次のコマンドでも同じようです。</p>
+<pre><code>$ sqlite3 database.db &lt; create_table1.sql
+$ sqlite3 database.db &lt; create_table2.sql
+$ sqlite3 database.db &lt; create_table3.sql
+</code></pre><h2 id="csv-import">CSV Import</h2>
+<p>マスター的なデータを CSV で用意してインポートできるようです。</p>
+<pre><code>$ sqlite3 mode csv database.db &quot;.import table1.csv table1&quot;
+$ sqlite3 mode csv database.db &quot;.import table2.csv table2&quot;
+</code></pre><p>CSV Import では NULL で登録することができないようなので、NULL が必要な場合は、インポートしてから長さ 0 の文字列を NULL に更新するようです。</p>
+<pre><code>$ sqlite3 database.db &quot;UPDATE TABLE1 SET COL1 = NULL WHERE COL1 = '';&quot;
+</code></pre><p>CSV ファイルは次のように作成されている必要があるようです。</p>
+<ul>
+<li>UTF-8 の文字コード</li>
+<li>ヘッダーなし</li>
+</ul>
+<h2 id="終わり">終わり</h2>
+<p>SQLite のデータベースはファイル 1 つで扱えるのでお手軽でした。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

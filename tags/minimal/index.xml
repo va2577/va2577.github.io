@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>minimal on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/minimal/</link>
+    <description>Recent content in minimal on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 25 Jul 2016 15:50:56 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/minimal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>引っ越しをして感じたこと</title>
+      <link>https://va2577.github.io/post/44/</link>
+      <pubDate>Mon, 25 Jul 2016 15:50:56 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/44/</guid>
+      <description>&lt;p&gt;引っ越しをしました。
+これまで何度か引っ越しをしたことがありましたが、引っ越しなんて人生で何十回もするものでもないので、普段の生活では得られないものを感じられました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>捨てることで感じたこと</title>
+      <link>https://va2577.github.io/post/43/</link>
+      <pubDate>Sat, 09 Jul 2016 12:59:20 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/43/</guid>
+      <description>&lt;p&gt;使わないものを不用品回収業者さんに回収してもらって、その時に感じたことです。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

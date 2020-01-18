@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>タートルズ・ブレイクアウト・システムでバックテストしてみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>タートルズ・ブレイクアウト・システムでバックテストしてみました</h1>
+    
+      <div><time>November 17, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="https://www.amazon.co.jp/dp/4939103188/"><img src="/img/208-01.jpg" alt=""></a></p>
+<!-- https://d1b14unh5d6w7g.cloudfront.net/4939103188.01.S001.LXXXXXXX.jpg?Expires=1549002131&Signature=IfTkT86XRRA1KkFPMVYKFzQ4qJuZIkoTY4y2bt9+rYzvSOtAlZOaM3G9C3V4xA+cickezNwrFBtt2Rgz/SLGOffBhnO4XwZSkxGTzEsO5nrYmTZHAJP/EEgom7pp4fSA14SOzCajr08YZqJvVbsu5gA37HTeVBUqduRYk9Xc/gE=&Key-Pair-Id=APKAIUO27P366FGALUMQ -->
+<p>『タートルズの秘密』を読みました。</p>
+<p>タートルズっていうと、『<a href="https://www.amazon.co.jp/dp/4198624267/">伝説のトレーダー集団 タートル流投資の魔術</a>』の方が有名な印象があります。
+評価も高いみたいです。
+こちらの本は数年前に読みました。
+まだトレードを始めたばかりのころでした。
+今となってはあまり記憶に残っていません…。
+多分良かったとは思います。</p>
+<p>今回の『タートルズの秘密』も良い本でした。
+評価はあまり高くはないみたいですけれども。
+その理由は、高いからなんじゃないかと思います。
+にまんえん…。
+それから大型本です。
+A3 くらいありました…。
+電車の中じゃとても読めません…。</p>
+<p>結果、『伝説のトレーダー集団 タートル流投資の魔術』を読めば十分かもしれません。</p>
+<p>今回は、この『タートルズの秘密』にあった売買ルールでバックテストしてみました。</p>
+<h2 id="トレンドフォロー">トレンドフォロー</h2>
+<p>最初に、機能する理由を引用しておきます。</p>
+<blockquote>
+<p>なぜトレンドフォローはうまく機能するのか？</p>
+<ol>
+<li>それは、バイアスを利用する統計学的な根拠を持つ概念である。<br>
+つまりひと続きの数値の予測不能（ランダム）な流れである。</li>
+<li>それはニュートン物理学の法則と同じくらい簡単である。<br>
+動いている物体は動き続け、止まっている物体はそこにとどまる傾向があるのだ。<br>
+トレンドはひと続きの価格変動のモメンタム以上の何ものでもない。</li>
+<li>マーケットは少数の人々にのみ利益を上げることを許す。<br>
+そして大多数のトレーダーは、彼らが何を考えているか、あるいは何を言うのかにかかわらず、どうしたら正しくトレンドに乗れるのかを知らない。</li>
+<li>マーケットは常に思い通りにはならない。<br>
+これは、大部分のトレーダーが資金の大部分を失い、嫌になって試みをあきらめた後になってはじめて、トレンドが発生することを意味している。<br>
+それ後、トレンドが発生しても、もう誰もその発生を信じられないが、結局はこれらの人々はマーケットに追随しなければならない。<br>
+これこそがトレンドを継続させることになる。</li>
+</ol>
+<p><cite>タートルズの秘密 Part 1 基本 The Basics P.14</cite></p>
+</blockquote>
+<p>売買ルールそのものよりも、どういう考えからそうしているのか理解する必要がある気がしています。
+表面的にその形だけを真似てみても同じ結果にはならないと考えるからです。
+説明してくれたチャートと全く同じチャートは未来には現れないですし。
+著者と自分は違いますし。
+これから現れるチャートで自分がトレードしなきゃいけないわけですし。</p>
+<h2 id="バックテスト">バックテスト</h2>
+<p>次のような Python のプログラムを作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test</span>(df, periods1<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, periods2<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, periods3<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>, unit<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>, spread<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>):
+    sp <span style="color:#f92672">=</span> unit <span style="color:#f92672">*</span> spread
+    last <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: ([<span style="color:#ae81ff">0.0</span>] <span style="color:#f92672">+</span> x<span style="color:#f92672">.</span>dropna()<span style="color:#f92672">.</span>values<span style="color:#f92672">.</span>tolist())[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    l <span style="color:#f92672">=</span> [
+        df,
+        df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">1</span>),
+        df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(periods1)<span style="color:#f92672">.</span>max()<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>),
+        df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(periods2)<span style="color:#f92672">.</span>max()<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>),
+        df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(periods1)<span style="color:#f92672">.</span>min()<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>),
+        df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>rolling(periods2)<span style="color:#f92672">.</span>min()<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>),
+        atr(df, periods<span style="color:#f92672">=</span>periods3)<span style="color:#f92672">.</span>shift(<span style="color:#ae81ff">2</span>),
+    ]
+    df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(l, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    pl1 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>full(df2<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size, np<span style="color:#f92672">.</span>nan), index<span style="color:#f92672">=</span>df2<span style="color:#f92672">.</span>index, name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">pl1</span><span style="color:#e6db74">&#39;</span>)
+    pl2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>full(df2<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>size, np<span style="color:#f92672">.</span>nan), index<span style="color:#f92672">=</span>df2<span style="color:#f92672">.</span>index, name<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">pl2</span><span style="color:#e6db74">&#39;</span>)
+    ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> df2<span style="color:#f92672">.</span>itertuples():
+        time, open_, high, low, close, close2, high2, high3, low2, low3, atr_ <span style="color:#f92672">=</span> row
+        <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>isnan([close2, high2, high3, low2, low3, atr_])<span style="color:#f92672">.</span>any():
+            <span style="color:#66d9ef">continue</span>
+        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> ls <span style="color:#f92672">and</span> close2 <span style="color:#f92672">&lt;</span> low3) <span style="color:#f92672">or</span> (ls <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> high3 <span style="color:#f92672">&lt;</span> close2):
+            <span style="color:#75715e"># exit</span>
+            p <span style="color:#f92672">=</span> (open_ <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> unit <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+            <span style="color:#66d9ef">if</span> last(pl2) <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>:
+                pl1[time] <span style="color:#f92672">=</span> p
+            pl2[time] <span style="color:#f92672">=</span> p
+            ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+        <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>isnan(ls) <span style="color:#f92672">and</span> (high2 <span style="color:#f92672">&lt;</span> close2 <span style="color:#f92672">or</span> close2 <span style="color:#f92672">&lt;</span> low2):
+            <span style="color:#75715e"># entry</span>
+            ls <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> high2 <span style="color:#f92672">&lt;</span> close2 <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+            entry <span style="color:#f92672">=</span> open_
+            stop <span style="color:#f92672">=</span> open_ <span style="color:#f92672">-</span> (atr_ <span style="color:#f92672">*</span> <span style="color:#ae81ff">2.0</span> <span style="color:#f92672">*</span> ls)
+        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;</span> ls <span style="color:#f92672">and</span> low <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> stop) <span style="color:#f92672">or</span> (ls <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> stop <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> high):
+            <span style="color:#75715e"># stop</span>
+            p <span style="color:#f92672">=</span> (stop <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> unit <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+            <span style="color:#66d9ef">if</span> last(pl2) <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>:
+                pl1[time] <span style="color:#f92672">=</span> p
+            pl2[time] <span style="color:#f92672">=</span> p
+            ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> np<span style="color:#f92672">.</span>isnan(ls):
+        p <span style="color:#f92672">=</span> (close <span style="color:#f92672">-</span> entry) <span style="color:#f92672">*</span> unit <span style="color:#f92672">*</span> ls <span style="color:#f92672">-</span> sp
+        <span style="color:#66d9ef">if</span> last(pl2) <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>:
+            pl1[time] <span style="color:#f92672">=</span> p
+        pl2[time] <span style="color:#f92672">=</span> p
+        ls <span style="color:#f92672">=</span> entry <span style="color:#f92672">=</span> stop <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>nan
+    <span style="color:#66d9ef">return</span> pd<span style="color:#f92672">.</span>concat([pl1, pl2], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</code></pre></div><p>具体的な売買ルールは <a href="https://gist.github.com/va2577/96908e8f0f7109d43bdcef6addc8d786">Gist</a> にアップロードした Jupyter Notebook のファイルに記載しました。</p>
+<p>株価指数と通貨の市場でバックテストしていますが、スプレッドだけ考慮に入れています。
+株価指数はお手軽に取引できそうな CFD での取引を想定しています。</p>
+<h2 id="株価指数">株価指数</h2>
+<p>これを <a href="https://finance.yahoo.com/">Yahoo Finance</a> のヒストリカルデータを使ってバックテストしました。
+かなり過去のデータも含まれていましたが（終値だけのもありましたが）、 2000 年から 2017 年までのデータを使いました。</p>
+<ul>
+<li><a href="https://finance.yahoo.com/quote/%5EDJI/history?p=%5EDJI">Dow Jones Industrial Average (^DJI)</a></li>
+<li><a href="https://finance.yahoo.com/quote/%5EGSPC/history?p=%5EGSPC">S&amp;P 500 (^GSPC)</a></li>
+<li><a href="https://finance.yahoo.com/quote/%5EIXIC/history?p=%5EIXIC">NASDAQ Composite (^IXIC)</a></li>
+<li><a href="https://finance.yahoo.com/quote/%5EN225/history?p=%5EN225">Nikkei 225 (^N225)</a></li>
+</ul>
+<p>ダウ平均です。</p>
+<p><img src="/img/208-02.png" alt=""></p>
+<p>青い損益のラインは P/L フィルターを使ったときの損益です。
+赤い損益のラインは P/L フィルターを使わなかったときの損益です。
+ダウ平均は P/L フィルターを使った方が利益になったようです。
+P/L フィルターについての説明も <a href="https://gist.github.com/va2577/96908e8f0f7109d43bdcef6addc8d786">Gist</a> にアップロードした Jupyter Notebook のファイルに記載してあります。</p>
+<p>S&amp;P500 種です。</p>
+<p><img src="/img/208-03.png" alt=""></p>
+<p>どちらも損失に終わりました。</p>
+<p>NASDAQ 総合です。</p>
+<p><img src="/img/208-04.png" alt=""></p>
+<p>P/L フィルターを使ったときに 2,500 ドルくらいの利益になっています。</p>
+<p>日経平均です。</p>
+<p><img src="/img/208-05.png" alt=""></p>
+<p>P/L フィルターを使わなかったときに 90,000 円くらいの利益になっています。</p>
+<p>評価の一覧表です。</p>
+<table>
+<thead>
+<tr>
+<th>　</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+<th align="right">期待値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^DJI pl1 (P/L Filter)</td>
+<td align="right">103</td>
+<td align="right">38.83</td>
+<td align="right">43.27</td>
+<td align="right">23.68</td>
+<td align="right">1.83</td>
+<td align="right">2.32</td>
+<td align="right">-462.46</td>
+<td align="right">238.72</td>
+<td align="right">0.10</td>
+</tr>
+<tr>
+<td>^DJI pl2</td>
+<td align="right">157</td>
+<td align="right">35.03</td>
+<td align="right">46.81</td>
+<td align="right">25.24</td>
+<td align="right">1.85</td>
+<td align="right">0.00</td>
+<td align="right">-498.86</td>
+<td align="right">0.07</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td>^GSPC pl1 (P/L Filter)</td>
+<td align="right">114</td>
+<td align="right">35.09</td>
+<td align="right">43.28</td>
+<td align="right">26.80</td>
+<td align="right">1.61</td>
+<td align="right">-2.21</td>
+<td align="right">-432.31</td>
+<td align="right">-252.04</td>
+<td align="right">-0.08</td>
+</tr>
+<tr>
+<td>^GSPC pl2</td>
+<td align="right">164</td>
+<td align="right">31.10</td>
+<td align="right">50.40</td>
+<td align="right">27.98</td>
+<td align="right">1.80</td>
+<td align="right">-3.60</td>
+<td align="right">-782.51</td>
+<td align="right">-591.10</td>
+<td align="right">-0.13</td>
+</tr>
+<tr>
+<td>^IXIC pl1 (P/L Filter)</td>
+<td align="right">105</td>
+<td align="right">40.00</td>
+<td align="right">159.59</td>
+<td align="right">69.52</td>
+<td align="right">2.30</td>
+<td align="right">22.12</td>
+<td align="right">-1014.90</td>
+<td align="right">2322.87</td>
+<td align="right">0.32</td>
+</tr>
+<tr>
+<td>^IXIC pl2</td>
+<td align="right">162</td>
+<td align="right">35.80</td>
+<td align="right">146.43</td>
+<td align="right">73.95</td>
+<td align="right">1.98</td>
+<td align="right">4.95</td>
+<td align="right">-1746.38</td>
+<td align="right">802.48</td>
+<td align="right">0.07</td>
+</tr>
+<tr>
+<td>^N225 pl1 (P/L Filter)</td>
+<td align="right">100</td>
+<td align="right">32.00</td>
+<td align="right">7138.61</td>
+<td align="right">3019.04</td>
+<td align="right">2.36</td>
+<td align="right">231.41</td>
+<td align="right">-38850.55</td>
+<td align="right">23140.96</td>
+<td align="right">0.08</td>
+</tr>
+<tr>
+<td>^N225 pl2</td>
+<td align="right">158</td>
+<td align="right">37.34</td>
+<td align="right">7097.03</td>
+<td align="right">3344.11</td>
+<td align="right">2.12</td>
+<td align="right">554.80</td>
+<td align="right">-51447.14</td>
+<td align="right">87658.12</td>
+<td align="right">0.17</td>
+</tr>
+</tbody>
+</table>
+<p>期待値が一番良かったのは NASDAQ 総合の P/L フィルターを使ったときでした。
+S&amp;P500 種はどちらもマイナスでした。</p>
+<blockquote>
+<p>S&amp;P株価指数の場合も同様に、P/Lフィルターを利用すると期待損益がマイナスからプラスに変わる。
+元々、トレンドを形成する要素があまり存在しないマーケットであり、結果的に失敗に終わってしまうトレードの数を大幅に減少させることができるからだ。
+ポートフォリオに組み込むには素晴らしいマーケットとは言えないが、マーケットの分散を図る、または特別の状況にある場合などにはポートフォリオに組み込んでもよいと思う。</p>
+<p><cite>タートルズの秘密 Part 2 ニュースレター Newsletter Turtle Talk タートル・トーク１９９４年９月 P.219</cite></p>
+</blockquote>
+<p>P/L フィルターを使うところと使わないところを見極める必要があるみたいです。
+タートルズはあまり積極的に S&amp;P500 種をトレードしないみたいですね。</p>
+<p>「トレンドを形成する要素があまり存在しないマーケット」だったのかどうかを確認するために、それぞれの終値をラインチャートにしました。</p>
+<p><img src="/img/208-06.png" alt=""></p>
+<p>2000 年を 0.00 としたときのパーセンテージで表示しました。
+ダウ平均、 S&amp;P500 種、 NASDAQ 総合は、 2009 年あたりからトレンドがあるようにも見えます。
+かなり長い期間を見てしまっているからでしょうか。
+バックテストをしたタイムフレーム（日足）で見てみたら一時的な下落もかなりあるのかもしれません。
+それでうまくシステムのルールに合っていなかったのかもしれません。</p>
+<h2 id="通貨">通貨</h2>
+<p>通貨の市場でもバックテストしてみました。
+<a href="/post/162/">以前作ったヒストリカルデータ</a>を使いました。
+株価指数のヒストリカルデータほど過去のものがなかったので、 2005 年から 2017 年までのデータを使いました。</p>
+<p>ユーロ／米ドルです。</p>
+<p><img src="/img/208-07.png" alt=""></p>
+<p>P/L フィルターを使ったときに 5,000 ドルくらいの利益になりました。</p>
+<p>米ドル／円です。</p>
+<p><img src="/img/208-08.png" alt=""></p>
+<p>P/L フィルターを使ったときに 200,000 円くらいの利益になりました。</p>
+<p>ユーロ／円です。</p>
+<p><img src="/img/208-09.png" alt=""></p>
+<p>P/L フィルターを使わなかったときに 150,000 円くらいの利益になりました。
+P/L フィルターを使っていたとしたら 2008 年から 2009 年あたりに大きな利益を逃してしまうようです。</p>
+<p>評価の一覧表です。</p>
+<table>
+<thead>
+<tr>
+<th>　</th>
+<th align="right">トレード数</th>
+<th align="right">勝率（％）</th>
+<th align="right">平均利益</th>
+<th align="right">平均損失</th>
+<th align="right">平均利益÷平均損失</th>
+<th align="right">1トレード当たりの平均損益</th>
+<th align="right">最大損失額</th>
+<th align="right">総損益</th>
+<th align="right">期待値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EURJPY pl1 (P/L Filter)</td>
+<td align="right">63</td>
+<td align="right">34.92</td>
+<td align="right">44651.36</td>
+<td align="right">22001.99</td>
+<td align="right">2.03</td>
+<td align="right">1273.79</td>
+<td align="right">-274874.76</td>
+<td align="right">80248.50</td>
+<td align="right">0.06</td>
+</tr>
+<tr>
+<td>EURJPY pl2</td>
+<td align="right">97</td>
+<td align="right">36.08</td>
+<td align="right">50087.14</td>
+<td align="right">21324.08</td>
+<td align="right">2.35</td>
+<td align="right">4442.86</td>
+<td align="right">-261197.45</td>
+<td align="right">430957.15</td>
+<td align="right">0.21</td>
+</tr>
+<tr>
+<td>EURUSD pl1 (P/L Filter)</td>
+<td align="right">72</td>
+<td align="right">34.72</td>
+<td align="right">383.08</td>
+<td align="right">139.67</td>
+<td align="right">2.74</td>
+<td align="right">41.84</td>
+<td align="right">-1675.26</td>
+<td align="right">3012.42</td>
+<td align="right">0.30</td>
+</tr>
+<tr>
+<td>EURUSD pl2</td>
+<td align="right">107</td>
+<td align="right">33.64</td>
+<td align="right">385.50</td>
+<td align="right">152.19</td>
+<td align="right">2.53</td>
+<td align="right">28.71</td>
+<td align="right">-2012.07</td>
+<td align="right">3072.34</td>
+<td align="right">0.19</td>
+</tr>
+<tr>
+<td>USDJPY pl1 (P/L Filter)</td>
+<td align="right">77</td>
+<td align="right">37.66</td>
+<td align="right">25646.55</td>
+<td align="right">13422.38</td>
+<td align="right">1.91</td>
+<td align="right">1291.90</td>
+<td align="right">-142026.84</td>
+<td align="right">99475.97</td>
+<td align="right">0.10</td>
+</tr>
+<tr>
+<td>USDJPY pl2</td>
+<td align="right">113</td>
+<td align="right">31.86</td>
+<td align="right">26342.50</td>
+<td align="right">14331.40</td>
+<td align="right">1.84</td>
+<td align="right">-1373.34</td>
+<td align="right">-276594.32</td>
+<td align="right">-155187.93</td>
+<td align="right">-0.10</td>
+</tr>
+</tbody>
+</table>
+<p>期待値が一番良かったのはユーロ／米ドルの P/L フィルターを使ったときのようでした。</p>
+<blockquote>
+<p>P/Lフィルターを利用する場合としない場合の結果を比較すると、この他にもいくつか浮き上がってくるポイントがある。
+１つは、通貨マーケットではP/Lフィルターを利用しない方が利益は大きくなるということである。
+そもそも通貨にはトレンドが現れやすいということがあるため、すべてのブレイクアウトに付いていかないと利益機会を逃してしまうことになる。
+一方、穀物や金属の場合、P/Lフィルターを利用すると、結果は段違いに向上する。
+これらのセクターは歴史的に見てすぐに反転して、大きなトレンドが現れることはまれである。
+そのためすべてのブレイクアウトに付いていくことは良策ではない。</p>
+<p><cite>タートルズの秘密 Part 2 ニュースレター Newsletter Turtle Talk タートル・トーク１９９４年９月 P.219</cite></p>
+</blockquote>
+<p>通貨の市場では P/L フィルターを使わない方がいいそうです。
+けれども、ユーロ／米ドルと米ドル／円は P/L フィルターを使った方が良い結果みたいでした。</p>
+<h2 id="マーケットの魔術師">マーケットの魔術師</h2>
+<p>『マーケットの魔術師』からトレンドフォローについて抜粋してみました。</p>
+<blockquote>
+<p>Q トレンドフォロー・システムは、もう平凡なものになってしまったのかい。</p>
+<p>そう思うよ。
+どこかの市場で極端な需給のアンバランスでも生じないかぎり、もうトレンドフォロー・システムは通用しなくなってしまったんだ（このインタビューの後すぐに起きた一九八八年の穀物地帯での干ばつ騒ぎは、まさに彼の言う例外的なものだった）。
+まあ、深刻なインフレやデフレにでもなったら、別の話だけどね。</p>
+<p><cite>マーケットの魔術師 マイケル・マーカス</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q コンピューターを使ったトレンドフォロー・システム（順バリのシステム）が急増していますけど、それがテクニカル分析におけるダマシを多くしている原因だとは思いませんか。</p>
+<p>そう思う。
+何十億ドルというお金が移動平均線や簡単なパターン認識システムで運用されてきているけど、その動きがダマシを非常に多くしている。
+僕もそれと似たようなシステムを開発しているから、そのようなシステムがいつ作動するかわかるけど、そのようなシステム運用のファンドのせいで値段が動いても、ロシア人の買いでブレイクが起こったというのに比べたら、全然面白味がないんだ。</p>
+<p><cite>マーケットの魔術師 ブルース・コフナー</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q トレンドフォロー・システムがだんだん広まれば広まるほど、相場に対する同じようなアプローチが増えることになって、逆にその効率は悪くなってきているということなのですか。</p>
+<p>そう思う。
+すごいインフレの時代でも来ないかぎり単純なトレンドフォロー・システムがうまく機能するのは難しくなってきている。
+だから、安定していてインフレ率の低いような期間だと、さまざまなテクニカル・システムがお互いに効果を相殺してしまうようになって、うまくいくはずがないんだ。</p>
+<p><cite>マーケットの魔術師 ブルース・コフナー</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q ダマシが多発するというのは、過去五～一〇年の間にコンピューターによるトレンドフォロー・システムの売買が著しい増加を遂げたことに関係があると思いますか。
+あまりにも多くの人々が同じことをやって、お互いの邪魔になっているのではありませんか。</p>
+<p>そう、それは疑う余地がない。
+そして、それはテクニカル・トレーディングがファンダメンタル・トレーディングに勝利したことを示している。
+皮肉なことだが、その勝利はテクニカル・トレーディングの価値を低めてしまった。</p>
+<p><cite>マーケットの魔術師 リチャード・デニス</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q トレンドフォロー・システムが機能しなくなる日がいつかくると思いますか。</p>
+<p>簡単に発見でき、すぐに思いつくトレンドフォロー・システムが有効でなくなる日はやがて来るだろう。
+良いシステムを開発するのは一層難しくなるだろう。</p>
+<p><cite>マーケットの魔術師 リチャード・デニス</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q あなたはトレーディング・システムをまったく使わないのですか。</p>
+<p>我々は公開されているすべてのシステムについて試してみた。
+そして本当にうまく機能するシステムを発見した。
+それは非常に良いシステムだが、当然詳しい話はできない。</p>
+<p>Q どういう種類のものですか。
+逆バリとかトレンドフォローとか。</p>
+<p>トレンドフォローだ。
+そのシステムの前提は相場が動くときには激しく動くというものだ。
+もし狭いレンジで動いていた相場が突然その幅を広げたときには、人間は本能的に価格変動を抑え込もうとする。
+しかし、レンジの幅が広がったということは、相場はその方向に動き出す準備ができたというサインを我々に送ってくれているんだ。</p>
+<p><cite>マーケットの魔術師 ポール・チューダー・ジョーンズ</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q トレンドフォロー・システムについてのあなたの意見を聞かせてください。</p>
+<p>トレードを始めたての人にとって、トレンドフォロー・システムがどのように機能するか学ぶことはとても有意義なことだと思う。
+トレンドフォロー・システムを使ってトレードすることで、初心者は利食いはゆっくり、損切りは素早くという原則を学ぶことができる。
+もしトレンドフォロー・システムを使って、その原則をしっかり身につけることができれば、トレーダーとして成功する可能性がかなり高くなったと言えると思う。</p>
+<p><cite>マーケットの魔術師 ゲーリー・ビールフェルド</cite></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>Q トレンドフォロー・システムの現在と将来の見込みについてどうお考えですか。
+トレンドフォロー・システムの普及が、結局はあなたのシステムの首を絞めるという結果になると考えられますか。</p>
+<p>いいえ。
+すべてのトレードは意識していようがいまいが、何らかの形でシステム・トレードの形態をとっている。
+多くの良いシステムは、トレンドに追随することをベースにしている。
+生ある者はすべてトレンドに従っているんだ。
+鳥は冬に備えて南へ旅立ち、それをずっと続ける。
+会社はトレンドを追いかけ、それに従って製品の品ぞろえを変えていく。
+小さな原生動物は化学作用と発光の変化に従ったトレンドで活動する。</p>
+<p>システム・トレードの収益性には周期があるんだ。
+トレンドフォロー・システムが非常にうまく機能している間は、その人気は高まり普及する。
+そしてトレンドフォロー・システムのユーザーが増えるにつれ、そして相場がトレンドのある動きから方向性のない動きになると、そのシステムは儲からなくなってくる。
+そこで、資金量が少なかったり、経験の浅いトレーダーは振り落とされていく。
+長く続けることが成功への鍵なんだ。</p>
+<p><cite>マーケットの魔術師 エド・スィコータ</cite></p>
+</blockquote>
+<p>第一章からだけ抜粋しました。
+『マーケットの魔術師』が出版されたのは 1988 年のようです。
+この時点で、もうトレンドフォローは機能しないと言っている人がかなりいたようでした。</p>
+<p>抜粋しながら気づいたことがありました。
+初めて『マーケットの魔術師』を読んだときの印象の中に <em><strong>トレンドフォローは機能しない</strong></em> なんてありませんでした。
+マーケットの魔術師たちはトレンドフォローでトレードしている印象を持っていた記憶があります。
+どこからそんな印象を持ったのだろう？</p>
+<p>そして『タートルズの秘密』が出版されたのは 1997 年のようです。
+著者はまだトレンドフォローは機能すると言っていました。</p>
+<blockquote>
+<p>チャネル・ブレイクアウトの全体的概念は、一般常識とマネー・マネジメント、そして多少のトレンドフォローのフィルターを組み合わせた統計的に根拠のあるものである。
+あなたがすべきこととは、他の誰かがすることを避けることである。
+だから私は、トレードを始めてからまもなく、４週間（システム１）から１０週間（システム２）に変更した。
+そしてまた、すべてのタートルがシステム２を利用し始めた後で数人がシステム１に復帰して、また機能し始めたのである。</p>
+<p><cite>タートルズの秘密 Part 2 ニュースレター Newsletter Turtle Talk タートル・トーク１９９３年４月 P.150</cite></p>
+</blockquote>
+<p>でも、市場が変わることは認識していて、パラメーターを変えることで対応しているようでした。
+システム 1 は 4 週間のブレイクアウト、システム 2 は 10 週間のブレイクアウトのようです。</p>
+<p>それぞれ言い分があるんだなあと感じます。
+結局、どんな売買ルールでも利益を上げられるんだと思います。
+ちゃんとそれが合うところで使えば。</p>
+<h2 id="終わり">終わり</h2>
+<p>バックテストしたときの Jupyter Notebook のファイルを <a href="https://gist.github.com/va2577/96908e8f0f7109d43bdcef6addc8d786">Gist</a> にアップロードしておきました。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

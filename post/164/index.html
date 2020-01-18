@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>ASCII 文字の一覧を BASH で表示してみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>ASCII 文字の一覧を Bash で表示してみました</h1>
+    
+      <div><time>May 14, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>前回、<a href="/post/163/">改行コードを扱った</a>ときに、 Bash で CR の改行コードをファイルに書き込むことを調べたので、書いておきます。</p>
+<p>結果だけ知りたい場合は、 <a href="#ascii-文字の一覧">ASCII 文字の一覧</a>をご参照ください。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 16.04 LTS</li>
+</ul>
+<h2 id="echo">echo</h2>
+<p><code>echo</code> コマンドでできるかな、と思って <code>man echo</code> を調べてみました。</p>
+<blockquote>
+<p>-n     do not output the trailing newline</p>
+<p>-e     enable interpretation of backslash escapes</p>
+<p>If -e is in effect, the following sequences are recognized:</p>
+<p>\n     new line</p>
+<p>\r     carriage return</p>
+<p><cite><code>man echo</code></cite></p>
+</blockquote>
+<pre><code>$ echo -ne '\r' | od -t a
+0000000  cr
+0000001
+</code></pre><p>CR はエスケープ文字で <code>\r</code> のように記述すると出力できます。
+バックスラッシュのエスケープ文字を有効にするには <code>-e</code> のオプションをつけるようです。</p>
+<p><code>-n</code> オプションをつけると出力の最後で改行しないようです。</p>
+<h3 id="octal-value">octal value</h3>
+<!-- > -e     enable interpretation of backslash escapes
+>
+> If -e is in effect, the following sequences are recognized:
+> -->
+<blockquote>
+<p>\0NNN  byte with octal value NNN (1 to 3 digits)</p>
+<p><cite><code>man echo</code></cite></p>
+</blockquote>
+<p>今回は、 ASCII 文字の一覧を表示したいので、コードで文字を指定する方法を調べてみました。
+8 進数で指定する場合は、 <code>\0NNN</code> のように記述するようです。</p>
+<pre><code>$ echo -e '\0101'
+A
+</code></pre><p>8 進数の 101 は A なので、 A と表示されました。</p>
+<pre><code>$ echo -ne '\015' | od -t a
+0000000  cr
+0000001
+</code></pre><p>8 進数の 15 は CR なので、 CR と表示されました。</p>
+<h3 id="hexadecimal-value">hexadecimal value</h3>
+<!-- > -e     enable interpretation of backslash escapes
+>
+> If -e is in effect, the following sequences are recognized:
+> -->
+<blockquote>
+<p>\xHH   byte with hexadecimal value HH (1 to 2 digits)</p>
+<p><cite><code>man echo</code></cite></p>
+</blockquote>
+<p>16 進数で指定する場合は、 <code>\xHH</code> のように記述するようです。</p>
+<pre><code>$ echo -e '\x42'
+B
+</code></pre><p>16 進数の 42 は B なので、 B と表示されました。</p>
+<pre><code>$ echo -ne '\x0d' | od -t a
+0000000  cr
+0000001
+</code></pre><p>16 進数の 0d は CR なので、 CR と表示されました。</p>
+<p><code>man echo</code> を見ると、 10 進数では指定できないようで、 10 進数を 8 進数か 16 進数に変換する必要があるようでした。</p>
+<h2 id="printf">printf</h2>
+<blockquote>
+<p>Convert a decimal number to Hex</p>
+<pre><code>printf &quot;0x%X\n &quot; 15
+# 0xF
+</code></pre>
+<p>Convert a decimal number to Octal</p>
+<pre><code>printf &quot;0%o\n &quot; 8
+# 010
+</code></pre>
+<p><cite><a href="https://ss64.com/bash/printf.html">printf Man Page - Bash - SS64.com</a></cite></p>
+</blockquote>
+<p>調べてみると、 10 進数から 8 進数や 16 進数に変換するには、 <code>printf</code> を使うのが多いみたいでした。
+それ以外だと簡単にはできないのかな。</p>
+<p>WSL の Ubuntu の <code>man printf</code> には Convert a decimal number to Hex や Convert a decimal number to Octal の記載がなかったので、ウェブサイトから引用しました。</p>
+<!-- 引用したウェブサイトには 10 進数から 8 進数、 10 進数から 16 進数にする書式が記載されていました。
+わたしの使っている Ubuntu の `man printf` には記載されていませんでしたけれども。 -->
+<h3 id="convert-a-decimal-number-to-octal">Convert a decimal number to Octal</h3>
+<p>10 進数から 8 進数にしてみます。</p>
+<pre><code>$ printf &quot;0%o\n &quot; 8
+010
+</code></pre><p>8 進数にできました。
+10 進数の 8 は 8 進数の 10 です。</p>
+<h3 id="convert-a-decimal-number-to-hex">Convert a decimal number to Hex</h3>
+<p>10 進数から 16 進数にしてみます。</p>
+<pre><code>$ printf &quot;0x%X\n &quot; 15
+0xF
+</code></pre><p>16 進数にできました。
+10 進数の 15 は 16 進数の F です。</p>
+<h2 id="command-substitution">Command substitution</h2>
+<p>10 進数から 8 進数や 16 進数にした結果を別のコマンドの入力にしたかったのですが、 <code>echo</code> や <code>printf</code> は標準入力から入力できないみたいでした。</p>
+<blockquote>
+<p>Command substitution allows the output of a command to replace the command itself. Command substitution occurs when a command is enclosed as follows:</p>
+<pre><code>$(command)
+</code></pre>
+<p>or</p>
+<pre><code>`command`
+</code></pre>
+<p><cite><a href="https://www.gnu.org/software/bash/manual/bashref.html#Command-Substitution">3.5.4 Command Substitution</a></cite></p>
+</blockquote>
+<p><code>$(command)</code> は Command substitution というそうです。
+コマンドの結果を返して変数に代入するときとかに使うようです。
+<code>`command`</code> と記述しても同じ意味になるようです。</p>
+<p>Command substitution を使って、 <code>command &quot;$(printf ...)&quot;</code> のようにしてみます。</p>
+<h2 id="printf-byte">printf byte</h2>
+<p><code>echo</code> でもコードから ASCII 文字を出力することができましたが、 <code>printf</code> でもできるみたいでした。
+10 進数から 8 進数や 16 進数にするのに <code>printf</code> を使うので、統一して <code>printf</code> で ASCII 文字を出力しようと思います。</p>
+<h3 id="printf-octal-value">printf octal value</h3>
+<blockquote>
+<p>FORMAT controls the output as in C printf.  Interpreted sequences are:</p>
+<p>\NNN   byte with octal value NNN (1 to 3 digits)</p>
+<p><cite><code>man printf</code></cite></p>
+</blockquote>
+<p><code>printf</code> で 8 進数から ASCII 文字を表示するには、 <code>\NNN</code> という書式を設定すればいいみたいです。
+<code>NNN</code> のところを 10 進数で指定して、 8 進数に変換した結果を渡したいので、 Command substitution も使って、次のように記述しました。</p>
+<pre><code>$ printf &quot;$(printf '\\%o' 65)&quot;
+A
+</code></pre><p>内側の <code>printf</code> で 10 進数から 8 進数に変換した結果を返しました。
+書式の先頭に <code>\\</code> をつけましたので、 <code>\NNN</code> の結果を返すことになります。</p>
+<p>外側の <code>printf</code> で 8 進数のコードから ASCII 文字を表示することになります。</p>
+<p>10 進数の 65 は A なので、 A と表示されました。</p>
+<h3 id="printf-hexadecimal-value">printf hexadecimal value</h3>
+<blockquote>
+<p>FORMAT controls the output as in C printf.  Interpreted sequences are:</p>
+<p>\xHH   byte with hexadecimal value HH (1 to 2 digits)</p>
+<p><cite><code>man printf</code></cite></p>
+</blockquote>
+<p><code>printf</code> で 16 進数から ASCII 文字を表示するには、 <code>\xHH</code> という書式を設定すればいいみたいです。
+<code>HH</code> のところを 10 進数で指定して、 16 進数に変換した結果を渡したいので、 Command substitution も使って、次のように記述しました。</p>
+<pre><code>$ printf &quot;$(printf '\\x%x' 66)&quot;
+B
+</code></pre><p>10 進数の 66 は B なので、 B と表示されました。</p>
+<p><code>'\\x%x'</code> のところ、ダブルクォーテーションだったり、 <code>\</code> が 1 つだったりするとエラーになりました。
+シングルクォーテーションで、 <code>\\</code> のようにしておく必要があるようでした。</p>
+<pre><code>$ printf &quot;\\x%x&quot; 65
+-bash: printf: missing hex digit for \x
+\x41
+$ printf '\x%x' 65
+-bash: printf: missing hex digit for \x
+\x41
+</code></pre><!-- ```
+$ printf $(printf "\\x%x" {65..65})
+-bash: printf: missing hex digit for \x
+A
+$ printf $(printf '\x%x' {65..65})
+-bash: printf: missing hex digit for \x
+A
+``` -->
+<p>たぶん、 <code>printf</code> は引数を 1 つだけとって、 <code>\xHH</code> のように記述することもできるので、</p>
+<pre><code>$ printf &quot;\x41&quot;
+A
+</code></pre><p><code>%x</code> の書式に引数の値を入れるよりも先に、 <code>\xHH</code> の解釈をしようとしてエラーになってしまっているように見えました。</p>
+<!-- `printf` コマンドを使って ASCII 文字を出力する方向で進めてみます。 -->
+<h2 id="brace-expansion">Brace Expansion</h2>
+<p>1 つの 10 進数から ASCII 文字を表示するところまでできました。
+一覧を表示したいので、これを繰り返し処理してみたいと思います。</p>
+<blockquote>
+<p>ASCIIとは、アルファベットや数字、記号などを収録した文字コードの一つ。最も基本的な文字コードとして世界的に普及している。7ビットの整数(0～127)で表現され、ラテンアルファベット(ローマ字)、数字、記号、空白文字、制御文字など128文字を収録している。</p>
+<p>現代のコンピュータのほとんどは1バイト(8ビット)を単位としてデータを扱うため、1文字を7ビットではなく1バイトで表すのが都合がよく、その際、128から255までの128文字分はASCIIでは規定されていない領域となる。</p>
+<p><cite><a href="http://e-words.jp/w/ASCII.html">ASCII（アスキーコード）とは - IT用語辞典</a></cite></p>
+</blockquote>
+<p>ASCII 文字は 10 進数で表現すると 0 から 127 までになります。
+まず、 10 進数で 0 から 127 を表示してみます。</p>
+<blockquote>
+<p>Brace expansion is a mechanism by which arbitrary strings may be generated.</p>
+<p>…略…</p>
+<p>Brace expansions may be nested. The results of each expanded string are not sorted; left to right order is preserved. For example,</p>
+<pre><code>bash$ echo a{d,c,b}e
+ade ace abe
+</code></pre>
+<p>A sequence expression takes the form {x..y[..incr]}, where x and y are either integers or single characters, and incr, an optional increment, is an integer.</p>
+<p><cite><a href="https://www.gnu.org/software/bash/manual/bashref.html#Brace-Expansion">3.5.1 Brace Expansion</a></cite></p>
+</blockquote>
+<p>ブレース展開というものがあるようです。
+引用の例ではカンマで区切られた文字列を記述していますが、シーケンス式で連番を返すこともできるようです。</p>
+<pre><code>$ echo {1..10}
+1 2 3 4 5 6 7 8 9 10
+</code></pre><p>英字もいけます。</p>
+<pre><code>$ echo {A..E}
+A B C D E
+</code></pre><p><code>printf</code> もいけます。</p>
+<pre><code>$ printf &quot;%o\n&quot; {1..10}
+1
+2
+3
+…略…
+7
+10
+11
+12
+</code></pre><p>ここでは 8 進数で表示してみました。
+<code>printf</code> の引数でブレース展開をして、繰り返し <code>printf</code> コマンドを実行できるのは初めて知りました。</p>
+<p>最初、 <code>for</code> や <code>seq</code> を試しましたが、 Brace Expansion が便利そうでした。
+参考までに、 <code>for</code> と <code>seq</code> を使うと次のようになりました。</p>
+<pre><code>$ for i in $(seq 65 90); do printf &quot;%x\n&quot; $i; done;
+41
+42
+43
+…略…
+58
+59
+5a
+</code></pre><p><code>seq</code> だけだと次のようになりました。</p>
+<pre><code>$ seq 65 90
+65
+66
+67
+…略…
+88
+89
+90
+</code></pre><p><code>for</code> や <code>seq</code> は <code>printf</code> と組み合わせて使おうとすると、少し面倒になりそうでしたのでやめました。</p>
+<h2 id="ascii-文字の一覧">ASCII 文字の一覧</h2>
+<h3 id="8-進数">8 進数</h3>
+<p>10 進数から 8 進数にして、 ASCII 文字を表示してみます。</p>
+<pre><code>$ printf &quot;$(printf '\\%o' {0..127})&quot; | od -t a
+0000000 nul soh stx etx eot enq ack bel  bs  ht  nl  vt  ff  cr  so  si
+0000020 dle dc1 dc2 dc3 dc4 nak syn etb can  em sub esc  fs  gs  rs  us
+0000040  sp   !   &quot;   #   $   %   &amp;   '   (   )   *   +   ,   -   .   /
+0000060   0   1   2   3   4   5   6   7   8   9   :   ;   &lt;   =   &gt;   ?
+0000100   @   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O
+0000120   P   Q   R   S   T   U   V   W   X   Y   Z   [   \   ]   ^   _
+0000140   `   a   b   c   d   e   f   g   h   i   j   k   l   m   n   o
+0000160   p   q   r   s   t   u   v   w   x   y   z   {   |   }   ~ del
+0000200
+</code></pre><p>だぶんできたみたいです。
+制御文字はそのままだと確認できないので、 <code>od -t a</code> にパイプで渡しました。</p>
+<h3 id="16-進数">16 進数</h3>
+<p>次は、 10 進数から 16 進数にして、 ASCII 文字を表示してみます。</p>
+<pre><code>$ printf &quot;$(printf '\\x%x' {0..127})&quot; | od -t a
+0000000 nul soh stx etx eot enq ack bel  bs  ht  nl  vt  ff  cr  so  si
+0000020 dle dc1 dc2 dc3 dc4 nak syn etb can  em sub esc  fs  gs  rs  us
+0000040  sp   !   &quot;   #   $   %   &amp;   '   (   )   *   +   ,   -   .   /
+0000060   0   1   2   3   4   5   6   7   8   9   :   ;   &lt;   =   &gt;   ?
+0000100   @   A   B   C   D   E   F   G   H   I   J   K   L   M   N   O
+0000120   P   Q   R   S   T   U   V   W   X   Y   Z   [   \   ]   ^   _
+0000140   `   a   b   c   d   e   f   g   h   i   j   k   l   m   n   o
+0000160   p   q   r   s   t   u   v   w   x   y   z   {   |   }   ~ del
+0000200
+</code></pre><p>だぶんできたみたいです。</p>
+<h2 id="終わり">終わり</h2>
+<p>最初、 <code>for</code> を使ってみたのですが、この記事を書きながら調べていて、ブレース展開でもできることがわかりました。
+調べたらもっとシンプルにできるのかな。</p>
+<h2 id="参考">参考</h2>
+<p>Bash のマニュアルってないのかな、と思っていたのですが、 GNU のがあったみたいでした。</p>
+<ul>
+<li><a href="https://www.gnu.org/software/bash/manual/bashref.html">Bash Reference Manual</a></li>
+</ul>
+<p>記号とか検索しづらいので、こういうマニュアルはありがたいです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

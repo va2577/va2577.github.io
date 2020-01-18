@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>GIT で差分ファイルを抽出する時にパスにスペースがあるとエラーになる - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Git で差分ファイルを抽出する時にパスにスペースがあるとエラーになる</h1>
+    
+      <div><time>December 17, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Visual Studio の <code>My Project</code> フォルダーの中にあるファイルを抽出しようとしてエラーになりましたので、調べてみました。</p>
+<h2 id="問題">問題</h2>
+<p>Visual Studio で開発をしていまして、まだ Subversion を使っていたのですが、Visual Studio が Git をサポートしてからしばらく経過していることもあり、ようやく最近 Git に移行してみました。</p>
+<p>コミットと同期だけするぶんには Visual Studio のチームエクスプローラーからステージしてコミットしたり(一部のファイルだけコミットするステージを覚えました)、同期したりしています。</p>
+<p>それから、Subversion を使っていた時によく差分ファイルを抽出していて、同じことができないかと調べていたら、丁寧なブログの記事がありまして、毎回ここからコピペしています。</p>
+<blockquote>
+<pre><code>$ git archive HEAD `git diff --name-only HEAD~1 HEAD --diff-filter=ACMR` -o archive.zip
+</code></pre>
+<p><cite><a href="http://www.granfairs.com/blog/staff/git-archivediff">Gitで差分ファイルを抽出+zipファイル化する方法 | 株式会社グランフェアズ</a></cite></p>
+</blockquote>
+<p>ですが、<code>My Project</code> フォルダーのところで <code>fatal: pathspec 'My' did not match any files</code> のエラーになりました。
+<code>My Project</code> のスペースで分割されて 2 つのファイルと認識されてしまっているようです。</p>
+<p>これに関して、同じような問題を持った人もいるようです。</p>
+<ul>
+<li><a href="http://qiita.com/gotohiro55/items/24d6696fd59a04751b5b">Gitの差分ファイル抽出時にスペースを含んだファイル名でエラー - Qiita</a></li>
+<li><a href="http://foohogehoge.hatenablog.com/entry/20141003/1412340221">パスに空白を含むファイルをgit archiveする - foohogehoge's blog</a></li>
+<li><a href="http://crunchlog.net/internet/net-service/git_rm_fatal/">git で半角スペースが混ざったファイルを消す方法 | Crunchlog</a></li>
+</ul>
+<p>が、あまり解決したように見えないです。
+対処として、スペースを含むファイルを抽出しないようにしているようですが、それはちょっと採用したくないです。</p>
+<p>パスをダブルクォーテーションで囲んでもエラーになります。</p>
+<blockquote>
+<p>ちなみにダブルクォーテーションで囲む方法も試したのですが、ダメでした。</p>
+<pre><code>$ git archive --format=zip --prefix=root/ HEAD `git diff --name-only d0b642e 17945a1 | sed 's/\(^.*$\)/&quot;\1&quot;/g'` -o archive.zip
+fatal: path not found: &quot;404/index.html&quot;
+</code></pre>
+<p><cite><a href="http://qiita.com/gotohiro55/items/24d6696fd59a04751b5b">Gitの差分ファイル抽出時にスペースを含んだファイル名でエラー - Qiita</a></cite></p>
+</blockquote>
+<p>スペースをバックスラッシュでエスケープしてもエラーになります。</p>
+<blockquote>
+<p>スペースの前にバックスラッシュが必要なのか？<br>
+というわけでsedしてみる</p>
+<pre><code>$ git diff --name-only HEAD..HEAD~ | sed -e &quot;s/ /\\\\ /g&quot;
+My\ Project/hoge
+</code></pre>
+<p>いいんじゃないかな…</p>
+<pre><code>$ git archive --format=zip master `git diff --name-only HEAD..HEAD~ | sed -e &quot;s/ /\\\\ /g&quot;` -o diff.zip
+fatal: pathspec 'My' did not match any files
+</code></pre>
+<p>何故じゃ！！<br>
+分かる人がいれば教えてください。</p>
+<p><cite><a href="http://foohogehoge.hatenablog.com/entry/20141003/1412340221">パスに空白を含むファイルをgit archiveする - foohogehoge's blog</a></cite></p>
+</blockquote>
+<p>ただ、ファイルのパスをとる時にバッククォートを使わないで、直接ファイルのパスを指定する場合はスペースがあってもダブルクォーテーショーンで囲めば抽出できるようです。</p>
+<pre><code>$ git archive HEAD &quot;Project/My Project/file.ext&quot; -o archive.zip
+</code></pre><p>スペースをバックスラッシュでエスケープすることもできるようです。</p>
+<pre><code>$ git archive HEAD Project/My\ Project/file.ext -o archive.zip
+</code></pre><p>バッククォートが怪しそうです。。</p>
+<h2 id="対処">対処</h2>
+<p>調べていたら、こちらがヒントになりました。</p>
+<blockquote>
+<pre><code>git diff --name-status commit1 commit2 | awk '{ if ($1 != &quot;D&quot;) print $2 }' | xargs git archive -o output.zip HEAD
+</code></pre>
+<p><cite><a href="http://stackoverflow.com/questions/7226009/git-how-to-create-archive-with-files-that-have-been-changed">Git. How to create archive with files, that have been changed? - Stack Overflow</a></cite></p>
+</blockquote>
+<p>抽出対象のファイルのパスをバッククォートで入れ子のコマンドから取得しようとしているのがエラーになる原因のようでしたので、パイプを使って抽出対象のファイルのパスを <code>git archive</code> コマンドに渡せば良いんじゃないかということです。</p>
+<p>前半の <code>git diff --name-status commit1 commit2 | awk '{ if ($1 != &quot;D&quot;) print $2 }'</code> の部分は <code>git diff --name-only commit1 commit2 --diff-filter=ACMR</code> とやりたいことは同じだと解釈しました。
+削除したファイル以外の差分のファイルのパスだけをとってきたいのだと思います。
+<code>git diff</code> だけですむ後者の方が <code>awk</code> を使うより良いかなと思います。</p>
+<p>次のパイプからは <code>xargs</code> がポイントです。</p>
+<blockquote>
+<p>xargs はしばしばたくさんのシェルのバッククォート機能と同じ機能を持っている。しかし、より柔軟で、入力に空白や特殊文字を含む場合にはしばしばより安全でもある。find、locate や grep のような長いリストを出力するコマンドとともによく使われる。</p>
+<p><cite><a href="https://ja.wikipedia.org/wiki/Xargs">xargs - Wikipedia</a></cite></p>
+</blockquote>
+<p><code>xargs</code> はバッククォート機能と同じ機能を持っているようです。</p>
+<blockquote>
+<p>xargsは、改行等で区切られた標準入力を読み込み、空白で区切られた１行の文字列へ加工し、それを引数として指定したコマンドへ渡して実行させる。ただし、この１行の文字列がシステムで許容される長さを超える場合は、xargsはその文字列を許容の長さになるよう最少の複数に分割し、コマンドを複数回に分けて実行させる。これにより、コマンドが許容の長さを超える引数のリストを受け付けない問題[1]を回避できる。</p>
+<p><cite><a href="https://ja.wikipedia.org/wiki/Xargs">xargs - Wikipedia</a></cite></p>
+</blockquote>
+<p><code>git archive</code> コマンドをファイルの数だけ繰り返し実行することになり、非効率的なのかな？とも思いましたが、そうではなく、<code>xargs</code> は &ldquo;その文字列を許容の長さになるよう最少の複数に分割し、コマンドを複数回に分けて実行させる&rdquo; ようなので、<code>git archive</code> コマンドを 1 回で実行できるだけのファイル数であれば 1 回で実行してくれるようでした。</p>
+<h2 id="結果">結果</h2>
+<p>調べた結果、このコマンドになりました。</p>
+<pre><code>$ git diff --name-only HEAD~1 HEAD --diff-filter=ACMR | sed -e 's/ /\\\\ /g' | xargs git archive HEAD -o output.zip
+</code></pre><p>まず、<code>git diff</code> で差分ファイルのパスを取得して、<code>sed</code> でスペースをバックスラッシュでエスケープして、<code>git archive</code> で抽出しています。</p>
+<h2 id="終わり">終わり</h2>
+<p>パスにスペースが含まれることは、まあ、少ないですよね。
+自分でファイルを作成する場合はスペースを含めないと思いますし。
+Visual Studio で作成したファイルが My Project フォルダーの下にできたので、エラーになっただけのことですから。。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

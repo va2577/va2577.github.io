@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Riot.js on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/riot.js/</link>
+    <description>Recent content in Riot.js on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 02 Jun 2019 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/riot.js/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Riot.js を使った</title>
+      <link>https://va2577.github.io/post/2019-06-02-01/</link>
+      <pubDate>Sun, 02 Jun 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/2019-06-02-01/</guid>
+      <description>&lt;p&gt;Riot.js を使って取引数量を定率で計算するページを作った。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

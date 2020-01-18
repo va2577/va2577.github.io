@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Money on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/money/</link>
+    <description>Recent content in Money on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Dec 2018 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/money/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>バックテストにおけるマネーマネジメントについてです</title>
+      <link>https://va2577.github.io/post/211/</link>
+      <pubDate>Sat, 08 Dec 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/211/</guid>
+      <description>&lt;p&gt;バックテストで評価したいことはその売買ルールの期待値でした。
+だからマネーマネジメントを考慮していませんでした。
+ですがマネーマネジメントは期待値にも影響してくるようでした。
+今回はそのことを書いてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>二つのパターン(ランダム、期待値)の口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/153/</link>
+      <pubDate>Thu, 03 May 2018 21:34:38 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/153/</guid>
+      <description>&lt;p&gt;前回までに次の 2 つの記事を書きました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移をシミュレーションしてみました&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://va2577.github.io/post/152/&#34;&gt;期待値による口座残高の推移を折れ線グラフで表示してみました&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;今回は、比較しやすくなるかと思って、一つのグラフに 2 つの推移を表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>期待値による口座残高の推移を折れ線グラフで表示してみました</title>
+      <link>https://va2577.github.io/post/152/</link>
+      <pubDate>Wed, 02 May 2018 15:26:52 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/152/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/150/&#34;&gt;口座残高の推移のシミュレーション&lt;/a&gt;をしてみました。
+今回は、ランダムな勝敗による口座残高の推移のシミュレーションではなく、期待値による口座残高の推移を折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>口座残高の推移をシミュレーションしてみました</title>
+      <link>https://va2577.github.io/post/150/</link>
+      <pubDate>Mon, 30 Apr 2018 22:32:01 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/150/</guid>
+      <description>&lt;p&gt;勝率と平均利益、平均損失をもとに口座残高の推移を Chart.js の折れ線グラフで表示してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>米ドル建ての口座の取引数量の計算式</title>
+      <link>https://va2577.github.io/post/84/</link>
+      <pubDate>Tue, 30 Jan 2018 18:31:08 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/84/</guid>
+      <description>&lt;p&gt;Forex Tester で検証していて、複利で運用した場合の口座残高の推移を把握しておきたいと思いました。
+が、 Forex Tester 2 の口座はドル建てなので、取引数量の計算式について調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>破産確率の計算</title>
+      <link>https://va2577.github.io/post/46/</link>
+      <pubDate>Sat, 24 Sep 2016 14:32:28 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/46/</guid>
+      <description>&lt;p&gt;破産確率を自分でも計算してみようと思いまして調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

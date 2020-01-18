@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>JAVASCRIPT の即時関数 (IMMEDIATE FUNCTION) の書き方を調べてしまいます - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>JavaScript の即時関数 (immediate function) の書き方を調べてしまいます</h1>
+    
+      <div><time>March 21, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>即時関数の書き方は <code>(function () { /* ... */ })()</code> だったか、 <code>(function () { /* ... */ }())</code> だったか、調べてしまうので、書いておきます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>eslint: 4.18.1</li>
+<li>eslint-config-standard: 11.0.0</li>
+<li>eslint-plugin-standard: 3.0.1</li>
+<li>babel-cli: 6.26.0</li>
+<li>babel-preset-env: 1.6.1</li>
+</ul>
+<h2 id="jslint">JSLint</h2>
+<p>JSLint で次のコードをチェックしてみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#e6db74">&#34;use strict&#34;</span>;
+(<span style="color:#66d9ef">function</span> () {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;message.&#34;</span>);
+})();
+</code></pre></div><p>次のようなエラーになりました。</p>
+<blockquote>
+<p>Wrap an immediate function invocation in parentheses to assist the reader in understanding that the expression is the result of a function, and not the function itself.</p>
+<pre><code>})();
+</code></pre>
+<p><cite><a href="http://www.jslint.com/">JSLint: The JavaScript Code Quality Tool</a></cite></p>
+</blockquote>
+<p>関数の結果であることを明確にするために呼び出し自体をかっこで囲むように言っているようです。</p>
+<p>次のように修正してチェックしてみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#e6db74">&#34;use strict&#34;</span>;
+(<span style="color:#66d9ef">function</span> () {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;message.&#34;</span>);
+}());
+</code></pre></div><p>エラーがなくなりました。</p>
+<p>JSLint では <code>(function () { /* ... */ }());</code> のパターンになるようです。</p>
+<p>おそらく、わたしが最初に即時関数のパターンを覚えたのは、こちらだったと思います。
+JSLint では、一方の書き方しかチェックが通らないことだけは覚えていました。</p>
+<h2 id="eslint">ESLint</h2>
+<p>ESLint でチェックしてみます。</p>
+<p>.eslintrc の設定は次の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;extends&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;standard&#34;</span>
+}
+</code></pre></div><p>次のコードをチェックしてみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// immediate.js
+</span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;use strict&#39;</span>;
+(<span style="color:#66d9ef">function</span> () {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message.&#39;</span>)
+})()
+</code></pre></div><p>チェックします。</p>
+<pre><code>$ eslint immediate.js
+$
+</code></pre><p>エラーが出力されずに、プロンプトが戻ってきました。</p>
+<p>次に、次のコードをチェックしてみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// immediate.js
+</span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;use strict&#39;</span>;
+(<span style="color:#66d9ef">function</span> () {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message.&#39;</span>)
+}())
+</code></pre></div><p>チェックします。</p>
+<pre><code>$ eslint immediate.js
+$
+</code></pre><p>こちらもエラーが出力されずに、プロンプトが戻ってきました。</p>
+<p>ESLint では <code>(function () { /* ... */ })();</code> のパターンも <code>(function () { /* ... */ }());</code> のパターンも許可しているようです。</p>
+<h2 id="babel">Babel</h2>
+<p>Babel でも確認してみます。</p>
+<p>.babelrc の設定は次の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;presets&#34;</span>: [<span style="color:#e6db74">&#34;env&#34;</span>]
+}
+</code></pre></div><p>次のコードをトランスパイルしてみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// immediate.js
+</span><span style="color:#75715e"></span>(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message&#39;</span>)
+})()
+</code></pre></div><p>トランスパイルします。</p>
+<pre><code>$ babel immediate.js
+'use strict';
+
+(function () {
+  console.log('message');
+})();
+
+</code></pre><p>トランスパイルされたものも <code>(function () { /* ... */ })();</code> のパターンになっています。</p>
+<p>次に、次のコードをトランスパイルしてみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// immediate.js
+</span><span style="color:#75715e"></span>(() =&gt; {
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message&#39;</span>)
+}())
+</code></pre></div><p>トランスパイルします。</p>
+<pre><code>$ babel immediate.js
+SyntaxError: immediate.js: Unexpected token, expected , (3:1)
+  1 | (() =&gt; {
+  2 |   console.log('message')
+&gt; 3 | }())
+    |  ^
+  4 |
+</code></pre><p>エラーになりました。
+関数呼び出しの <code>()</code> がエラーだと言っているようです。</p>
+<p>Babel は <code>(function () { /* ... */ })();</code> のパターンになるようです。</p>
+<h2 id="jslint-と-eslint-のトレンド">JSLint と ESLint のトレンド</h2>
+<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1328_RC04/embed_loader.js"></script>
+<script type="text/javascript">
+  trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"jslint","geo":"","time":"2004-01-01 2018-03-22"},{"keyword":"eslint","geo":"","time":"2004-01-01 2018-03-22"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=jslint,eslint","guestPath":"https://trends.google.co.jp:443/trends/embed/"});
+</script>
+<h2 id="終わり">終わり</h2>
+<p>JSLint は昔の話。
+ということで、 <code>(function () { /* ... */ })();</code> の書き方にしようかな、と思っています。</p>
+<h2 id="31-march-2018-追記">31 March 2018 追記</h2>
+<p>当時、読んだ本を引用しておきます。</p>
+<blockquote>
+<p>4.5 即時関数</p>
+<p>即時関数パターンは、関数を定義したすぐにその関数を実行するための構文です。</p>
+<pre><code>(function () {
+  alert('watch out');
+}());
+</code></pre>
+<p>このパターンは本質的には関数式にすぎませんが、関数を作成した直後に実行されます。</p>
+<p>即時関数 (immediate function) という用語は ECMAScript 標準では定義されていませんが、このパターンを説明するのに便利です。</p>
+<p>このパターンは以下の部品で構成されます。</p>
+<ul>
+<li>関数式を使って関数を定義する(関数宣言は使えません)。</li>
+<li>最後に一対の括弧を付加する。これによって関数が即座に実行されます。</li>
+<li>関数全体を括弧で囲む(関数を変数に代入しないときだけこれが必要です)。</li>
+</ul>
+<p>次の構文(最後の括弧の位置に注意してください)もよく使われますが、 JSLint は最初の構文を推奨します。</p>
+<pre><code>(function () {
+  alert('watch out');
+})();
+</code></pre>
+<p>…略…</p>
+<p>4.5.2 即時関数からの戻り値</p>
+<p>関数を囲む括弧を省略しても同じ結果が得られます。
+即時関数の戻り値を変数に代入するとき括弧は必要ありません。
+最初の括弧を省略した書き方は次のようになります。</p>
+<pre><code>var result = function () {
+  return 2 + 3;
+}();
+</code></pre>
+<p>この構文は簡潔ですが、誤読される可能性があります。
+関数の最後にある <code>()</code> を見落としてしまうと、 <code>result</code> が関数を指していると誤読されるかもしれません。
+実際には <code>result</code> は即時関数の戻り値、この場合は数値の 4 を指しています。</p>
+<p><cite><a href="https://www.amazon.co.jp/JavaScript%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3-%E2%80%95%E5%84%AA%E3%82%8C%E3%81%9F%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E4%BD%9C%E6%B3%95-Stoyan-Stefanov/dp/4873114888">JavaScriptパターン ―優れたアプリケーションのための作法 | Stoyan Stefanov, 豊福 剛 |本 | 通販 | Amazon</a></cite></p>
+</blockquote>
+<p>誤読される可能性があるそうです。</p>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

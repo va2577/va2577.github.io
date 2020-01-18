@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/bash/</link>
+    <description>Recent content in Bash on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 16 May 2018 18:27:55 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ubuntu Bash でファイルの内容を 8 進数で出力しました</title>
+      <link>https://va2577.github.io/post/166/</link>
+      <pubDate>Wed, 16 May 2018 18:27:55 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/166/</guid>
+      <description>&lt;p&gt;以前、&lt;a href=&#34;https://va2577.github.io/post/163/&#34;&gt;改行コードを調べたこと&lt;/a&gt;の続きです。
+ファイルの内容を 8 進数や 16 進数で表示したかったので調べました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ASCII 文字の一覧を Bash で表示してみました</title>
+      <link>https://va2577.github.io/post/164/</link>
+      <pubDate>Mon, 14 May 2018 13:34:51 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/164/</guid>
+      <description>&lt;p&gt;前回、&lt;a href=&#34;https://va2577.github.io/post/163/&#34;&gt;改行コードを扱った&lt;/a&gt;ときに、 Bash で CR の改行コードをファイルに書き込むことを調べたので、書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu Bash で CRLF の改行コードのファイルを探してみました</title>
+      <link>https://va2577.github.io/post/163/</link>
+      <pubDate>Sun, 13 May 2018 07:25:22 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/163/</guid>
+      <description>&lt;p&gt;WSL(Windows Subsystem for Linux) で Ubuntu を使っていると、 Windows で CRLF で編集したテキストファイルをそのまま Ubuntu に持ってきてしまうことがあります。
+そういったファイルがあるか確認したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo のデプロイのシェルの echo が気になったので調べました</title>
+      <link>https://va2577.github.io/post/107/</link>
+      <pubDate>Sun, 18 Mar 2018 14:38:32 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/107/</guid>
+      <description>&lt;p&gt;Bash で気になって調べたことを書いておきます。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

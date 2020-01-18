@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>.NET FRAMEWORK(C#, VB.NET) EXCELのプロセスが残る - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>.NET Framework(C#, VB.NET) Excelのプロセスが残る</h1>
+    
+      <div><time>October 11, 2016</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p><a href="/post/45/">Office 2016 の PIA がない</a>の記事で環境を設定していたところです。
+Excelの帳票を出力するアプリケーションを作っていて、よくあるExcelのプロセスが残る問題が発生してしまったので調べました。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Windows 10</li>
+<li>Visual Studio 2013</li>
+<li>.NET Framework(C#, VB.NET)</li>
+<li>Excel 2013</li>
+</ul>
+<h2 id="参照カウント">参照カウント</h2>
+<p>.NET FrameworkのアプリケーションからExcelを操作してプロセスが残るという問題は多くあって、検索すれば解決方法はたくさん出てきます。
+オブジェクトの1つ1つを変数に受け取って解放すれば良いのはわかっていたのですが・・
+クラスになっていたり、関数になっていたり、その引数に設定されていたり、戻り値になっていたり、そのあたりがよく理解できていませんでした。</p>
+<p>次のような場合、<code>workbooks2</code>は無意味ですが、これも解放するのか？とか思ってしまっていました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">Excel.Application app = <span style="color:#66d9ef">new</span> Excel.Application;
+Excel.Workbooks workbooks = app.Workbooks;
+Excel.Workbooks workbooks2 = workbooks;
+
+Marshal.ReleaseComObject(workbooks);
+Marshal.ReleaseComObject(app);
+</code></pre></div><p><code>workbooks2</code>の解放は必要なくて、COMオブジェクトから直接参照したところは解放する必要があるのだと理解しました。</p>
+<p>自分の参照カウントの知識はObjective-Cで学んだことなのですが、Objective-Cの方が規約が明確である分、理解しやすかったように思いました。</p>
+<h2 id="問題">問題</h2>
+<p>今回の問題は別のところにあったのですが、ワークブックの閉じる処理がなかったので、閉じる処理をいれてみたらそこでExcelが異常終了することがあったのです。
+<code>Excel.Application</code>のオブジェクトを解放する前にです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">Excel.Application app = <span style="color:#66d9ef">new</span> Excel.Application;
+Excel.Workbooks workbooks = app.Workbooks;
+Excel.Workbook workbook = workbooks.Workbooks.Add();
+
+<span style="color:#75715e">// 何かの処理
+</span><span style="color:#75715e"></span><span style="color:#75715e">// 何かの処理
+</span><span style="color:#75715e"></span><span style="color:#75715e">// 何かの処理
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// Excel.WorkbookのCloseがない・・・
+</span><span style="color:#75715e"></span><span style="color:#75715e">// けど、Closeを入れてみたらここでExcelが異常終了した
+</span><span style="color:#75715e"></span><span style="color:#75715e">// workbook.Close();
+</span><span style="color:#75715e"></span>Marshal.ReleaseComObject(workbook);
+Marshal.ReleaseComObject(workbooks);
+app.Quit();
+Marshal.ReleaseComObject(app);
+</code></pre></div><p>Excelに帳票のテンプレートとなるレイアウトを定義しておいて、それをコピーしながら処理を進めていたのですが、そのコピーする情報が多すぎてExcelが異常終了してしまうという状況になっていたようでした。</p>
+<p>普通にExcelを操作している時でもコピーして貼り付けして、Excelを終了しようとした時に「クリップボードに大きな情報があります。この情報をほかのプログラムに貼り付けられるようにしますか？」というメッセージが出ることがあります。
+多分その状態が悪影響をしていたのだと思うのですが・・</p>
+<p><code>Excel.Range.Copy</code>ってクリップボードを経由するのですね。</p>
+<h2 id="対応">対応</h2>
+<p>次のようにクリップボードをクリアすることでExcelが異常終了することもなくなりました。
+Excelのプロセスが残ることもなくなりました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">Excel.Application app = <span style="color:#66d9ef">new</span> Excel.Application;
+Excel.Workbooks workbooks = app.Workbooks;
+Excel.Workbook workbook = workbooks.Workbooks.Add();
+
+<span style="color:#75715e">// 何かの処理
+</span><span style="color:#75715e"></span><span style="color:#75715e">// 何かの処理
+</span><span style="color:#75715e"></span><span style="color:#75715e">// 何かの処理
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// ワークブックを閉じる前にクリップボードをクリアする
+</span><span style="color:#75715e"></span><span style="color:#75715e">// Windows フォーム アプリケーションの場合
+</span><span style="color:#75715e"></span>System.Windows.Forms.Clipboard.Clear();
+<span style="color:#75715e">// WPF アプリケーションの場合
+</span><span style="color:#75715e"></span>System.Windows.Clipboard.Clear();
+
+workbook.Close();
+Marshal.ReleaseComObject(workbook);
+Marshal.ReleaseComObject(workbooks);
+app.Quit();
+Marshal.ReleaseComObject(app);
+</code></pre></div><h2 id="終わり">終わり</h2>
+<p>実装的には参照の解放漏れはなさそうなのに・・
+と思っていましたが、こんなところに原因があったとは・・
+こういう仕様なのでしょうか？
+そういう仕様が記載されているページをご存知でしたら教えていただきたいです。</p>
+<p>注意：コードブロックに記載したコードはCOMオブジェクトの参照カウントを正しく解放していません。参考に記載したリンク先にあるように正しく解放する必要があります。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://jeanne.wankuma.com/tips/vb.net/programming/releasecom.html">VB.NET - COM オブジェクトの参照カウントを解放する</a></li>
+<li><a href="http://jeanne.wankuma.com/tips/csharp/programming/releasecom.html">C# - COM オブジェクトの参照カウントを解放する</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

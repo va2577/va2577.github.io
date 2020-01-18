@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitHub on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/github/</link>
+    <description>Recent content in GitHub on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Apr 2018 09:04:05 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git のすでにあるリポジトリーからサブモジュールにするためのリポジトリーを作成しました</title>
+      <link>https://va2577.github.io/post/141/</link>
+      <pubDate>Sat, 21 Apr 2018 09:04:05 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/141/</guid>
+      <description>&lt;p&gt;Hugo でウェブサイトを作っていて、テーマも自分で作っていたのですが、ウェブサイトとテーマが同じリポジトリーに含まれてしまっていたため、テーマだけのリポジトリーを独立して作成してみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitHub のアイコンを元に戻したい(Identicons!)</title>
+      <link>https://va2577.github.io/post/87/</link>
+      <pubDate>Mon, 05 Feb 2018 16:19:38 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/87/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://va2577.github.io/img/87-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;GitHub のアイコンを元に戻したかったので調べてみました。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Jekyllでブログを作成する</title>
+      <link>https://va2577.github.io/post/5/</link>
+      <pubDate>Thu, 31 Dec 2015 22:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/5/</guid>
+      <description>&lt;p&gt;GitHub PagesでブログをするためにJekyllを使ってみました。
+費用がかからないのに広告も出ないので良いです。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GitHubのサインアップ</title>
+      <link>https://va2577.github.io/post/4/</link>
+      <pubDate>Thu, 31 Dec 2015 21:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/4/</guid>
+      <description>&lt;p&gt;GitHubはソースコードのバージョンを管理できるサービスですけど、GitHub PagesとJekyllを使うとブログができるということでGitHubにサインアップしてみました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

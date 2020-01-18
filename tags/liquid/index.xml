@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Liquid on Espresso &amp; Onigiri</title>
+    <link>https://va2577.github.io/tags/liquid/</link>
+    <description>Recent content in Liquid on Espresso &amp; Onigiri</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Jan 2016 22:51:09 +0900</lastBuildDate>
+    
+	<atom:link href="https://va2577.github.io/tags/liquid/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JekyllのLiquidテンプレートのエスケープ</title>
+      <link>https://va2577.github.io/post/11/</link>
+      <pubDate>Sun, 10 Jan 2016 22:51:09 +0900</pubDate>
+      
+      <guid>https://va2577.github.io/post/11/</guid>
+      <description>&lt;p&gt;Jekyllで記事を書いていると&lt;code&gt;{{ site.url }}&lt;/code&gt;のようなLiquidテンプレートを使います。
+これのエスケープ(その意味を無効化させること)について調べました。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

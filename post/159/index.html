@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>FLASK を使ってみました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Flask を使ってみました</h1>
+    
+      <div><time>May 9, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>Flask を使ってみたので、メモです。</p>
+<h2 id="installing-1">Installing 1</h2>
+<blockquote>
+<p>Installing</p>
+<p>Install and update using pip:</p>
+<pre><code>pip install -U Flask
+</code></pre>
+<p><cite><a href="https://github.com/pallets/flask#installing">GitHub - pallets/flask: The Python micro framework for building web applications.</a></cite></p>
+</blockquote>
+<p>この通りにインストールしました。</p>
+<pre><code class="language-console" data-lang="console">$ pip install -U Flask
+Collecting Flask
+  Downloading https://files.pythonhosted.org/packages/9b/93/628509b8d5dc749656a9641f4caf13540e2cdec85276964ff8f43bbb1d3b/Flask-1.1.1-py2.py3-none-any.whl (94kB)
+    100% |████████████████████████████████| 102kB 691kB/s
+Collecting Werkzeug&gt;=0.15 (from Flask)
+  Downloading https://files.pythonhosted.org/packages/d1/ab/d3bed6b92042622d24decc7aadc8877badf18aeca1571045840ad4956d3f/Werkzeug-0.15.5-py2.py3-none-any.whl (328kB)
+    100% |████████████████████████████████| 337kB 1.3MB/s
+Collecting itsdangerous&gt;=0.24 (from Flask)
+  Downloading https://files.pythonhosted.org/packages/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/itsdangerous-1.1.0-py2.py3-none-any.whl
+Requirement already satisfied, skipping upgrade: click&gt;=5.1 in /usr/lib/python3/dist-packages (from Flask) (6.7)
+Collecting Jinja2&gt;=2.10.1 (from Flask)
+  Downloading https://files.pythonhosted.org/packages/1d/e7/fd8b501e7a6dfe492a433deb7b9d833d39ca74916fa8bc63dd1a4947a671/Jinja2-2.10.1-py2.py3-none-any.whl (124kB)
+    100% |████████████████████████████████| 133kB 1.9MB/s
+Requirement already satisfied, skipping upgrade: MarkupSafe&gt;=0.23 in /usr/lib/python3/dist-packages (from Jinja2&gt;=2.10.1-&gt;Flask) (1.0)
+Installing collected packages: Werkzeug, itsdangerous, Jinja2, Flask
+Could not install packages due to an EnvironmentError: [Errno 13] Permission denied: '/usr/local/lib/python3.6/dist-packages/Werkzeug-0.15.5.dist-info'
+Consider using the `--user` option or check the permissions.
+
+You are using pip version 18.1, however version 19.2.2 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+</code></pre><p>エラーになりました。</p>
+<p>そういえば、普段 <code>--user</code> オプションをつけていました。</p>
+<h2 id="installing-2">Installing 2</h2>
+<p>改めて <code>--user</code> オプションをつけてインストールしました。</p>
+<pre><code class="language-console" data-lang="console">$ pip install -U Flask --user
+Collecting Flask
+  Using cached https://files.pythonhosted.org/packages/9b/93/628509b8d5dc749656a9641f4caf13540e2cdec85276964ff8f43bbb1d3b/Flask-1.1.1-py2.py3-none-any.whl
+Collecting itsdangerous&gt;=0.24 (from Flask)
+  Using cached https://files.pythonhosted.org/packages/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/itsdangerous-1.1.0-py2.py3-none-any.whl
+Requirement already satisfied, skipping upgrade: click&gt;=5.1 in /usr/lib/python3/dist-packages (from Flask) (6.7)
+Collecting Jinja2&gt;=2.10.1 (from Flask)
+  Using cached https://files.pythonhosted.org/packages/1d/e7/fd8b501e7a6dfe492a433deb7b9d833d39ca74916fa8bc63dd1a4947a671/Jinja2-2.10.1-py2.py3-none-any.whl
+Collecting Werkzeug&gt;=0.15 (from Flask)
+  Using cached https://files.pythonhosted.org/packages/d1/ab/d3bed6b92042622d24decc7aadc8877badf18aeca1571045840ad4956d3f/Werkzeug-0.15.5-py2.py3-none-any.whl
+Requirement already satisfied, skipping upgrade: MarkupSafe&gt;=0.23 in /usr/lib/python3/dist-packages (from Jinja2&gt;=2.10.1-&gt;Flask) (1.0)
+Installing collected packages: itsdangerous, Jinja2, Werkzeug, Flask
+Successfully installed Flask-1.1.1 Jinja2-2.10.1 Werkzeug-0.15.5 itsdangerous-1.1.0
+You are using pip version 18.1, however version 19.2.2 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+</code></pre><p>インストールできました。</p>
+<h2 id="a-simple-example">A Simple Example</h2>
+<p>次のような<a href="https://github.com/pallets/flask#a-simple-example">サンプル</a>のファイルを作りました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># hello.py</span>
+<span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask
+
+app <span style="color:#f92672">=</span> Flask(__name__)
+
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hello</span>():
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Hello, World!</span><span style="color:#e6db74">&#34;</span>
+</code></pre></div><p>次のように実行しました。
+FLASK_APP を設定するみたいです。</p>
+<pre><code class="language-console" data-lang="console">$ env FLASK_APP=hello.py flask run
+ * Serving Flask app &quot;hello.py&quot;
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre><h2 id="example-2">Example 2</h2>
+<p>株式のヒストリカルデータをダウンロードするサンプルを作りました。</p>
+<p>pip で numpy, pandas, requests をインストールしてあります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#75715e"># historical-prices.py</span>
+<span style="color:#f92672">import</span> datetime
+<span style="color:#f92672">import</span> io
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> requests
+<span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask, request, send_from_directory
+
+app <span style="color:#f92672">=</span> Flask(__name__)
+
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">root</span>():
+    title <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Historical Prices</span><span style="color:#e6db74">&#39;</span>
+    res <span style="color:#f92672">=</span> f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;&#39;&#39;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        &lt;!DOCTYPE html&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        &lt;html&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">            &lt;head&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                &lt;title&gt;{title}&lt;/title&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                &lt;meta charset=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> /&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">            &lt;/head&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">            &lt;body&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                &lt;h1&gt;{title}&lt;/h1&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                &lt;ul&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=DJIA</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;Dow Jones Industrial Average (DJIA)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=SPX</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;S&amp;P 500 Index (SPX)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=COMP</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;NASDAQ Composite Index (COMP)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=NIK</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;NIKKEI 225 Index (NIK)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=180460</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;TOPIX Index (180460)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=SHCOMP</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;Shanghai Composite Index (SHCOMP)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=HSI</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;Hang Seng Index (HSI)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=UKX</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;FTSE 100 Index (UKX)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                    &lt;li&gt;&lt;a href=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download?symbol=DAX</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt;DAX (DAX)&lt;/a&gt;&lt;/li&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">                &lt;/ul&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">            &lt;/body&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">        &lt;/html&gt;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">    </span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+    <span style="color:#66d9ef">return</span> res
+
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/download</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">download</span>():
+    symbol <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>args<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">symbol</span><span style="color:#e6db74">&#39;</span>)
+    text <span style="color:#f92672">=</span> get(symbol)
+    df <span style="color:#f92672">=</span> to_csv(symbol, text)
+    res <span style="color:#f92672">=</span> send_from_directory(os<span style="color:#f92672">.</span>getcwd(), f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{symbol}.csv</span><span style="color:#e6db74">&#39;</span>, as_attachment<span style="color:#f92672">=</span>True, attachment_filename<span style="color:#f92672">=</span>f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{symbol}.csv</span><span style="color:#e6db74">&#39;</span>)
+    os<span style="color:#f92672">.</span>remove(f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{symbol}.csv</span><span style="color:#e6db74">&#39;</span>)
+    <span style="color:#66d9ef">return</span> res
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(symbol):
+    url_dict <span style="color:#f92672">=</span> {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">DJIA</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/DJIA/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">SPX</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/SPX/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">COMP</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/COMP/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">NIK</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/JP/XTKS/NIK/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">180460</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/JP/TOKYO EXCHANGE (TOPIX)/180460/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">SHCOMP</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/CN/XSHG/SHCOMP/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">HSI</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/HK/XHKG/HSI/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UKX</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/UK/FTSE</span><span style="color:#e6db74">%</span><span style="color:#e6db74">20UK/UKX/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">DAX</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://quotes.wsj.com/index/DX/XETR/DAX/historical-prices/download</span><span style="color:#e6db74">&#39;</span>,
+    }
+    start_dict <span style="color:#f92672">=</span> {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">DJIA</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1970</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">31</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">SPX</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1978</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">COMP</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1971</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">NIK</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1949</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">16</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">180460</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">2008</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">30</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">SHCOMP</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1992</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">HSI</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1985</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">UKX</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1985</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">31</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">DAX</span><span style="color:#e6db74">&#39;</span>: datetime<span style="color:#f92672">.</span>date(<span style="color:#ae81ff">1987</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">30</span>),
+    }
+    url <span style="color:#f92672">=</span> url_dict[symbol]
+    start <span style="color:#f92672">=</span> start_dict[symbol]
+    end <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>date<span style="color:#f92672">.</span>today()
+    days <span style="color:#f92672">=</span> (end <span style="color:#f92672">-</span> start)<span style="color:#f92672">.</span>days
+    payload <span style="color:#f92672">=</span> {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">MOD_VIEW</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">page</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">num_rows</span><span style="color:#e6db74">&#39;</span>: days,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">range_days</span><span style="color:#e6db74">&#39;</span>: days,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">startDate</span><span style="color:#e6db74">&#39;</span>: start<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%</span><span style="color:#e6db74">m/</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">/</span><span style="color:#e6db74">%</span><span style="color:#e6db74">Y</span><span style="color:#e6db74">&#34;</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">endDate</span><span style="color:#e6db74">&#39;</span>: end<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%</span><span style="color:#e6db74">m/</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">/</span><span style="color:#e6db74">%</span><span style="color:#e6db74">Y</span><span style="color:#e6db74">&#34;</span>),
+    }
+    headers <span style="color:#f92672">=</span> {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">User-Agent</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Accept</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text/html, */*; q=0.01</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Accept-Language</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ja,en-US;q=0.7,en;q=0.3</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Referer</span><span style="color:#e6db74">&#39;</span>: url<span style="color:#f92672">.</span>replace(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">/download</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>),
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Connection</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">keep-alive</span><span style="color:#e6db74">&#39;</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">TE</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Trailers</span><span style="color:#e6db74">&#39;</span>,
+    }
+    r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, params<span style="color:#f92672">=</span>payload, headers<span style="color:#f92672">=</span>headers, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>)
+    r<span style="color:#f92672">.</span>raise_for_status()
+    r<span style="color:#f92672">.</span>text
+    <span style="color:#66d9ef">return</span> r<span style="color:#f92672">.</span>text
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_csv</span>(symbol, text):
+    df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(io<span style="color:#f92672">.</span>StringIO(text), index_col<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, parse_dates<span style="color:#f92672">=</span>True)
+    df2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>sort_index()
+    df2<span style="color:#f92672">.</span>to_csv(f<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{symbol}.csv</span><span style="color:#e6db74">&#39;</span>)
+    <span style="color:#66d9ef">return</span> df2
+</code></pre></div><p>これを次のように実行しました。</p>
+<pre><code class="language-console" data-lang="console">$ env FLASK_APP=historical-prices.py flask run
+ * Serving Flask app &quot;historical-prices.py&quot;
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre><p><a href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a> にアクセスすると。</p>
+<p><img src="/img/159-01.png" alt=""></p>
+<p>ちゃんとダウンロードできたみたいでした。</p>
+<h2 id="終わり">終わり</h2>
+<p>Flask は Node.js の Express のような印象を受けました。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://palletsprojects.com/p/flask/">Flask | The Pallets Projects</a></li>
+<li><a href="https://github.com/pallets/flask">GitHub - pallets/flask: The Python micro framework for building web applications.</a></li>
+<li><a href="https://pypi.org/project/Flask/">Flask · PyPI</a></li>
+<li><a href="https://flask.palletsprojects.com/en/1.1.x/">Welcome to Flask — Flask Documentation (1.1.x)</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>

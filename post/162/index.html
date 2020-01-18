@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8">
+  <title>PYTHON で 1 分足のヒストリカルデータから日足のデータを作りました - Espresso &amp; Onigiri</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="/img/favicon.png" type:="image/png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+</head>
+<body><header>
+  <ul>
+    <li>
+      <a href="/">
+        
+        <img src="/img/identicon.png" alt="icon">
+        <span class="icon3">Espresso &amp; Onigiri</span>
+      </a>
+    </li>
+    <li><a href="/post/">BLOG</a></li>
+    <li><a href="/tags/">TAGS</a></li>
+    <li><a href="/categories/">CATEGORIES</a></li>
+    <li><a href="/about/">ABOUT</a></li>
+    <li><a href="/privacy/">PRIVACY</a></li>
+  </ul>
+</header>
+<style>
+  header a {
+    color: #2f495e;
+  }
+  header {
+    align-items: center;
+    border-bottom: #e2e8f0 solid 1px;
+    display: flex;
+    height: 92px;
+    margin: 0px auto;
+    width: 992px;
+  }
+  header > ul {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  header > ul > li:first-child > a {
+    align-items: center;
+    display: flex;
+  }
+  header .icon2 {
+    font-size: 40px;
+    color: #00c58e;
+    margin-bottom: 10px;
+  }
+  header .icon3 {
+    color: #2f495e;
+    font-size: 24px;
+    margin-left: 6px;
+  }
+  header img {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+  }
+  @media screen and (max-width: 992px) {
+    header {
+      width: 640px;
+    }
+  }
+</style>
+<div id="content">
+  <main>
+    <h1>Python で 1 分足のヒストリカルデータから日足のデータを作りました</h1>
+    
+      <div><time>May 12, 2018</time></div>
+    
+    
+    <article>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+      <p>売買ルールを検証するのに Python を使ってみようと思いました。
+かなりメカニカル、機械的にトレードをするようになったので、検証もメカニカルにプログラムを使ってできないかと思い始めています。
+でも、 MT4 の EA のような、システムトレードをしたいわけではないです。</p>
+<p>今回は、データを用意するところを書いてみます。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 16.04 LTS</li>
+<li>Python 3.5.2</li>
+<li>jupyter-1.0.0</li>
+<li>pandas-0.22.0</li>
+<li>numpy-1.14.3</li>
+<li>matplotlib-2.2.2</li>
+</ul>
+<p>次の記事にあるように Jupyter Notebook と pandas と matplotlib をインストールしておきました。</p>
+<ul>
+<li><a href="/post/148/">WSL の Ubuntu に Jupyter Notebook をインストールしました</a></li>
+<li><a href="/post/149/">Python で為替レートの折れ線グラフを表示してみました</a></li>
+</ul>
+<h2 id="データ">データ</h2>
+<p>デューカスコピー・ジャパンの<a href="https://www.dukascopy.jp/marketwatch/historical/">ヒストリカルデータ取得</a>のページを参考にデータをダウンロードしました。</p>
+<p>ダウンロードするのにデモ口座を開設しました。
+30 日で期限が切れるようです。
+依頼すれば期限を延ばすこともできるみたいです。
+プライバシーの問題があるので、放置していても期限が切れるのはありがたいです。</p>
+<p>JForex を使ってダウンロードしたのですが、 AppData の下に一時的なファイルを作るようです。
+1 通貨ペア当たり数百 MB 程度あったので、複数通貨ペアだと数 GB になります。
+JForex をアンインストールしても残っていたので、気になる場合はちゃんと AppData の下も削除した方がよさそうでした。</p>
+<p>データの形式は CSV で、次のような感じになっていました。</p>
+<pre><code>Time (UTC),Open,High,Low,Close,Volume
+2003.05.04 21:00:00,118.94,118.952,118.94,118.952,253
+2003.05.04 21:01:00,118.961,118.967,118.958,118.967,154.6
+2003.05.04 21:02:00,118.972,118.972,118.955,118.955,219.7
+2003.05.04 21:03:00,118.953,118.961,118.949,118.949,309.9
+2003.05.04 21:04:00,118.953,118.953,118.946,118.946,229.4
+2003.05.04 21:05:00,118.952,118.954,118.944,118.944,112.2
+2003.05.04 21:06:00,118.95,118.952,118.945,118.945,170.2
+2003.05.04 21:07:00,118.947,118.956,118.947,118.947,124.5
+2003.05.04 21:08:00,118.946,118.954,118.934,118.934,355
+</code></pre><p>USD/JPY のデータを 2001 年からダウンロードしたのですが、 2003 からしかなかったみたいです。</p>
+<h2 id="プログラム">プログラム</h2>
+<p>ここからは Jupyter Notebook を使って Python のプログラムを実行していきます。
+この記事の 1 つのコードブロックを、 Jupyter Notebook の 1 つのセルに入力しながら進めました。</p>
+<h3 id="モジュールを読み込む">モジュールを読み込む</h3>
+<p>matplotlib のマジックコマンドを記述しました。
+それから、必要なモジュールを読み込みました。
+matplotlib と pandas を使っています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><h3 id="データを読み込む">データを読み込む</h3>
+<p>データを読み込みました。
+pandas の <code>read_csv</code> を使うと CSV ファイルから読み込めるようです</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dtype1 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>: str, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: float, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: float }
+names1 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(filepath_or_buffer<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USDJPY_1 Min_Bid_2000.01.01_2018.01.01.csv</span><span style="color:#e6db74">&#39;</span>, dtype<span style="color:#f92672">=</span>dtype1, header<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, index_col<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>, names<span style="color:#f92672">=</span>names1, parse_dates<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">time</span><span style="color:#e6db74">&#39;</span>])
+df<span style="color:#f92672">.</span>head()
+</code></pre></div><p>結果です。</p>
+<pre><code> 	open 	high 	low 	close 	volume
+time 					
+2003-05-04 21:00:00 	118.940 	118.952 	118.940 	118.952 	253.0
+2003-05-04 21:01:00 	118.961 	118.967 	118.958 	118.967 	154.6
+2003-05-04 21:02:00 	118.972 	118.972 	118.955 	118.955 	219.7
+2003-05-04 21:03:00 	118.953 	118.961 	118.949 	118.949 	309.9
+2003-05-04 21:04:00 	118.953 	118.953 	118.946 	118.946 	229.4
+</code></pre><h3 id="時刻を-eest-にする">時刻を EEST にする</h3>
+<p>入力したデータの時刻が UTC (協定世界時)になっているので、 EEST(UTC+3) に直しました。
+こうすると、週の始まりのデータが 2003-05-04 21:00:00 (日)から 2003-05-05 00:00:00 (月)になって、日足のローソク足が 5 本になります。
+EEST が為替の業界の標準のようです(たぶん)。
+ここでは UTC に対して +3 時間の計算をしています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data1 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: df[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values }
+columns1 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+index1 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>index <span style="color:#f92672">+</span> pd<span style="color:#f92672">.</span>DateOffset(hours<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data1, columns<span style="color:#f92672">=</span>columns1, index<span style="color:#f92672">=</span>index1)
+df2<span style="color:#f92672">.</span>head()
+</code></pre></div><p>結果です。</p>
+<pre><code> 	open 	high 	low 	close 	volume
+time 					
+2003-05-05 00:00:00 	118.940 	118.952 	118.940 	118.952 	253.0
+2003-05-05 00:01:00 	118.961 	118.967 	118.958 	118.967 	154.6
+2003-05-05 00:02:00 	118.972 	118.972 	118.955 	118.955 	219.7
+2003-05-05 00:03:00 	118.953 	118.961 	118.949 	118.949 	309.9
+2003-05-05 00:04:00 	118.953 	118.953 	118.946 	118.946 	229.4
+</code></pre><p>ちゃんと月曜日の 0 時から始まっているようです。</p>
+<h3 id="日足にリサンプリングする">日足にリサンプリングする</h3>
+<p>データは 1 分足のものなので、日足にリサンプリングします。
+<code>resample</code> に <code>'D'</code> を渡すと日ごとにサンプリングしてくれるようです。
+<code>ohlc</code> で、始値 (O) 、高値 (H) 、安値 (L) 、終値 (C) を計算してくれるようです。
+<code>ohlc</code> は、 pandas の Series ごとに OHLC を計算してくれるようなので、始値を参照する場合は、 <code>df['open']['open']</code> のように記述する必要があるようです。</p>
+<p>まだ必要かわからないですけど、入力したデータに出来高もあったので、出来高は <code>sum</code> で日ごとの合計を計算しました。</p>
+<p>リサンプリングしたら土日も含まれてしまっていたので、 <code>dropna</code> で取り除きました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df3 <span style="color:#f92672">=</span> df2<span style="color:#f92672">.</span>resample(rule<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">D</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>ohlc()
+df4 <span style="color:#f92672">=</span> df2<span style="color:#f92672">.</span>resample(rule<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">D</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>sum()
+data2 <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: df3[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: df4[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]<span style="color:#f92672">.</span>values }
+columns2 <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>]
+df5 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">=</span>data2, columns<span style="color:#f92672">=</span>columns2, index<span style="color:#f92672">=</span>df3<span style="color:#f92672">.</span>index)<span style="color:#f92672">.</span>dropna()
+df5<span style="color:#f92672">.</span>head()
+</code></pre></div><p>結果です。</p>
+<pre><code> 	open 	high 	low 	close 	volume
+time 					
+2003-05-05 	118.940 	119.046 	118.461 	118.603 	592866.9
+2003-05-06 	118.591 	118.751 	117.290 	117.500 	581707.0
+2003-05-07 	117.456 	117.830 	116.052 	116.303 	584496.2
+2003-05-08 	116.311 	116.969 	115.940 	116.823 	588236.7
+2003-05-09 	116.835 	117.612 	116.794 	117.151 	583132.9
+</code></pre><p>日ごとにサンプリングできたみたいです。</p>
+<h3 id="グラフを表示する">グラフを表示する</h3>
+<p>終値を折れ線グラフに表示してみました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df5<span style="color:#f92672">.</span>plot(y<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>結果は .ipynb ファイルを Gist にアップしました。</p>
+<ul>
+<li><a href="https://gist.github.com/va2577/f8b20698656d679b948b76660868972e">ヒストリカルデータリサンプリング</a></li>
+</ul>
+<h3 id="csv-ファイルを作る">CSV ファイルを作る</h3>
+<p>それから、日足のデータを CSV ファイルにしました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df5<span style="color:#f92672">.</span>to_csv(path_or_buf<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USDJPY_daily.csv</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>結果です。</p>
+<pre><code>time,open,high,low,close,volume
+2003-05-05,118.94,119.046,118.461,118.603,592866.9000000006
+2003-05-06,118.59100000000001,118.751,117.29,117.5,581707.0000000001
+2003-05-07,117.456,117.83,116.052,116.303,584496.2000000001
+2003-05-08,116.311,116.969,115.94,116.823,588236.6999999998
+2003-05-09,116.835,117.61200000000001,116.794,117.15100000000001,583132.8999999994
+2003-05-12,117.286,117.286,116.304,117.025,586660.3000000002
+2003-05-13,117.053,117.52799999999999,116.338,116.561,584984.3999999999
+2003-05-14,116.554,116.837,115.557,116.16,586464.9000000006
+2003-05-15,116.17299999999999,116.525,115.28200000000001,116.515,585585.1000000006
+</code></pre><p>うーん、小数点以下に誤差が出てしまっています。
+検証に影響あるかな。
+どうかな。</p>
+<p>取引業者によって提示している価格に差はあるでしょうし、特定の業者に限定して取引をした場合だけ成績が良くても仕方ないので、今はこのまま進めようと思います。
+これくらいの誤差程度で大きな影響を受けるようじゃ、堅牢な売買ルールとは言えないんじゃないか、とも思いますし。</p>
+<h2 id="終わり">終わり</h2>
+<p>pandas は便利で、 resample で 1 時間足でも 2 時間足でも 15 分足でも作れるみたいです。
+そのときに引数の <code>rule</code> に渡す値は <a href="https://pandas.pydata.org/pandas-docs/stable/timeseries.html#timeseries-offset-aliases">Offset Aliases</a> にあるもののようです。
+15 分足だったら <code>15T</code> か <code>15min</code> のようにできそうです。</p>
+<h2 id="23-may-2018-追記">23 May 2018 追記</h2>
+<p>pandas は簡単に四捨五入できました。</p>
+<ul>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.round.html">pandas.DataFrame.round — pandas 0.23.0 documentation</a></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df5<span style="color:#f92672">.</span>round({ <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">open</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">high</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">low</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">close</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">volume</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">1</span> })<span style="color:#f92672">.</span>to_csv(path_or_buf<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">USDJPY_daily.csv</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>結果です。</p>
+<pre><code>time,open,high,low,close,volume
+2003-05-05,118.94,119.046,118.461,118.603,592866.9
+2003-05-06,118.591,118.751,117.29,117.5,581707.0
+2003-05-07,117.456,117.83,116.052,116.303,584496.2
+2003-05-08,116.311,116.969,115.94,116.823,588236.7
+2003-05-09,116.835,117.612,116.794,117.151,583132.9
+2003-05-12,117.286,117.286,116.304,117.025,586660.3
+2003-05-13,117.053,117.528,116.338,116.561,584984.4
+2003-05-14,116.554,116.837,115.557,116.16,586464.9
+2003-05-15,116.173,116.525,115.282,116.515,585585.1
+</code></pre><h2 id="23-may-2018-追記-1">23 May 2018 追記</h2>
+<p>次の記事を書きました。</p>
+<ul>
+<li><a href="/post/173/">Python pandas ヒストリカルデータのサマータイムを考慮していませんでした</a></li>
+</ul>
+      
+        <aside class="ads">
+  <div>広告</div>
+  <div>
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9305907051774965" data-ad-slot="2028899530" data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</aside>
+<style>
+  aside.ads {
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+</style>
+
+      
+    </article>
+  </main>
+
+        </div><footer>
+  <div>&copy; 2015 Espresso &amp; Onigiri</div>
+  
+  <a href="https://gohugo.io">
+    <img alt="Hugo" src="/img/hugo-logo-wide.svg">
+  </a>
+</footer>
+<style>
+  footer {
+    align-items: center;
+    border-top: #e2e8f0 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 73px;
+    justify-content: space-between;
+    margin: 0px auto;
+    width: 992px;
+  }
+  footer img {
+    height: 40px;
+    width: 160px;
+  }
+  @media screen and (max-width: 992px) {
+    footer {
+      width: 640px;
+    }
+  }
+</style>
+</body>
+</html>
