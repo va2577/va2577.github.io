@@ -49,6 +49,16 @@ h3 {
   position: relative;
 }
 
+h4,
+h5,
+h6 {
+  display: inline-block;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  position: relative;
+}
+
 h1:after,
 h2:after,
 h3:after,
@@ -77,6 +87,14 @@ h3:after {
 
 h4:after {
   background-color: #2f495e;
+}
+
+h5:after {
+  background-color: #1f394e;
+}
+
+h6:after {
+  background-color: #0f293e;
 }
 
 a {
