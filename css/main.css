@@ -194,3 +194,21 @@ strong {
 mjx-container[display] {
   margin: 2rem 0;
 }
+
+@media screen and (max-width: 992px) {
+  main {
+    /* margin-left: 1rem; */
+    /* margin-right: 1rem; */
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 98%;
+  }
+
+  article {
+    width: 100%;
+  }
+
+  aside {
+    width: 100%;
+  }
+}
